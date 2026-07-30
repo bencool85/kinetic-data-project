@@ -406,3 +406,33 @@ seasonality calendar.
   has an order after their churn date"), and added a guard against ever
   re-introducing a purchase-activity condition into a lapsed time-bucket's
   description again. All 16 checks pass.
+
+## 2026-07-30 — Added a "High Churn Risk" segment (renewal approaching + low engagement)
+
+- Ben asked for a segment covering active subscribers with an upcoming
+  renewal decision who aren't using their subscription much. Added
+  **"High Churn Risk (Renewal Approaching, Low Engagement)"** as a 9th
+  customer-grain segment (12 total with the 3 anonymous ones).
+- This one is honestly flagged as only partially computable today, rather
+  than pretending it's fully ready:
+  - The "renewal approaching" half needs a computed next-renewal-date from
+    `billing_interval`, which doesn't exist until Phase 2's `subscriptions`
+    table (the same gap flagged back at `subscription_plans`).
+  - The "low engagement" half is proxied today by `engagement_tier ==
+    "regular"` -- discovered while building this that active subscribers in
+    the simulation can only ever be tiered "power" or "regular," never
+    "casual" (that tier is reserved for lapsed/never-subscribed customers),
+    so there's currently no true "barely using it" tier among actives.
+    "Regular" (the lower of the two) is the honest proxy until Phase 5's
+    real app/web usage events give a proper recency/frequency signal.
+  - Gave it its own `source_system` ("churn_propensity_model") distinct
+    from the plain rule-based segments, since this one's conceptually a
+    model output, not a SQL filter -- and dated its `created_at`
+    (2024-10-25) to after the 20th real churn in the simulation exists (21
+    had occurred by then), matching the same "needs real data to model
+    against" logic used for the Lookalike audience.
+- Added 4 new checks to `validate_segments.py`: the engagement-half proxy
+  isn't vacuous (47 real active 'regular'-tier subscribers), the
+  description explicitly names its Phase 2/5 dependency, it uses the
+  distinct source_system, and its created_at postdates >=20 real churns.
+  All 20 checks pass.

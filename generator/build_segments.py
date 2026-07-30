@@ -9,17 +9,17 @@ independently). Two grains distinguished by audience_grain:
   paid-media platform's ad-set-level table (built in Phase 7) will get a
   nullable targeting_segment_id -> segments.segment_id pointing at these.
 
-Small, curated list per the agreed scope: 8 customer-grain + 3
-anonymous-grain (grew from the originally-agreed 7 customer-grain by one,
-after catching that "lapsed but still buying courses/merch" -- a real,
-explicitly-modeled population in the simulation -- didn't cleanly fit any of
-the original 7; see the "Lapsed - Still Buying" segment below). The
-"Lookalike - Recent Converters" audience's created_at is
-deliberately later than the others -- a lookalike/similar-audience algorithm
-needs an existing seed audience of real converters to build from, so it
-couldn't have existed since day 1. Computed directly from the simulation: the
-50th conversion lands ~429 days after START_DATE, so the audience is dated
-~2 weeks after that (time to actually build and upload it).
+Small, curated list per the agreed scope: 9 customer-grain + 3
+anonymous-grain (grew from the originally-agreed 7 customer-grain by two --
+see the "Lapsed - Still Buying" and "High Churn Risk" segments below, each
+added to fix or fill a real gap rather than force-fit into the original 7).
+The "Lookalike - Recent Converters" audience's created_at is deliberately
+later than the others -- a lookalike/similar-audience algorithm needs an
+existing seed audience of real converters to build from, so it couldn't have
+existed since day 1. Computed directly from the simulation: the 50th
+conversion lands ~429 days after START_DATE, so the audience is dated ~2
+weeks after that (time to actually build and upload it). Same logic applies
+to "High Churn Risk" (needs a real base of observed churns to model against).
 
 Output: data/segments.csv
 """
@@ -29,24 +29,52 @@ import pandas as pd
 
 from params import START_DATE
 
+# (segment_name, description, source_system, created_at)
 CUSTOMER_SEGMENTS = [
     # Lifecycle-stage segments (time-based, mutually exclusive across the
     # lapsed population -- deliberately behavior-agnostic: whether someone is
     # still buying courses/merch after lapsing is a separate, overlapping tag
     # below, not baked into the time bucket itself).
-    ("Active Subscriber", "Customer currently has an open (non-lapsed) subscription interval."),
-    ("Lapsed 0-30 Days", "Subscription canceled within the last 30 days."),
-    ("Lapsed 31-90 Days", "Subscription canceled 31-90 days ago."),
-    ("Lapsed 90+ Days", "Subscription canceled more than 90 days ago."),
-    ("Course/Merch-Only (Never Subscribed)", "Never started a subscription trial; purchase history is course and/or merch only."),
-    ("Trial In Progress", "Currently within an active (unresolved) subscription trial period."),
-    ("High-LTV Customer", "Lifetime order + subscription revenue in the top decile of the customer base."),
+    ("Active Subscriber", "Customer currently has an open (non-lapsed) subscription interval.",
+     "internal_crm", START_DATE),
+    ("Lapsed 0-30 Days", "Subscription canceled within the last 30 days.",
+     "internal_crm", START_DATE),
+    ("Lapsed 31-90 Days", "Subscription canceled 31-90 days ago.",
+     "internal_crm", START_DATE),
+    ("Lapsed 90+ Days", "Subscription canceled more than 90 days ago.",
+     "internal_crm", START_DATE),
+    ("Course/Merch-Only (Never Subscribed)", "Never started a subscription trial; purchase history is course and/or merch only.",
+     "internal_crm", START_DATE),
+    ("Trial In Progress", "Currently within an active (unresolved) subscription trial period.",
+     "internal_crm", START_DATE),
+    ("High-LTV Customer", "Lifetime order + subscription revenue in the top decile of the customer base.",
+     "internal_crm", START_DATE),
     # Behavioral overlay: can co-occur with ANY of the three lapsed buckets
     # above (a customer lapsed 12 days ago and one lapsed 400 days ago can
     # both carry this tag if either is still buying a la carte). This is the
     # win-back-worthy population -- churned the subscription but still
     # engaged with the brand -- as distinct from the fully-quiet majority.
-    ("Lapsed - Still Buying (Courses/Merch)", "Subscription has lapsed (any duration), but the customer has placed at least one course or merch order since their subscription ended."),
+    ("Lapsed - Still Buying (Courses/Merch)",
+     "Subscription has lapsed (any duration), but the customer has placed at least one course or merch order since their subscription ended.",
+     "internal_crm", START_DATE),
+    # Predictive segment (its own source_system, distinct from the simple
+    # rule-based segments above -- this one is a model output, not a plain
+    # SQL filter). Two conditions: (1) a renewal/billing decision is coming
+    # up -- requires the subscription's billing_interval and a computed
+    # next-renewal-date, which don't exist until Phase 2's `subscriptions`
+    # table; (2) below-average recent engagement -- for now, proxied by
+    # engagement_tier == "regular" (the lower of the only two tiers the
+    # simulation currently assigns to *active* subscribers; "casual" is
+    # reserved for lapsed/never-subscribed customers, so it can't be used as
+    # the active-subscriber low-engagement signal today). Once Phase 5's real
+    # app/web usage events exist, that should replace the tier proxy with an
+    # actual recency/frequency signal.
+    ("High Churn Risk (Renewal Approaching, Low Engagement)",
+     "Active subscriber approaching their next renewal/billing decision with below-average recent "
+     "product engagement. Flags subscribers at elevated risk of voluntary churn at their next renewal. "
+     "NOTE: full computation depends on Phase 2 (subscriptions.billing_interval + next renewal date) and "
+     "ideally Phase 5 (real usage-event recency/frequency) -- membership can't be fully computed until then.",
+     "churn_propensity_model", datetime.date(2024, 10, 25)),  # ~2 weeks after the 20th real churn in the simulation
 ]
 
 # (segment_name, description, ad_platform, created_at)
@@ -75,17 +103,17 @@ def build_segments():
     rows = []
     seg_num = 0
 
-    for name, description in CUSTOMER_SEGMENTS:
+    for name, description, source_system, created_at in CUSTOMER_SEGMENTS:
         seg_num += 1
         rows.append({
             "segment_id": f"seg_{seg_num:03d}",
             "segment_name": name,
             "audience_grain": "customer",
             "description": description,
-            "source_system": "internal_crm",
+            "source_system": source_system,
             "ad_platform": None,
             "platform_audience_id": None,
-            "created_at": START_DATE.isoformat(),
+            "created_at": created_at.isoformat(),
             "is_active": True,
         })
 

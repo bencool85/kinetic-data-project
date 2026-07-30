@@ -54,6 +54,13 @@ def run():
     check("Temporal", "the Lookalike audience's created_at falls after a real seed audience of >=50 converters already exists in the simulation",
           seed_size_at_creation >= 50, f"{seed_size_at_creation} converters existed by {lookalike_created}")
 
+    churns = sorted(datetime.date.fromisoformat(t["churn_date"]) for t in timeline if t["churn_date"])
+    churn_risk_created = pd.to_datetime(
+        segments.loc[segments["segment_name"].str.startswith("High Churn Risk"), "created_at"].iloc[0]).date()
+    churns_by_creation = sum(1 for d in churns if d <= churn_risk_created)
+    check("Temporal", "the 'High Churn Risk' model's created_at falls after >=20 real churns already exist to model against",
+          churns_by_creation >= 20, f"{churns_by_creation} churns existed by {churn_risk_created}")
+
     # --- 4. Business-rule invariants ---
     customer_rows = segments[segments["audience_grain"] == "customer"]
     anon_rows = segments[segments["audience_grain"] == "anonymous_device"]
@@ -80,6 +87,22 @@ def run():
     check("Business rule", "the 'Lapsed - Still Buying' segment isn't vacuous -- real customers in the simulation actually match it "
                             "(lapsed AND has an order after their churn date)",
           still_buying_lapsed > 0, f"{still_buying_lapsed} matching customers in the timeline")
+
+    # "High Churn Risk" has two conditions; only the engagement half is
+    # checkable against today's data (billing_interval/next-renewal-date
+    # doesn't exist until Phase 2). Confirm that half isn't vacuous, and
+    # confirm the segment's own description is honest that it's incomplete.
+    active_regular_tier = sum(
+        1 for t in timeline
+        if any(iv["end"] is None for iv in t["subscription_intervals"]) and t["engagement_tier"] == "regular"
+    )
+    check("Business rule", "the 'High Churn Risk' segment's low-engagement half (active + engagement_tier='regular') isn't vacuous",
+          active_regular_tier > 0, f"{active_regular_tier} currently-active 'regular'-tier subscribers in the timeline")
+    churn_risk_desc = segments.loc[segments["segment_name"].str.startswith("High Churn Risk"), "description"].iloc[0]
+    check("Business rule", "'High Churn Risk' segment's description explicitly flags its Phase 2/5 dependency (so it isn't silently treated as fully computable today)",
+          "Phase 2" in churn_risk_desc)
+    check("Business rule", "'High Churn Risk' segment uses a distinct source_system ('churn_propensity_model') from the plain rule-based segments",
+          segments.loc[segments["segment_name"].str.startswith("High Churn Risk"), "source_system"].iloc[0] == "churn_propensity_model")
     check("Business rule", "no lapsed-time-bucket segment's description re-bakes a purchase-activity condition into a time bucket "
                             "(that's what caused the original gap -- must stay purely time-based)",
           not any(kw in customer_rows.loc[customer_rows["segment_name"].str.startswith("Lapsed") &
@@ -87,8 +110,8 @@ def run():
                   .str.cat(sep=" ").lower() for kw in ["no purchase", "quiet", "still buying"]))
 
     # --- 5. Distributional sanity ---
-    check("Distributional", "11 total segments: 8 customer-grain, 3 anonymous_device-grain, as designed",
-          len(segments) == 11 and len(customer_rows) == 8 and len(anon_rows) == 3)
+    check("Distributional", "12 total segments: 9 customer-grain, 3 anonymous_device-grain, as designed",
+          len(segments) == 12 and len(customer_rows) == 9 and len(anon_rows) == 3)
 
     n_fail = sum(1 for _, _, ok, _ in results if not ok)
     for layer, name, ok, detail in results:

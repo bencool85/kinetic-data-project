@@ -7,6 +7,7 @@ seg_005,Course/Merch-Only (Never Subscribed),customer,Never started a subscripti
 seg_006,Trial In Progress,customer,Currently within an active (unresolved) subscription trial period.,internal_crm,,,2023-08-01,True
 seg_007,High-LTV Customer,customer,Lifetime order + subscription revenue in the top decile of the customer base.,internal_crm,,,2023-08-01,True
 seg_008,Lapsed - Still Buying (Courses/Merch),customer,"Subscription has lapsed (any duration), but the customer has placed at least one course or merch order since their subscription ended.",internal_crm,,,2023-08-01,True
-seg_009,Website Visitors - Last 30 Days,anonymous_device,Anonymous devices with a tracked site visit in the trailing 30 days.,,google_search,800000000009,2023-08-31,True
-seg_010,Cart Abandoners,anonymous_device,Anonymous devices that began checkout without completing a purchase.,,meta,23850000000000010,2023-08-31,True
-seg_011,Lookalike - Recent Converters,anonymous_device,Ad-platform lookalike/similar audience modeled on recently converted subscribers.,,tiktok,7100000000000000011,2024-10-17,True
+seg_009,"High Churn Risk (Renewal Approaching, Low Engagement)",customer,Active subscriber approaching their next renewal/billing decision with below-average recent product engagement. Flags subscribers at elevated risk of voluntary churn at their next renewal. NOTE: full computation depends on Phase 2 (subscriptions.billing_interval + next renewal date) and ideally Phase 5 (real usage-event recency/frequency) -- membership can't be fully computed until then.,churn_propensity_model,,,2024-10-25,True
+seg_010,Website Visitors - Last 30 Days,anonymous_device,Anonymous devices with a tracked site visit in the trailing 30 days.,,google_search,800000000010,2023-08-31,True
+seg_011,Cart Abandoners,anonymous_device,Anonymous devices that began checkout without completing a purchase.,,meta,23850000000000011,2023-08-31,True
+seg_012,Lookalike - Recent Converters,anonymous_device,Ad-platform lookalike/similar audience modeled on recently converted subscribers.,,tiktok,7100000000000000012,2024-10-17,True
