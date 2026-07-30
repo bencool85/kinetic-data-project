@@ -10,8 +10,8 @@ SEED = 42
 START_DATE = datetime.date(2023, 8, 1)
 END_DATE = datetime.date(2026, 7, 30)
 
-N_CUSTOMERS = 100
-N_ANONYMOUS = 2000
+N_CUSTOMERS = 1100       # derived: sized so ~100 subscribers land active as of END_DATE
+N_ANONYMOUS = 21800      # scaled proportionally with N_CUSTOMERS (~12x the original 2,000)
 
 TRIAL_DAYS = 7
 
@@ -21,22 +21,31 @@ BASIC_ANNUAL = 179.00
 PLUS_MONTHLY = 34.99
 
 # Behavioral rates (defaults agreed in planning; tune here if needed)
-EVER_SUBSCRIBE_RATE = 0.60       # % of the 100 customers who ever start a trial/subscription
-TRIAL_CONVERSION_RATE = 0.65     # % of trials that convert to paid
+EVER_SUBSCRIBE_RATE = 0.60       # % of all customers who ever start a trial/subscription
+TRIAL_CONVERSION_RATE = 0.30     # % of trials that convert to paid (lowered from 0.65 - "too high")
 TRIAL_CANCEL_RATE = 0.15         # % of trials actively canceled before trial end
-# (remainder, ~0.20, expire passively without canceling)
+# (remainder, ~0.55, expire passively without canceling -- mechanically larger now
+# that conversion dropped and the cancel rate held fixed)
 BASIC_PLAN_SHARE = 0.75          # of those who convert, % choosing Basic vs Plus
 
 GUEST_MERCH_CONVERSION_RATE = 0.08  # % of anonymous ghosts who make a guest merch purchase
 
-# Subscription lifecycle (Phase 0 Step 5)
-SUBSCRIPTION_MEAN_TENURE_MONTHS = 11   # mean interval length before churn (exponential draw)
+# Subscription lifecycle (Phase 0 Step 5) -- two-segment churn model.
+# A single constant churn rate can't hit "40% annual retention" AND "avg churner
+# tenure = 3 months" simultaneously (a constant hazard is memoryless: those two
+# numbers are mechanically linked). Instead: some subscribers essentially never
+# organically churn ("loyal"), and the rest churn fast ("quick", ~3mo average).
+# Blended, this gives ~40% annual retention while nearly all *realized* churns
+# come from the quick segment, landing its average tenure right at ~3 months.
+LOYAL_SEGMENT_SHARE = 0.3888           # solved so blended annual retention = 40%
+QUICK_CHURN_MEAN_TENURE_MONTHS = 3.0    # mean tenure for the "quick churn" segment
 PLAN_CHANGE_PROBABILITY = 0.20         # chance of one upgrade/downgrade mid-interval
-INVOLUNTARY_CHURN_SHARE = 0.25         # of intervals that end, fraction ending via payment failure
-WINBACK_PROBABILITY = 0.25             # chance a churned subscriber eventually resubscribes
+INVOLUNTARY_CHURN_SHARE = 0.25         # of quick-segment churns, fraction via payment failure
+WINBACK_PROBABILITY = 0.25             # chance a churned (quick-segment) subscriber eventually resubscribes
 WINBACK_GAP_MONTHS_RANGE = (1, 7)      # months between churn and win-back, if it happens
 PAYMENT_BLIP_PROBS = {0: 0.75, 1: 0.20, 2: 0.05}  # resolved payment-failure blips per interval
 REACTIVATION_CHANNEL_WEIGHTS = {"email": 0.50, "push": 0.15, "organic": 0.35}
+LAPSED_STILL_BUYING_RATE = 0.10        # of currently-lapsed subscribers, % who still buy courses/merch since lapsing (down from 0.30)
 
 # Order behavior
 COURSE_ORDERS_PER_YEAR_NONSUB_RANGE = (1, 4)  # course/merch-only accounts, per active year

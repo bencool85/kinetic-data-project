@@ -78,3 +78,29 @@ seasonality calendar.
   Awaiting Ben's call on whether to keep this churn severity or loosen it.
 - Initially missed syncing this batch to Ben's folder until asked — fixed; this is
   now happening as part of the same step, not a follow-up.
+
+## 2026-07-30 — Retention model recalibrated: 100 active subscribers, churnier retention
+
+- Target changed from "100 total customers" to "100 *active* subscribers today,"
+  with an approved funnel: ~1,100 total customers LTD, 658 trial starters, 205
+  ever-paid, 102 active / 103 lapsed (11 still buying since lapsing, 92 quiet).
+- Trial-to-paid conversion rate lowered from 65% to 30% (judged too high).
+- Lapsed-still-buying rate lowered from 30% to 10%.
+- New churn model: a single constant churn rate can't hit both "40% annual
+  retention" and "3-month average churner tenure" at once (mechanically the same
+  number under a constant hazard). Replaced with a two-segment model —
+  `LOYAL_SEGMENT_SHARE` (38.9%, essentially never organically churns) and
+  `QUICK_CHURN_MEAN_TENURE_MONTHS` (3.0, the rest) — landing both targets
+  simultaneously since nearly all realized churns come from the quick segment.
+- `generator/simulate_customers.py` rewritten: two-segment subscription lifecycle,
+  explicit post-lapse purchase gating (`LAPSED_STILL_BUYING_RATE`), `churn_segment`
+  now recorded per customer.
+- Scaled `N_CUSTOMERS` 100 -> 1,100 and `N_ANONYMOUS` 2,000 -> 21,800 (proportional)
+  to sustain 100 active subscribers under the new, churnier retention curve.
+- Added `generator/build_simulation_charts.py` (funnel + segment-breakdown charts,
+  colors from the dataviz skill's validated reference palette) and
+  `docs/phase0_simulation_analysis.md` (full written analysis of the results).
+- Realized vs. target: trial conversion 31.2% (target 30%), churn segment split
+  59/41 quick/loyal (target 61/39), avg churner tenure 2.68mo (target 3.0),
+  lapsed-still-buying 10.7% (target 10%), active subscribers 102 (target 100) —
+  all within normal sampling variance.

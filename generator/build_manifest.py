@@ -34,6 +34,10 @@ FILES = [
     ("internal/_sim_customer_timeline.json", "Internal artifact", "Full nested ground-truth simulation for all 100 customers (signup, trial, subscriptions, orders, churn)"),
     ("internal/_sim_customer_timeline_summary.csv", "Internal artifact", "Flattened, spreadsheet-readable summary of the customer timeline"),
     ("internal/_sim_attribution_ground_truth.json", "Internal artifact", "True acquisition/reactivation channel per customer, kept separate from intentionally messy shipped UTM data"),
+    ("generator/build_simulation_charts.py", "Code", "Builds the funnel + segment breakdown charts for the simulation analysis"),
+    ("internal/funnel_chart.png", "Chart", "Customer funnel: total -> trial started -> converted -> active today"),
+    ("internal/segment_breakdown_chart.png", "Chart", "Part-to-whole breakdown of all customers' current status"),
+    ("docs/phase0_simulation_analysis.md", "Docs", "Summary analysis of the recalibrated Phase 0 simulation results"),
 ]
 
 
