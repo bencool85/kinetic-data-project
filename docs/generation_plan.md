@@ -57,6 +57,33 @@ Win-back (reactivation) timing is weighted by calendar month only (same relative
 shape as the seasonality calendar's monthly factors, independent of the multi-year
 growth trend), so reactivations cluster around January every year.
 
+## Cross-phase consistency commitments (flagged now, must hold once later phases are built)
+
+These are gaps or dependencies surfaced while building earlier phases, deliberately not
+fixed at the time because the table that would resolve them doesn't exist yet. Each is a
+concrete promise that a later phase must keep — checked here so it isn't forgotten:
+
+1. **Billing interval isn't in the master timeline.** Subscription intervals only carry
+   plan *tier* ("basic"/"plus"), not billing_interval (monthly vs. annual). Phase 2's
+   `subscriptions` table must assign billing_interval itself (and derive a next-renewal
+   date from it) — this is also what the `segments` table's "High Churn Risk" segment
+   needs for its "renewal approaching" half.
+2. **"Low engagement" needs a real usage signal, not just the engagement_tier proxy.**
+   The `segments` table's "High Churn Risk (Renewal Approaching, Low Engagement)" segment
+   currently proxies low engagement with `engagement_tier == "regular"` (the only
+   non-"power" tier the simulation assigns to *active* subscribers). Once Phase 5
+   (`app_sessions`, `app_events`, `web_sessions`, `web_events`) exists, low engagement
+   must be derived from **real, countable usage activity** in those tables (session
+   recency/frequency, workout_completed counts, etc.) — and critically, whichever
+   customers get computed as low-usage for `customer_segment_membership` (Phase 4) must
+   show correspondingly low activity counts in Phase 5's usage tables. The two can't
+   diverge: a customer flagged low-engagement in segment membership but showing normal
+   or high session/event volume in app_events/web_events would be exactly the kind of
+   cross-table impossibility this whole project exists to prevent. Phase 5's build must
+   design its per-customer usage-event volume around the same engagement_tier (or its
+   Phase-5-native replacement) that drives segment membership, not generate usage
+   independently and hope the two line up.
+
 ## Debug artifacts (internal, not part of the 47 shipped tables)
 
 - `_sim_customer_timeline.json` — full nested ground truth

@@ -436,3 +436,12 @@ seasonality calendar.
   description explicitly names its Phase 2/5 dependency, it uses the
   distinct source_system, and its created_at postdates >=20 real churns.
   All 20 checks pass.
+- Ben decided: don't fix the engagement_tier proxy now -- instead, once
+  Phase 5 (app/web usage tables) is built, low engagement must be shown
+  directly in real, countable usage activity there, and whoever gets
+  computed as low-usage in `customer_segment_membership` (Phase 4) must
+  match. Recorded this as a locked commitment in
+  `docs/generation_plan.md`'s new "Cross-phase consistency commitments"
+  section, alongside the earlier-flagged billing_interval gap, so both
+  are checked against when those phases actually get built rather than
+  forgotten.
