@@ -70,9 +70,25 @@ def run():
     check("Business rule", "every ad_platform value is one of the project's 6 paid-media platforms",
           anon_rows["ad_platform"].isin(["meta", "google_search", "youtube", "dv360", "snap", "tiktok"]).all())
 
+    still_buying_lapsed = 0
+    for t in timeline:
+        if t["churn_date"] is None:
+            continue
+        churn_dt = datetime.date.fromisoformat(t["churn_date"])
+        if any(datetime.date.fromisoformat(o["date"]) > churn_dt for o in t["order_events"]):
+            still_buying_lapsed += 1
+    check("Business rule", "the 'Lapsed - Still Buying' segment isn't vacuous -- real customers in the simulation actually match it "
+                            "(lapsed AND has an order after their churn date)",
+          still_buying_lapsed > 0, f"{still_buying_lapsed} matching customers in the timeline")
+    check("Business rule", "no lapsed-time-bucket segment's description re-bakes a purchase-activity condition into a time bucket "
+                            "(that's what caused the original gap -- must stay purely time-based)",
+          not any(kw in customer_rows.loc[customer_rows["segment_name"].str.startswith("Lapsed") &
+                                           ~customer_rows["segment_name"].str.contains("Still Buying"), "description"]
+                  .str.cat(sep=" ").lower() for kw in ["no purchase", "quiet", "still buying"]))
+
     # --- 5. Distributional sanity ---
-    check("Distributional", "10 total segments: 7 customer-grain, 3 anonymous_device-grain, as designed",
-          len(segments) == 10 and len(customer_rows) == 7 and len(anon_rows) == 3)
+    check("Distributional", "11 total segments: 8 customer-grain, 3 anonymous_device-grain, as designed",
+          len(segments) == 11 and len(customer_rows) == 8 and len(anon_rows) == 3)
 
     n_fail = sum(1 for _, _, ok, _ in results if not ok)
     for layer, name, ok, detail in results:

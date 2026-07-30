@@ -9,8 +9,12 @@ independently). Two grains distinguished by audience_grain:
   paid-media platform's ad-set-level table (built in Phase 7) will get a
   nullable targeting_segment_id -> segments.segment_id pointing at these.
 
-Small, curated list per the agreed scope: 7 customer-grain + 3
-anonymous-grain. The "Lookalike - Recent Converters" audience's created_at is
+Small, curated list per the agreed scope: 8 customer-grain + 3
+anonymous-grain (grew from the originally-agreed 7 customer-grain by one,
+after catching that "lapsed but still buying courses/merch" -- a real,
+explicitly-modeled population in the simulation -- didn't cleanly fit any of
+the original 7; see the "Lapsed - Still Buying" segment below). The
+"Lookalike - Recent Converters" audience's created_at is
 deliberately later than the others -- a lookalike/similar-audience algorithm
 needs an existing seed audience of real converters to build from, so it
 couldn't have existed since day 1. Computed directly from the simulation: the
@@ -26,13 +30,23 @@ import pandas as pd
 from params import START_DATE
 
 CUSTOMER_SEGMENTS = [
+    # Lifecycle-stage segments (time-based, mutually exclusive across the
+    # lapsed population -- deliberately behavior-agnostic: whether someone is
+    # still buying courses/merch after lapsing is a separate, overlapping tag
+    # below, not baked into the time bucket itself).
     ("Active Subscriber", "Customer currently has an open (non-lapsed) subscription interval."),
     ("Lapsed 0-30 Days", "Subscription canceled within the last 30 days."),
     ("Lapsed 31-90 Days", "Subscription canceled 31-90 days ago."),
-    ("Lapsed 90+ Days (Quiet)", "Subscription canceled more than 90 days ago, with no purchase activity since."),
+    ("Lapsed 90+ Days", "Subscription canceled more than 90 days ago."),
     ("Course/Merch-Only (Never Subscribed)", "Never started a subscription trial; purchase history is course and/or merch only."),
     ("Trial In Progress", "Currently within an active (unresolved) subscription trial period."),
     ("High-LTV Customer", "Lifetime order + subscription revenue in the top decile of the customer base."),
+    # Behavioral overlay: can co-occur with ANY of the three lapsed buckets
+    # above (a customer lapsed 12 days ago and one lapsed 400 days ago can
+    # both carry this tag if either is still buying a la carte). This is the
+    # win-back-worthy population -- churned the subscription but still
+    # engaged with the brand -- as distinct from the fully-quiet majority.
+    ("Lapsed - Still Buying (Courses/Merch)", "Subscription has lapsed (any duration), but the customer has placed at least one course or merch order since their subscription ended."),
 ]
 
 # (segment_name, description, ad_platform, created_at)

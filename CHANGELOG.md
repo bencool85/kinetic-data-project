@@ -381,3 +381,28 @@ seasonality calendar.
   subscription_plans, customers, customer_addresses, devices, identity_map,
   segments). Next up per `docs/generation_plan.md`: Phase 2 (subscriptions,
   subscription_events, invoices).
+
+## 2026-07-30 — Bug fix: lapsed-but-still-buying customers didn't fit any segment
+
+- Ben caught a real gap: "Lapsed 90+ Days (Quiet)" baked "no purchase
+  activity since" directly into its definition, and the two shorter lapsed
+  buckets were ambiguous about purchase behavior -- so a customer who
+  lapsed their subscription but kept buying courses/merch (a real,
+  explicitly-modeled population -- 6 of 76 lapsed subscribers per the Phase
+  0 analysis) didn't cleanly belong to any of the 7 segments.
+- Fixed by separating lifecycle stage from behavior: renamed "Lapsed 90+
+  Days (Quiet)" back to a purely time-based "Lapsed 90+ Days" (dropped the
+  purchase-activity condition, matching how the 0-30/31-90 buckets already
+  worked), and added a new, separate customer-grain segment: **"Lapsed -
+  Still Buying (Courses/Merch)"** -- a behavioral overlay that can co-occur
+  with any of the three time buckets, rather than a 4th mutually-exclusive
+  time bucket. This matches how real segmentation systems handle
+  lifecycle-stage vs. behavior-tag segments (non-exclusive, overlapping).
+  Customer-grain segments grew from 7 to 8 (11 total with the 3 anonymous
+  ones) -- a deliberate, justified departure from the originally-agreed
+  "~8-10" scope to fix a real coverage gap rather than silently leaving it.
+- Added 2 new checks to `validate_segments.py`: confirmed the new segment
+  isn't vacuous (6 real customers in the timeline actually match "lapsed AND
+  has an order after their churn date"), and added a guard against ever
+  re-introducing a purchase-activity condition into a lapsed time-bucket's
+  description again. All 16 checks pass.
