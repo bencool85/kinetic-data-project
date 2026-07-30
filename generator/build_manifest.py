@@ -80,6 +80,9 @@ FILES = [
     ("generator/build_order_line_items.py", "Code", "Phase 3: builds order_line_items (one row per order -- resolves each order's price tier down to a specific product + variant)"),
     ("generator/validate_order_line_items.py", "Code", "Phase 3: 5-layer validation for order_line_items"),
     ("data/order_line_items.csv", "Shipped table", "Phase 3: order_line_items table (3,650 rows, one per order)"),
+    ("generator/build_payments.py", "Code", "Phase 3: builds payments (one Stripe-shaped Charge attempt per row; models realistic declined-then-retried charge attempts)"),
+    ("generator/validate_payments.py", "Code", "Phase 3: 5-layer validation for payments"),
+    ("data/payments.csv", "Shipped table", "Phase 3: payments table (3,964 rows: 3,650 succeeded + 314 failed retry attempts)"),
 ]
 
 

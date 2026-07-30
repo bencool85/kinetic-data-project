@@ -141,3 +141,26 @@ IS_DELETED_RATE = 0.02     # soft-deleted accounts (GDPR-style request); PII scr
 # Phase 1 - devices table
 SECOND_DEVICE_RATE = 0.20   # of non-deleted customers, % who also have a 2nd device on file
 DEVICE_TYPE_WEIGHTS = {"ios": 0.45, "android": 0.35, "web": 0.20}  # fitness app skews mobile
+
+# Phase 3 (payments table) -- one Stripe-shaped Charge object per payment
+# *attempt*. Every order in orders.csv did eventually succeed (there's no
+# abandoned-cart concept in this dataset), but real storefronts see a card
+# declined and retried within the same checkout session -- that's the
+# realistic messiness modeled here: a share of orders get one or two failed
+# charge attempts immediately before the successful one, same order/amount,
+# new payment_id + failure_code each time.
+PAYMENT_METHOD_WEIGHTS = {"card": 0.86, "paypal": 0.10, "apple_pay": 0.04}
+CARD_BRAND_WEIGHTS = {"visa": 0.50, "mastercard": 0.30, "amex": 0.14, "discover": 0.06}
+ORDER_PAYMENT_ONE_RETRY_RATE = 0.07   # share of orders with exactly 1 failed attempt before the successful charge
+ORDER_PAYMENT_TWO_RETRY_RATE = 0.01   # share of orders with 2 failed attempts before the successful charge (subset, rarer)
+PAYMENT_FAILURE_CODE_WEIGHTS = {"card_declined": 0.55, "insufficient_funds": 0.25, "expired_card": 0.12, "processing_error": 0.08}
+
+# Phase 3 (refunds table) -- a share of successful orders later get refunded.
+# Most refunds are full; a minority are partial (goodwill/shipping adjustment
+# -- these are single-line-item orders, so a partial refund is a discretionary
+# adjustment, not a partial-quantity return).
+ORDER_REFUND_RATE = 0.045            # of all orders, % that are refunded at some point
+PARTIAL_REFUND_SHARE = 0.25          # of refunded orders, % that are partial rather than full
+PARTIAL_REFUND_FRACTION_RANGE = (0.20, 0.70)  # partial refund amount, as a fraction of the order total
+REFUND_REASON_WEIGHTS = {"requested_by_customer": 0.70, "product_unacceptable": 0.20, "duplicate": 0.05, "fraudulent": 0.05}
+REFUND_DELAY_DAYS_RANGE = (1, 21)    # days between order_date and the refund being processed

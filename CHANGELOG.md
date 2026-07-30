@@ -820,3 +820,34 @@ seasonality calendar.
   (362) and Water Bottle (310) landing close to a 50/50 split as expected).
   `validate_order_line_items.py`: **14/14 checks passed on the first run** --
   no bugs found this time.
+
+## 2026-07-30 — Phase 3: build + validate payments (4 of 5)
+
+- `generator/build_payments.py` -- one row per Stripe-shaped Charge
+  *attempt*, not one row per order. Every order in `orders.csv` represents a
+  purchase that ultimately succeeded (no abandoned-cart concept in this
+  dataset), but real storefronts routinely see a card declined and retried
+  within the same checkout session -- that's the realistic messiness added
+  here: a small share of orders (`ORDER_PAYMENT_ONE_RETRY_RATE` = 7%,
+  `ORDER_PAYMENT_TWO_RETRY_RATE` = 1%) get 1 or 2 failed charge attempts
+  immediately before the successful one -- same order_id/amount/currency,
+  a fresh `payment_id` + `failure_code` each time, timestamped a few
+  minutes before the successful charge (which itself is timestamped exactly
+  at the order's own `created_at`). Every order gets exactly one succeeded
+  payment by construction.
+- Payment method (`card`/`paypal`/`apple_pay`, card brand, last4) is
+  assigned independently per attempt rather than sticky across retries -- a
+  customer switching payment methods mid-retry is realistic and not worth
+  over-modeling.
+- `generator/validate_payments.py` -- 5-layer suite, central checks being:
+  every order has EXACTLY one succeeded payment (never zero, never two);
+  every failed attempt's `processed_at` is strictly before its order's
+  successful charge; the succeeded payment's amount matches the order's
+  `total_amount` exactly; and `payments.customer_id` is null if and only if
+  the order itself is a guest order.
+- Result: 3,964 payments (3,650 succeeded + 314 failed retry attempts, i.e.
+  7.7% of orders had at least one declined-then-retried attempt -- within
+  the realistic 3-15% band checked distributionally). Payment method mix:
+  86.5% card / 10.1% paypal / 3.5% apple_pay.
+  `validate_payments.py`: **16/16 checks passed on the first run** -- no
+  bugs found.
