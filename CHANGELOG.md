@@ -680,3 +680,30 @@ seasonality calendar.
 - **Phase 2 is now complete** (subscriptions, subscription_events, invoices
   -- all 3 tables built and cross-validated against each other and the
   master timeline).
+
+## 2026-07-30 — Phase 3 begins: built + validated `discount_codes` (1 of 5)
+
+- Ben said proceed into Phase 3 (orders, order_line_items, payments,
+  refunds, discount_codes). Built `discount_codes` FIRST within the phase,
+  even though schema_reference.md lists it last -- `orders.discount_code_id`
+  will need real code definitions to redeem against, and discount_codes has
+  no dependencies of its own, so the true build order is discount_codes ->
+  orders -> order_line_items -> payments -> refunds, not the doc's listing
+  order. Noted this explicitly rather than silently reordering.
+- A small, hand-curated list of 7 codes (like products/subscription_plans
+  were) -- not randomly generated, since these are business decisions, not
+  simulated customer behavior. Mixes evergreen codes (WELCOME10, SAVE15,
+  MERCH25OFF, COURSE20 -- no expiry) with time-boxed seasonal promos
+  (HOLIDAY2024, and two separate one-off January codes in consecutive years,
+  JANRESET10_2025 / JANRESET10_2026) -- thematically consistent with the
+  project's already-established January seasonality spike that also drives
+  win-back timing.
+- `is_active` is deliberately derived, not hand-picked: True iff
+  valid_until is null or still on/after END_DATE. All 3 seasonal codes'
+  windows have already closed relative to END_DATE (2026-07-30), so they
+  correctly come out `is_active=False` by construction, not by manually
+  flagging them.
+- `validate_discount_codes.py`: 19 checks. Real redemption-based checks (was
+  a code only ever used inside its valid window, actual redemption rate)
+  are deferred to `orders`, once it exists and can actually reference these
+  codes -- noted in the docstring rather than faked here. All 19 pass.

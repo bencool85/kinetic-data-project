@@ -71,6 +71,9 @@ FILES = [
     ("generator/build_invoices.py", "Code", "Phase 2: builds invoices (one per initial charge + renewal, plus uncollectible/open for failed payments) -- completes Phase 2 (all 3 tables)"),
     ("generator/validate_invoices.py", "Code", "Phase 2: 5-layer validation for invoices"),
     ("data/invoices.csv", "Shipped table", "Phase 2: invoices table (1,229 rows) -- completes Phase 2"),
+    ("generator/build_discount_codes.py", "Code", "Phase 3: builds discount_codes (hand-curated list: evergreen + seasonal promo codes) -- built first in Phase 3 since orders needs it"),
+    ("generator/validate_discount_codes.py", "Code", "Phase 3: 5-layer validation for discount_codes"),
+    ("data/discount_codes.csv", "Shipped table", "Phase 3: discount_codes table (7 rows)"),
 ]
 
 

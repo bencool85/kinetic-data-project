@@ -1,0 +1,8 @@
+discount_code_id,code,discount_type,discount_value,applies_to,min_order_amount,valid_from,valid_until,is_active,created_at
+disc_001,WELCOME10,percent,10.0,all,,2023-08-01,,True,2023-08-01
+disc_002,SAVE15,percent,15.0,all,75.0,2023-08-01,,True,2023-08-01
+disc_003,MERCH25OFF,fixed_amount,25.0,merch,100.0,2023-08-01,,True,2023-08-01
+disc_004,COURSE20,percent,20.0,course,,2023-08-01,,True,2023-08-01
+disc_005,HOLIDAY2024,percent,20.0,all,,2024-11-15,2025-01-05,False,2024-11-15
+disc_006,JANRESET10_2025,percent,10.0,all,,2025-01-01,2025-01-31,False,2025-01-01
+disc_007,JANRESET10_2026,percent,10.0,all,,2026-01-01,2026-01-31,False,2026-01-01
