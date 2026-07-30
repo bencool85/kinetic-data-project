@@ -10,8 +10,10 @@ SEED = 42
 START_DATE = datetime.date(2023, 8, 1)
 END_DATE = datetime.date(2026, 7, 30)
 
-N_CUSTOMERS = 1100       # derived: sized so ~100 subscribers land active as of END_DATE
-N_ANONYMOUS = 21800      # scaled proportionally with N_CUSTOMERS (~12x the original 2,000)
+N_CUSTOMERS = 860        # derived: sized so ~100 subscribers land active as of END_DATE
+                         # (re-derived after adding the email-to-subscriber pathway, which
+                         # adds active subscribers beyond the original 1,100-customer calibration)
+N_ANONYMOUS = 17050      # scaled proportionally with N_CUSTOMERS
 
 TRIAL_DAYS = 7
 
@@ -42,10 +44,23 @@ QUICK_CHURN_MEAN_TENURE_MONTHS = 3.0    # mean tenure for the "quick churn" segm
 PLAN_CHANGE_PROBABILITY = 0.20         # chance of one upgrade/downgrade mid-interval
 INVOLUNTARY_CHURN_SHARE = 0.25         # of quick-segment churns, fraction via payment failure
 WINBACK_PROBABILITY = 0.25             # chance a churned (quick-segment) subscriber eventually resubscribes
-WINBACK_GAP_MONTHS_RANGE = (1, 7)      # months between churn and win-back, if it happens
+# Win-back timing: reuse the seasonality calendar's weekly multiplier (same mechanism
+# as signup dates) so reactivations cluster around January every year -- total
+# subscribers peak in January and taper through the rest of the year, same as new
+# signups. A minimum gap is enforced so nobody reactivates in the same month they churned.
+WINBACK_MIN_GAP_MONTHS = 1
 PAYMENT_BLIP_PROBS = {0: 0.75, 1: 0.20, 2: 0.05}  # resolved payment-failure blips per interval
 REACTIVATION_CHANNEL_WEIGHTS = {"email": 0.50, "push": 0.15, "organic": 0.35}
 LAPSED_STILL_BUYING_RATE = 0.10        # of currently-lapsed subscribers, % who still buy courses/merch since lapsing (down from 0.30)
+
+# New acquisition pathway: a course/merch-only customer (never subscribed) who
+# eventually receives a targeted "come try a membership" email based on their own
+# purchase history and starts a trial because of it. Timing is relative to their
+# purchase history, not the seasonal calendar -- a warm, triggered send, not a
+# calendar campaign.
+MERCH_TO_SUB_EMAIL_RATE = 0.175              # % of course/merch-only customers this eventually reaches (target range 15-20%)
+MERCH_TO_SUB_TRIAL_CONVERSION_RATE = 0.475   # trial-to-paid rate for this warm pathway (target range 45-50%, vs 30% baseline)
+MERCH_TO_SUB_TRIGGER_GAP_MONTHS_RANGE = (3, 12)  # months after their first course/merch order that the email lands
 
 # Order behavior
 COURSE_ORDERS_PER_YEAR_NONSUB_RANGE = (1, 4)  # course/merch-only accounts, per active year

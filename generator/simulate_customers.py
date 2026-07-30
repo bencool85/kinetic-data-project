@@ -30,13 +30,18 @@ from params import (
     EVER_SUBSCRIBE_RATE, TRIAL_CONVERSION_RATE, TRIAL_CANCEL_RATE, BASIC_PLAN_SHARE,
     LOYAL_SEGMENT_SHARE, QUICK_CHURN_MEAN_TENURE_MONTHS,
     PLAN_CHANGE_PROBABILITY, INVOLUNTARY_CHURN_SHARE,
-    WINBACK_PROBABILITY, WINBACK_GAP_MONTHS_RANGE, PAYMENT_BLIP_PROBS,
+    WINBACK_PROBABILITY, WINBACK_MIN_GAP_MONTHS, PAYMENT_BLIP_PROBS,
     REACTIVATION_CHANNEL_WEIGHTS, LAPSED_STILL_BUYING_RATE,
+    MERCH_TO_SUB_EMAIL_RATE, MERCH_TO_SUB_TRIAL_CONVERSION_RATE,
+    MERCH_TO_SUB_TRIGGER_GAP_MONTHS_RANGE, MONTHLY_SEASONALITY,
     COURSE_ORDERS_PER_YEAR_NONSUB_RANGE,
     MERCH_ORDERS_PER_YEAR_RANGE, COURSE_PRICE_TIERS, COURSE_PRICE_WEIGHTS,
     MERCH_PRICE_TIERS, MERCH_PRICE_WEIGHTS, SUBSCRIBER_MERCH_DISCOUNT,
 )
-from sim_utils import load_calendar, load_channel_mix, sample_weighted_date, sample_channel
+from sim_utils import (
+    load_calendar, load_channel_mix, sample_weighted_date, sample_channel,
+    sample_seasonal_month_date,
+)
 
 
 def _resolved_payment_blips(rng, cursor, span_end):
@@ -56,7 +61,13 @@ def _resolved_payment_blips(rng, cursor, span_end):
 def simulate_subscription_lifecycle(rng, start_date, initial_plan, dataset_end):
     """Simulate a converted subscriber's full interval history from trial-end
     forward, using the two-segment churn model. Returns (intervals, events,
-    churn_date, reactivation_channels, segment)."""
+    churn_date, reactivation_channels, segment).
+
+    Win-back timing is sampled by calendar MONTH ONLY (MONTHLY_SEASONALITY),
+    restricted to start at least WINBACK_MIN_GAP_MONTHS after churn -- this
+    concentrates reactivations around January every year rather than spreading
+    them uniformly or (as an earlier attempt did) biasing toward whatever month
+    happens to be closest to the dataset's end date."""
     intervals, events, reactivation_channels = [], [], []
     cursor = start_date
     interval_num = 0
@@ -119,10 +130,10 @@ def simulate_subscription_lifecycle(rng, start_date, initial_plan, dataset_end):
         churn_date = tentative_end.isoformat()
 
         if rng.random() < WINBACK_PROBABILITY:
-            gap_months = int(rng.integers(WINBACK_GAP_MONTHS_RANGE[0], WINBACK_GAP_MONTHS_RANGE[1] + 1))
-            next_start = tentative_end + relativedelta(months=gap_months)
-            if next_start >= dataset_end:
+            earliest_winback = tentative_end + relativedelta(months=WINBACK_MIN_GAP_MONTHS)
+            if earliest_winback >= dataset_end:
                 break
+            next_start = sample_seasonal_month_date(rng, earliest_winback, dataset_end, MONTHLY_SEASONALITY)
             channel = str(rng.choice(list(REACTIVATION_CHANNEL_WEIGHTS.keys()),
                                       p=list(REACTIVATION_CHANNEL_WEIGHTS.values())))
             reactivation_channels.append({"interval_id": interval_num + 1, "channel": channel,
@@ -235,10 +246,45 @@ def generate_orders(rng, customer_start, dataset_end, account_type, sub_windows,
     return orders
 
 
-def assign_engagement_tier(rng, account_type, churn_date):
-    if account_type == "subscriber" and churn_date is None:
+def maybe_trigger_merch_to_sub_email(rng, orders, dataset_end):
+    """For course/merch-only customers: sometimes a targeted "come try a
+    membership" email, based on their own purchase history, lands and triggers
+    a trial. Returns a trial dict (with trigger="email_reactivation") or None
+    if the email never reaches them, or there isn't enough runway left in the
+    dataset window to resolve a trial that starts this late."""
+    if not orders:
+        return None
+    if rng.random() >= MERCH_TO_SUB_EMAIL_RATE:
+        return None
+
+    first_order_date = datetime.date.fromisoformat(min(o["date"] for o in orders))
+    gap_months = int(rng.integers(MERCH_TO_SUB_TRIGGER_GAP_MONTHS_RANGE[0],
+                                   MERCH_TO_SUB_TRIGGER_GAP_MONTHS_RANGE[1] + 1))
+    trigger_date = first_order_date + relativedelta(months=gap_months)
+    trial_end = trigger_date + datetime.timedelta(days=TRIAL_DAYS)
+    if trigger_date >= dataset_end or trial_end >= dataset_end:
+        return None  # not enough purchase history + runway left to resolve this yet
+
+    roll = rng.random()
+    if roll < MERCH_TO_SUB_TRIAL_CONVERSION_RATE:
+        outcome = "converted"
+    elif roll < MERCH_TO_SUB_TRIAL_CONVERSION_RATE + TRIAL_CANCEL_RATE:
+        outcome = "canceled_during_trial"
+    else:
+        outcome = "expired_passively"
+
+    return {"start": trigger_date.isoformat(), "end": trial_end.isoformat(),
+            "outcome": outcome, "trigger": "email_reactivation"}
+
+
+def assign_engagement_tier(rng, ever_converted, churn_date):
+    """Tier reflects true subscription history (ever converted + currently
+    active vs. lapsed), not the customer's original signup account_type --
+    this also covers customers who converted later via the email-reactivation
+    pathway, who should be tiered the same as any other subscriber."""
+    if ever_converted and churn_date is None:
         return str(rng.choice(["power", "regular"], p=[0.6, 0.4]))
-    if account_type == "subscriber" and churn_date is not None:
+    if ever_converted and churn_date is not None:
         return str(rng.choice(["regular", "casual"], p=[0.5, 0.5]))
     return str(rng.choice(["casual", "regular"], p=[0.7, 0.3]))
 
@@ -263,27 +309,57 @@ def simulate_all_customers(seed=SEED + 2):
 
         trial = None
         intervals, sub_events, churn_date, reactivations, churn_segment = [], [], None, [], None
+        orders = []
 
         if account_type == "subscriber":
             trial_start = signup_date
             trial_end = trial_start + datetime.timedelta(days=TRIAL_DAYS)
-            roll = rng.random()
-            if roll < TRIAL_CONVERSION_RATE:
-                outcome = "converted"
-            elif roll < TRIAL_CONVERSION_RATE + TRIAL_CANCEL_RATE:
-                outcome = "canceled_during_trial"
+            if trial_end >= END_DATE:
+                # Signed up too close to the dataset's end date for the trial to
+                # have resolved yet -- can't be "converted" with zero runway left
+                # to actually show a subscription interval. Trial is still pending.
+                outcome = "trial_in_progress"
             else:
-                outcome = "expired_passively"
-            trial = {"start": trial_start.isoformat(), "end": trial_end.isoformat(), "outcome": outcome}
+                roll = rng.random()
+                if roll < TRIAL_CONVERSION_RATE:
+                    outcome = "converted"
+                elif roll < TRIAL_CONVERSION_RATE + TRIAL_CANCEL_RATE:
+                    outcome = "canceled_during_trial"
+                else:
+                    outcome = "expired_passively"
+            trial = {"start": trial_start.isoformat(), "end": trial_end.isoformat(),
+                     "outcome": outcome, "trigger": "signup"}
 
             if outcome == "converted":
                 initial_plan = "basic" if rng.random() < BASIC_PLAN_SHARE else "plus"
                 intervals, sub_events, churn_date, reactivations, churn_segment = simulate_subscription_lifecycle(
                     rng, trial_end, initial_plan, END_DATE)
 
-        sub_windows = active_subscription_windows(intervals)
-        orders = generate_orders(rng, signup_date, END_DATE, account_type, sub_windows, churn_date)
-        engagement_tier = assign_engagement_tier(rng, account_type, churn_date)
+            sub_windows = active_subscription_windows(intervals)
+            orders = generate_orders(rng, signup_date, END_DATE, account_type, sub_windows, churn_date)
+
+        else:
+            # course_merch_only: build their organic order history first (no
+            # subscription windows exist yet), then roll whether a targeted
+            # "come back and subscribe" email eventually reaches them based on
+            # that purchase history.
+            orders = generate_orders(rng, signup_date, END_DATE, account_type, [], None)
+            email_trial = maybe_trigger_merch_to_sub_email(rng, orders, END_DATE)
+            if email_trial is not None:
+                trial = email_trial
+                if trial["outcome"] == "converted":
+                    initial_plan = "basic" if rng.random() < BASIC_PLAN_SHARE else "plus"
+                    trial_end_date = datetime.date.fromisoformat(trial["end"])
+                    intervals, sub_events, churn_date, reactivations, churn_segment = simulate_subscription_lifecycle(
+                        rng, trial_end_date, initial_plan, END_DATE)
+                    sub_windows = active_subscription_windows(intervals)
+                    post_orders = generate_orders(
+                        rng, trial_end_date, END_DATE, "subscriber", sub_windows, churn_date)
+                    orders = orders + post_orders
+
+        orders.sort(key=lambda o: o["date"])
+        ever_converted = trial is not None and trial["outcome"] == "converted"
+        engagement_tier = assign_engagement_tier(rng, ever_converted, churn_date)
 
         timelines.append({
             "customer_id": customer_id,
@@ -307,6 +383,10 @@ def simulate_all_customers(seed=SEED + 2):
             "true_acquisition_channel": signup_source,
             "true_acquisition_date": signup_date.isoformat(),
             "reactivation_events": reactivations,
+            "merch_to_subscriber_email_trigger": (
+                {"trigger_date": trial["start"], "converted": trial["outcome"] == "converted"}
+                if (trial is not None and trial.get("trigger") == "email_reactivation") else None
+            ),
         })
 
     return timelines, attribution
@@ -350,7 +430,7 @@ if __name__ == "__main__":
     print(f"Simulated {len(timelines)} customers\n")
     print("--- Account type split ---")
     print(summary["account_type"].value_counts().to_string())
-    print("\n--- Trial outcome (subscribers only) ---")
+    print("\n--- Trial outcome (all trials: signup + email-triggered) ---")
     print(summary["trial_outcome"].value_counts(dropna=True).to_string())
     denom = summary["trial_outcome"].notna().sum()
     print(f"\nRealized trial conversion rate: "
@@ -361,3 +441,23 @@ if __name__ == "__main__":
     print(f"\nOf {len(ever_paid)} who ever converted, "
           f"{ever_paid['currently_active_subscriber'].sum()} are active today "
           f"({ever_paid['currently_active_subscriber'].mean():.1%})")
+
+    email_triggered = [t for t in timelines if t["trial"] and t["trial"].get("trigger") == "email_reactivation"]
+    email_converted = [t for t in email_triggered if t["trial"]["outcome"] == "converted"]
+    email_active_today = [t for t in email_converted if t["churn_date"] is None]
+    print("\n--- Email-triggered trials (course/merch-only -> subscriber) ---")
+    print(f"{len(email_triggered)} customers received the trigger; "
+          f"{len(email_converted)} converted "
+          f"({len(email_converted)/max(1,len(email_triggered)):.1%}); "
+          f"{len(email_active_today)} of those are still active today")
+
+    reactivation_months = [
+        datetime.date.fromisoformat(r["reactivated_at"]).month
+        for t in timelines for r in t["reactivations"]
+    ]
+    if reactivation_months:
+        from collections import Counter
+        counts = Counter(reactivation_months)
+        print(f"\n--- Reactivation month distribution ({len(reactivation_months)} total) ---")
+        for m in range(1, 13):
+            print(f"  {m:2d}: {counts.get(m, 0)}")

@@ -40,8 +40,14 @@ def load_stats():
         post = [o for o in t["order_events"] if datetime.date.fromisoformat(o["date"]) > churn_dt]
         (still_buying if post else quiet).append(t)
 
-    course_merch_only = [t for t in data if t["account_type"] == "course_merch_only"]
+    # "Never subscribed" now specifically means: signed up as course/merch-only
+    # AND never received/acted on the email-to-subscriber trigger (trial is None).
+    # Some course/merch-only customers DO get a trial via that pathway -- they
+    # flow into ever_trial/ever_paid/active/lapsed above like anyone else.
+    course_merch_only = [t for t in data if t["account_type"] == "course_merch_only" and t["trial"] is None]
     trial_not_converted = [t for t in ever_trial if t["trial"]["outcome"] != "converted"]
+    email_triggered = [t for t in data if t["trial"] is not None and t["trial"].get("trigger") == "email_reactivation"]
+    email_converted = [t for t in email_triggered if t["trial"]["outcome"] == "converted"]
 
     return {
         "total": total,
@@ -53,6 +59,8 @@ def load_stats():
         "quiet": len(quiet),
         "course_merch_only": len(course_merch_only),
         "trial_not_converted": len(trial_not_converted),
+        "email_triggered": len(email_triggered),
+        "email_converted": len(email_converted),
     }
 
 

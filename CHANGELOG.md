@@ -104,3 +104,51 @@ seasonality calendar.
   59/41 quick/loyal (target 61/39), avg churner tenure 2.68mo (target 3.0),
   lapsed-still-buying 10.7% (target 10%), active subscribers 102 (target 100) —
   all within normal sampling variance.
+
+## 2026-07-30 — January-clustered win-backs + email-acquired subscribers
+
+- **Win-back timing is now January-clustered.** Reactivations are sampled by
+  calendar month only (same relative weights as `MONTHLY_SEASONALITY`), with a
+  minimum 1-month gap enforced after churn, so total subscribers peak every
+  January and taper through the year, matching new-signup seasonality.
+  Added `sim_utils.sample_seasonal_month_date()` for this. First attempt reused
+  the full seasonality-calendar sampler (which also bakes in the 3-year growth
+  trend) and produced a spurious mid-year spike instead of a January one, since
+  growth + end-of-window truncation dominated the weighting; fixed by weighting
+  strictly on calendar month, independent of year or growth trend. Verified the
+  fixed sampler against a 20,000-draw isolated test (Jan ≈13.7% vs. target
+  ≈14.2%, Jul ≈5.8% vs. target ≈5.9%) since the actual simulation only produces
+  ~25 reactivation events, too few to visually confirm the skew on its own.
+- **New acquisition pathway:** course/merch-only customers (never subscribed) can
+  now be nudged into a trial by a targeted "come try a membership" email, timed
+  3-12 months after their first course/merch order (relative to their own
+  purchase history, not the seasonal calendar). New params:
+  `MERCH_TO_SUB_EMAIL_RATE` (17.5%, target range 15-20%) and
+  `MERCH_TO_SUB_TRIAL_CONVERSION_RATE` (47.5%, target range 45-50%, reflecting
+  better odds for this warm, already-purchasing audience vs. the 30% baseline).
+  Their `account_type` stays `course_merch_only` (their original signup reason)
+  even if they convert — subscription status must be read from
+  `trial`/`subscription_intervals`/`churn_date`, not `account_type`. The `trial`
+  object now carries a `trigger` field (`"signup"` or `"email_reactivation"`) as
+  the attribution answer key for Phase 6.
+- **Bug fix (engagement tier):** tier assignment was keyed off original
+  `account_type` rather than actual conversion/active status, so a subscriber
+  whose trial never converted could still be tiered "power." Fixed to key off
+  whether the customer ever converted and is currently active/lapsed — this
+  also correctly tiers the new email-acquired subscribers.
+- **Bug fix (edge-case impossible state):** a customer signing up in the final
+  week of the dataset window could have their 7-day trial resolve past
+  `END_DATE` and get marked "converted" with zero subscription intervals — an
+  impossible state for the eventual `subscriptions` table. Fixed: such trials
+  now get outcome `trial_in_progress` instead (3 occurrences in this run).
+- Adding an active-subscriber-producing channel pushed active subscribers to
+  128 (vs. the 100 target) on the first run at the existing 1,100-customer
+  scale, so `N_CUSTOMERS` and `N_ANONYMOUS` were re-derived down (1,100→860,
+  21,800→17,050) to land back near target — same empirical-correction approach
+  used in the original retention calibration. Landed at 98 active subscribers.
+- Regenerated `internal/_sim_customer_timeline.json` and related artifacts,
+  `internal/funnel_chart.png`, `internal/segment_breakdown_chart.png`, and
+  rewrote `docs/phase0_simulation_analysis.md` to cover both new mechanics and
+  the corrected numbers. Added a short section to `docs/generation_plan.md`'s
+  master timeline spec describing the two acquisition pathways and the
+  `trial.trigger` field.

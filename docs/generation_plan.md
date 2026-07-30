@@ -37,9 +37,25 @@ Short pass/fail summary shown after each table, not raw query output.
 
 ## Master timeline contents (per customer)
 
-signup_date, signup_source (true first-touch channel), trial_start/end/outcome,
-subscription intervals (plan/status/start/end), churn_date, order events
-(type/date/amount), engagement_tier, pre-signup anonymous_id(s).
+signup_date, signup_source (true first-touch channel), trial_start/end/outcome/trigger
+("signup" or "email_reactivation" -- see below), subscription intervals
+(plan/status/start/end), churn_date, churn_segment ("loyal"/"quick"), order events
+(type/date/amount), engagement_tier, reactivations (channel + date), pre-signup
+anonymous_id(s).
+
+Two acquisition-to-subscriber pathways can populate the trial/subscription fields:
+1. **Direct signup** (`account_type == "subscriber"`) — trial starts at signup.
+2. **Email reactivation of a course/merch-only customer** (`account_type` stays
+   `"course_merch_only"`, since that's their original signup reason) — a targeted
+   email based on their own purchase history (3-12 months after their first order)
+   can trigger a trial later, at a better conversion rate (warm audience). Downstream
+   phases must key subscription status off `trial`/`subscription_intervals`/`churn_date`
+   directly, not off `account_type`, since `account_type` reflects original signup
+   intent and doesn't update if this pathway later converts them.
+
+Win-back (reactivation) timing is weighted by calendar month only (same relative
+shape as the seasonality calendar's monthly factors, independent of the multi-year
+growth trend), so reactivations cluster around January every year.
 
 ## Debug artifacts (internal, not part of the 47 shipped tables)
 
