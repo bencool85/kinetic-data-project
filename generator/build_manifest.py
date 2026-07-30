@@ -77,6 +77,9 @@ FILES = [
     ("generator/build_orders.py", "Code", "Phase 3: builds orders (customer course/merch + guest merch), cross-validated against subscriptions.csv"),
     ("generator/validate_orders.py", "Code", "Phase 3: 5-layer validation for orders, incl. the no-course-during-subscription cross-check"),
     ("data/orders.csv", "Shipped table", "Phase 3: orders table (3,650 rows: 1,061 course + 1,332 customer-merch + 1,257 guest-merch)"),
+    ("generator/build_order_line_items.py", "Code", "Phase 3: builds order_line_items (one row per order -- resolves each order's price tier down to a specific product + variant)"),
+    ("generator/validate_order_line_items.py", "Code", "Phase 3: 5-layer validation for order_line_items"),
+    ("data/order_line_items.csv", "Shipped table", "Phase 3: order_line_items table (3,650 rows, one per order)"),
 ]
 
 

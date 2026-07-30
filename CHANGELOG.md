@@ -784,3 +784,39 @@ seasonality calendar.
   now-passing cross-check against `subscriptions.csv` (0 violations, down
   from 16) and an exact row-count reconciliation against the timeline +
   anonymous population. All 23 pass.
+
+## 2026-07-30 — Phase 3: build + validate order_line_items (3 of 5)
+
+- `generator/build_order_line_items.py` -- `orders.csv` only ever carries an
+  order-level amount (`subtotal`), never which specific product was bought;
+  that's genuinely a line-item-level fact under normal order/order_line_item
+  normalization (catalog facts live on the line item, order-level
+  discounts/totals live on the order). This table resolves each order down
+  to one specific `product_id` + `variant_id`.
+- This simulated storefront never generates multi-item carts -- the master
+  timeline tracks exactly one `order_type` + one `amount` per order event --
+  so `order_line_items` is exactly one row per order, `quantity` is always 1,
+  and `unit_price == line_total == subtotal` by construction.
+- Product selection had one genuine ambiguity to resolve: each of the 5
+  course price tiers maps to exactly one product, but the $24.99 merch tier
+  maps to TWO products (Logo Cap vs. Water Bottle) -- resolved with a random
+  pick between them per order. Variant selection: apparel products (Tee,
+  Shorts, Pullover) have 4 size variants, picked with a size-distribution
+  skew (S 20% / M 35% / L 30% / XL 15%, M/L most common); every other
+  product has exactly one variant and needs no choice.
+- `generator/validate_order_line_items.py` -- 5-layer suite, central checks
+  being: exactly one line item per order (no multi-item carts, and every
+  order_id in `orders.csv` is covered exactly once); every line item's
+  product genuinely matches both its order's `order_type` AND its exact
+  `subtotal` (i.e. the chosen product really does correspond to the priced
+  tier, not just any random product of the right type); every variant
+  actually belongs to its own product; and the real point of this table --
+  per-order `sum(line_total)` reconciles exactly against `orders.csv`'s own
+  `subtotal`.
+- Result: 3,650 order_line_items (one per order, matching orders.csv
+  exactly), all 12 catalog products represented (course products range from
+  74 to 489 line items following the tier-price distribution baked into the
+  timeline; merch products from 142 to 647, with the $24.99 tie between Cap
+  (362) and Water Bottle (310) landing close to a 50/50 split as expected).
+  `validate_order_line_items.py`: **14/14 checks passed on the first run** --
+  no bugs found this time.
