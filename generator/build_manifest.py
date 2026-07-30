@@ -38,6 +38,9 @@ FILES = [
     ("internal/funnel_chart.png", "Chart", "Customer funnel: total -> trial started -> converted -> active today"),
     ("internal/segment_breakdown_chart.png", "Chart", "Part-to-whole breakdown of all customers' current status"),
     ("docs/phase0_simulation_analysis.md", "Docs", "Summary analysis of the recalibrated Phase 0 simulation results"),
+    ("generator/build_products.py", "Code", "Phase 1: builds the products table (~12-item course/merch catalog)"),
+    ("generator/validate_products.py", "Code", "Phase 1: 5-layer validation for products (structural/referential/temporal/business-rule/distributional)"),
+    ("data/products.csv", "Shipped table", "Phase 1: products table (course + merch catalog)"),
 ]
 
 

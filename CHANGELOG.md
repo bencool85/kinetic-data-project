@@ -152,3 +152,34 @@ seasonality calendar.
   the corrected numbers. Added a short section to `docs/generation_plan.md`'s
   master timeline spec describing the two acquisition pathways and the
   `trial.trigger` field.
+
+## 2026-07-30 — Phase 1 kickoff: aligned scope, built `products` (table 1 of 47)
+
+- Aligned on Phase 1 specifics before building: a minimal ~12-item product
+  catalog (one flagship product per existing price tier), a Plus Annual
+  subscription plan added ($314.00, matching Basic's ~25.4% annual discount
+  ratio), a small 10-segment definition list (7 customer-grain, 3
+  anonymous-grain), and device records for the anonymous ghost population too
+  (not just the 860 known customers).
+- Built `generator/build_products.py` -> `data/products.csv`: 5 course products
+  (one per COURSE_PRICE_TIERS value) + 7 merch products (one per
+  MERCH_PRICE_TIERS value, plus a second item at the $24.99 tier).
+  `is_subscription_eligible` is True only for courses (an active subscription
+  includes course-catalog access, which is exactly why the simulation never
+  places a course order during an active subscription window); merch is never
+  subscription-eligible, only ever discounted.
+- Built `generator/validate_products.py` — 18 checks across the same 5 layers
+  used throughout this project (structural / referential / temporal /
+  business-rule / distributional). Note: DuckDB isn't installable in this
+  sandbox (no network access to fetch new packages, confirmed by testing a
+  few other new installs), so validation is implemented directly in pandas
+  instead of SQL-over-DuckDB -- same rigor, different tool. Will apply to
+  every later table's validator too.
+- Key correctness check: every price that appears in the Phase 0 simulation's
+  order_events (and the anonymous population's guest purchases) must resolve
+  to a real product here. This required accounting for the subscriber merch
+  discount explicitly -- a discounted merch order's price (e.g. $19.99) is a
+  *different number* than its catalog base_price ($24.99), so the check
+  verifies against both the full and discounted price, while guest purchases
+  (never subscribed, never discounted) are checked against full price only.
+  All 18 checks passed on the first run.

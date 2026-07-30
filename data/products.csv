@@ -1,0 +1,13 @@
+product_id,name,product_type,category,base_price,is_subscription_eligible,created_at,is_active
+prod_0001,Foundations: 5-Minute Mobility,course,mobility,9.99,True,2023-08-01,True
+prod_0002,6-Week Strength Fundamentals,course,strength,79.0,True,2023-08-01,True
+prod_0003,8-Week HIIT Conditioning,course,conditioning,99.0,True,2023-08-01,True
+prod_0004,12-Week Total Body Transformation,course,transformation,129.0,True,2023-08-01,True
+prod_0005,Marathon Prep: 16-Week Program,course,endurance,149.0,True,2023-08-01,True
+prod_0006,Kinetic Logo Cap,merch,apparel,24.99,False,2023-08-01,True
+prod_0007,Kinetic Water Bottle,merch,accessories,24.99,False,2023-08-01,True
+prod_0008,Kinetic Performance Tee,merch,apparel,34.99,False,2023-08-01,True
+prod_0009,Kinetic Training Shorts,merch,apparel,49.99,False,2023-08-01,True
+prod_0010,Kinetic Quarter-Zip Pullover,merch,apparel,64.99,False,2023-08-01,True
+prod_0011,Kinetic Resistance Band Set,merch,equipment,89.99,False,2023-08-01,True
+prod_0012,Kinetic Yoga Mat + Block Bundle,merch,equipment,120.0,False,2023-08-01,True
