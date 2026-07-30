@@ -46,3 +46,15 @@ seasonality calendar.
   3 years.
 - Awaiting review before proceeding to Steps 4-6 (anonymous population + per-customer
   master timelines).
+
+## 2026-07-30 — Process fix: file manifest + every-file sync
+
+- Caught a gap: the Steps 1-3 files were built and sent into the conversation, but not
+  actually pushed to Ben's synced folder until he flagged it.
+- Added `File_Manifest.xlsx` (project root) — one row per file committed to the folder,
+  with a category, description, and last-updated timestamp (Pacific time, pulled from
+  the file's real modification time). Rebuilt via `generator/build_manifest.py`.
+- **New standing process going forward:** every file created or edited on my side gets
+  (1) written locally, (2) added/updated as a row in `File_Manifest.xlsx`, (3) sent and
+  committed to the synced Mac folder, (4) committed to git — every time, no exceptions.
+- Added `.gitignore` for Python `__pycache__`.
