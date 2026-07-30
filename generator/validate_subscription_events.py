@@ -134,8 +134,17 @@ def run():
             continue
         origin = o["trial_end"] if o["interval_id"] == 1 else o["start_date"]
         k = 0
-        while bse.bs._advance(origin, o["billing_interval"], k + 1) <= o["current_period_start"]:
-            k += 1
+        while True:
+            candidate = bse.bs._advance(origin, o["billing_interval"], k + 1)
+            # A past_due subscription's current_period_start is itself the
+            # pending/failed renewal attempt, not a successful one -- excluded,
+            # matching the builder's logic (see build_subscription_events.py).
+            if o["status"] == "past_due" and candidate >= o["current_period_start"]:
+                break
+            if candidate <= o["current_period_start"]:
+                k += 1
+            else:
+                break
         expected = k
         actual = int(renewed_counts.get(o["subscription_id"], 0))
         if actual != expected:

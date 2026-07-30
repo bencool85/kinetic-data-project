@@ -5,6 +5,15 @@ schema_reference.md exactly: trial_started, trial_converted, trial_expired,
 canceled_during_trial, renewed, upgraded, downgraded, payment_failed,
 canceled, resumed.
 
+Amended (2026-07-30, while building `invoices`): a currently `past_due`
+subscription's current_period_start is the PENDING/failed renewal attempt
+itself (that's the whole reason it's past_due) -- not a successful one, so
+it must not also get a "renewed" event at that same cycle boundary (that
+would contradict the payment_failed event at the identical timestamp: a
+subscription can't have both successfully renewed and be past_due for the
+exact same billing attempt). The renewed-event loop now excludes that final
+cycle boundary specifically for past_due subscriptions.
+
 Built by importing `build_subscription_objects()` directly from
 build_subscriptions.py (the same in-memory objects, not a re-parse of
 subscriptions.csv) -- single source of truth, so the two tables can never
@@ -90,10 +99,19 @@ def build_subscription_events(timeline, seed=SEED + 8):
             origin = obj["start_date"]
 
         # renewed: one per fully-elapsed billing cycle since origin, up to
-        # (and including) the cycle that produced current_period_start.
+        # (and including) the cycle that produced current_period_start --
+        # EXCEPT for a currently 'past_due' subscription, where
+        # current_period_start IS the pending/failed renewal attempt itself
+        # (see its payment_failed event below), not a successful one. Emitting
+        # a "renewed" event for that same cycle boundary would contradict the
+        # payment_failed event happening at the identical timestamp -- a
+        # subscription can't have both successfully renewed and be past_due
+        # for that exact same billing attempt.
         k = 1
         while True:
             candidate = bs._advance(origin, obj["billing_interval"], k)
+            if obj["status"] == "past_due" and candidate >= obj["current_period_start"]:
+                break
             if candidate <= obj["current_period_start"]:
                 emit(sub_id, cid, "renewed", candidate)
                 k += 1

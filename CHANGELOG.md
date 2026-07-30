@@ -623,3 +623,60 @@ seasonality calendar.
   natural key (subscription_id + event_type + event_at) rather than
   `event_id`, since real duplicate detection in a webhook pipeline can't
   rely on the receiver assigning the same ingestion id twice. All 22 pass.
+
+## 2026-07-30 — Phase 2 complete: built + validated `invoices` (3 of 3)
+
+- Last table in Phase 2. One row per Stripe invoice: the initial charge at
+  trial-conversion/resubscribe, one per successful renewal, plus a failed
+  invoice for the small populations currently `past_due` or that churned
+  `involuntary`ly exactly at a renewal boundary. No invoice is ever created
+  for a trial that never converted (interval_id==0) -- nothing was ever
+  charged, so there's nothing to invoice.
+- Built directly on `subscription_events.csv`'s already-validated `renewed`
+  events (reused, not recomputed) plus `build_subscription_objects()` for
+  the subscription-level fields -- single source of truth for both.
+- Real subtlety handled correctly rather than glossed over: 32 subscriptions
+  have a single mid-life upgraded/downgraded tier change. A naive
+  `invoices.plan_id = subscriptions.plan_id` would silently bill the WRONG
+  (final) tier's price on every invoice issued before the change. Instead,
+  each invoice gets its own plan_id based on whichever tier was actually in
+  effect on its own date -- verified for all 32 affected subscriptions that
+  pre-change and post-change invoices genuinely bill different amounts.
+- **Caught two real bugs while validating** (both now fixed at the source,
+  not papered over in invoices.csv):
+  1. **A relativedelta month-end drift bug in invoice period math.**
+     Computing each invoice's period_end by chaining "+1 month" off the
+     previous invoice's date breaks under month-end clamping -- e.g. Jan 30
+     -> Feb 28 -> chaining +1 month from Feb 28 lands on Mar 28, not the
+     Mar 30 that computing directly from the origin date gives. This
+     produced real 2-day gaps between consecutive invoice periods for
+     subscriptions anchored on 29th/30th/31st-of-month dates crossing
+     February. Fixed by computing every period boundary directly from the
+     subscription's origin date at its own cycle index (matching how
+     `subscriptions.py` already computes current_period_start/end), never
+     by chaining off a previously-computed date. Same fix applied to the
+     "does this involuntary churn land on a real renewal boundary" check.
+     Contiguity check went from 6 breaks to 0.
+  2. **A genuine cross-table logical contradiction, traced back to
+     `subscription_events.csv` (already shipped)**: for a currently
+     `past_due` subscription, the `renewed`-event loop was including the
+     CURRENT cycle boundary (current_period_start) even though that exact
+     renewal attempt is the one that's failing (that's the entire reason
+     the subscription is past_due) -- producing a `renewed` event and a
+     `payment_failed` event at the identical timestamp for the identical
+     billing attempt, an impossible state (can't have both succeeded and be
+     pending/failed). Fixed `build_subscription_events.py` to exclude that
+     final cycle boundary specifically when status is `past_due`. Re-ran
+     `validate_subscription_events.py` (with a matching fix to its own
+     independent recomputation check) -- still 22/22, one fewer `renewed`
+     event system-wide (2,423 total events, down from 2,424).
+- `validate_invoices.py`: 24 checks across all 5 layers, including an exact
+  paid-invoice-count reconciliation against subscription_events.csv's own
+  renewed count (1,208 = 199 initial + 1,009 renewals), a perfect
+  period-contiguity check across every subscription's invoice history (0
+  gaps/overlaps), and exact-match counts for both failure-invoice types
+  against their real preconditions (20 uncollectible = 20 aligned
+  involuntary churns; 1 open = 1 past_due subscription). All 24 pass.
+- **Phase 2 is now complete** (subscriptions, subscription_events, invoices
+  -- all 3 tables built and cross-validated against each other and the
+  master timeline).

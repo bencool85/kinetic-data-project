@@ -67,7 +67,10 @@ FILES = [
     ("data/subscriptions.csv", "Shipped table", "Phase 2: subscriptions table (576 rows: one Stripe-shaped subscription object per trial-or-interval)"),
     ("generator/build_subscription_events.py", "Code", "Phase 2: builds subscription_events (event log behind every subscription: trial_started/converted/expired, renewed, upgraded/downgraded, payment_failed, canceled, resumed)"),
     ("generator/validate_subscription_events.py", "Code", "Phase 2: 5-layer validation for subscription_events"),
-    ("data/subscription_events.csv", "Shipped table", "Phase 2: subscription_events table (2,424 rows, incl. ~3% deliberate duplicate webhook-style rows)"),
+    ("data/subscription_events.csv", "Shipped table", "Phase 2: subscription_events table (2,423 rows, incl. ~3% deliberate duplicate webhook-style rows)"),
+    ("generator/build_invoices.py", "Code", "Phase 2: builds invoices (one per initial charge + renewal, plus uncollectible/open for failed payments) -- completes Phase 2 (all 3 tables)"),
+    ("generator/validate_invoices.py", "Code", "Phase 2: 5-layer validation for invoices"),
+    ("data/invoices.csv", "Shipped table", "Phase 2: invoices table (1,229 rows) -- completes Phase 2"),
 ]
 
 
