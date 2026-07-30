@@ -41,6 +41,9 @@ FILES = [
     ("generator/build_products.py", "Code", "Phase 1: builds the products table (~12-item course/merch catalog)"),
     ("generator/validate_products.py", "Code", "Phase 1: 5-layer validation for products (structural/referential/temporal/business-rule/distributional)"),
     ("data/products.csv", "Shipped table", "Phase 1: products table (course + merch catalog)"),
+    ("generator/build_product_variants.py", "Code", "Phase 1: builds product_variants (sizes for apparel, single variant elsewhere)"),
+    ("generator/validate_product_variants.py", "Code", "Phase 1: 5-layer validation for product_variants, including FK to products"),
+    ("data/product_variants.csv", "Shipped table", "Phase 1: product_variants table (21 variants across 12 products)"),
 ]
 
 

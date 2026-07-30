@@ -1,0 +1,22 @@
+variant_id,product_id,sku,option_value,price_adjustment,is_active,created_at
+var_0001,prod_0001,KIN-0001-STANDARD,Standard Access,0.0,True,2023-08-01
+var_0002,prod_0002,KIN-0002-STANDARD,Standard Access,0.0,True,2023-08-01
+var_0003,prod_0003,KIN-0003-STANDARD,Standard Access,0.0,True,2023-08-01
+var_0004,prod_0004,KIN-0004-STANDARD,Standard Access,0.0,True,2023-08-01
+var_0005,prod_0005,KIN-0005-STANDARD,Standard Access,0.0,True,2023-08-01
+var_0006,prod_0006,KIN-0006-ONESIZE,One Size,0.0,True,2023-08-01
+var_0007,prod_0007,KIN-0007-DEFAULT,Default,0.0,True,2023-08-01
+var_0008,prod_0008,KIN-0008-S,S,0.0,True,2023-08-01
+var_0009,prod_0008,KIN-0008-M,M,0.0,True,2023-08-01
+var_0010,prod_0008,KIN-0008-L,L,0.0,True,2023-08-01
+var_0011,prod_0008,KIN-0008-XL,XL,0.0,True,2023-08-01
+var_0012,prod_0009,KIN-0009-S,S,0.0,True,2023-08-01
+var_0013,prod_0009,KIN-0009-M,M,0.0,True,2023-08-01
+var_0014,prod_0009,KIN-0009-L,L,0.0,True,2023-08-01
+var_0015,prod_0009,KIN-0009-XL,XL,0.0,True,2023-08-01
+var_0016,prod_0010,KIN-0010-S,S,0.0,True,2023-08-01
+var_0017,prod_0010,KIN-0010-M,M,0.0,True,2023-08-01
+var_0018,prod_0010,KIN-0010-L,L,0.0,True,2023-08-01
+var_0019,prod_0010,KIN-0010-XL,XL,0.0,True,2023-08-01
+var_0020,prod_0011,KIN-0011-DEFAULT,Default,0.0,True,2023-08-01
+var_0021,prod_0012,KIN-0012-DEFAULT,Default,0.0,True,2023-08-01

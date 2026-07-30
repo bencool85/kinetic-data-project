@@ -183,3 +183,16 @@ seasonality calendar.
   verifies against both the full and discounted price, while guest purchases
   (never subscribed, never discounted) are checked against full price only.
   All 18 checks passed on the first run.
+- Built `generator/build_product_variants.py` -> `data/product_variants.csv`
+  (21 variants across 12 products): courses get a single "Standard Access"
+  variant (digital, no sizing); the tee/shorts/pullover get S/M/L/XL; the cap
+  gets "One Size" instead of the originally-sketched blanket S/M/L/XL for all
+  apparel (a small realism refinement -- caps aren't usually sized S-XL like
+  other apparel); everything else gets one "Default" variant. No per-variant
+  price adjustment -- the product's base_price already sets the price.
+- Built `generator/validate_product_variants.py` — 18 checks, same 5 layers.
+  This is the first table with a real foreign key to another shipped table
+  (`product_id` -> `products.product_id`), so referential integrity does real
+  work for the first time: checked both directions (every variant resolves to
+  a real product, and every product has at least one sellable variant so
+  nothing in the catalog is orphaned). All 18 checks passed on the first run.
