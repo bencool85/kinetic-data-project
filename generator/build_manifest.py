@@ -50,6 +50,9 @@ FILES = [
     ("generator/build_customers.py", "Code", "Phase 1: builds customers table from the master timeline; defines customer_id mapping"),
     ("generator/validate_customers.py", "Code", "Phase 1: 5-layer validation for customers, incl. 1:1 reconciliation vs. the timeline"),
     ("data/customers.csv", "Shipped table", "Phase 1: customers table (860 rows, one per simulated customer)"),
+    ("generator/build_customer_addresses.py", "Code", "Phase 1: builds customer_addresses (billing/shipping, obviously-fake streets)"),
+    ("generator/validate_customer_addresses.py", "Code", "Phase 1: 5-layer validation for customer_addresses"),
+    ("data/customer_addresses.csv", "Shipped table", "Phase 1: customer_addresses table (1,431 rows)"),
 ]
 
 

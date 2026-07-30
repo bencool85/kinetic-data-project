@@ -1,0 +1,1432 @@
+address_id,customer_id,address_type,created_at,street_address,unit,city,state,zip_code,country
+addr_00001,cust_00001,billing,2024-02-19,5075 Fake Canyon Road,,Austin,TX,78701,US
+addr_00002,cust_00001,shipping,2025-01-07,5075 Fake Canyon Road,,Austin,TX,78701,US
+addr_00003,cust_00002,billing,2026-01-26,1463 Fake Canyon Place,,Denver,CO,80202,US
+addr_00004,cust_00003,billing,2025-11-12,8103 Fake Valley Road,,Boston,MA,02108,US
+addr_00005,cust_00004,billing,2024-11-05,7280 Fake Harbor Boulevard,,Boston,MA,02108,US
+addr_00006,cust_00004,shipping,2025-05-31,7280 Fake Harbor Boulevard,,Boston,MA,02108,US
+addr_00007,cust_00005,billing,2026-03-12,6273 Fake Ridge Avenue,Suite 372,Denver,CO,80202,US
+addr_00008,cust_00005,shipping,2026-06-10,6273 Fake Ridge Avenue,Suite 372,Denver,CO,80202,US
+addr_00009,cust_00006,billing,2026-02-01,2750 Fake Willow Place,,Atlanta,GA,30301,US
+addr_00010,cust_00006,shipping,2026-05-12,2750 Fake Willow Place,,Atlanta,GA,30301,US
+addr_00011,cust_00007,billing,2026-06-03,2455 Fake Pine Drive,,Tampa,FL,33602,US
+addr_00012,cust_00007,shipping,2026-07-09,2455 Fake Pine Drive,,Tampa,FL,33602,US
+addr_00013,cust_00008,billing,2025-03-25,1980 Fake Spring Drive,,Austin,TX,78701,US
+addr_00014,cust_00009,billing,2026-05-18,6157 Fake Spring Way,,Milwaukee,WI,53202,US
+addr_00015,cust_00009,shipping,2026-05-18,8453 Fake River Boulevard,Suite 254,Atlanta,GA,30301,US
+addr_00016,cust_00010,billing,2025-12-03,7026 Fake Pine Court,,Dallas,TX,75201,US
+addr_00017,cust_00011,billing,2026-02-18,1444 Fake Pine Road,Apt 182,Columbus,OH,43215,US
+addr_00018,cust_00011,shipping,2026-02-24,7732 Fake Highland Drive,,Columbus,OH,43215,US
+addr_00019,cust_00012,billing,2024-05-05,8846 Fake Elm Trail,Suite 18,Denver,CO,80202,US
+addr_00020,cust_00012,shipping,2024-05-28,8846 Fake Elm Trail,Suite 18,Denver,CO,80202,US
+addr_00021,cust_00013,billing,2026-04-25,5954 Fake Cedar Lane,,Salt Lake City,UT,84101,US
+addr_00022,cust_00014,billing,2023-10-20,2617 Fake River Drive,,Nashville,TN,37201,US
+addr_00023,cust_00014,shipping,2023-11-25,3917 Fake Spring Place,Suite 395,Boise,ID,83702,US
+addr_00024,cust_00015,billing,2025-06-27,6522 Fake Sunset Street,,Minneapolis,MN,55401,US
+addr_00025,cust_00015,shipping,2025-09-01,6522 Fake Sunset Street,,Minneapolis,MN,55401,US
+addr_00026,cust_00016,billing,2026-04-04,6469 Fake Ridge Court,,Atlanta,GA,30301,US
+addr_00027,cust_00017,billing,2026-06-11,3549 Fake Canyon Boulevard,,Tampa,FL,33602,US
+addr_00028,cust_00017,shipping,2026-06-23,3549 Fake Canyon Boulevard,,Tampa,FL,33602,US
+addr_00029,cust_00018,billing,2025-07-18,1418 Fake Meadow Court,,Salt Lake City,UT,84101,US
+addr_00030,cust_00018,shipping,2025-08-03,1418 Fake Meadow Court,,Salt Lake City,UT,84101,US
+addr_00031,cust_00019,billing,2023-08-16,6040 Fake Maple Drive,,Tampa,FL,33602,US
+addr_00032,cust_00020,billing,2024-12-05,3414 Fake Canyon Trail,,Minneapolis,MN,55401,US
+addr_00033,cust_00021,billing,2025-01-14,2228 Fake Forest Place,,Kansas City,MO,64105,US
+addr_00034,cust_00021,shipping,2025-09-19,2228 Fake Forest Place,,Kansas City,MO,64105,US
+addr_00035,cust_00022,billing,2025-12-15,7162 Fake Birch Street,,Chicago,IL,60601,US
+addr_00036,cust_00023,billing,2026-01-29,5270 Fake Valley Drive,Apt 70,Dallas,TX,75201,US
+addr_00037,cust_00023,shipping,2026-06-25,5270 Fake Valley Drive,Apt 70,Dallas,TX,75201,US
+addr_00038,cust_00024,billing,2026-03-03,4280 Fake Lake Road,,San Diego,CA,92101,US
+addr_00039,cust_00025,billing,2024-11-22,485 Fake Spring Lane,Suite 179,Austin,TX,78701,US
+addr_00040,cust_00025,shipping,2025-01-30,485 Fake Spring Lane,Suite 179,Austin,TX,78701,US
+addr_00041,cust_00026,billing,2024-08-19,7677 Fake Harbor Boulevard,,Charlotte,NC,28202,US
+addr_00042,cust_00026,shipping,2024-09-26,7677 Fake Harbor Boulevard,,Charlotte,NC,28202,US
+addr_00043,cust_00027,billing,2025-03-05,5981 Fake Lake Trail,,Nashville,TN,37201,US
+addr_00044,cust_00027,shipping,2025-07-20,5981 Fake Lake Trail,,Nashville,TN,37201,US
+addr_00045,cust_00028,billing,2024-05-21,9910 Fake Harbor Court,Apt 310,Columbus,OH,43215,US
+addr_00046,cust_00028,shipping,2024-08-20,9910 Fake Harbor Court,Apt 310,Columbus,OH,43215,US
+addr_00047,cust_00029,billing,2026-05-01,7207 Fake River Boulevard,Apt 212,Nashville,TN,37201,US
+addr_00048,cust_00029,shipping,2026-07-02,7207 Fake River Boulevard,Apt 212,Nashville,TN,37201,US
+addr_00049,cust_00030,billing,2026-07-07,1053 Fake Highland Drive,,Kansas City,MO,64105,US
+addr_00050,cust_00031,billing,2025-01-13,5332 Fake Pine Trail,Suite 42,Indianapolis,IN,46204,US
+addr_00051,cust_00031,shipping,2025-08-25,5332 Fake Pine Trail,Suite 42,Indianapolis,IN,46204,US
+addr_00052,cust_00032,billing,2026-02-28,3272 Fake Valley Way,,Sacramento,CA,95814,US
+addr_00053,cust_00032,shipping,2026-07-29,3272 Fake Valley Way,,Sacramento,CA,95814,US
+addr_00054,cust_00033,billing,2026-07-30,4023 Fake Meadow Place,Apt 299,Raleigh,NC,27601,US
+addr_00055,cust_00034,billing,2025-02-10,4448 Fake Pine Place,Apt 75,Minneapolis,MN,55401,US
+addr_00056,cust_00034,shipping,2025-02-10,1472 Fake Spring Boulevard,Apt 186,Indianapolis,IN,46204,US
+addr_00057,cust_00035,billing,2026-07-19,9167 Fake Maple Court,,Boise,ID,83702,US
+addr_00058,cust_00036,billing,2024-09-15,1612 Fake Elm Place,,Chicago,IL,60601,US
+addr_00059,cust_00036,shipping,2024-10-17,1612 Fake Elm Place,,Chicago,IL,60601,US
+addr_00060,cust_00037,billing,2023-11-16,5579 Fake Spring Trail,,Sacramento,CA,95814,US
+addr_00061,cust_00037,shipping,2024-10-16,5579 Fake Spring Trail,,Sacramento,CA,95814,US
+addr_00062,cust_00038,billing,2025-11-13,4145 Fake Highland Street,Apt 221,Columbus,OH,43215,US
+addr_00063,cust_00038,shipping,2026-06-20,3876 Fake Sunset Way,,Kansas City,MO,64105,US
+addr_00064,cust_00039,billing,2024-12-16,7383 Fake Elm Way,,Austin,TX,78701,US
+addr_00065,cust_00040,billing,2026-02-17,6654 Fake Lake Trail,,Denver,CO,80202,US
+addr_00066,cust_00040,shipping,2026-03-21,6654 Fake Lake Trail,,Denver,CO,80202,US
+addr_00067,cust_00041,billing,2023-09-04,3668 Fake Birch Way,,Portland,OR,97201,US
+addr_00068,cust_00041,shipping,2024-06-04,3668 Fake Birch Way,,Portland,OR,97201,US
+addr_00069,cust_00042,billing,2026-04-06,1709 Fake Forest Boulevard,,Charlotte,NC,28202,US
+addr_00070,cust_00042,shipping,2026-05-19,1709 Fake Forest Boulevard,,Charlotte,NC,28202,US
+addr_00071,cust_00043,billing,2025-06-16,4296 Fake River Boulevard,,Atlanta,GA,30301,US
+addr_00072,cust_00044,billing,2024-06-11,4711 Fake Forest Drive,,Salt Lake City,UT,84101,US
+addr_00073,cust_00044,shipping,2024-06-19,4711 Fake Forest Drive,,Salt Lake City,UT,84101,US
+addr_00074,cust_00045,billing,2025-02-08,8497 Fake Birch Drive,,Minneapolis,MN,55401,US
+addr_00075,cust_00045,shipping,2026-07-03,8497 Fake Birch Drive,,Minneapolis,MN,55401,US
+addr_00076,cust_00046,billing,2025-03-06,2969 Fake Harbor Place,,Tampa,FL,33602,US
+addr_00077,cust_00047,billing,2026-02-28,3401 Fake Pine Place,,Denver,CO,80202,US
+addr_00078,cust_00048,billing,2025-07-08,8167 Fake Cedar Road,Apt 384,Seattle,WA,98101,US
+addr_00079,cust_00048,shipping,2025-12-05,8167 Fake Cedar Road,Apt 384,Seattle,WA,98101,US
+addr_00080,cust_00049,billing,2026-06-22,1180 Fake Oak Court,,Richmond,VA,23219,US
+addr_00081,cust_00049,shipping,2026-06-28,1180 Fake Oak Court,,Richmond,VA,23219,US
+addr_00082,cust_00050,billing,2024-04-09,2761 Fake River Street,,Nashville,TN,37201,US
+addr_00083,cust_00050,shipping,2024-04-09,2761 Fake River Street,,Nashville,TN,37201,US
+addr_00084,cust_00051,billing,2026-05-31,3208 Fake Sunset Trail,Apt 84,San Diego,CA,92101,US
+addr_00085,cust_00052,billing,2025-09-12,6620 Fake River Drive,,Phoenix,AZ,85001,US
+addr_00086,cust_00052,shipping,2025-10-22,4105 Fake Maple Street,,Charlotte,NC,28202,US
+addr_00087,cust_00053,billing,2025-02-18,3145 Fake Pine Court,,Portland,OR,97201,US
+addr_00088,cust_00053,shipping,2026-02-11,3145 Fake Pine Court,,Portland,OR,97201,US
+addr_00089,cust_00054,billing,2026-01-03,7625 Fake Highland Avenue,,Atlanta,GA,30301,US
+addr_00090,cust_00054,shipping,2026-02-13,7625 Fake Highland Avenue,,Atlanta,GA,30301,US
+addr_00091,cust_00055,billing,2026-04-07,6831 Fake Ridge Way,,Nashville,TN,37201,US
+addr_00092,cust_00055,shipping,2026-06-30,6831 Fake Ridge Way,,Nashville,TN,37201,US
+addr_00093,cust_00056,billing,2024-09-27,9286 Fake Highland Street,Apt 371,Raleigh,NC,27601,US
+addr_00094,cust_00057,billing,2026-06-15,9794 Fake Valley Court,,Seattle,WA,98101,US
+addr_00095,cust_00057,shipping,2026-07-16,2620 Fake Highland Street,,Kansas City,MO,64105,US
+addr_00096,cust_00058,billing,2026-03-07,8128 Fake Pine Court,,Atlanta,GA,30301,US
+addr_00097,cust_00058,shipping,2026-03-20,9837 Fake Willow Drive,,Phoenix,AZ,85001,US
+addr_00098,cust_00059,billing,2023-08-17,275 Fake Sunset Way,,San Diego,CA,92101,US
+addr_00099,cust_00059,shipping,2023-09-19,8579 Fake Sunset Boulevard,,Boston,MA,02108,US
+addr_00100,cust_00060,billing,2024-11-25,3005 Fake Sunset Way,Apt 251,Tampa,FL,33602,US
+addr_00101,cust_00060,shipping,2024-12-17,3005 Fake Sunset Way,Apt 251,Tampa,FL,33602,US
+addr_00102,cust_00062,billing,2025-05-13,5505 Fake Prairie Boulevard,,Kansas City,MO,64105,US
+addr_00103,cust_00062,shipping,2025-09-10,5505 Fake Prairie Boulevard,,Kansas City,MO,64105,US
+addr_00104,cust_00063,billing,2026-07-07,3670 Fake Prairie Avenue,,Nashville,TN,37201,US
+addr_00105,cust_00064,billing,2024-11-25,6885 Fake Lake Way,,Phoenix,AZ,85001,US
+addr_00106,cust_00064,shipping,2025-10-07,4828 Fake Meadow Way,Suite 78,Kansas City,MO,64105,US
+addr_00107,cust_00065,billing,2026-01-31,7807 Fake Valley Trail,,Denver,CO,80202,US
+addr_00108,cust_00066,billing,2025-07-27,8830 Fake Oak Drive,,Nashville,TN,37201,US
+addr_00109,cust_00066,shipping,2025-07-27,8830 Fake Oak Drive,,Nashville,TN,37201,US
+addr_00110,cust_00067,billing,2024-06-17,9388 Fake Birch Avenue,,Atlanta,GA,30301,US
+addr_00111,cust_00068,billing,2024-09-02,1182 Fake Forest Road,,Tampa,FL,33602,US
+addr_00112,cust_00068,shipping,2024-11-03,1182 Fake Forest Road,,Tampa,FL,33602,US
+addr_00113,cust_00069,billing,2026-07-11,9511 Fake Willow Boulevard,,Minneapolis,MN,55401,US
+addr_00114,cust_00070,billing,2026-04-12,4361 Fake Pine Drive,,Salt Lake City,UT,84101,US
+addr_00115,cust_00070,shipping,2026-05-05,9237 Fake Canyon Way,,Columbus,OH,43215,US
+addr_00116,cust_00071,billing,2023-09-06,9870 Fake Cedar Boulevard,,Indianapolis,IN,46204,US
+addr_00117,cust_00072,billing,2025-09-04,3757 Fake Willow Way,Apt 272,Nashville,TN,37201,US
+addr_00118,cust_00072,shipping,2026-02-01,3757 Fake Willow Way,Apt 272,Nashville,TN,37201,US
+addr_00119,cust_00073,billing,2026-05-06,318 Fake Spring Place,Suite 197,Atlanta,GA,30301,US
+addr_00120,cust_00074,billing,2023-11-09,6040 Fake Summit Avenue,,Kansas City,MO,64105,US
+addr_00121,cust_00074,shipping,2023-12-14,6040 Fake Summit Avenue,,Kansas City,MO,64105,US
+addr_00122,cust_00075,billing,2024-01-01,8837 Fake Cedar Court,,Dallas,TX,75201,US
+addr_00123,cust_00075,shipping,2024-05-09,8837 Fake Cedar Court,,Dallas,TX,75201,US
+addr_00124,cust_00076,billing,2025-11-17,8845 Fake Harbor Place,,Chicago,IL,60601,US
+addr_00125,cust_00076,shipping,2026-01-02,8908 Fake Willow Street,,Richmond,VA,23219,US
+addr_00126,cust_00077,billing,2024-06-15,5397 Fake Cedar Way,,Columbus,OH,43215,US
+addr_00127,cust_00078,billing,2026-06-09,4077 Fake Harbor Place,,Chicago,IL,60601,US
+addr_00128,cust_00078,shipping,2026-06-21,4077 Fake Harbor Place,,Chicago,IL,60601,US
+addr_00129,cust_00079,billing,2025-03-29,9124 Fake Summit Street,,Seattle,WA,98101,US
+addr_00130,cust_00079,shipping,2025-04-29,9124 Fake Summit Street,,Seattle,WA,98101,US
+addr_00131,cust_00080,billing,2023-11-14,5175 Fake Meadow Drive,Suite 155,Milwaukee,WI,53202,US
+addr_00132,cust_00081,billing,2023-09-13,8958 Fake Lake Lane,,Indianapolis,IN,46204,US
+addr_00133,cust_00081,shipping,2024-12-05,8958 Fake Lake Lane,,Indianapolis,IN,46204,US
+addr_00134,cust_00082,billing,2025-09-02,1050 Fake Ridge Avenue,,Salt Lake City,UT,84101,US
+addr_00135,cust_00083,billing,2025-03-19,9712 Fake Harbor Street,,Charlotte,NC,28202,US
+addr_00136,cust_00085,billing,2023-10-14,3184 Fake Cedar Court,,Salt Lake City,UT,84101,US
+addr_00137,cust_00085,shipping,2023-10-29,331 Fake Canyon Street,,Minneapolis,MN,55401,US
+addr_00138,cust_00086,billing,2025-04-04,5289 Fake Maple Road,,Dallas,TX,75201,US
+addr_00139,cust_00087,billing,2026-01-09,3002 Fake Oak Trail,Suite 252,San Diego,CA,92101,US
+addr_00140,cust_00087,shipping,2026-01-12,3002 Fake Oak Trail,Suite 252,San Diego,CA,92101,US
+addr_00141,cust_00088,billing,2024-11-19,1254 Fake Elm Street,,Minneapolis,MN,55401,US
+addr_00142,cust_00088,shipping,2024-11-19,1254 Fake Elm Street,,Minneapolis,MN,55401,US
+addr_00143,cust_00089,billing,2025-08-06,8014 Fake Harbor Court,Apt 335,Kansas City,MO,64105,US
+addr_00144,cust_00090,billing,2025-01-09,3153 Fake Highland Boulevard,,Seattle,WA,98101,US
+addr_00145,cust_00090,shipping,2025-02-03,3153 Fake Highland Boulevard,,Seattle,WA,98101,US
+addr_00146,cust_00091,billing,2025-05-31,3810 Fake Willow Road,,Portland,OR,97201,US
+addr_00147,cust_00091,shipping,2026-02-26,3810 Fake Willow Road,,Portland,OR,97201,US
+addr_00148,cust_00092,billing,2024-03-09,241 Fake Prairie Drive,Suite 251,Atlanta,GA,30301,US
+addr_00149,cust_00093,billing,2026-06-21,2474 Fake Harbor Boulevard,Suite 65,Columbus,OH,43215,US
+addr_00150,cust_00093,shipping,2026-06-30,2474 Fake Harbor Boulevard,Suite 65,Columbus,OH,43215,US
+addr_00151,cust_00094,billing,2024-09-16,1056 Fake Spring Road,,San Diego,CA,92101,US
+addr_00152,cust_00094,shipping,2024-11-14,1056 Fake Spring Road,,San Diego,CA,92101,US
+addr_00153,cust_00095,billing,2023-11-29,3800 Fake Pine Road,,Austin,TX,78701,US
+addr_00154,cust_00095,shipping,2024-06-26,3800 Fake Pine Road,,Austin,TX,78701,US
+addr_00155,cust_00096,billing,2026-06-02,8120 Fake Valley Road,,Minneapolis,MN,55401,US
+addr_00156,cust_00096,shipping,2026-07-07,8120 Fake Valley Road,,Minneapolis,MN,55401,US
+addr_00157,cust_00097,billing,2025-10-30,5557 Fake Highland Boulevard,,Boston,MA,02108,US
+addr_00158,cust_00098,billing,2024-01-08,1894 Fake Prairie Road,Suite 152,Seattle,WA,98101,US
+addr_00159,cust_00098,shipping,2024-01-26,1894 Fake Prairie Road,Suite 152,Seattle,WA,98101,US
+addr_00160,cust_00099,billing,2025-10-09,9530 Fake Willow Court,,Raleigh,NC,27601,US
+addr_00161,cust_00099,shipping,2026-05-19,9530 Fake Willow Court,,Raleigh,NC,27601,US
+addr_00162,cust_00100,billing,2024-09-13,469 Fake Ridge Way,,Milwaukee,WI,53202,US
+addr_00163,cust_00100,shipping,2024-09-13,2081 Fake Pine Trail,,Orlando,FL,32801,US
+addr_00164,cust_00101,billing,2026-07-29,5728 Fake Lake Street,,Kansas City,MO,64105,US
+addr_00165,cust_00102,billing,2025-09-17,3424 Fake Lake Court,,Milwaukee,WI,53202,US
+addr_00166,cust_00103,billing,2025-11-04,4450 Fake Elm Court,Suite 42,San Diego,CA,92101,US
+addr_00167,cust_00103,shipping,2026-06-22,4450 Fake Elm Court,Suite 42,San Diego,CA,92101,US
+addr_00168,cust_00104,billing,2024-07-22,3385 Fake Forest Avenue,,Boston,MA,02108,US
+addr_00169,cust_00105,billing,2026-06-29,5772 Fake Maple Way,,Denver,CO,80202,US
+addr_00170,cust_00106,billing,2026-06-15,5580 Fake Harbor Avenue,,Raleigh,NC,27601,US
+addr_00171,cust_00107,billing,2025-01-06,7271 Fake Oak Court,,Milwaukee,WI,53202,US
+addr_00172,cust_00107,shipping,2025-10-09,9536 Fake Spring Trail,,Milwaukee,WI,53202,US
+addr_00173,cust_00108,billing,2025-12-17,446 Fake Elm Drive,Apt 312,Richmond,VA,23219,US
+addr_00174,cust_00108,shipping,2026-04-29,136 Fake River Lane,Apt 244,Indianapolis,IN,46204,US
+addr_00175,cust_00109,billing,2025-11-30,6864 Fake Highland Street,,Austin,TX,78701,US
+addr_00176,cust_00109,shipping,2025-11-30,6864 Fake Highland Street,,Austin,TX,78701,US
+addr_00177,cust_00110,billing,2024-12-28,9048 Fake Summit Way,,Indianapolis,IN,46204,US
+addr_00178,cust_00111,billing,2025-01-14,2023 Fake Spring Way,,Tampa,FL,33602,US
+addr_00179,cust_00112,billing,2026-06-23,2159 Fake Pine Way,Apt 106,Nashville,TN,37201,US
+addr_00180,cust_00112,shipping,2026-06-28,2159 Fake Pine Way,Apt 106,Nashville,TN,37201,US
+addr_00181,cust_00113,billing,2026-05-15,3405 Fake Spring Court,,Denver,CO,80202,US
+addr_00182,cust_00113,shipping,2026-06-08,3405 Fake Spring Court,,Denver,CO,80202,US
+addr_00183,cust_00114,billing,2024-09-04,7689 Fake Canyon Road,,Indianapolis,IN,46204,US
+addr_00184,cust_00114,shipping,2025-03-02,7689 Fake Canyon Road,,Indianapolis,IN,46204,US
+addr_00185,cust_00115,billing,2026-03-22,1142 Fake Prairie Avenue,Suite 242,Austin,TX,78701,US
+addr_00186,cust_00115,shipping,2026-03-22,1142 Fake Prairie Avenue,Suite 242,Austin,TX,78701,US
+addr_00187,cust_00116,billing,2026-02-14,7573 Fake Sunset Street,,Charlotte,NC,28202,US
+addr_00188,cust_00117,billing,2025-11-23,6029 Fake Canyon Street,Apt 73,Phoenix,AZ,85001,US
+addr_00189,cust_00118,billing,2024-01-18,7511 Fake Forest Avenue,,Raleigh,NC,27601,US
+addr_00190,cust_00119,billing,2025-04-16,4367 Fake River Way,Suite 195,Nashville,TN,37201,US
+addr_00191,cust_00119,shipping,2026-03-19,6664 Fake Birch Road,Apt 60,Columbus,OH,43215,US
+addr_00192,cust_00120,billing,2025-12-26,481 Fake Summit Street,,Pittsburgh,PA,15222,US
+addr_00193,cust_00120,shipping,2026-05-04,2395 Fake Maple Trail,,Raleigh,NC,27601,US
+addr_00194,cust_00121,billing,2024-11-22,2373 Fake Pine Road,Suite 380,San Diego,CA,92101,US
+addr_00195,cust_00121,shipping,2025-04-25,6441 Fake Sunset Lane,Apt 48,Indianapolis,IN,46204,US
+addr_00196,cust_00122,billing,2023-11-24,2417 Fake Harbor Boulevard,Apt 149,Dallas,TX,75201,US
+addr_00197,cust_00123,billing,2025-12-15,5590 Fake Prairie Trail,Apt 246,Columbus,OH,43215,US
+addr_00198,cust_00123,shipping,2026-01-24,4191 Fake Harbor Boulevard,Suite 46,Portland,OR,97201,US
+addr_00199,cust_00124,billing,2024-11-27,9090 Fake Harbor Road,,Boise,ID,83702,US
+addr_00200,cust_00124,shipping,2025-03-04,9379 Fake Elm Boulevard,,Sacramento,CA,95814,US
+addr_00201,cust_00125,billing,2026-06-30,5517 Fake Highland Boulevard,,Austin,TX,78701,US
+addr_00202,cust_00126,billing,2025-04-26,8541 Fake Elm Drive,,Charlotte,NC,28202,US
+addr_00203,cust_00126,shipping,2025-07-16,8541 Fake Elm Drive,,Charlotte,NC,28202,US
+addr_00204,cust_00127,billing,2025-03-04,8487 Fake Harbor Lane,,Milwaukee,WI,53202,US
+addr_00205,cust_00128,billing,2026-04-11,560 Fake Elm Drive,,Kansas City,MO,64105,US
+addr_00206,cust_00129,billing,2026-04-29,5240 Fake Canyon Boulevard,,Atlanta,GA,30301,US
+addr_00207,cust_00130,billing,2024-01-25,7616 Fake Harbor Avenue,,Charlotte,NC,28202,US
+addr_00208,cust_00130,shipping,2024-02-23,7616 Fake Harbor Avenue,,Charlotte,NC,28202,US
+addr_00209,cust_00131,billing,2026-03-08,9225 Fake Willow Trail,Apt 266,Pittsburgh,PA,15222,US
+addr_00210,cust_00131,shipping,2026-05-27,9225 Fake Willow Trail,Apt 266,Pittsburgh,PA,15222,US
+addr_00211,cust_00132,billing,2026-01-17,986 Fake Oak Trail,,Dallas,TX,75201,US
+addr_00212,cust_00132,shipping,2026-02-21,986 Fake Oak Trail,,Dallas,TX,75201,US
+addr_00213,cust_00133,billing,2025-02-13,8080 Fake Cedar Lane,Apt 296,Orlando,FL,32801,US
+addr_00214,cust_00134,billing,2025-08-06,8412 Fake Maple Lane,,Boise,ID,83702,US
+addr_00215,cust_00135,billing,2026-04-14,3154 Fake Valley Court,,Orlando,FL,32801,US
+addr_00216,cust_00136,billing,2024-02-10,6475 Fake Ridge Avenue,Apt 230,Boston,MA,02108,US
+addr_00217,cust_00136,shipping,2025-01-14,6475 Fake Ridge Avenue,Apt 230,Boston,MA,02108,US
+addr_00218,cust_00137,billing,2025-11-27,1206 Fake Summit Road,,Charlotte,NC,28202,US
+addr_00219,cust_00137,shipping,2026-02-10,6089 Fake Pine Court,,Dallas,TX,75201,US
+addr_00220,cust_00138,billing,2025-03-08,4988 Fake Willow Way,Apt 199,Orlando,FL,32801,US
+addr_00221,cust_00138,shipping,2025-03-08,4988 Fake Willow Way,Apt 199,Orlando,FL,32801,US
+addr_00222,cust_00139,billing,2024-12-18,9328 Fake Meadow Avenue,,Orlando,FL,32801,US
+addr_00223,cust_00139,shipping,2024-12-18,9328 Fake Meadow Avenue,,Orlando,FL,32801,US
+addr_00224,cust_00140,billing,2023-08-30,3349 Fake Oak Avenue,,Raleigh,NC,27601,US
+addr_00225,cust_00140,shipping,2024-04-30,3349 Fake Oak Avenue,,Raleigh,NC,27601,US
+addr_00226,cust_00141,billing,2024-01-15,8423 Fake Lake Lane,,Richmond,VA,23219,US
+addr_00227,cust_00141,shipping,2024-01-15,1081 Fake Birch Court,Apt 247,Seattle,WA,98101,US
+addr_00228,cust_00142,billing,2024-03-29,7857 Fake Birch Drive,,Boise,ID,83702,US
+addr_00229,cust_00142,shipping,2025-04-12,6374 Fake Canyon Avenue,,Sacramento,CA,95814,US
+addr_00230,cust_00143,billing,2024-11-18,1363 Fake Pine Avenue,,Milwaukee,WI,53202,US
+addr_00231,cust_00144,billing,2026-03-25,1251 Fake Valley Drive,Suite 161,Raleigh,NC,27601,US
+addr_00232,cust_00145,billing,2024-01-12,6312 Fake Prairie Place,,Kansas City,MO,64105,US
+addr_00233,cust_00146,billing,2023-12-14,4983 Fake Sunset Trail,,Sacramento,CA,95814,US
+addr_00234,cust_00146,shipping,2023-12-30,8412 Fake Sunset Place,,Seattle,WA,98101,US
+addr_00235,cust_00147,billing,2025-01-09,2562 Fake Spring Avenue,,Tampa,FL,33602,US
+addr_00236,cust_00148,billing,2026-01-25,6802 Fake Harbor Court,Apt 340,Denver,CO,80202,US
+addr_00237,cust_00148,shipping,2026-05-22,6802 Fake Harbor Court,Apt 340,Denver,CO,80202,US
+addr_00238,cust_00149,billing,2026-02-05,6180 Fake Prairie Street,,Boston,MA,02108,US
+addr_00239,cust_00149,shipping,2026-02-08,6180 Fake Prairie Street,,Boston,MA,02108,US
+addr_00240,cust_00150,billing,2024-03-12,3109 Fake Ridge Road,,Columbus,OH,43215,US
+addr_00241,cust_00150,shipping,2025-12-19,3109 Fake Ridge Road,,Columbus,OH,43215,US
+addr_00242,cust_00151,billing,2024-09-28,9816 Fake River Place,,Orlando,FL,32801,US
+addr_00243,cust_00152,billing,2025-12-08,2738 Fake Highland Lane,,Austin,TX,78701,US
+addr_00244,cust_00153,billing,2025-12-23,9413 Fake Elm Road,,Nashville,TN,37201,US
+addr_00245,cust_00153,shipping,2025-12-23,9413 Fake Elm Road,,Nashville,TN,37201,US
+addr_00246,cust_00154,billing,2023-09-05,2216 Fake Cedar Court,,Columbus,OH,43215,US
+addr_00247,cust_00155,billing,2025-11-30,8795 Fake Willow Road,,Pittsburgh,PA,15222,US
+addr_00248,cust_00155,shipping,2026-01-01,8795 Fake Willow Road,,Pittsburgh,PA,15222,US
+addr_00249,cust_00156,billing,2025-10-31,1820 Fake Willow Street,,Sacramento,CA,95814,US
+addr_00250,cust_00157,billing,2026-01-10,9263 Fake Pine Court,Suite 47,Tampa,FL,33602,US
+addr_00251,cust_00157,shipping,2026-04-10,9263 Fake Pine Court,Suite 47,Tampa,FL,33602,US
+addr_00252,cust_00158,billing,2025-06-25,931 Fake Valley Lane,,Austin,TX,78701,US
+addr_00253,cust_00158,shipping,2025-12-24,931 Fake Valley Lane,,Austin,TX,78701,US
+addr_00254,cust_00159,billing,2026-06-06,2486 Fake Highland Street,,Atlanta,GA,30301,US
+addr_00255,cust_00160,billing,2024-07-01,655 Fake Valley Avenue,,Columbus,OH,43215,US
+addr_00256,cust_00160,shipping,2024-07-01,655 Fake Valley Avenue,,Columbus,OH,43215,US
+addr_00257,cust_00161,billing,2025-05-21,5647 Fake Valley Way,,Denver,CO,80202,US
+addr_00258,cust_00161,shipping,2025-06-07,8823 Fake Oak Street,,Columbus,OH,43215,US
+addr_00259,cust_00162,billing,2025-02-09,2134 Fake Ridge Lane,,Phoenix,AZ,85001,US
+addr_00260,cust_00162,shipping,2025-04-24,5224 Fake Oak Lane,,Richmond,VA,23219,US
+addr_00261,cust_00163,billing,2026-07-27,360 Fake Meadow Drive,,Charlotte,NC,28202,US
+addr_00262,cust_00163,shipping,2026-07-28,360 Fake Meadow Drive,,Charlotte,NC,28202,US
+addr_00263,cust_00164,billing,2024-09-14,1968 Fake Pine Boulevard,,Charlotte,NC,28202,US
+addr_00264,cust_00164,shipping,2024-09-24,1968 Fake Pine Boulevard,,Charlotte,NC,28202,US
+addr_00265,cust_00165,billing,2025-07-30,2180 Fake Valley Drive,,Milwaukee,WI,53202,US
+addr_00266,cust_00165,shipping,2025-08-18,3120 Fake Pine Trail,,Austin,TX,78701,US
+addr_00267,cust_00166,billing,2024-12-02,4252 Fake River Street,Suite 19,Minneapolis,MN,55401,US
+addr_00268,cust_00166,shipping,2024-12-12,4252 Fake River Street,Suite 19,Minneapolis,MN,55401,US
+addr_00269,cust_00167,billing,2024-04-27,2002 Fake Valley Boulevard,,Pittsburgh,PA,15222,US
+addr_00270,cust_00167,shipping,2024-07-23,7889 Fake Sunset Way,,Raleigh,NC,27601,US
+addr_00271,cust_00168,billing,2024-11-28,3143 Fake Highland Place,,Seattle,WA,98101,US
+addr_00272,cust_00168,shipping,2025-02-03,3143 Fake Highland Place,,Seattle,WA,98101,US
+addr_00273,cust_00169,billing,2023-12-25,4771 Fake Summit Street,Suite 318,Boise,ID,83702,US
+addr_00274,cust_00169,shipping,2024-01-01,4771 Fake Summit Street,Suite 318,Boise,ID,83702,US
+addr_00275,cust_00170,billing,2024-07-17,8164 Fake Elm Boulevard,Apt 265,Salt Lake City,UT,84101,US
+addr_00276,cust_00170,shipping,2024-10-28,6324 Fake Highland Lane,,Austin,TX,78701,US
+addr_00277,cust_00171,billing,2024-03-09,6142 Fake Canyon Place,,Seattle,WA,98101,US
+addr_00278,cust_00171,shipping,2024-03-09,6142 Fake Canyon Place,,Seattle,WA,98101,US
+addr_00279,cust_00172,billing,2024-03-10,4895 Fake Spring Drive,Apt 2,Charlotte,NC,28202,US
+addr_00280,cust_00173,billing,2026-02-22,5274 Fake Valley Place,,Charlotte,NC,28202,US
+addr_00281,cust_00173,shipping,2026-02-22,5274 Fake Valley Place,,Charlotte,NC,28202,US
+addr_00282,cust_00174,billing,2024-05-06,9023 Fake Canyon Lane,Apt 131,Sacramento,CA,95814,US
+addr_00283,cust_00175,billing,2023-12-21,8053 Fake Meadow Boulevard,,Orlando,FL,32801,US
+addr_00284,cust_00175,shipping,2024-01-02,8053 Fake Meadow Boulevard,,Orlando,FL,32801,US
+addr_00285,cust_00176,billing,2025-06-18,4678 Fake Summit Boulevard,,Dallas,TX,75201,US
+addr_00286,cust_00176,shipping,2026-04-08,4678 Fake Summit Boulevard,,Dallas,TX,75201,US
+addr_00287,cust_00177,billing,2026-06-01,9471 Fake Highland Boulevard,,Tampa,FL,33602,US
+addr_00288,cust_00177,shipping,2026-06-04,4150 Fake Pine Street,Suite 366,Columbus,OH,43215,US
+addr_00289,cust_00178,billing,2024-04-29,2889 Fake Birch Road,Suite 238,Boston,MA,02108,US
+addr_00290,cust_00178,shipping,2024-05-28,2889 Fake Birch Road,Suite 238,Boston,MA,02108,US
+addr_00291,cust_00179,billing,2024-01-03,3786 Fake Pine Way,,Kansas City,MO,64105,US
+addr_00292,cust_00179,shipping,2024-03-27,3786 Fake Pine Way,,Kansas City,MO,64105,US
+addr_00293,cust_00180,billing,2026-01-02,4899 Fake Pine Place,,Indianapolis,IN,46204,US
+addr_00294,cust_00180,shipping,2026-01-22,5895 Fake Harbor Court,,Columbus,OH,43215,US
+addr_00295,cust_00181,billing,2023-12-15,9389 Fake Canyon Trail,,Kansas City,MO,64105,US
+addr_00296,cust_00182,billing,2026-01-19,8758 Fake Prairie Boulevard,Suite 157,Raleigh,NC,27601,US
+addr_00297,cust_00182,shipping,2026-05-05,8758 Fake Prairie Boulevard,Suite 157,Raleigh,NC,27601,US
+addr_00298,cust_00183,billing,2026-06-14,8479 Fake Meadow Drive,,Richmond,VA,23219,US
+addr_00299,cust_00184,billing,2024-06-28,7234 Fake Elm Court,Apt 20,Pittsburgh,PA,15222,US
+addr_00300,cust_00185,billing,2026-01-13,7513 Fake Summit Road,Suite 348,Indianapolis,IN,46204,US
+addr_00301,cust_00185,shipping,2026-01-20,7513 Fake Summit Road,Suite 348,Indianapolis,IN,46204,US
+addr_00302,cust_00186,billing,2025-10-12,1698 Fake Sunset Boulevard,,Richmond,VA,23219,US
+addr_00303,cust_00186,shipping,2026-03-23,2241 Fake Prairie Court,,Minneapolis,MN,55401,US
+addr_00304,cust_00187,billing,2024-01-07,5353 Fake Ridge Lane,,Austin,TX,78701,US
+addr_00305,cust_00187,shipping,2024-12-15,5353 Fake Ridge Lane,,Austin,TX,78701,US
+addr_00306,cust_00188,billing,2026-06-21,555 Fake Canyon Boulevard,Suite 243,Chicago,IL,60601,US
+addr_00307,cust_00188,shipping,2026-06-21,555 Fake Canyon Boulevard,Suite 243,Chicago,IL,60601,US
+addr_00308,cust_00189,billing,2024-02-03,4646 Fake Forest Avenue,,Nashville,TN,37201,US
+addr_00309,cust_00189,shipping,2024-08-29,4646 Fake Forest Avenue,,Nashville,TN,37201,US
+addr_00310,cust_00190,billing,2025-06-20,9516 Fake Lake Lane,Suite 180,Atlanta,GA,30301,US
+addr_00311,cust_00190,shipping,2025-08-12,9516 Fake Lake Lane,Suite 180,Atlanta,GA,30301,US
+addr_00312,cust_00191,billing,2024-04-19,8921 Fake Prairie Lane,,Milwaukee,WI,53202,US
+addr_00313,cust_00191,shipping,2024-08-25,8921 Fake Prairie Lane,,Milwaukee,WI,53202,US
+addr_00314,cust_00192,billing,2025-01-05,5859 Fake Sunset Street,,Kansas City,MO,64105,US
+addr_00315,cust_00192,shipping,2025-03-24,5859 Fake Sunset Street,,Kansas City,MO,64105,US
+addr_00316,cust_00193,billing,2026-03-18,2937 Fake Harbor Trail,Apt 160,Atlanta,GA,30301,US
+addr_00317,cust_00194,billing,2026-04-26,2554 Fake Spring Drive,,Seattle,WA,98101,US
+addr_00318,cust_00194,shipping,2026-07-04,6949 Fake River Street,,Minneapolis,MN,55401,US
+addr_00319,cust_00195,billing,2024-08-04,2302 Fake Highland Court,,Portland,OR,97201,US
+addr_00320,cust_00195,shipping,2024-10-10,2302 Fake Highland Court,,Portland,OR,97201,US
+addr_00321,cust_00196,billing,2024-11-24,7017 Fake Valley Avenue,,Sacramento,CA,95814,US
+addr_00322,cust_00196,shipping,2025-01-14,8853 Fake Pine Way,,Kansas City,MO,64105,US
+addr_00323,cust_00197,billing,2025-04-05,6902 Fake Spring Court,Apt 279,Sacramento,CA,95814,US
+addr_00324,cust_00197,shipping,2026-02-04,1220 Fake Prairie Lane,Apt 158,Dallas,TX,75201,US
+addr_00325,cust_00198,billing,2024-04-27,9354 Fake Elm Court,,Milwaukee,WI,53202,US
+addr_00326,cust_00198,shipping,2024-09-17,9354 Fake Elm Court,,Milwaukee,WI,53202,US
+addr_00327,cust_00199,billing,2026-01-19,5366 Fake Prairie Street,Suite 152,Pittsburgh,PA,15222,US
+addr_00328,cust_00199,shipping,2026-03-17,5366 Fake Prairie Street,Suite 152,Pittsburgh,PA,15222,US
+addr_00329,cust_00200,billing,2024-01-10,7203 Fake Cedar Court,,Portland,OR,97201,US
+addr_00330,cust_00200,shipping,2024-01-28,3942 Fake Elm Way,,Boston,MA,02108,US
+addr_00331,cust_00201,billing,2026-07-10,1039 Fake Birch Road,,Portland,OR,97201,US
+addr_00332,cust_00201,shipping,2026-07-11,1490 Fake Prairie Avenue,,Milwaukee,WI,53202,US
+addr_00333,cust_00202,billing,2025-02-22,6216 Fake Valley Road,Apt 220,Salt Lake City,UT,84101,US
+addr_00334,cust_00203,billing,2025-09-23,6205 Fake Highland Avenue,,Minneapolis,MN,55401,US
+addr_00335,cust_00203,shipping,2026-01-03,6205 Fake Highland Avenue,,Minneapolis,MN,55401,US
+addr_00336,cust_00204,billing,2025-02-07,8033 Fake Maple Avenue,,Kansas City,MO,64105,US
+addr_00337,cust_00204,shipping,2025-03-05,8033 Fake Maple Avenue,,Kansas City,MO,64105,US
+addr_00338,cust_00205,billing,2024-04-12,2654 Fake Elm Trail,Suite 272,Raleigh,NC,27601,US
+addr_00339,cust_00205,shipping,2024-04-12,7070 Fake Willow Avenue,,Seattle,WA,98101,US
+addr_00340,cust_00206,billing,2026-05-14,9392 Fake Pine Trail,,Pittsburgh,PA,15222,US
+addr_00341,cust_00206,shipping,2026-06-10,9392 Fake Pine Trail,,Pittsburgh,PA,15222,US
+addr_00342,cust_00207,billing,2026-01-16,1476 Fake Maple Drive,,Austin,TX,78701,US
+addr_00343,cust_00208,billing,2024-07-07,9230 Fake Canyon Drive,Apt 193,Orlando,FL,32801,US
+addr_00344,cust_00209,billing,2026-05-16,141 Fake Birch Avenue,Suite 147,Chicago,IL,60601,US
+addr_00345,cust_00210,billing,2025-06-14,9957 Fake Pine Place,,Richmond,VA,23219,US
+addr_00346,cust_00210,shipping,2025-08-10,9957 Fake Pine Place,,Richmond,VA,23219,US
+addr_00347,cust_00211,billing,2026-01-03,6962 Fake Oak Trail,,Seattle,WA,98101,US
+addr_00348,cust_00211,shipping,2026-04-14,6962 Fake Oak Trail,,Seattle,WA,98101,US
+addr_00349,cust_00212,billing,2024-12-10,6033 Fake Meadow Way,Apt 82,Columbus,OH,43215,US
+addr_00350,cust_00212,shipping,2026-01-15,6033 Fake Meadow Way,Apt 82,Columbus,OH,43215,US
+addr_00351,cust_00213,billing,2024-08-29,4563 Fake Meadow Way,Apt 33,Orlando,FL,32801,US
+addr_00352,cust_00213,shipping,2024-12-15,4563 Fake Meadow Way,Apt 33,Orlando,FL,32801,US
+addr_00353,cust_00214,billing,2026-05-04,8448 Fake Prairie Avenue,,Atlanta,GA,30301,US
+addr_00354,cust_00214,shipping,2026-05-05,8448 Fake Prairie Avenue,,Atlanta,GA,30301,US
+addr_00355,cust_00215,billing,2025-11-21,3621 Fake Highland Lane,,San Diego,CA,92101,US
+addr_00356,cust_00215,shipping,2026-04-26,9658 Fake Maple Drive,Apt 341,Nashville,TN,37201,US
+addr_00357,cust_00216,billing,2026-06-16,6492 Fake River Trail,,Salt Lake City,UT,84101,US
+addr_00358,cust_00217,billing,2025-09-25,1455 Fake Oak Place,,Austin,TX,78701,US
+addr_00359,cust_00217,shipping,2025-12-15,1455 Fake Oak Place,,Austin,TX,78701,US
+addr_00360,cust_00218,billing,2026-05-06,2999 Fake Canyon Way,,Nashville,TN,37201,US
+addr_00361,cust_00218,shipping,2026-05-20,2999 Fake Canyon Way,,Nashville,TN,37201,US
+addr_00362,cust_00219,billing,2023-10-29,4890 Fake Spring Place,,Raleigh,NC,27601,US
+addr_00363,cust_00219,shipping,2024-05-10,2055 Fake Pine Trail,Suite 129,Columbus,OH,43215,US
+addr_00364,cust_00220,billing,2025-09-25,3374 Fake Oak Road,Apt 285,Sacramento,CA,95814,US
+addr_00365,cust_00220,shipping,2026-01-19,3374 Fake Oak Road,Apt 285,Sacramento,CA,95814,US
+addr_00366,cust_00221,billing,2026-03-01,6845 Fake River Way,,Denver,CO,80202,US
+addr_00367,cust_00221,shipping,2026-07-24,6845 Fake River Way,,Denver,CO,80202,US
+addr_00368,cust_00222,billing,2025-08-25,530 Fake Highland Lane,,Charlotte,NC,28202,US
+addr_00369,cust_00223,billing,2025-01-10,4173 Fake Highland Boulevard,,Raleigh,NC,27601,US
+addr_00370,cust_00223,shipping,2025-03-29,4173 Fake Highland Boulevard,,Raleigh,NC,27601,US
+addr_00371,cust_00224,billing,2026-07-05,295 Fake Willow Street,,Minneapolis,MN,55401,US
+addr_00372,cust_00225,billing,2026-02-27,6593 Fake Pine Avenue,,Atlanta,GA,30301,US
+addr_00373,cust_00225,shipping,2026-05-27,1022 Fake Valley Boulevard,,San Diego,CA,92101,US
+addr_00374,cust_00226,billing,2026-07-18,1029 Fake Prairie Drive,Suite 90,Dallas,TX,75201,US
+addr_00375,cust_00227,billing,2026-06-17,9943 Fake Summit Way,Apt 167,Boise,ID,83702,US
+addr_00376,cust_00228,billing,2024-02-16,1922 Fake Meadow Trail,,Denver,CO,80202,US
+addr_00377,cust_00228,shipping,2024-11-01,1922 Fake Meadow Trail,,Denver,CO,80202,US
+addr_00378,cust_00229,billing,2023-11-23,3596 Fake Pine Lane,,Indianapolis,IN,46204,US
+addr_00379,cust_00229,shipping,2023-11-30,3596 Fake Pine Lane,,Indianapolis,IN,46204,US
+addr_00380,cust_00230,billing,2023-10-30,3864 Fake River Avenue,Apt 23,Atlanta,GA,30301,US
+addr_00381,cust_00230,shipping,2024-02-26,3864 Fake River Avenue,Apt 23,Atlanta,GA,30301,US
+addr_00382,cust_00231,billing,2025-04-17,6502 Fake Pine Place,,Nashville,TN,37201,US
+addr_00383,cust_00232,billing,2025-05-25,4960 Fake Prairie Court,,Phoenix,AZ,85001,US
+addr_00384,cust_00232,shipping,2026-02-26,8166 Fake Highland Street,,Sacramento,CA,95814,US
+addr_00385,cust_00233,billing,2025-07-30,4350 Fake Ridge Boulevard,,Chicago,IL,60601,US
+addr_00386,cust_00233,shipping,2025-10-06,4350 Fake Ridge Boulevard,,Chicago,IL,60601,US
+addr_00387,cust_00234,billing,2025-05-22,4503 Fake Spring Road,Suite 168,Kansas City,MO,64105,US
+addr_00388,cust_00234,shipping,2025-07-29,4503 Fake Spring Road,Suite 168,Kansas City,MO,64105,US
+addr_00389,cust_00235,billing,2025-10-24,8084 Fake Oak Lane,,Columbus,OH,43215,US
+addr_00390,cust_00235,shipping,2025-12-08,8847 Fake Meadow Court,,Sacramento,CA,95814,US
+addr_00391,cust_00236,billing,2025-10-22,7938 Fake Spring Place,Apt 178,Austin,TX,78701,US
+addr_00392,cust_00237,billing,2023-09-24,4993 Fake Meadow Way,,Denver,CO,80202,US
+addr_00393,cust_00237,shipping,2024-08-31,9059 Fake Pine Way,,Minneapolis,MN,55401,US
+addr_00394,cust_00238,billing,2024-04-28,3323 Fake Oak Drive,Suite 368,Dallas,TX,75201,US
+addr_00395,cust_00238,shipping,2024-04-28,3323 Fake Oak Drive,Suite 368,Dallas,TX,75201,US
+addr_00396,cust_00239,billing,2026-06-27,8402 Fake Cedar Boulevard,,Phoenix,AZ,85001,US
+addr_00397,cust_00240,billing,2026-04-07,3150 Fake Elm Drive,,Nashville,TN,37201,US
+addr_00398,cust_00240,shipping,2026-04-11,3150 Fake Elm Drive,,Nashville,TN,37201,US
+addr_00399,cust_00241,billing,2024-05-16,4364 Fake Harbor Court,,Denver,CO,80202,US
+addr_00400,cust_00241,shipping,2024-08-03,4364 Fake Harbor Court,,Denver,CO,80202,US
+addr_00401,cust_00242,billing,2026-02-20,9563 Fake Sunset Boulevard,,Charlotte,NC,28202,US
+addr_00402,cust_00242,shipping,2026-07-22,9563 Fake Sunset Boulevard,,Charlotte,NC,28202,US
+addr_00403,cust_00243,billing,2025-03-31,9339 Fake Oak Street,,Minneapolis,MN,55401,US
+addr_00404,cust_00243,shipping,2025-08-14,3561 Fake Meadow Place,,Portland,OR,97201,US
+addr_00405,cust_00244,billing,2025-12-24,5518 Fake Willow Road,,Seattle,WA,98101,US
+addr_00406,cust_00244,shipping,2025-12-24,5518 Fake Willow Road,,Seattle,WA,98101,US
+addr_00407,cust_00245,billing,2025-05-01,8970 Fake River Boulevard,Suite 58,Salt Lake City,UT,84101,US
+addr_00408,cust_00245,shipping,2025-05-27,8970 Fake River Boulevard,Suite 58,Salt Lake City,UT,84101,US
+addr_00409,cust_00246,billing,2026-04-13,5655 Fake Pine Place,,Minneapolis,MN,55401,US
+addr_00410,cust_00247,billing,2025-12-02,6288 Fake Highland Street,,Seattle,WA,98101,US
+addr_00411,cust_00247,shipping,2026-04-10,6288 Fake Highland Street,,Seattle,WA,98101,US
+addr_00412,cust_00248,billing,2026-02-11,1752 Fake Harbor Boulevard,,Nashville,TN,37201,US
+addr_00413,cust_00248,shipping,2026-02-11,1752 Fake Harbor Boulevard,,Nashville,TN,37201,US
+addr_00414,cust_00249,billing,2026-02-06,3263 Fake Summit Road,,Indianapolis,IN,46204,US
+addr_00415,cust_00249,shipping,2026-06-05,8069 Fake Pine Court,,Kansas City,MO,64105,US
+addr_00416,cust_00250,billing,2025-08-05,176 Fake Valley Lane,,Salt Lake City,UT,84101,US
+addr_00417,cust_00250,shipping,2026-05-05,176 Fake Valley Lane,,Salt Lake City,UT,84101,US
+addr_00418,cust_00251,billing,2026-01-29,622 Fake Meadow Street,,Kansas City,MO,64105,US
+addr_00419,cust_00252,billing,2024-06-18,6061 Fake Spring Road,,Boise,ID,83702,US
+addr_00420,cust_00252,shipping,2024-06-24,6088 Fake Maple Avenue,Apt 389,Kansas City,MO,64105,US
+addr_00421,cust_00253,billing,2026-03-30,536 Fake Valley Boulevard,,Kansas City,MO,64105,US
+addr_00422,cust_00253,shipping,2026-07-04,8598 Fake Meadow Road,,Chicago,IL,60601,US
+addr_00423,cust_00254,billing,2026-06-04,8813 Fake Birch Street,,Pittsburgh,PA,15222,US
+addr_00424,cust_00254,shipping,2026-07-03,3962 Fake Elm Road,,Tampa,FL,33602,US
+addr_00425,cust_00255,billing,2024-02-03,9538 Fake Birch Avenue,Apt 257,Seattle,WA,98101,US
+addr_00426,cust_00256,billing,2025-06-08,4640 Fake Lake Court,,Pittsburgh,PA,15222,US
+addr_00427,cust_00257,billing,2024-06-12,8599 Fake Summit Way,,Boise,ID,83702,US
+addr_00428,cust_00257,shipping,2024-06-12,8599 Fake Summit Way,,Boise,ID,83702,US
+addr_00429,cust_00258,billing,2025-11-27,5078 Fake Valley Street,Suite 65,Salt Lake City,UT,84101,US
+addr_00430,cust_00258,shipping,2025-12-06,5078 Fake Valley Street,Suite 65,Salt Lake City,UT,84101,US
+addr_00431,cust_00259,billing,2026-05-23,899 Fake Summit Trail,,Atlanta,GA,30301,US
+addr_00432,cust_00259,shipping,2026-07-01,8502 Fake Willow Drive,,Portland,OR,97201,US
+addr_00433,cust_00260,billing,2024-08-02,1640 Fake Summit Avenue,,Tampa,FL,33602,US
+addr_00434,cust_00260,shipping,2025-07-01,9183 Fake Harbor Lane,Apt 274,Orlando,FL,32801,US
+addr_00435,cust_00261,billing,2026-06-04,9862 Fake Maple Court,,Seattle,WA,98101,US
+addr_00436,cust_00262,billing,2025-08-04,5232 Fake Canyon Court,,Seattle,WA,98101,US
+addr_00437,cust_00262,shipping,2026-07-01,5232 Fake Canyon Court,,Seattle,WA,98101,US
+addr_00438,cust_00263,billing,2024-01-26,5227 Fake River Boulevard,,Austin,TX,78701,US
+addr_00439,cust_00263,shipping,2024-04-28,5227 Fake River Boulevard,,Austin,TX,78701,US
+addr_00440,cust_00264,billing,2025-12-21,6911 Fake Oak Drive,,Milwaukee,WI,53202,US
+addr_00441,cust_00264,shipping,2025-12-21,6911 Fake Oak Drive,,Milwaukee,WI,53202,US
+addr_00442,cust_00265,billing,2026-04-14,3511 Fake Ridge Boulevard,Suite 342,Dallas,TX,75201,US
+addr_00443,cust_00265,shipping,2026-05-04,3511 Fake Ridge Boulevard,Suite 342,Dallas,TX,75201,US
+addr_00444,cust_00266,billing,2026-01-05,3052 Fake Willow Avenue,,Raleigh,NC,27601,US
+addr_00445,cust_00266,shipping,2026-02-10,3419 Fake Willow Trail,,Sacramento,CA,95814,US
+addr_00446,cust_00267,billing,2024-06-03,6040 Fake Willow Lane,,Kansas City,MO,64105,US
+addr_00447,cust_00267,shipping,2024-12-07,7099 Fake Birch Lane,,Portland,OR,97201,US
+addr_00448,cust_00268,billing,2026-03-26,7788 Fake Maple Way,,San Diego,CA,92101,US
+addr_00449,cust_00268,shipping,2026-06-03,4900 Fake Elm Drive,,Chicago,IL,60601,US
+addr_00450,cust_00269,billing,2026-07-22,3613 Fake Sunset Boulevard,,Richmond,VA,23219,US
+addr_00451,cust_00270,billing,2025-03-14,4212 Fake Spring Street,,Seattle,WA,98101,US
+addr_00452,cust_00270,shipping,2026-02-24,4212 Fake Spring Street,,Seattle,WA,98101,US
+addr_00453,cust_00271,billing,2026-06-19,3347 Fake Willow Way,,Pittsburgh,PA,15222,US
+addr_00454,cust_00272,billing,2025-12-08,1051 Fake Maple Trail,,Charlotte,NC,28202,US
+addr_00455,cust_00272,shipping,2025-12-16,1322 Fake Elm Lane,,Austin,TX,78701,US
+addr_00456,cust_00273,billing,2026-01-24,7782 Fake Oak Way,,Denver,CO,80202,US
+addr_00457,cust_00273,shipping,2026-02-24,7782 Fake Oak Way,,Denver,CO,80202,US
+addr_00458,cust_00274,billing,2024-03-12,2565 Fake Prairie Trail,,Atlanta,GA,30301,US
+addr_00459,cust_00274,shipping,2025-03-14,2565 Fake Prairie Trail,,Atlanta,GA,30301,US
+addr_00460,cust_00275,billing,2026-02-26,6293 Fake Cedar Street,Suite 376,Indianapolis,IN,46204,US
+addr_00461,cust_00275,shipping,2026-04-11,4192 Fake Harbor Lane,,Portland,OR,97201,US
+addr_00462,cust_00276,billing,2024-12-23,3177 Fake Elm Place,,Charlotte,NC,28202,US
+addr_00463,cust_00276,shipping,2026-01-15,3177 Fake Elm Place,,Charlotte,NC,28202,US
+addr_00464,cust_00277,billing,2026-02-25,7133 Fake Elm Place,Apt 241,Columbus,OH,43215,US
+addr_00465,cust_00277,shipping,2026-03-25,7133 Fake Elm Place,Apt 241,Columbus,OH,43215,US
+addr_00466,cust_00278,billing,2026-06-10,1171 Fake Elm Road,,Atlanta,GA,30301,US
+addr_00467,cust_00279,billing,2024-08-18,7212 Fake Maple Street,Apt 16,Seattle,WA,98101,US
+addr_00468,cust_00279,shipping,2025-07-17,7212 Fake Maple Street,Apt 16,Seattle,WA,98101,US
+addr_00469,cust_00280,billing,2025-06-24,7643 Fake Valley Street,,Salt Lake City,UT,84101,US
+addr_00470,cust_00281,billing,2026-05-05,2199 Fake Meadow Avenue,Suite 262,Indianapolis,IN,46204,US
+addr_00471,cust_00281,shipping,2026-05-19,2199 Fake Meadow Avenue,Suite 262,Indianapolis,IN,46204,US
+addr_00472,cust_00282,billing,2026-02-22,6804 Fake Harbor Drive,,Portland,OR,97201,US
+addr_00473,cust_00282,shipping,2026-03-12,8430 Fake Canyon Place,,Sacramento,CA,95814,US
+addr_00474,cust_00283,billing,2026-01-08,2331 Fake Oak Avenue,,Tampa,FL,33602,US
+addr_00475,cust_00283,shipping,2026-04-22,8669 Fake Sunset Court,,Chicago,IL,60601,US
+addr_00476,cust_00284,billing,2024-01-04,2801 Fake River Trail,Apt 77,Phoenix,AZ,85001,US
+addr_00477,cust_00285,billing,2026-07-01,7085 Fake Prairie Way,,Salt Lake City,UT,84101,US
+addr_00478,cust_00285,shipping,2026-07-01,7085 Fake Prairie Way,,Salt Lake City,UT,84101,US
+addr_00479,cust_00286,billing,2025-04-15,9956 Fake Spring Way,,Milwaukee,WI,53202,US
+addr_00480,cust_00286,shipping,2025-06-14,9956 Fake Spring Way,,Milwaukee,WI,53202,US
+addr_00481,cust_00287,billing,2026-02-16,9872 Fake Highland Drive,,Dallas,TX,75201,US
+addr_00482,cust_00287,shipping,2026-06-17,9872 Fake Highland Drive,,Dallas,TX,75201,US
+addr_00483,cust_00288,billing,2024-07-14,9190 Fake Highland Place,,Boise,ID,83702,US
+addr_00484,cust_00288,shipping,2025-01-27,9190 Fake Highland Place,,Boise,ID,83702,US
+addr_00485,cust_00289,billing,2025-04-09,7178 Fake Oak Road,,Raleigh,NC,27601,US
+addr_00486,cust_00289,shipping,2026-01-30,7178 Fake Oak Road,,Raleigh,NC,27601,US
+addr_00487,cust_00290,billing,2024-09-26,9965 Fake Elm Way,,Milwaukee,WI,53202,US
+addr_00488,cust_00290,shipping,2024-10-23,9965 Fake Elm Way,,Milwaukee,WI,53202,US
+addr_00489,cust_00291,billing,2026-05-11,3980 Fake Sunset Boulevard,,Minneapolis,MN,55401,US
+addr_00490,cust_00292,billing,2024-07-05,4362 Fake Prairie Avenue,,Atlanta,GA,30301,US
+addr_00491,cust_00292,shipping,2024-07-05,4362 Fake Prairie Avenue,,Atlanta,GA,30301,US
+addr_00492,cust_00293,billing,2025-01-23,9841 Fake Meadow Drive,,Austin,TX,78701,US
+addr_00493,cust_00293,shipping,2025-04-06,9841 Fake Meadow Drive,,Austin,TX,78701,US
+addr_00494,cust_00294,billing,2025-11-17,1835 Fake Cedar Road,,Pittsburgh,PA,15222,US
+addr_00495,cust_00294,shipping,2026-01-06,1835 Fake Cedar Road,,Pittsburgh,PA,15222,US
+addr_00496,cust_00295,billing,2025-07-26,7918 Fake Forest Avenue,Suite 206,Milwaukee,WI,53202,US
+addr_00497,cust_00296,billing,2024-01-12,7257 Fake Sunset Avenue,,Columbus,OH,43215,US
+addr_00498,cust_00297,billing,2025-06-12,4173 Fake Canyon Lane,,Richmond,VA,23219,US
+addr_00499,cust_00298,billing,2024-11-12,8323 Fake Summit Trail,,San Diego,CA,92101,US
+addr_00500,cust_00298,shipping,2025-06-15,2697 Fake Highland Place,Apt 305,Austin,TX,78701,US
+addr_00501,cust_00299,billing,2023-09-28,2502 Fake Lake Trail,Apt 18,Indianapolis,IN,46204,US
+addr_00502,cust_00299,shipping,2024-01-24,2502 Fake Lake Trail,Apt 18,Indianapolis,IN,46204,US
+addr_00503,cust_00300,billing,2026-02-20,2231 Fake Harbor Road,Apt 237,Tampa,FL,33602,US
+addr_00504,cust_00300,shipping,2026-02-20,2231 Fake Harbor Road,Apt 237,Tampa,FL,33602,US
+addr_00505,cust_00301,billing,2025-06-17,5505 Fake Willow Trail,,Austin,TX,78701,US
+addr_00506,cust_00301,shipping,2025-07-27,9179 Fake Maple Way,Suite 342,Charlotte,NC,28202,US
+addr_00507,cust_00302,billing,2026-06-03,6469 Fake Birch Road,,Tampa,FL,33602,US
+addr_00508,cust_00302,shipping,2026-06-14,6469 Fake Birch Road,,Tampa,FL,33602,US
+addr_00509,cust_00303,billing,2024-05-24,3824 Fake Sunset Court,,Kansas City,MO,64105,US
+addr_00510,cust_00303,shipping,2024-10-26,3824 Fake Sunset Court,,Kansas City,MO,64105,US
+addr_00511,cust_00304,billing,2025-04-21,4156 Fake Willow Boulevard,Apt 130,Atlanta,GA,30301,US
+addr_00512,cust_00304,shipping,2025-11-09,4156 Fake Willow Boulevard,Apt 130,Atlanta,GA,30301,US
+addr_00513,cust_00305,billing,2025-09-04,6514 Fake Summit Drive,,Richmond,VA,23219,US
+addr_00514,cust_00305,shipping,2025-09-24,6514 Fake Summit Drive,,Richmond,VA,23219,US
+addr_00515,cust_00306,billing,2026-02-23,6635 Fake Summit Trail,,Chicago,IL,60601,US
+addr_00516,cust_00307,billing,2025-01-19,9542 Fake Ridge Lane,,Portland,OR,97201,US
+addr_00517,cust_00307,shipping,2025-01-19,9542 Fake Ridge Lane,,Portland,OR,97201,US
+addr_00518,cust_00308,billing,2026-07-02,1661 Fake River Lane,,Raleigh,NC,27601,US
+addr_00519,cust_00309,billing,2024-10-17,2205 Fake Valley Boulevard,,Boston,MA,02108,US
+addr_00520,cust_00310,billing,2024-01-19,4576 Fake Elm Drive,,Minneapolis,MN,55401,US
+addr_00521,cust_00310,shipping,2024-04-11,5091 Fake Valley Road,,Dallas,TX,75201,US
+addr_00522,cust_00311,billing,2025-06-07,1503 Fake Elm Trail,,Atlanta,GA,30301,US
+addr_00523,cust_00312,billing,2024-01-11,6794 Fake Forest Lane,,Portland,OR,97201,US
+addr_00524,cust_00312,shipping,2024-03-04,6794 Fake Forest Lane,,Portland,OR,97201,US
+addr_00525,cust_00313,billing,2024-12-16,6087 Fake Prairie Lane,,Boston,MA,02108,US
+addr_00526,cust_00314,billing,2025-11-24,357 Fake Elm Way,,Kansas City,MO,64105,US
+addr_00527,cust_00315,billing,2025-03-07,696 Fake Forest Drive,,Denver,CO,80202,US
+addr_00528,cust_00315,shipping,2025-05-13,696 Fake Forest Drive,,Denver,CO,80202,US
+addr_00529,cust_00316,billing,2025-08-26,8361 Fake Lake Place,,Denver,CO,80202,US
+addr_00530,cust_00316,shipping,2026-01-25,8361 Fake Lake Place,,Denver,CO,80202,US
+addr_00531,cust_00317,billing,2024-08-28,5541 Fake Birch Lane,,Chicago,IL,60601,US
+addr_00532,cust_00318,billing,2025-02-19,9332 Fake Forest Boulevard,,Nashville,TN,37201,US
+addr_00533,cust_00318,shipping,2025-06-20,1799 Fake Valley Boulevard,,Chicago,IL,60601,US
+addr_00534,cust_00319,billing,2024-11-16,2538 Fake Forest Drive,,Chicago,IL,60601,US
+addr_00535,cust_00320,billing,2026-04-24,9121 Fake Maple Way,Suite 267,Denver,CO,80202,US
+addr_00536,cust_00320,shipping,2026-05-10,9121 Fake Maple Way,Suite 267,Denver,CO,80202,US
+addr_00537,cust_00321,billing,2025-01-09,8262 Fake Oak Avenue,,Phoenix,AZ,85001,US
+addr_00538,cust_00321,shipping,2025-05-16,8262 Fake Oak Avenue,,Phoenix,AZ,85001,US
+addr_00539,cust_00322,billing,2024-06-16,591 Fake Elm Avenue,Apt 317,Richmond,VA,23219,US
+addr_00540,cust_00323,billing,2023-11-11,5871 Fake Summit Avenue,,Denver,CO,80202,US
+addr_00541,cust_00323,shipping,2023-11-11,5871 Fake Summit Avenue,,Denver,CO,80202,US
+addr_00542,cust_00324,billing,2025-02-09,2465 Fake Forest Way,,Raleigh,NC,27601,US
+addr_00543,cust_00324,shipping,2025-03-03,2465 Fake Forest Way,,Raleigh,NC,27601,US
+addr_00544,cust_00325,billing,2025-10-02,637 Fake Willow Lane,,Sacramento,CA,95814,US
+addr_00545,cust_00325,shipping,2025-10-02,637 Fake Willow Lane,,Sacramento,CA,95814,US
+addr_00546,cust_00326,billing,2024-07-25,2931 Fake Valley Street,,Portland,OR,97201,US
+addr_00547,cust_00327,billing,2026-01-31,2619 Fake Ridge Place,,Boise,ID,83702,US
+addr_00548,cust_00328,billing,2026-07-12,3633 Fake Meadow Boulevard,,Phoenix,AZ,85001,US
+addr_00549,cust_00329,billing,2024-10-05,5329 Fake Sunset Court,Suite 289,Boston,MA,02108,US
+addr_00550,cust_00329,shipping,2025-05-31,5329 Fake Sunset Court,Suite 289,Boston,MA,02108,US
+addr_00551,cust_00330,billing,2025-04-11,3982 Fake Lake Trail,,Phoenix,AZ,85001,US
+addr_00552,cust_00330,shipping,2025-04-11,4944 Fake Forest Way,,Portland,OR,97201,US
+addr_00553,cust_00331,billing,2024-03-05,6698 Fake River Place,Suite 334,Nashville,TN,37201,US
+addr_00554,cust_00331,shipping,2024-04-26,9220 Fake Cedar Avenue,Apt 170,Richmond,VA,23219,US
+addr_00555,cust_00332,billing,2025-03-17,6339 Fake Pine Avenue,,Nashville,TN,37201,US
+addr_00556,cust_00332,shipping,2025-03-17,514 Fake Valley Road,,Charlotte,NC,28202,US
+addr_00557,cust_00333,billing,2026-05-05,9049 Fake Pine Trail,Suite 82,Minneapolis,MN,55401,US
+addr_00558,cust_00333,shipping,2026-05-05,6098 Fake Sunset Street,Apt 184,Boise,ID,83702,US
+addr_00559,cust_00334,billing,2024-03-06,1404 Fake Birch Street,,Boise,ID,83702,US
+addr_00560,cust_00334,shipping,2024-07-02,1404 Fake Birch Street,,Boise,ID,83702,US
+addr_00561,cust_00335,billing,2024-07-23,3699 Fake Elm Trail,Apt 235,Portland,OR,97201,US
+addr_00562,cust_00335,shipping,2024-07-23,3699 Fake Elm Trail,Apt 235,Portland,OR,97201,US
+addr_00563,cust_00336,billing,2026-02-15,8879 Fake Canyon Place,,Kansas City,MO,64105,US
+addr_00564,cust_00336,shipping,2026-04-21,4008 Fake Summit Lane,Suite 207,Indianapolis,IN,46204,US
+addr_00565,cust_00337,billing,2025-11-22,7460 Fake Highland Avenue,,Boise,ID,83702,US
+addr_00566,cust_00337,shipping,2026-03-21,7460 Fake Highland Avenue,,Boise,ID,83702,US
+addr_00567,cust_00338,billing,2026-06-26,1071 Fake Elm Street,,Milwaukee,WI,53202,US
+addr_00568,cust_00339,billing,2026-06-13,2581 Fake Meadow Way,Suite 15,Denver,CO,80202,US
+addr_00569,cust_00339,shipping,2026-06-13,2581 Fake Meadow Way,Suite 15,Denver,CO,80202,US
+addr_00570,cust_00340,billing,2026-06-18,8122 Fake Harbor Avenue,Suite 151,Minneapolis,MN,55401,US
+addr_00571,cust_00341,billing,2026-01-27,8062 Fake Sunset Place,,Nashville,TN,37201,US
+addr_00572,cust_00341,shipping,2026-01-27,8062 Fake Sunset Place,,Nashville,TN,37201,US
+addr_00573,cust_00342,billing,2026-06-24,9877 Fake Summit Boulevard,,Boise,ID,83702,US
+addr_00574,cust_00342,shipping,2026-07-13,9877 Fake Summit Boulevard,,Boise,ID,83702,US
+addr_00575,cust_00343,billing,2025-10-30,4173 Fake Summit Road,,Boise,ID,83702,US
+addr_00576,cust_00343,shipping,2026-05-24,4173 Fake Summit Road,,Boise,ID,83702,US
+addr_00577,cust_00344,billing,2025-09-05,5686 Fake Pine Court,,Denver,CO,80202,US
+addr_00578,cust_00344,shipping,2025-11-14,5686 Fake Pine Court,,Denver,CO,80202,US
+addr_00579,cust_00345,billing,2024-12-19,4478 Fake Meadow Lane,Suite 9,Kansas City,MO,64105,US
+addr_00580,cust_00345,shipping,2025-01-17,4478 Fake Meadow Lane,Suite 9,Kansas City,MO,64105,US
+addr_00581,cust_00346,billing,2025-08-12,8013 Fake Prairie Avenue,,Seattle,WA,98101,US
+addr_00582,cust_00346,shipping,2025-08-26,8623 Fake Sunset Road,Apt 82,Charlotte,NC,28202,US
+addr_00583,cust_00347,billing,2025-03-17,9052 Fake Spring Way,,Sacramento,CA,95814,US
+addr_00584,cust_00347,shipping,2026-04-16,9052 Fake Spring Way,,Sacramento,CA,95814,US
+addr_00585,cust_00348,billing,2025-05-05,8824 Fake Summit Place,,Boise,ID,83702,US
+addr_00586,cust_00348,shipping,2025-07-21,8824 Fake Summit Place,,Boise,ID,83702,US
+addr_00587,cust_00349,billing,2025-08-29,7343 Fake Sunset Place,,Columbus,OH,43215,US
+addr_00588,cust_00349,shipping,2026-01-07,3896 Fake Cedar Place,Suite 209,Pittsburgh,PA,15222,US
+addr_00589,cust_00350,billing,2025-07-29,7768 Fake Elm Drive,,Chicago,IL,60601,US
+addr_00590,cust_00350,shipping,2025-09-19,7768 Fake Elm Drive,,Chicago,IL,60601,US
+addr_00591,cust_00352,billing,2023-12-17,1888 Fake Forest Way,,Portland,OR,97201,US
+addr_00592,cust_00353,billing,2025-01-07,6737 Fake Forest Road,,Nashville,TN,37201,US
+addr_00593,cust_00354,billing,2024-03-28,3114 Fake Valley Street,,Pittsburgh,PA,15222,US
+addr_00594,cust_00354,shipping,2024-06-05,3114 Fake Valley Street,,Pittsburgh,PA,15222,US
+addr_00595,cust_00355,billing,2026-05-27,8939 Fake Sunset Court,,Nashville,TN,37201,US
+addr_00596,cust_00356,billing,2026-02-08,6323 Fake Ridge Court,,Atlanta,GA,30301,US
+addr_00597,cust_00356,shipping,2026-07-29,6323 Fake Ridge Court,,Atlanta,GA,30301,US
+addr_00598,cust_00357,billing,2025-04-27,9009 Fake Forest Road,Suite 98,Boise,ID,83702,US
+addr_00599,cust_00357,shipping,2025-10-27,9009 Fake Forest Road,Suite 98,Boise,ID,83702,US
+addr_00600,cust_00358,billing,2025-12-18,9011 Fake Canyon Road,,Chicago,IL,60601,US
+addr_00601,cust_00359,billing,2024-07-16,8202 Fake Pine Avenue,,Salt Lake City,UT,84101,US
+addr_00602,cust_00359,shipping,2025-01-08,8202 Fake Pine Avenue,,Salt Lake City,UT,84101,US
+addr_00603,cust_00360,billing,2025-07-24,8634 Fake Lake Boulevard,,Chicago,IL,60601,US
+addr_00604,cust_00360,shipping,2026-03-30,8634 Fake Lake Boulevard,,Chicago,IL,60601,US
+addr_00605,cust_00361,billing,2025-06-27,2940 Fake Ridge Avenue,,Chicago,IL,60601,US
+addr_00606,cust_00361,shipping,2025-06-27,1522 Fake Willow Way,Apt 176,Austin,TX,78701,US
+addr_00607,cust_00362,billing,2025-12-23,5965 Fake Willow Place,,Orlando,FL,32801,US
+addr_00608,cust_00362,shipping,2025-12-23,5965 Fake Willow Place,,Orlando,FL,32801,US
+addr_00609,cust_00363,billing,2025-07-09,5177 Fake River Road,,Orlando,FL,32801,US
+addr_00610,cust_00363,shipping,2026-06-25,1723 Fake Sunset Way,,Charlotte,NC,28202,US
+addr_00611,cust_00364,billing,2025-03-12,7132 Fake Canyon Lane,Suite 277,Columbus,OH,43215,US
+addr_00612,cust_00365,billing,2025-06-20,4891 Fake Elm Trail,Apt 266,Chicago,IL,60601,US
+addr_00613,cust_00365,shipping,2025-09-12,8966 Fake Meadow Boulevard,,Portland,OR,97201,US
+addr_00614,cust_00366,billing,2026-02-14,2372 Fake Lake Lane,Suite 276,Salt Lake City,UT,84101,US
+addr_00615,cust_00366,shipping,2026-03-17,153 Fake Highland Lane,,Kansas City,MO,64105,US
+addr_00616,cust_00367,billing,2025-05-23,9240 Fake River Road,,Charlotte,NC,28202,US
+addr_00617,cust_00367,shipping,2026-02-03,9240 Fake River Road,,Charlotte,NC,28202,US
+addr_00618,cust_00368,billing,2026-01-29,461 Fake Canyon Boulevard,,Richmond,VA,23219,US
+addr_00619,cust_00368,shipping,2026-01-29,4299 Fake Pine Court,,San Diego,CA,92101,US
+addr_00620,cust_00369,billing,2025-09-02,5810 Fake Willow Boulevard,,Indianapolis,IN,46204,US
+addr_00621,cust_00369,shipping,2025-11-03,1989 Fake Valley Boulevard,Suite 181,Tampa,FL,33602,US
+addr_00622,cust_00370,billing,2024-03-29,8310 Fake River Avenue,Apt 149,Milwaukee,WI,53202,US
+addr_00623,cust_00370,shipping,2024-03-29,5779 Fake Forest Boulevard,Suite 77,Columbus,OH,43215,US
+addr_00624,cust_00371,billing,2024-11-10,6722 Fake Spring Trail,Suite 264,Chicago,IL,60601,US
+addr_00625,cust_00371,shipping,2025-01-16,5637 Fake Forest Drive,Suite 23,Denver,CO,80202,US
+addr_00626,cust_00372,billing,2023-11-29,3471 Fake Cedar Trail,,San Diego,CA,92101,US
+addr_00627,cust_00372,shipping,2023-12-28,3471 Fake Cedar Trail,,San Diego,CA,92101,US
+addr_00628,cust_00373,billing,2024-02-20,5006 Fake Willow Street,,Austin,TX,78701,US
+addr_00629,cust_00373,shipping,2025-08-15,5006 Fake Willow Street,,Austin,TX,78701,US
+addr_00630,cust_00374,billing,2025-02-02,1869 Fake Birch Road,,Minneapolis,MN,55401,US
+addr_00631,cust_00374,shipping,2025-03-22,1869 Fake Birch Road,,Minneapolis,MN,55401,US
+addr_00632,cust_00375,billing,2026-06-19,9037 Fake Maple Road,,Atlanta,GA,30301,US
+addr_00633,cust_00376,billing,2023-12-20,5649 Fake Birch Road,,Boise,ID,83702,US
+addr_00634,cust_00376,shipping,2024-03-21,5649 Fake Birch Road,,Boise,ID,83702,US
+addr_00635,cust_00377,billing,2025-01-26,5315 Fake Lake Drive,Suite 70,Denver,CO,80202,US
+addr_00636,cust_00377,shipping,2026-05-06,5315 Fake Lake Drive,Suite 70,Denver,CO,80202,US
+addr_00637,cust_00378,billing,2024-04-19,4822 Fake Elm Drive,,Charlotte,NC,28202,US
+addr_00638,cust_00378,shipping,2024-04-19,5989 Fake Prairie Drive,,Raleigh,NC,27601,US
+addr_00639,cust_00379,billing,2024-08-15,9168 Fake Ridge Court,,Salt Lake City,UT,84101,US
+addr_00640,cust_00379,shipping,2025-05-13,9168 Fake Ridge Court,,Salt Lake City,UT,84101,US
+addr_00641,cust_00380,billing,2025-10-21,5132 Fake Oak Street,,Raleigh,NC,27601,US
+addr_00642,cust_00380,shipping,2025-10-21,7039 Fake Meadow Boulevard,Apt 382,Austin,TX,78701,US
+addr_00643,cust_00381,billing,2024-05-05,8385 Fake Lake Avenue,,Nashville,TN,37201,US
+addr_00644,cust_00381,shipping,2024-08-17,8385 Fake Lake Avenue,,Nashville,TN,37201,US
+addr_00645,cust_00382,billing,2025-05-04,9252 Fake River Road,,Pittsburgh,PA,15222,US
+addr_00646,cust_00383,billing,2026-07-06,8359 Fake Sunset Boulevard,Apt 145,Kansas City,MO,64105,US
+addr_00647,cust_00384,billing,2024-05-16,8394 Fake Elm Place,Apt 334,Portland,OR,97201,US
+addr_00648,cust_00384,shipping,2024-05-16,8394 Fake Elm Place,Apt 334,Portland,OR,97201,US
+addr_00649,cust_00385,billing,2024-09-19,8685 Fake Cedar Avenue,,Boston,MA,02108,US
+addr_00650,cust_00385,shipping,2025-11-21,122 Fake Meadow Boulevard,,Columbus,OH,43215,US
+addr_00651,cust_00386,billing,2024-04-06,3733 Fake Canyon Court,,Atlanta,GA,30301,US
+addr_00652,cust_00387,billing,2026-04-13,5800 Fake Pine Avenue,,Milwaukee,WI,53202,US
+addr_00653,cust_00387,shipping,2026-06-10,5800 Fake Pine Avenue,,Milwaukee,WI,53202,US
+addr_00654,cust_00389,billing,2025-07-18,272 Fake Lake Trail,Suite 52,Raleigh,NC,27601,US
+addr_00655,cust_00389,shipping,2026-01-02,272 Fake Lake Trail,Suite 52,Raleigh,NC,27601,US
+addr_00656,cust_00390,billing,2024-08-28,7348 Fake Harbor Boulevard,Suite 23,Richmond,VA,23219,US
+addr_00657,cust_00391,billing,2024-07-12,5878 Fake Oak Court,,Boston,MA,02108,US
+addr_00658,cust_00391,shipping,2025-06-01,5878 Fake Oak Court,,Boston,MA,02108,US
+addr_00659,cust_00392,billing,2026-01-15,2029 Fake Canyon Avenue,,Atlanta,GA,30301,US
+addr_00660,cust_00392,shipping,2026-02-10,2029 Fake Canyon Avenue,,Atlanta,GA,30301,US
+addr_00661,cust_00393,billing,2025-08-26,4863 Fake Pine Street,,Seattle,WA,98101,US
+addr_00662,cust_00394,billing,2024-03-14,8198 Fake Cedar Lane,Apt 278,Pittsburgh,PA,15222,US
+addr_00663,cust_00395,billing,2024-08-20,6226 Fake Birch Boulevard,,Salt Lake City,UT,84101,US
+addr_00664,cust_00396,billing,2024-12-28,6432 Fake Willow Avenue,,Sacramento,CA,95814,US
+addr_00665,cust_00396,shipping,2024-12-28,6432 Fake Willow Avenue,,Sacramento,CA,95814,US
+addr_00666,cust_00397,billing,2026-07-12,5451 Fake River Boulevard,,Salt Lake City,UT,84101,US
+addr_00667,cust_00397,shipping,2026-07-27,5451 Fake River Boulevard,,Salt Lake City,UT,84101,US
+addr_00668,cust_00398,billing,2026-01-09,4000 Fake Valley Street,,Raleigh,NC,27601,US
+addr_00669,cust_00398,shipping,2026-05-02,4000 Fake Valley Street,,Raleigh,NC,27601,US
+addr_00670,cust_00399,billing,2024-06-12,1629 Fake Harbor Way,,Raleigh,NC,27601,US
+addr_00671,cust_00400,billing,2026-07-18,838 Fake Lake Court,,Salt Lake City,UT,84101,US
+addr_00672,cust_00400,shipping,2026-07-26,1764 Fake Lake Boulevard,,Denver,CO,80202,US
+addr_00673,cust_00401,billing,2023-12-13,9672 Fake Ridge Place,,Richmond,VA,23219,US
+addr_00674,cust_00402,billing,2025-11-07,7667 Fake Elm Trail,,Chicago,IL,60601,US
+addr_00675,cust_00403,billing,2024-06-04,6519 Fake Valley Street,,Orlando,FL,32801,US
+addr_00676,cust_00403,shipping,2024-07-05,6519 Fake Valley Street,,Orlando,FL,32801,US
+addr_00677,cust_00404,billing,2025-06-15,1534 Fake Maple Trail,,Salt Lake City,UT,84101,US
+addr_00678,cust_00404,shipping,2026-03-17,1534 Fake Maple Trail,,Salt Lake City,UT,84101,US
+addr_00679,cust_00405,billing,2026-06-28,4362 Fake River Place,Apt 375,Raleigh,NC,27601,US
+addr_00680,cust_00405,shipping,2026-06-28,4362 Fake River Place,Apt 375,Raleigh,NC,27601,US
+addr_00681,cust_00406,billing,2025-11-19,483 Fake Birch Avenue,,Tampa,FL,33602,US
+addr_00682,cust_00406,shipping,2025-11-19,6895 Fake Oak Way,Apt 301,San Diego,CA,92101,US
+addr_00683,cust_00407,billing,2024-10-15,551 Fake Elm Trail,,Chicago,IL,60601,US
+addr_00684,cust_00407,shipping,2026-02-16,551 Fake Elm Trail,,Chicago,IL,60601,US
+addr_00685,cust_00408,billing,2023-12-27,5154 Fake Valley Street,Apt 338,Portland,OR,97201,US
+addr_00686,cust_00409,billing,2025-09-13,125 Fake Ridge Avenue,,Pittsburgh,PA,15222,US
+addr_00687,cust_00409,shipping,2025-11-07,125 Fake Ridge Avenue,,Pittsburgh,PA,15222,US
+addr_00688,cust_00410,billing,2024-11-03,1766 Fake Summit Court,,San Diego,CA,92101,US
+addr_00689,cust_00411,billing,2023-12-03,4240 Fake Maple Way,Suite 147,Sacramento,CA,95814,US
+addr_00690,cust_00412,billing,2025-08-31,6820 Fake Willow Boulevard,Suite 397,Phoenix,AZ,85001,US
+addr_00691,cust_00413,billing,2025-03-10,5707 Fake Summit Road,Apt 66,Salt Lake City,UT,84101,US
+addr_00692,cust_00413,shipping,2025-04-25,6193 Fake Oak Way,,Sacramento,CA,95814,US
+addr_00693,cust_00414,billing,2025-01-14,2207 Fake Maple Boulevard,Suite 209,Boston,MA,02108,US
+addr_00694,cust_00415,billing,2026-03-02,1055 Fake Forest Boulevard,,Seattle,WA,98101,US
+addr_00695,cust_00416,billing,2024-02-01,3740 Fake Cedar Lane,,Dallas,TX,75201,US
+addr_00696,cust_00416,shipping,2024-04-03,103 Fake Maple Avenue,,Atlanta,GA,30301,US
+addr_00697,cust_00417,billing,2026-05-13,7190 Fake Sunset Road,Apt 279,Tampa,FL,33602,US
+addr_00698,cust_00417,shipping,2026-05-13,7190 Fake Sunset Road,Apt 279,Tampa,FL,33602,US
+addr_00699,cust_00418,billing,2026-02-26,376 Fake Forest Avenue,Apt 398,Milwaukee,WI,53202,US
+addr_00700,cust_00418,shipping,2026-06-02,376 Fake Forest Avenue,Apt 398,Milwaukee,WI,53202,US
+addr_00701,cust_00419,billing,2024-02-14,3691 Fake Oak Road,,Richmond,VA,23219,US
+addr_00702,cust_00419,shipping,2024-03-16,9932 Fake Ridge Boulevard,Apt 244,Atlanta,GA,30301,US
+addr_00703,cust_00420,billing,2024-07-29,5692 Fake Sunset Place,,Minneapolis,MN,55401,US
+addr_00704,cust_00421,billing,2023-12-13,8173 Fake Prairie Trail,Suite 98,Seattle,WA,98101,US
+addr_00705,cust_00421,shipping,2024-11-20,1948 Fake Oak Street,,Phoenix,AZ,85001,US
+addr_00706,cust_00422,billing,2025-12-25,6790 Fake Birch Boulevard,,Portland,OR,97201,US
+addr_00707,cust_00422,shipping,2025-12-25,6790 Fake Birch Boulevard,,Portland,OR,97201,US
+addr_00708,cust_00423,billing,2024-02-28,5436 Fake Prairie Way,Suite 116,Kansas City,MO,64105,US
+addr_00709,cust_00423,shipping,2024-04-06,5436 Fake Prairie Way,Suite 116,Kansas City,MO,64105,US
+addr_00710,cust_00424,billing,2026-01-21,8395 Fake Maple Boulevard,,Minneapolis,MN,55401,US
+addr_00711,cust_00424,shipping,2026-03-14,7647 Fake Oak Street,Suite 368,Sacramento,CA,95814,US
+addr_00712,cust_00425,billing,2025-01-15,8221 Fake River Way,,Nashville,TN,37201,US
+addr_00713,cust_00426,billing,2025-12-19,4586 Fake Canyon Road,Suite 222,Richmond,VA,23219,US
+addr_00714,cust_00426,shipping,2026-04-30,4586 Fake Canyon Road,Suite 222,Richmond,VA,23219,US
+addr_00715,cust_00427,billing,2025-10-29,233 Fake Highland Street,,Tampa,FL,33602,US
+addr_00716,cust_00427,shipping,2026-02-14,233 Fake Highland Street,,Tampa,FL,33602,US
+addr_00717,cust_00428,billing,2026-01-19,4726 Fake Birch Drive,Apt 56,Denver,CO,80202,US
+addr_00718,cust_00428,shipping,2026-04-13,4726 Fake Birch Drive,Apt 56,Denver,CO,80202,US
+addr_00719,cust_00429,billing,2025-12-16,4762 Fake Forest Court,,Chicago,IL,60601,US
+addr_00720,cust_00429,shipping,2026-06-02,2162 Fake Birch Street,Suite 215,Minneapolis,MN,55401,US
+addr_00721,cust_00430,billing,2024-01-13,2651 Fake Summit Road,,Atlanta,GA,30301,US
+addr_00722,cust_00432,billing,2025-08-21,5640 Fake Lake Street,,Phoenix,AZ,85001,US
+addr_00723,cust_00432,shipping,2025-09-19,4811 Fake Summit Street,Suite 231,Boston,MA,02108,US
+addr_00724,cust_00433,billing,2025-11-15,1574 Fake Willow Court,,Seattle,WA,98101,US
+addr_00725,cust_00433,shipping,2025-11-15,1574 Fake Willow Court,,Seattle,WA,98101,US
+addr_00726,cust_00434,billing,2025-02-08,4379 Fake Prairie Street,,Indianapolis,IN,46204,US
+addr_00727,cust_00434,shipping,2025-04-07,5047 Fake Maple Trail,,Boston,MA,02108,US
+addr_00728,cust_00435,billing,2025-05-16,4313 Fake Cedar Trail,Suite 292,Chicago,IL,60601,US
+addr_00729,cust_00435,shipping,2025-05-16,4313 Fake Cedar Trail,Suite 292,Chicago,IL,60601,US
+addr_00730,cust_00436,billing,2026-01-27,6776 Fake Meadow Place,,Richmond,VA,23219,US
+addr_00731,cust_00436,shipping,2026-04-09,6776 Fake Meadow Place,,Richmond,VA,23219,US
+addr_00732,cust_00437,billing,2024-08-28,735 Fake Willow Boulevard,,Charlotte,NC,28202,US
+addr_00733,cust_00437,shipping,2026-01-29,7951 Fake Spring Street,,Dallas,TX,75201,US
+addr_00734,cust_00438,billing,2025-11-25,2696 Fake Spring Drive,,San Diego,CA,92101,US
+addr_00735,cust_00438,shipping,2026-01-02,4515 Fake Birch Street,,Phoenix,AZ,85001,US
+addr_00736,cust_00439,billing,2025-07-08,2467 Fake Lake Court,,Boise,ID,83702,US
+addr_00737,cust_00440,billing,2024-06-06,7800 Fake Valley Boulevard,,Milwaukee,WI,53202,US
+addr_00738,cust_00440,shipping,2024-06-06,7800 Fake Valley Boulevard,,Milwaukee,WI,53202,US
+addr_00739,cust_00441,billing,2025-01-09,2299 Fake Summit Lane,,Sacramento,CA,95814,US
+addr_00740,cust_00441,shipping,2025-02-26,2299 Fake Summit Lane,,Sacramento,CA,95814,US
+addr_00741,cust_00442,billing,2023-12-18,4948 Fake Harbor Way,,Atlanta,GA,30301,US
+addr_00742,cust_00442,shipping,2024-01-04,4948 Fake Harbor Way,,Atlanta,GA,30301,US
+addr_00743,cust_00443,billing,2026-05-30,6388 Fake Harbor Road,,Atlanta,GA,30301,US
+addr_00744,cust_00443,shipping,2026-07-04,6388 Fake Harbor Road,,Atlanta,GA,30301,US
+addr_00745,cust_00444,billing,2024-03-22,6312 Fake Maple Drive,,Salt Lake City,UT,84101,US
+addr_00746,cust_00445,billing,2026-02-22,1959 Fake Willow Road,Apt 361,Indianapolis,IN,46204,US
+addr_00747,cust_00445,shipping,2026-07-16,1959 Fake Willow Road,Apt 361,Indianapolis,IN,46204,US
+addr_00748,cust_00446,billing,2025-01-07,2037 Fake Pine Drive,,Portland,OR,97201,US
+addr_00749,cust_00446,shipping,2025-03-28,2037 Fake Pine Drive,,Portland,OR,97201,US
+addr_00750,cust_00447,billing,2024-01-15,9231 Fake Pine Street,,Denver,CO,80202,US
+addr_00751,cust_00447,shipping,2024-01-25,8830 Fake Birch Trail,,Phoenix,AZ,85001,US
+addr_00752,cust_00448,billing,2026-04-06,8610 Fake Pine Road,,Atlanta,GA,30301,US
+addr_00753,cust_00449,billing,2023-11-28,513 Fake Elm Drive,,San Diego,CA,92101,US
+addr_00754,cust_00450,billing,2023-12-14,3466 Fake Oak Drive,,Raleigh,NC,27601,US
+addr_00755,cust_00451,billing,2026-02-13,6109 Fake Lake Court,,Seattle,WA,98101,US
+addr_00756,cust_00451,shipping,2026-02-13,6109 Fake Lake Court,,Seattle,WA,98101,US
+addr_00757,cust_00452,billing,2024-11-21,6479 Fake Forest Road,,Dallas,TX,75201,US
+addr_00758,cust_00452,shipping,2026-01-01,6479 Fake Forest Road,,Dallas,TX,75201,US
+addr_00759,cust_00453,billing,2026-07-04,9509 Fake Ridge Avenue,Apt 8,Boston,MA,02108,US
+addr_00760,cust_00453,shipping,2026-07-27,8556 Fake Maple Lane,,Pittsburgh,PA,15222,US
+addr_00761,cust_00454,billing,2024-07-05,5338 Fake Spring Place,,Pittsburgh,PA,15222,US
+addr_00762,cust_00455,billing,2025-05-31,368 Fake Sunset Court,,Austin,TX,78701,US
+addr_00763,cust_00455,shipping,2026-01-25,368 Fake Sunset Court,,Austin,TX,78701,US
+addr_00764,cust_00457,billing,2025-02-16,4318 Fake Summit Trail,,Dallas,TX,75201,US
+addr_00765,cust_00458,billing,2025-02-16,5386 Fake Sunset Avenue,,Indianapolis,IN,46204,US
+addr_00766,cust_00458,shipping,2025-02-16,1705 Fake Highland Drive,,Tampa,FL,33602,US
+addr_00767,cust_00459,billing,2026-07-07,8536 Fake Oak Court,,Pittsburgh,PA,15222,US
+addr_00768,cust_00460,billing,2025-11-08,6971 Fake Harbor Boulevard,,Charlotte,NC,28202,US
+addr_00769,cust_00460,shipping,2026-05-18,6971 Fake Harbor Boulevard,,Charlotte,NC,28202,US
+addr_00770,cust_00461,billing,2026-05-25,3743 Fake Prairie Boulevard,,San Diego,CA,92101,US
+addr_00771,cust_00462,billing,2025-06-26,8908 Fake Willow Drive,,Portland,OR,97201,US
+addr_00772,cust_00462,shipping,2025-11-05,8908 Fake Willow Drive,,Portland,OR,97201,US
+addr_00773,cust_00463,billing,2025-12-09,8860 Fake River Boulevard,Suite 306,Dallas,TX,75201,US
+addr_00774,cust_00463,shipping,2026-01-26,8860 Fake River Boulevard,Suite 306,Dallas,TX,75201,US
+addr_00775,cust_00464,billing,2023-12-16,3464 Fake Lake Trail,,Nashville,TN,37201,US
+addr_00776,cust_00464,shipping,2024-03-14,3464 Fake Lake Trail,,Nashville,TN,37201,US
+addr_00777,cust_00465,billing,2026-07-20,5562 Fake Maple Boulevard,,Sacramento,CA,95814,US
+addr_00778,cust_00467,billing,2024-07-27,8655 Fake Meadow Lane,,San Diego,CA,92101,US
+addr_00779,cust_00467,shipping,2024-07-27,3852 Fake Summit Court,,Portland,OR,97201,US
+addr_00780,cust_00468,billing,2024-02-01,4377 Fake Willow Boulevard,,Tampa,FL,33602,US
+addr_00781,cust_00468,shipping,2024-04-02,4377 Fake Willow Boulevard,,Tampa,FL,33602,US
+addr_00782,cust_00469,billing,2025-10-17,8593 Fake Willow Road,,Kansas City,MO,64105,US
+addr_00783,cust_00470,billing,2024-03-04,3578 Fake Oak Lane,,Milwaukee,WI,53202,US
+addr_00784,cust_00470,shipping,2025-02-26,6341 Fake Meadow Street,,Columbus,OH,43215,US
+addr_00785,cust_00471,billing,2023-10-27,3733 Fake Lake Trail,,Salt Lake City,UT,84101,US
+addr_00786,cust_00472,billing,2024-01-09,885 Fake Elm Boulevard,,Tampa,FL,33602,US
+addr_00787,cust_00472,shipping,2024-03-11,885 Fake Elm Boulevard,,Tampa,FL,33602,US
+addr_00788,cust_00473,billing,2026-07-15,3148 Fake Highland Boulevard,,San Diego,CA,92101,US
+addr_00789,cust_00473,shipping,2026-07-15,3148 Fake Highland Boulevard,,San Diego,CA,92101,US
+addr_00790,cust_00474,billing,2025-11-01,8612 Fake Ridge Street,,Dallas,TX,75201,US
+addr_00791,cust_00474,shipping,2026-01-08,8612 Fake Ridge Street,,Dallas,TX,75201,US
+addr_00792,cust_00475,billing,2024-10-25,4608 Fake Elm Drive,,Charlotte,NC,28202,US
+addr_00793,cust_00475,shipping,2025-01-17,5172 Fake Forest Drive,Apt 223,Chicago,IL,60601,US
+addr_00794,cust_00476,billing,2024-09-24,2477 Fake Summit Place,,Dallas,TX,75201,US
+addr_00795,cust_00477,billing,2025-08-16,6836 Fake Harbor Avenue,,Orlando,FL,32801,US
+addr_00796,cust_00478,billing,2026-04-13,2566 Fake Forest Boulevard,,Tampa,FL,33602,US
+addr_00797,cust_00478,shipping,2026-04-13,2566 Fake Forest Boulevard,,Tampa,FL,33602,US
+addr_00798,cust_00479,billing,2024-06-17,4997 Fake Birch Trail,,Salt Lake City,UT,84101,US
+addr_00799,cust_00479,shipping,2024-09-05,4997 Fake Birch Trail,,Salt Lake City,UT,84101,US
+addr_00800,cust_00480,billing,2026-07-25,3640 Fake Pine Boulevard,Apt 237,Richmond,VA,23219,US
+addr_00801,cust_00481,billing,2026-04-01,5157 Fake Oak Trail,Apt 7,Chicago,IL,60601,US
+addr_00802,cust_00482,billing,2026-05-26,7150 Fake Forest Street,,Indianapolis,IN,46204,US
+addr_00803,cust_00482,shipping,2026-06-04,7150 Fake Forest Street,,Indianapolis,IN,46204,US
+addr_00804,cust_00483,billing,2025-11-21,1327 Fake Birch Street,,Indianapolis,IN,46204,US
+addr_00805,cust_00483,shipping,2026-03-30,1327 Fake Birch Street,,Indianapolis,IN,46204,US
+addr_00806,cust_00484,billing,2026-04-09,8889 Fake Valley Street,,Boston,MA,02108,US
+addr_00807,cust_00484,shipping,2026-05-02,8889 Fake Valley Street,,Boston,MA,02108,US
+addr_00808,cust_00485,billing,2026-06-29,5830 Fake Lake Court,,Tampa,FL,33602,US
+addr_00809,cust_00485,shipping,2026-06-29,4871 Fake Prairie Place,,Charlotte,NC,28202,US
+addr_00810,cust_00486,billing,2026-04-20,8148 Fake Meadow Road,,San Diego,CA,92101,US
+addr_00811,cust_00487,billing,2025-09-09,8205 Fake Cedar Road,,Raleigh,NC,27601,US
+addr_00812,cust_00487,shipping,2025-09-09,1722 Fake Oak Trail,,Salt Lake City,UT,84101,US
+addr_00813,cust_00488,billing,2025-11-13,561 Fake Oak Avenue,,Salt Lake City,UT,84101,US
+addr_00814,cust_00488,shipping,2025-11-26,561 Fake Oak Avenue,,Salt Lake City,UT,84101,US
+addr_00815,cust_00489,billing,2025-06-21,9016 Fake Ridge Lane,,Raleigh,NC,27601,US
+addr_00816,cust_00489,shipping,2025-06-21,9016 Fake Ridge Lane,,Raleigh,NC,27601,US
+addr_00817,cust_00490,billing,2025-01-17,1012 Fake Summit Trail,,Portland,OR,97201,US
+addr_00818,cust_00490,shipping,2025-06-20,1012 Fake Summit Trail,,Portland,OR,97201,US
+addr_00819,cust_00491,billing,2026-07-06,4498 Fake Harbor Lane,Suite 25,Chicago,IL,60601,US
+addr_00820,cust_00492,billing,2025-08-15,2838 Fake Sunset Lane,Suite 338,Richmond,VA,23219,US
+addr_00821,cust_00492,shipping,2025-08-15,2838 Fake Sunset Lane,Suite 338,Richmond,VA,23219,US
+addr_00822,cust_00493,billing,2024-03-21,1402 Fake Summit Lane,,Columbus,OH,43215,US
+addr_00823,cust_00493,shipping,2024-12-22,1402 Fake Summit Lane,,Columbus,OH,43215,US
+addr_00824,cust_00494,billing,2025-02-11,8923 Fake Maple Boulevard,,Richmond,VA,23219,US
+addr_00825,cust_00494,shipping,2025-06-18,9177 Fake Willow Court,,Milwaukee,WI,53202,US
+addr_00826,cust_00495,billing,2024-10-23,1765 Fake Elm Place,,Richmond,VA,23219,US
+addr_00827,cust_00495,shipping,2025-09-04,8586 Fake Willow Street,,Kansas City,MO,64105,US
+addr_00828,cust_00496,billing,2024-11-29,9629 Fake Oak Way,,Austin,TX,78701,US
+addr_00829,cust_00496,shipping,2025-07-18,9629 Fake Oak Way,,Austin,TX,78701,US
+addr_00830,cust_00497,billing,2025-02-10,2389 Fake Forest Trail,Apt 364,Dallas,TX,75201,US
+addr_00831,cust_00497,shipping,2025-09-11,2389 Fake Forest Trail,Apt 364,Dallas,TX,75201,US
+addr_00832,cust_00498,billing,2024-05-07,639 Fake River Lane,,Orlando,FL,32801,US
+addr_00833,cust_00499,billing,2026-05-25,1087 Fake Canyon Road,,Portland,OR,97201,US
+addr_00834,cust_00501,billing,2023-12-23,8625 Fake Ridge Trail,Apt 312,Atlanta,GA,30301,US
+addr_00835,cust_00501,shipping,2024-05-26,8625 Fake Ridge Trail,Apt 312,Atlanta,GA,30301,US
+addr_00836,cust_00502,billing,2025-04-28,4102 Fake Oak Street,,Orlando,FL,32801,US
+addr_00837,cust_00503,billing,2025-11-05,3375 Fake Valley Trail,,Atlanta,GA,30301,US
+addr_00838,cust_00503,shipping,2026-01-30,3375 Fake Valley Trail,,Atlanta,GA,30301,US
+addr_00839,cust_00504,billing,2025-10-23,262 Fake Elm Place,,Tampa,FL,33602,US
+addr_00840,cust_00504,shipping,2025-10-23,262 Fake Elm Place,,Tampa,FL,33602,US
+addr_00841,cust_00505,billing,2026-04-24,385 Fake Meadow Court,Suite 160,Atlanta,GA,30301,US
+addr_00842,cust_00505,shipping,2026-06-04,385 Fake Meadow Court,Suite 160,Atlanta,GA,30301,US
+addr_00843,cust_00506,billing,2024-10-25,6245 Fake Forest Drive,,San Diego,CA,92101,US
+addr_00844,cust_00506,shipping,2025-05-20,5983 Fake Highland Drive,,Dallas,TX,75201,US
+addr_00845,cust_00507,billing,2025-08-30,965 Fake Highland Lane,Apt 11,Nashville,TN,37201,US
+addr_00846,cust_00507,shipping,2025-09-04,3726 Fake Maple Lane,,Raleigh,NC,27601,US
+addr_00847,cust_00508,billing,2025-01-11,9525 Fake Willow Boulevard,,Indianapolis,IN,46204,US
+addr_00848,cust_00508,shipping,2025-04-08,9525 Fake Willow Boulevard,,Indianapolis,IN,46204,US
+addr_00849,cust_00509,billing,2026-06-17,5668 Fake Cedar Way,,Pittsburgh,PA,15222,US
+addr_00850,cust_00509,shipping,2026-07-10,5668 Fake Cedar Way,,Pittsburgh,PA,15222,US
+addr_00851,cust_00510,billing,2025-11-26,2369 Fake Sunset Place,Apt 7,Boise,ID,83702,US
+addr_00852,cust_00510,shipping,2026-03-28,2369 Fake Sunset Place,Apt 7,Boise,ID,83702,US
+addr_00853,cust_00511,billing,2024-06-03,3539 Fake Prairie Boulevard,Suite 382,Indianapolis,IN,46204,US
+addr_00854,cust_00512,billing,2026-01-20,1636 Fake Ridge Lane,,Raleigh,NC,27601,US
+addr_00855,cust_00513,billing,2025-07-13,644 Fake Valley Boulevard,,Minneapolis,MN,55401,US
+addr_00856,cust_00513,shipping,2025-08-08,297 Fake Sunset Way,,Tampa,FL,33602,US
+addr_00857,cust_00514,billing,2025-04-06,4256 Fake Ridge Court,,Austin,TX,78701,US
+addr_00858,cust_00514,shipping,2025-04-30,4256 Fake Ridge Court,,Austin,TX,78701,US
+addr_00859,cust_00516,billing,2025-04-16,4416 Fake Summit Avenue,Suite 217,Milwaukee,WI,53202,US
+addr_00860,cust_00516,shipping,2025-06-01,4416 Fake Summit Avenue,Suite 217,Milwaukee,WI,53202,US
+addr_00861,cust_00517,billing,2026-07-14,2421 Fake Forest Road,,Raleigh,NC,27601,US
+addr_00862,cust_00518,billing,2026-01-22,7027 Fake Oak Place,Suite 33,Dallas,TX,75201,US
+addr_00863,cust_00519,billing,2024-02-07,3404 Fake Meadow Boulevard,,Tampa,FL,33602,US
+addr_00864,cust_00519,shipping,2024-04-04,3404 Fake Meadow Boulevard,,Tampa,FL,33602,US
+addr_00865,cust_00520,billing,2025-12-03,7441 Fake Elm Place,,Boston,MA,02108,US
+addr_00866,cust_00520,shipping,2026-03-11,7441 Fake Elm Place,,Boston,MA,02108,US
+addr_00867,cust_00521,billing,2025-12-07,279 Fake Maple Boulevard,,Chicago,IL,60601,US
+addr_00868,cust_00521,shipping,2026-03-20,3859 Fake Lake Boulevard,,Boise,ID,83702,US
+addr_00869,cust_00522,billing,2025-04-04,5021 Fake Birch Boulevard,,San Diego,CA,92101,US
+addr_00870,cust_00522,shipping,2025-09-12,5021 Fake Birch Boulevard,,San Diego,CA,92101,US
+addr_00871,cust_00523,billing,2025-09-22,931 Fake Forest Drive,Suite 194,Portland,OR,97201,US
+addr_00872,cust_00523,shipping,2025-10-22,931 Fake Forest Drive,Suite 194,Portland,OR,97201,US
+addr_00873,cust_00524,billing,2025-04-18,9787 Fake Maple Way,,Columbus,OH,43215,US
+addr_00874,cust_00525,billing,2025-09-13,638 Fake River Way,,Boise,ID,83702,US
+addr_00875,cust_00525,shipping,2026-05-19,638 Fake River Way,,Boise,ID,83702,US
+addr_00876,cust_00526,billing,2024-09-11,727 Fake Summit Street,,Dallas,TX,75201,US
+addr_00877,cust_00526,shipping,2025-01-21,3332 Fake Oak Way,Apt 336,Phoenix,AZ,85001,US
+addr_00878,cust_00527,billing,2025-09-06,6573 Fake Pine Avenue,,Orlando,FL,32801,US
+addr_00879,cust_00528,billing,2025-02-01,4255 Fake Harbor Lane,Apt 201,Sacramento,CA,95814,US
+addr_00880,cust_00528,shipping,2025-06-26,4255 Fake Harbor Lane,Apt 201,Sacramento,CA,95814,US
+addr_00881,cust_00529,billing,2026-01-19,4476 Fake Harbor Lane,,Tampa,FL,33602,US
+addr_00882,cust_00529,shipping,2026-02-17,4476 Fake Harbor Lane,,Tampa,FL,33602,US
+addr_00883,cust_00530,billing,2025-08-01,9066 Fake Willow Court,,Tampa,FL,33602,US
+addr_00884,cust_00530,shipping,2026-01-28,9066 Fake Willow Court,,Tampa,FL,33602,US
+addr_00885,cust_00531,billing,2024-02-25,3916 Fake Sunset Street,Apt 304,Richmond,VA,23219,US
+addr_00886,cust_00532,billing,2026-01-18,6940 Fake Lake Road,,Columbus,OH,43215,US
+addr_00887,cust_00532,shipping,2026-04-26,6940 Fake Lake Road,,Columbus,OH,43215,US
+addr_00888,cust_00533,billing,2023-11-07,5827 Fake Harbor Way,,Portland,OR,97201,US
+addr_00889,cust_00533,shipping,2024-01-02,5827 Fake Harbor Way,,Portland,OR,97201,US
+addr_00890,cust_00534,billing,2023-09-26,9488 Fake Valley Lane,,Salt Lake City,UT,84101,US
+addr_00891,cust_00534,shipping,2023-09-27,3018 Fake Summit Road,,Dallas,TX,75201,US
+addr_00892,cust_00535,billing,2026-02-23,7844 Fake Prairie Avenue,,Sacramento,CA,95814,US
+addr_00893,cust_00536,billing,2026-03-16,2473 Fake Pine Avenue,,Pittsburgh,PA,15222,US
+addr_00894,cust_00536,shipping,2026-03-16,2473 Fake Pine Avenue,,Pittsburgh,PA,15222,US
+addr_00895,cust_00537,billing,2024-11-19,8559 Fake Valley Boulevard,,Nashville,TN,37201,US
+addr_00896,cust_00538,billing,2023-11-27,7207 Fake Summit Street,,Atlanta,GA,30301,US
+addr_00897,cust_00539,billing,2026-04-17,7029 Fake Birch Way,,Richmond,VA,23219,US
+addr_00898,cust_00540,billing,2025-08-13,9207 Fake Cedar Way,,Denver,CO,80202,US
+addr_00899,cust_00540,shipping,2026-07-17,9207 Fake Cedar Way,,Denver,CO,80202,US
+addr_00900,cust_00541,billing,2023-10-11,6063 Fake Cedar Lane,Suite 257,Milwaukee,WI,53202,US
+addr_00901,cust_00541,shipping,2025-03-22,6063 Fake Cedar Lane,Suite 257,Milwaukee,WI,53202,US
+addr_00902,cust_00542,billing,2026-01-27,5206 Fake Forest Trail,,San Diego,CA,92101,US
+addr_00903,cust_00543,billing,2024-01-31,4999 Fake Cedar Lane,,Minneapolis,MN,55401,US
+addr_00904,cust_00543,shipping,2024-06-06,4999 Fake Cedar Lane,,Minneapolis,MN,55401,US
+addr_00905,cust_00544,billing,2025-07-26,8321 Fake Harbor Road,,Milwaukee,WI,53202,US
+addr_00906,cust_00544,shipping,2026-06-16,3560 Fake Oak Boulevard,Suite 390,Portland,OR,97201,US
+addr_00907,cust_00545,billing,2024-11-28,5840 Fake Willow Street,,Charlotte,NC,28202,US
+addr_00908,cust_00545,shipping,2025-05-03,5840 Fake Willow Street,,Charlotte,NC,28202,US
+addr_00909,cust_00546,billing,2025-06-09,9237 Fake Harbor Avenue,Suite 375,Boise,ID,83702,US
+addr_00910,cust_00546,shipping,2025-12-07,9237 Fake Harbor Avenue,Suite 375,Boise,ID,83702,US
+addr_00911,cust_00547,billing,2024-11-12,922 Fake Sunset Drive,,Raleigh,NC,27601,US
+addr_00912,cust_00548,billing,2024-10-23,9393 Fake Summit Place,Suite 163,Pittsburgh,PA,15222,US
+addr_00913,cust_00549,billing,2025-12-21,5799 Fake Spring Lane,,Raleigh,NC,27601,US
+addr_00914,cust_00549,shipping,2026-01-11,5799 Fake Spring Lane,,Raleigh,NC,27601,US
+addr_00915,cust_00550,billing,2025-04-30,2203 Fake Pine Place,,Boise,ID,83702,US
+addr_00916,cust_00551,billing,2025-11-29,692 Fake Maple Court,Suite 206,Columbus,OH,43215,US
+addr_00917,cust_00551,shipping,2025-11-29,657 Fake Harbor Place,,Atlanta,GA,30301,US
+addr_00918,cust_00552,billing,2025-10-09,6049 Fake Highland Avenue,,Boise,ID,83702,US
+addr_00919,cust_00552,shipping,2026-01-26,4692 Fake Cedar Trail,Suite 283,Denver,CO,80202,US
+addr_00920,cust_00554,billing,2025-05-11,3753 Fake Birch Boulevard,Apt 115,Nashville,TN,37201,US
+addr_00921,cust_00554,shipping,2025-11-15,3753 Fake Birch Boulevard,Apt 115,Nashville,TN,37201,US
+addr_00922,cust_00555,billing,2025-07-06,3641 Fake River Way,,Phoenix,AZ,85001,US
+addr_00923,cust_00555,shipping,2026-07-19,3641 Fake River Way,,Phoenix,AZ,85001,US
+addr_00924,cust_00556,billing,2025-10-13,5048 Fake Cedar Road,,Salt Lake City,UT,84101,US
+addr_00925,cust_00557,billing,2025-11-09,1873 Fake Meadow Place,,Phoenix,AZ,85001,US
+addr_00926,cust_00557,shipping,2025-11-09,1313 Fake River Avenue,,Indianapolis,IN,46204,US
+addr_00927,cust_00558,billing,2024-01-21,3916 Fake Cedar Drive,Apt 138,Austin,TX,78701,US
+addr_00928,cust_00558,shipping,2024-11-05,3916 Fake Cedar Drive,Apt 138,Austin,TX,78701,US
+addr_00929,cust_00559,billing,2025-01-23,8566 Fake Harbor Way,,Dallas,TX,75201,US
+addr_00930,cust_00559,shipping,2026-06-10,8566 Fake Harbor Way,,Dallas,TX,75201,US
+addr_00931,cust_00560,billing,2026-05-28,4845 Fake Ridge Trail,Suite 311,Phoenix,AZ,85001,US
+addr_00932,cust_00560,shipping,2026-06-05,4761 Fake Valley Way,,Nashville,TN,37201,US
+addr_00933,cust_00561,billing,2024-09-25,7196 Fake Oak Lane,,Orlando,FL,32801,US
+addr_00934,cust_00561,shipping,2025-01-09,7196 Fake Oak Lane,,Orlando,FL,32801,US
+addr_00935,cust_00562,billing,2024-08-26,3504 Fake Valley Way,,Chicago,IL,60601,US
+addr_00936,cust_00563,billing,2026-03-13,8530 Fake Lake Lane,,Denver,CO,80202,US
+addr_00937,cust_00563,shipping,2026-04-27,8530 Fake Lake Lane,,Denver,CO,80202,US
+addr_00938,cust_00564,billing,2026-06-25,9116 Fake Prairie Way,,Sacramento,CA,95814,US
+addr_00939,cust_00565,billing,2025-03-22,1405 Fake Ridge Avenue,Suite 107,Richmond,VA,23219,US
+addr_00940,cust_00565,shipping,2025-03-22,6717 Fake Spring Avenue,Suite 202,San Diego,CA,92101,US
+addr_00941,cust_00566,billing,2025-12-25,6912 Fake Spring Drive,Apt 121,Chicago,IL,60601,US
+addr_00942,cust_00567,billing,2025-11-17,9574 Fake Harbor Drive,,San Diego,CA,92101,US
+addr_00943,cust_00568,billing,2025-11-26,6133 Fake Forest Street,,Milwaukee,WI,53202,US
+addr_00944,cust_00569,billing,2025-12-19,1515 Fake Harbor Way,Suite 211,Boise,ID,83702,US
+addr_00945,cust_00570,billing,2024-05-09,3157 Fake Canyon Lane,,Columbus,OH,43215,US
+addr_00946,cust_00571,billing,2025-01-21,4403 Fake Harbor Court,Suite 303,Milwaukee,WI,53202,US
+addr_00947,cust_00571,shipping,2025-05-16,247 Fake Highland Lane,,Atlanta,GA,30301,US
+addr_00948,cust_00572,billing,2025-09-01,6506 Fake Spring Avenue,,Seattle,WA,98101,US
+addr_00949,cust_00572,shipping,2026-01-22,6506 Fake Spring Avenue,,Seattle,WA,98101,US
+addr_00950,cust_00573,billing,2025-03-05,6614 Fake River Court,Suite 331,Columbus,OH,43215,US
+addr_00951,cust_00573,shipping,2025-06-29,1496 Fake Highland Way,,Portland,OR,97201,US
+addr_00952,cust_00574,billing,2025-01-02,8948 Fake Highland Drive,,Minneapolis,MN,55401,US
+addr_00953,cust_00574,shipping,2025-01-22,8948 Fake Highland Drive,,Minneapolis,MN,55401,US
+addr_00954,cust_00575,billing,2026-01-10,702 Fake Harbor Boulevard,,Raleigh,NC,27601,US
+addr_00955,cust_00576,billing,2025-09-27,8378 Fake Cedar Trail,Apt 10,Dallas,TX,75201,US
+addr_00956,cust_00576,shipping,2026-02-24,8378 Fake Cedar Trail,Apt 10,Dallas,TX,75201,US
+addr_00957,cust_00577,billing,2025-01-15,2244 Fake Lake Lane,,Minneapolis,MN,55401,US
+addr_00958,cust_00577,shipping,2025-01-27,2244 Fake Lake Lane,,Minneapolis,MN,55401,US
+addr_00959,cust_00578,billing,2025-02-13,8340 Fake Lake Boulevard,,Nashville,TN,37201,US
+addr_00960,cust_00579,billing,2026-06-29,6443 Fake River Lane,,Denver,CO,80202,US
+addr_00961,cust_00580,billing,2025-02-25,8704 Fake Meadow Place,,Richmond,VA,23219,US
+addr_00962,cust_00580,shipping,2025-02-25,8704 Fake Meadow Place,,Richmond,VA,23219,US
+addr_00963,cust_00581,billing,2025-12-23,4111 Fake Elm Drive,,Atlanta,GA,30301,US
+addr_00964,cust_00581,shipping,2026-07-04,4111 Fake Elm Drive,,Atlanta,GA,30301,US
+addr_00965,cust_00582,billing,2023-09-19,7497 Fake Sunset Boulevard,,Denver,CO,80202,US
+addr_00966,cust_00583,billing,2024-09-12,8676 Fake Forest Road,,Boise,ID,83702,US
+addr_00967,cust_00584,billing,2025-03-10,3385 Fake Spring Avenue,,Chicago,IL,60601,US
+addr_00968,cust_00585,billing,2026-04-18,4196 Fake Pine Road,,Dallas,TX,75201,US
+addr_00969,cust_00586,billing,2024-08-28,1452 Fake Summit Place,Apt 206,Boston,MA,02108,US
+addr_00970,cust_00587,billing,2024-11-08,525 Fake Highland Trail,,Kansas City,MO,64105,US
+addr_00971,cust_00589,billing,2026-03-04,1077 Fake Sunset Road,,Charlotte,NC,28202,US
+addr_00972,cust_00589,shipping,2026-06-17,6350 Fake Willow Lane,,Charlotte,NC,28202,US
+addr_00973,cust_00590,billing,2025-11-27,9467 Fake Valley Trail,,Boise,ID,83702,US
+addr_00974,cust_00591,billing,2024-11-26,3651 Fake Lake Avenue,,Boston,MA,02108,US
+addr_00975,cust_00592,billing,2024-06-06,2516 Fake Valley Lane,Apt 121,Pittsburgh,PA,15222,US
+addr_00976,cust_00592,shipping,2024-07-20,9279 Fake Birch Lane,,Dallas,TX,75201,US
+addr_00977,cust_00593,billing,2026-06-26,8304 Fake Birch Street,,Orlando,FL,32801,US
+addr_00978,cust_00593,shipping,2026-06-26,8304 Fake Birch Street,,Orlando,FL,32801,US
+addr_00979,cust_00594,billing,2025-02-28,6065 Fake Maple Place,Suite 56,Orlando,FL,32801,US
+addr_00980,cust_00594,shipping,2025-09-01,6065 Fake Maple Place,Suite 56,Orlando,FL,32801,US
+addr_00981,cust_00595,billing,2024-07-13,3394 Fake Forest Trail,Suite 301,Boise,ID,83702,US
+addr_00982,cust_00595,shipping,2025-03-29,3394 Fake Forest Trail,Suite 301,Boise,ID,83702,US
+addr_00983,cust_00596,billing,2025-05-28,3863 Fake Sunset Place,,Denver,CO,80202,US
+addr_00984,cust_00596,shipping,2025-06-08,3863 Fake Sunset Place,,Denver,CO,80202,US
+addr_00985,cust_00597,billing,2026-02-28,4019 Fake Highland Way,,Chicago,IL,60601,US
+addr_00986,cust_00597,shipping,2026-06-25,4019 Fake Highland Way,,Chicago,IL,60601,US
+addr_00987,cust_00598,billing,2023-08-14,9515 Fake River Boulevard,,Nashville,TN,37201,US
+addr_00988,cust_00598,shipping,2023-08-26,8624 Fake Meadow Court,Suite 110,Boston,MA,02108,US
+addr_00989,cust_00599,billing,2025-02-10,1105 Fake Ridge Boulevard,,Milwaukee,WI,53202,US
+addr_00990,cust_00600,billing,2024-02-06,468 Fake Ridge Avenue,,Seattle,WA,98101,US
+addr_00991,cust_00601,billing,2024-04-03,4563 Fake Elm Lane,,Portland,OR,97201,US
+addr_00992,cust_00601,shipping,2024-04-03,9826 Fake Pine Drive,Suite 255,Chicago,IL,60601,US
+addr_00993,cust_00602,billing,2025-08-18,2382 Fake Summit Drive,,Boston,MA,02108,US
+addr_00994,cust_00602,shipping,2025-11-12,2382 Fake Summit Drive,,Boston,MA,02108,US
+addr_00995,cust_00603,billing,2024-12-04,1307 Fake River Street,,Chicago,IL,60601,US
+addr_00996,cust_00603,shipping,2024-12-15,1307 Fake River Street,,Chicago,IL,60601,US
+addr_00997,cust_00604,billing,2025-06-27,2945 Fake Ridge Avenue,,San Diego,CA,92101,US
+addr_00998,cust_00604,shipping,2025-06-27,2945 Fake Ridge Avenue,,San Diego,CA,92101,US
+addr_00999,cust_00605,billing,2026-03-04,6679 Fake Valley Avenue,,Pittsburgh,PA,15222,US
+addr_01000,cust_00605,shipping,2026-07-13,6679 Fake Valley Avenue,,Pittsburgh,PA,15222,US
+addr_01001,cust_00606,billing,2024-01-30,164 Fake Highland Lane,,Nashville,TN,37201,US
+addr_01002,cust_00606,shipping,2024-03-21,164 Fake Highland Lane,,Nashville,TN,37201,US
+addr_01003,cust_00607,billing,2025-08-07,1922 Fake Willow Street,Apt 355,Richmond,VA,23219,US
+addr_01004,cust_00608,billing,2026-02-24,8506 Fake Birch Trail,,Charlotte,NC,28202,US
+addr_01005,cust_00608,shipping,2026-03-30,8506 Fake Birch Trail,,Charlotte,NC,28202,US
+addr_01006,cust_00609,billing,2024-09-10,4363 Fake Birch Boulevard,Apt 18,Atlanta,GA,30301,US
+addr_01007,cust_00609,shipping,2025-05-24,219 Fake Valley Road,,Kansas City,MO,64105,US
+addr_01008,cust_00610,billing,2026-05-23,3928 Fake Spring Drive,,Denver,CO,80202,US
+addr_01009,cust_00611,billing,2023-12-26,2537 Fake Willow Avenue,,Indianapolis,IN,46204,US
+addr_01010,cust_00611,shipping,2024-06-01,2537 Fake Willow Avenue,,Indianapolis,IN,46204,US
+addr_01011,cust_00612,billing,2024-12-22,5509 Fake Harbor Court,Suite 294,Orlando,FL,32801,US
+addr_01012,cust_00612,shipping,2025-06-21,5509 Fake Harbor Court,Suite 294,Orlando,FL,32801,US
+addr_01013,cust_00613,billing,2024-07-24,8129 Fake Maple Trail,,Sacramento,CA,95814,US
+addr_01014,cust_00614,billing,2024-01-06,7048 Fake Canyon Drive,Suite 308,San Diego,CA,92101,US
+addr_01015,cust_00614,shipping,2024-01-06,7048 Fake Canyon Drive,Suite 308,San Diego,CA,92101,US
+addr_01016,cust_00615,billing,2024-04-12,8512 Fake Forest Place,,Dallas,TX,75201,US
+addr_01017,cust_00615,shipping,2024-05-10,932 Fake Valley Boulevard,,Indianapolis,IN,46204,US
+addr_01018,cust_00616,billing,2023-09-01,5765 Fake Lake Street,Suite 86,Columbus,OH,43215,US
+addr_01019,cust_00616,shipping,2023-09-01,5765 Fake Lake Street,Suite 86,Columbus,OH,43215,US
+addr_01020,cust_00617,billing,2023-08-29,7093 Fake Ridge Lane,,Sacramento,CA,95814,US
+addr_01021,cust_00617,shipping,2024-02-12,5102 Fake Birch Way,,Raleigh,NC,27601,US
+addr_01022,cust_00618,billing,2025-03-17,7000 Fake Cedar Drive,,Boston,MA,02108,US
+addr_01023,cust_00619,billing,2026-07-30,514 Fake Prairie Place,Apt 280,Denver,CO,80202,US
+addr_01024,cust_00619,shipping,2026-07-30,4988 Fake Summit Place,,Milwaukee,WI,53202,US
+addr_01025,cust_00620,billing,2025-10-11,8871 Fake Canyon Street,Suite 6,Boston,MA,02108,US
+addr_01026,cust_00620,shipping,2026-02-14,1905 Fake Maple Trail,,Dallas,TX,75201,US
+addr_01027,cust_00621,billing,2025-01-10,9442 Fake Valley Way,,Indianapolis,IN,46204,US
+addr_01028,cust_00621,shipping,2025-05-31,9442 Fake Valley Way,,Indianapolis,IN,46204,US
+addr_01029,cust_00622,billing,2023-09-16,5542 Fake Summit Street,,Raleigh,NC,27601,US
+addr_01030,cust_00623,billing,2026-07-12,9695 Fake Elm Lane,Suite 78,Orlando,FL,32801,US
+addr_01031,cust_00623,shipping,2026-07-16,9695 Fake Elm Lane,Suite 78,Orlando,FL,32801,US
+addr_01032,cust_00624,billing,2026-04-16,737 Fake Highland Way,,Tampa,FL,33602,US
+addr_01033,cust_00624,shipping,2026-05-10,5254 Fake Elm Way,,Phoenix,AZ,85001,US
+addr_01034,cust_00625,billing,2023-08-24,3377 Fake Cedar Street,Suite 377,Milwaukee,WI,53202,US
+addr_01035,cust_00625,shipping,2024-04-05,3377 Fake Cedar Street,Suite 377,Milwaukee,WI,53202,US
+addr_01036,cust_00626,billing,2024-08-02,4771 Fake Cedar Drive,,Sacramento,CA,95814,US
+addr_01037,cust_00626,shipping,2025-06-07,4771 Fake Cedar Drive,,Sacramento,CA,95814,US
+addr_01038,cust_00627,billing,2025-01-09,671 Fake Prairie Trail,Suite 212,Chicago,IL,60601,US
+addr_01039,cust_00627,shipping,2025-01-17,671 Fake Prairie Trail,Suite 212,Chicago,IL,60601,US
+addr_01040,cust_00628,billing,2025-02-22,2263 Fake Ridge Trail,,Salt Lake City,UT,84101,US
+addr_01041,cust_00628,shipping,2025-10-06,2263 Fake Ridge Trail,,Salt Lake City,UT,84101,US
+addr_01042,cust_00629,billing,2025-09-21,6769 Fake Forest Avenue,,Milwaukee,WI,53202,US
+addr_01043,cust_00629,shipping,2026-02-12,6769 Fake Forest Avenue,,Milwaukee,WI,53202,US
+addr_01044,cust_00630,billing,2024-02-21,9391 Fake Birch Lane,,Denver,CO,80202,US
+addr_01045,cust_00630,shipping,2024-02-21,9391 Fake Birch Lane,,Denver,CO,80202,US
+addr_01046,cust_00631,billing,2025-09-17,2319 Fake Valley Avenue,,Tampa,FL,33602,US
+addr_01047,cust_00632,billing,2024-01-20,7830 Fake Cedar Place,,Seattle,WA,98101,US
+addr_01048,cust_00632,shipping,2025-07-13,2657 Fake Summit Way,Suite 322,Charlotte,NC,28202,US
+addr_01049,cust_00633,billing,2025-12-03,4701 Fake River Place,Apt 399,Kansas City,MO,64105,US
+addr_01050,cust_00633,shipping,2025-12-15,4701 Fake River Place,Apt 399,Kansas City,MO,64105,US
+addr_01051,cust_00634,billing,2023-09-21,9006 Fake Lake Road,,Boise,ID,83702,US
+addr_01052,cust_00634,shipping,2023-10-09,9006 Fake Lake Road,,Boise,ID,83702,US
+addr_01053,cust_00635,billing,2025-01-25,5015 Fake Summit Court,,Sacramento,CA,95814,US
+addr_01054,cust_00636,billing,2026-05-21,3581 Fake Harbor Place,Apt 177,Tampa,FL,33602,US
+addr_01055,cust_00636,shipping,2026-06-06,3581 Fake Harbor Place,Apt 177,Tampa,FL,33602,US
+addr_01056,cust_00637,billing,2024-03-06,1010 Fake Sunset Court,,Phoenix,AZ,85001,US
+addr_01057,cust_00637,shipping,2025-04-21,1364 Fake Willow Boulevard,,Portland,OR,97201,US
+addr_01058,cust_00638,billing,2025-08-27,813 Fake Meadow Avenue,,Dallas,TX,75201,US
+addr_01059,cust_00639,billing,2025-03-30,767 Fake Meadow Place,Apt 157,Austin,TX,78701,US
+addr_01060,cust_00639,shipping,2025-11-16,767 Fake Meadow Place,Apt 157,Austin,TX,78701,US
+addr_01061,cust_00640,billing,2025-12-19,9010 Fake Canyon Avenue,,Salt Lake City,UT,84101,US
+addr_01062,cust_00640,shipping,2025-12-19,9010 Fake Canyon Avenue,,Salt Lake City,UT,84101,US
+addr_01063,cust_00641,billing,2025-04-11,477 Fake Ridge Boulevard,Suite 341,Raleigh,NC,27601,US
+addr_01064,cust_00641,shipping,2025-11-23,477 Fake Ridge Boulevard,Suite 341,Raleigh,NC,27601,US
+addr_01065,cust_00642,billing,2025-09-13,165 Fake Willow Boulevard,,Austin,TX,78701,US
+addr_01066,cust_00643,billing,2024-01-29,8844 Fake Maple Avenue,,Pittsburgh,PA,15222,US
+addr_01067,cust_00643,shipping,2025-07-29,8844 Fake Maple Avenue,,Pittsburgh,PA,15222,US
+addr_01068,cust_00644,billing,2025-01-27,224 Fake Birch Way,,Denver,CO,80202,US
+addr_01069,cust_00644,shipping,2025-02-16,3434 Fake Spring Boulevard,,Tampa,FL,33602,US
+addr_01070,cust_00645,billing,2025-06-13,670 Fake Valley Lane,Apt 233,Chicago,IL,60601,US
+addr_01071,cust_00646,billing,2024-11-24,6432 Fake Forest Avenue,,Raleigh,NC,27601,US
+addr_01072,cust_00646,shipping,2024-12-21,4373 Fake Spring Place,,Seattle,WA,98101,US
+addr_01073,cust_00647,billing,2025-02-13,4696 Fake Forest Street,,Orlando,FL,32801,US
+addr_01074,cust_00647,shipping,2025-02-13,4696 Fake Forest Street,,Orlando,FL,32801,US
+addr_01075,cust_00648,billing,2026-05-06,3787 Fake Ridge Trail,Suite 203,Dallas,TX,75201,US
+addr_01076,cust_00648,shipping,2026-05-06,3787 Fake Ridge Trail,Suite 203,Dallas,TX,75201,US
+addr_01077,cust_00649,billing,2026-05-02,3325 Fake Lake Road,,Raleigh,NC,27601,US
+addr_01078,cust_00649,shipping,2026-05-25,3325 Fake Lake Road,,Raleigh,NC,27601,US
+addr_01079,cust_00650,billing,2024-11-02,7491 Fake Lake Road,,Kansas City,MO,64105,US
+addr_01080,cust_00650,shipping,2025-09-26,7491 Fake Lake Road,,Kansas City,MO,64105,US
+addr_01081,cust_00651,billing,2026-02-04,6215 Fake Meadow Lane,,Seattle,WA,98101,US
+addr_01082,cust_00652,billing,2026-02-14,7498 Fake Forest Court,,Boston,MA,02108,US
+addr_01083,cust_00652,shipping,2026-07-14,7498 Fake Forest Court,,Boston,MA,02108,US
+addr_01084,cust_00653,billing,2025-06-25,2125 Fake Meadow Street,,Orlando,FL,32801,US
+addr_01085,cust_00653,shipping,2026-07-18,2125 Fake Meadow Street,,Orlando,FL,32801,US
+addr_01086,cust_00654,billing,2025-02-03,5322 Fake Ridge Court,Apt 383,Charlotte,NC,28202,US
+addr_01087,cust_00655,billing,2024-01-23,992 Fake Oak Avenue,,Milwaukee,WI,53202,US
+addr_01088,cust_00655,shipping,2024-03-08,992 Fake Oak Avenue,,Milwaukee,WI,53202,US
+addr_01089,cust_00656,billing,2025-04-15,1072 Fake Summit Lane,,Seattle,WA,98101,US
+addr_01090,cust_00656,shipping,2026-03-20,1072 Fake Summit Lane,,Seattle,WA,98101,US
+addr_01091,cust_00657,billing,2025-06-29,731 Fake Pine Way,,Austin,TX,78701,US
+addr_01092,cust_00657,shipping,2025-08-27,731 Fake Pine Way,,Austin,TX,78701,US
+addr_01093,cust_00658,billing,2025-04-28,7072 Fake Spring Way,,Indianapolis,IN,46204,US
+addr_01094,cust_00659,billing,2024-06-20,6200 Fake Harbor Way,,Nashville,TN,37201,US
+addr_01095,cust_00660,billing,2026-04-20,5327 Fake Willow Trail,Apt 188,Phoenix,AZ,85001,US
+addr_01096,cust_00660,shipping,2026-06-06,1561 Fake Cedar Court,Apt 143,San Diego,CA,92101,US
+addr_01097,cust_00661,billing,2023-10-12,8886 Fake Harbor Drive,,Atlanta,GA,30301,US
+addr_01098,cust_00661,shipping,2024-03-02,8886 Fake Harbor Drive,,Atlanta,GA,30301,US
+addr_01099,cust_00662,billing,2023-12-29,9903 Fake Lake Lane,,San Diego,CA,92101,US
+addr_01100,cust_00662,shipping,2024-01-31,9903 Fake Lake Lane,,San Diego,CA,92101,US
+addr_01101,cust_00663,billing,2023-09-08,1220 Fake River Place,,Indianapolis,IN,46204,US
+addr_01102,cust_00664,billing,2026-02-17,3550 Fake Canyon Trail,,Minneapolis,MN,55401,US
+addr_01103,cust_00664,shipping,2026-04-03,3550 Fake Canyon Trail,,Minneapolis,MN,55401,US
+addr_01104,cust_00665,billing,2026-05-21,8366 Fake Ridge Drive,,Atlanta,GA,30301,US
+addr_01105,cust_00665,shipping,2026-05-21,3416 Fake Maple Avenue,Suite 370,Columbus,OH,43215,US
+addr_01106,cust_00666,billing,2024-05-23,1543 Fake Elm Road,Suite 350,Kansas City,MO,64105,US
+addr_01107,cust_00666,shipping,2024-11-30,8835 Fake Summit Trail,,Phoenix,AZ,85001,US
+addr_01108,cust_00667,billing,2026-04-21,7076 Fake Forest Road,Suite 124,Portland,OR,97201,US
+addr_01109,cust_00668,billing,2024-01-01,8026 Fake Lake Trail,Suite 200,Chicago,IL,60601,US
+addr_01110,cust_00668,shipping,2024-03-28,724 Fake Spring Lane,,Chicago,IL,60601,US
+addr_01111,cust_00669,billing,2026-02-16,1968 Fake Birch Drive,Apt 11,Phoenix,AZ,85001,US
+addr_01112,cust_00670,billing,2024-12-30,1781 Fake Spring Avenue,Suite 216,Austin,TX,78701,US
+addr_01113,cust_00671,billing,2024-12-27,9852 Fake Lake Boulevard,,Minneapolis,MN,55401,US
+addr_01114,cust_00671,shipping,2025-10-28,9852 Fake Lake Boulevard,,Minneapolis,MN,55401,US
+addr_01115,cust_00672,billing,2026-06-02,6898 Fake Spring Court,,Austin,TX,78701,US
+addr_01116,cust_00673,billing,2023-12-04,8104 Fake Meadow Street,,Denver,CO,80202,US
+addr_01117,cust_00673,shipping,2024-04-02,8104 Fake Meadow Street,,Denver,CO,80202,US
+addr_01118,cust_00674,billing,2025-11-16,3364 Fake Sunset Trail,Suite 51,Chicago,IL,60601,US
+addr_01119,cust_00674,shipping,2026-04-26,3364 Fake Sunset Trail,Suite 51,Chicago,IL,60601,US
+addr_01120,cust_00675,billing,2026-05-31,6179 Fake Sunset Place,Apt 134,Charlotte,NC,28202,US
+addr_01121,cust_00675,shipping,2026-06-11,6179 Fake Sunset Place,Apt 134,Charlotte,NC,28202,US
+addr_01122,cust_00676,billing,2025-07-17,1353 Fake Pine Road,,San Diego,CA,92101,US
+addr_01123,cust_00676,shipping,2025-09-22,1353 Fake Pine Road,,San Diego,CA,92101,US
+addr_01124,cust_00677,billing,2025-11-15,4626 Fake Forest Way,,Richmond,VA,23219,US
+addr_01125,cust_00678,billing,2026-05-17,1001 Fake Willow Court,,Orlando,FL,32801,US
+addr_01126,cust_00678,shipping,2026-06-14,1001 Fake Willow Court,,Orlando,FL,32801,US
+addr_01127,cust_00679,billing,2026-04-06,8620 Fake Summit Drive,,Richmond,VA,23219,US
+addr_01128,cust_00679,shipping,2026-04-18,8620 Fake Summit Drive,,Richmond,VA,23219,US
+addr_01129,cust_00680,billing,2025-01-14,1081 Fake Elm Lane,Apt 73,Richmond,VA,23219,US
+addr_01130,cust_00680,shipping,2025-02-20,389 Fake Sunset Court,,Chicago,IL,60601,US
+addr_01131,cust_00681,billing,2024-08-02,3592 Fake Pine Boulevard,,Kansas City,MO,64105,US
+addr_01132,cust_00681,shipping,2024-08-02,3592 Fake Pine Boulevard,,Kansas City,MO,64105,US
+addr_01133,cust_00682,billing,2025-11-26,554 Fake Oak Avenue,,Nashville,TN,37201,US
+addr_01134,cust_00683,billing,2025-07-21,7993 Fake Maple Way,Suite 225,Charlotte,NC,28202,US
+addr_01135,cust_00684,billing,2025-06-30,3149 Fake River Boulevard,Suite 74,Denver,CO,80202,US
+addr_01136,cust_00685,billing,2024-11-22,278 Fake Highland Road,,Sacramento,CA,95814,US
+addr_01137,cust_00685,shipping,2025-08-07,278 Fake Highland Road,,Sacramento,CA,95814,US
+addr_01138,cust_00686,billing,2023-08-26,1079 Fake Lake Place,Suite 351,Phoenix,AZ,85001,US
+addr_01139,cust_00686,shipping,2023-09-22,1079 Fake Lake Place,Suite 351,Phoenix,AZ,85001,US
+addr_01140,cust_00687,billing,2025-12-03,9462 Fake Pine Trail,,Dallas,TX,75201,US
+addr_01141,cust_00687,shipping,2025-12-09,9462 Fake Pine Trail,,Dallas,TX,75201,US
+addr_01142,cust_00688,billing,2024-09-03,8662 Fake Elm Trail,,Boston,MA,02108,US
+addr_01143,cust_00688,shipping,2026-01-17,5033 Fake Harbor Boulevard,,Raleigh,NC,27601,US
+addr_01144,cust_00689,billing,2024-03-02,2925 Fake Lake Court,,Chicago,IL,60601,US
+addr_01145,cust_00690,billing,2024-09-30,2477 Fake Cedar Court,,Tampa,FL,33602,US
+addr_01146,cust_00690,shipping,2025-09-09,7576 Fake Ridge Avenue,,Denver,CO,80202,US
+addr_01147,cust_00691,billing,2025-01-15,8454 Fake Valley Court,,Richmond,VA,23219,US
+addr_01148,cust_00692,billing,2026-01-13,2540 Fake Pine Road,Apt 220,Raleigh,NC,27601,US
+addr_01149,cust_00692,shipping,2026-03-02,1026 Fake Oak Place,,Pittsburgh,PA,15222,US
+addr_01150,cust_00693,billing,2026-05-14,9976 Fake Valley Street,,Boise,ID,83702,US
+addr_01151,cust_00693,shipping,2026-07-16,168 Fake Harbor Avenue,,Kansas City,MO,64105,US
+addr_01152,cust_00694,billing,2026-02-08,352 Fake Lake Place,,Dallas,TX,75201,US
+addr_01153,cust_00695,billing,2026-03-20,3476 Fake Canyon Lane,Apt 79,Tampa,FL,33602,US
+addr_01154,cust_00695,shipping,2026-05-18,3476 Fake Canyon Lane,Apt 79,Tampa,FL,33602,US
+addr_01155,cust_00696,billing,2026-02-19,5939 Fake Cedar Lane,Apt 259,Phoenix,AZ,85001,US
+addr_01156,cust_00697,billing,2026-06-24,9783 Fake River Boulevard,,Boston,MA,02108,US
+addr_01157,cust_00697,shipping,2026-06-26,1356 Fake Valley Boulevard,,Boston,MA,02108,US
+addr_01158,cust_00698,billing,2024-10-21,2167 Fake Pine Lane,,Pittsburgh,PA,15222,US
+addr_01159,cust_00698,shipping,2024-10-21,2167 Fake Pine Lane,,Pittsburgh,PA,15222,US
+addr_01160,cust_00699,billing,2025-04-30,5006 Fake Lake Boulevard,,Pittsburgh,PA,15222,US
+addr_01161,cust_00699,shipping,2025-05-05,5006 Fake Lake Boulevard,,Pittsburgh,PA,15222,US
+addr_01162,cust_00700,billing,2025-01-30,3911 Fake Summit Lane,Suite 214,Seattle,WA,98101,US
+addr_01163,cust_00701,billing,2025-02-21,9309 Fake Oak Way,,Minneapolis,MN,55401,US
+addr_01164,cust_00702,billing,2025-11-07,5486 Fake Spring Place,Apt 152,Chicago,IL,60601,US
+addr_01165,cust_00702,shipping,2026-02-14,5486 Fake Spring Place,Apt 152,Chicago,IL,60601,US
+addr_01166,cust_00703,billing,2026-02-26,7778 Fake Valley Place,,Columbus,OH,43215,US
+addr_01167,cust_00704,billing,2024-12-18,6736 Fake Sunset Court,,Salt Lake City,UT,84101,US
+addr_01168,cust_00705,billing,2024-03-18,6155 Fake Meadow Lane,,Indianapolis,IN,46204,US
+addr_01169,cust_00705,shipping,2024-03-18,6155 Fake Meadow Lane,,Indianapolis,IN,46204,US
+addr_01170,cust_00706,billing,2026-07-11,3833 Fake Elm Way,,Phoenix,AZ,85001,US
+addr_01171,cust_00706,shipping,2026-07-11,3833 Fake Elm Way,,Phoenix,AZ,85001,US
+addr_01172,cust_00707,billing,2026-06-11,3160 Fake Pine Drive,,Richmond,VA,23219,US
+addr_01173,cust_00707,shipping,2026-07-06,3160 Fake Pine Drive,,Richmond,VA,23219,US
+addr_01174,cust_00708,billing,2026-01-05,4529 Fake Highland Court,,Atlanta,GA,30301,US
+addr_01175,cust_00708,shipping,2026-01-05,4451 Fake Elm Avenue,,Milwaukee,WI,53202,US
+addr_01176,cust_00709,billing,2025-01-27,8208 Fake Birch Way,,Boise,ID,83702,US
+addr_01177,cust_00709,shipping,2026-02-18,8208 Fake Birch Way,,Boise,ID,83702,US
+addr_01178,cust_00710,billing,2026-01-26,3028 Fake Pine Trail,,Chicago,IL,60601,US
+addr_01179,cust_00710,shipping,2026-01-26,3028 Fake Pine Trail,,Chicago,IL,60601,US
+addr_01180,cust_00711,billing,2026-04-25,487 Fake Ridge Trail,,Seattle,WA,98101,US
+addr_01181,cust_00711,shipping,2026-05-08,5079 Fake Pine Lane,,Columbus,OH,43215,US
+addr_01182,cust_00712,billing,2025-08-25,3951 Fake Pine Street,Suite 392,Seattle,WA,98101,US
+addr_01183,cust_00712,shipping,2025-12-02,3951 Fake Pine Street,Suite 392,Seattle,WA,98101,US
+addr_01184,cust_00713,billing,2025-11-15,2334 Fake Sunset Trail,,Minneapolis,MN,55401,US
+addr_01185,cust_00713,shipping,2026-05-18,2334 Fake Sunset Trail,,Minneapolis,MN,55401,US
+addr_01186,cust_00714,billing,2023-11-12,373 Fake Ridge Lane,,Indianapolis,IN,46204,US
+addr_01187,cust_00715,billing,2025-08-10,7754 Fake Forest Avenue,,Denver,CO,80202,US
+addr_01188,cust_00715,shipping,2025-08-11,7754 Fake Forest Avenue,,Denver,CO,80202,US
+addr_01189,cust_00716,billing,2026-03-11,8942 Fake Maple Trail,,Richmond,VA,23219,US
+addr_01190,cust_00717,billing,2026-02-20,7121 Fake Harbor Drive,,Denver,CO,80202,US
+addr_01191,cust_00717,shipping,2026-02-20,7121 Fake Harbor Drive,,Denver,CO,80202,US
+addr_01192,cust_00718,billing,2025-09-28,3710 Fake Maple Lane,,Minneapolis,MN,55401,US
+addr_01193,cust_00718,shipping,2026-03-24,3710 Fake Maple Lane,,Minneapolis,MN,55401,US
+addr_01194,cust_00719,billing,2025-05-26,9489 Fake Pine Avenue,,Nashville,TN,37201,US
+addr_01195,cust_00720,billing,2024-03-25,723 Fake Meadow Drive,,Pittsburgh,PA,15222,US
+addr_01196,cust_00720,shipping,2024-04-14,1275 Fake Willow Boulevard,,Minneapolis,MN,55401,US
+addr_01197,cust_00721,billing,2024-08-06,8574 Fake Birch Boulevard,,Portland,OR,97201,US
+addr_01198,cust_00722,billing,2024-03-12,5874 Fake Canyon Street,,Portland,OR,97201,US
+addr_01199,cust_00723,billing,2025-11-27,460 Fake Pine Street,,Raleigh,NC,27601,US
+addr_01200,cust_00724,billing,2024-05-19,7471 Fake River Trail,,Phoenix,AZ,85001,US
+addr_01201,cust_00724,shipping,2025-11-26,6409 Fake Ridge Road,Suite 265,Raleigh,NC,27601,US
+addr_01202,cust_00725,billing,2024-02-13,5960 Fake Canyon Road,,Denver,CO,80202,US
+addr_01203,cust_00726,billing,2026-03-18,3552 Fake Cedar Avenue,Suite 240,Dallas,TX,75201,US
+addr_01204,cust_00727,billing,2026-04-26,2032 Fake Summit Drive,,Columbus,OH,43215,US
+addr_01205,cust_00727,shipping,2026-04-26,2032 Fake Summit Drive,,Columbus,OH,43215,US
+addr_01206,cust_00728,billing,2024-07-09,7238 Fake Harbor Lane,,Austin,TX,78701,US
+addr_01207,cust_00728,shipping,2024-07-09,1991 Fake Maple Court,,Chicago,IL,60601,US
+addr_01208,cust_00729,billing,2026-02-12,1943 Fake Prairie Street,,Seattle,WA,98101,US
+addr_01209,cust_00729,shipping,2026-04-13,1943 Fake Prairie Street,,Seattle,WA,98101,US
+addr_01210,cust_00730,billing,2023-09-14,5325 Fake Highland Drive,,Columbus,OH,43215,US
+addr_01211,cust_00730,shipping,2024-03-01,5325 Fake Highland Drive,,Columbus,OH,43215,US
+addr_01212,cust_00731,billing,2025-11-23,6830 Fake Spring Court,,Indianapolis,IN,46204,US
+addr_01213,cust_00731,shipping,2026-01-31,6830 Fake Spring Court,,Indianapolis,IN,46204,US
+addr_01214,cust_00732,billing,2025-01-06,3666 Fake Pine Trail,,Sacramento,CA,95814,US
+addr_01215,cust_00732,shipping,2025-06-16,3666 Fake Pine Trail,,Sacramento,CA,95814,US
+addr_01216,cust_00733,billing,2024-01-15,2146 Fake Lake Road,Suite 105,San Diego,CA,92101,US
+addr_01217,cust_00733,shipping,2024-03-12,7521 Fake Prairie Street,,Boise,ID,83702,US
+addr_01218,cust_00734,billing,2026-05-06,5605 Fake River Avenue,Apt 124,Minneapolis,MN,55401,US
+addr_01219,cust_00734,shipping,2026-05-25,858 Fake Highland Place,,Dallas,TX,75201,US
+addr_01220,cust_00735,billing,2025-10-19,909 Fake Oak Lane,,Seattle,WA,98101,US
+addr_01221,cust_00736,billing,2026-07-30,1853 Fake Harbor Way,,Minneapolis,MN,55401,US
+addr_01222,cust_00737,billing,2024-07-21,1816 Fake Ridge Boulevard,,Minneapolis,MN,55401,US
+addr_01223,cust_00738,billing,2025-02-10,7789 Fake Birch Lane,Suite 365,Orlando,FL,32801,US
+addr_01224,cust_00739,billing,2026-07-01,8791 Fake Elm Boulevard,,Atlanta,GA,30301,US
+addr_01225,cust_00739,shipping,2026-07-09,3021 Fake Maple Avenue,Suite 197,Portland,OR,97201,US
+addr_01226,cust_00740,billing,2024-12-21,1514 Fake Ridge Place,,Boise,ID,83702,US
+addr_01227,cust_00741,billing,2026-02-06,6568 Fake Harbor Road,Suite 70,Sacramento,CA,95814,US
+addr_01228,cust_00741,shipping,2026-02-17,6568 Fake Harbor Road,Suite 70,Sacramento,CA,95814,US
+addr_01229,cust_00742,billing,2024-09-06,1383 Fake Oak Drive,,Richmond,VA,23219,US
+addr_01230,cust_00742,shipping,2024-09-06,1383 Fake Oak Drive,,Richmond,VA,23219,US
+addr_01231,cust_00743,billing,2026-02-12,4956 Fake Meadow Way,,Tampa,FL,33602,US
+addr_01232,cust_00743,shipping,2026-03-01,9874 Fake Canyon Court,,Milwaukee,WI,53202,US
+addr_01233,cust_00744,billing,2024-02-26,2799 Fake Willow Drive,,Raleigh,NC,27601,US
+addr_01234,cust_00744,shipping,2024-02-26,1297 Fake Willow Lane,,Chicago,IL,60601,US
+addr_01235,cust_00745,billing,2024-10-02,1855 Fake Valley Place,,Chicago,IL,60601,US
+addr_01236,cust_00746,billing,2023-12-29,7789 Fake Forest Way,,Denver,CO,80202,US
+addr_01237,cust_00746,shipping,2024-10-27,1638 Fake Pine Trail,,Atlanta,GA,30301,US
+addr_01238,cust_00747,billing,2025-06-10,3565 Fake Valley Place,,Sacramento,CA,95814,US
+addr_01239,cust_00747,shipping,2025-10-08,5189 Fake Spring Way,,Indianapolis,IN,46204,US
+addr_01240,cust_00748,billing,2024-10-27,3766 Fake River Road,,Kansas City,MO,64105,US
+addr_01241,cust_00748,shipping,2025-01-21,7709 Fake Cedar Court,,Dallas,TX,75201,US
+addr_01242,cust_00749,billing,2025-11-12,4603 Fake Birch Street,Apt 165,Boston,MA,02108,US
+addr_01243,cust_00750,billing,2026-01-01,335 Fake Sunset Road,,Raleigh,NC,27601,US
+addr_01244,cust_00751,billing,2024-12-12,1242 Fake Cedar Lane,,Sacramento,CA,95814,US
+addr_01245,cust_00751,shipping,2024-12-12,1242 Fake Cedar Lane,,Sacramento,CA,95814,US
+addr_01246,cust_00752,billing,2024-05-06,266 Fake Cedar Avenue,,Nashville,TN,37201,US
+addr_01247,cust_00753,billing,2025-07-22,8653 Fake Harbor Trail,,Pittsburgh,PA,15222,US
+addr_01248,cust_00753,shipping,2025-09-23,8653 Fake Harbor Trail,,Pittsburgh,PA,15222,US
+addr_01249,cust_00754,billing,2026-03-20,9247 Fake Lake Way,Suite 373,Portland,OR,97201,US
+addr_01250,cust_00755,billing,2025-03-05,1708 Fake Maple Boulevard,,Phoenix,AZ,85001,US
+addr_01251,cust_00755,shipping,2025-07-22,6053 Fake Canyon Place,Apt 194,Phoenix,AZ,85001,US
+addr_01252,cust_00756,billing,2026-02-21,8453 Fake Meadow Place,Suite 17,Kansas City,MO,64105,US
+addr_01253,cust_00756,shipping,2026-07-16,8453 Fake Meadow Place,Suite 17,Kansas City,MO,64105,US
+addr_01254,cust_00757,billing,2025-01-30,6775 Fake Prairie Street,,Kansas City,MO,64105,US
+addr_01255,cust_00758,billing,2026-05-05,5089 Fake Elm Place,Apt 197,San Diego,CA,92101,US
+addr_01256,cust_00759,billing,2024-07-19,4630 Fake Birch Street,,Tampa,FL,33602,US
+addr_01257,cust_00759,shipping,2024-08-18,4630 Fake Birch Street,,Tampa,FL,33602,US
+addr_01258,cust_00760,billing,2024-11-20,4709 Fake Highland Trail,,Columbus,OH,43215,US
+addr_01259,cust_00760,shipping,2024-12-05,4709 Fake Highland Trail,,Columbus,OH,43215,US
+addr_01260,cust_00761,billing,2026-01-04,1117 Fake Pine Lane,Suite 40,Columbus,OH,43215,US
+addr_01261,cust_00761,shipping,2026-01-21,1117 Fake Pine Lane,Suite 40,Columbus,OH,43215,US
+addr_01262,cust_00762,billing,2023-10-24,5413 Fake Harbor Road,,San Diego,CA,92101,US
+addr_01263,cust_00762,shipping,2024-05-16,5413 Fake Harbor Road,,San Diego,CA,92101,US
+addr_01264,cust_00763,billing,2025-04-12,8835 Fake Ridge Road,Apt 280,Phoenix,AZ,85001,US
+addr_01265,cust_00763,shipping,2025-10-15,8835 Fake Ridge Road,Apt 280,Phoenix,AZ,85001,US
+addr_01266,cust_00764,billing,2025-10-29,8404 Fake Summit Boulevard,,Richmond,VA,23219,US
+addr_01267,cust_00765,billing,2024-12-07,9035 Fake Forest Avenue,,Indianapolis,IN,46204,US
+addr_01268,cust_00766,billing,2025-08-26,1939 Fake Willow Lane,,Pittsburgh,PA,15222,US
+addr_01269,cust_00767,billing,2025-10-02,2164 Fake Pine Way,,Orlando,FL,32801,US
+addr_01270,cust_00768,billing,2024-04-26,5799 Fake Forest Drive,,Tampa,FL,33602,US
+addr_01271,cust_00769,billing,2024-11-09,6903 Fake Prairie Road,Apt 353,Orlando,FL,32801,US
+addr_01272,cust_00769,shipping,2024-11-26,6903 Fake Prairie Road,Apt 353,Orlando,FL,32801,US
+addr_01273,cust_00770,billing,2026-01-24,5259 Fake Valley Court,,Indianapolis,IN,46204,US
+addr_01274,cust_00770,shipping,2026-02-12,699 Fake Summit Street,,Boston,MA,02108,US
+addr_01275,cust_00771,billing,2024-12-08,1071 Fake Prairie Place,,Minneapolis,MN,55401,US
+addr_01276,cust_00771,shipping,2025-06-02,1071 Fake Prairie Place,,Minneapolis,MN,55401,US
+addr_01277,cust_00772,billing,2025-06-08,7884 Fake Ridge Street,Apt 362,Atlanta,GA,30301,US
+addr_01278,cust_00772,shipping,2025-11-01,7884 Fake Ridge Street,Apt 362,Atlanta,GA,30301,US
+addr_01279,cust_00773,billing,2025-04-12,2698 Fake Lake Boulevard,,Seattle,WA,98101,US
+addr_01280,cust_00773,shipping,2025-08-18,2698 Fake Lake Boulevard,,Seattle,WA,98101,US
+addr_01281,cust_00774,billing,2026-06-15,5564 Fake Highland Drive,Suite 367,Chicago,IL,60601,US
+addr_01282,cust_00775,billing,2025-08-15,333 Fake Cedar Place,,Dallas,TX,75201,US
+addr_01283,cust_00775,shipping,2025-09-27,333 Fake Cedar Place,,Dallas,TX,75201,US
+addr_01284,cust_00776,billing,2025-05-19,438 Fake Elm Trail,,Charlotte,NC,28202,US
+addr_01285,cust_00777,billing,2024-02-25,1266 Fake Valley Boulevard,,Salt Lake City,UT,84101,US
+addr_01286,cust_00778,billing,2025-02-12,2611 Fake Spring Street,Apt 97,Kansas City,MO,64105,US
+addr_01287,cust_00778,shipping,2025-05-13,2611 Fake Spring Street,Apt 97,Kansas City,MO,64105,US
+addr_01288,cust_00779,billing,2023-08-18,3812 Fake Lake Road,Suite 391,Nashville,TN,37201,US
+addr_01289,cust_00780,billing,2026-02-27,7928 Fake Cedar Trail,,Sacramento,CA,95814,US
+addr_01290,cust_00780,shipping,2026-04-15,7928 Fake Cedar Trail,,Sacramento,CA,95814,US
+addr_01291,cust_00781,billing,2024-12-10,6425 Fake Spring Boulevard,,Minneapolis,MN,55401,US
+addr_01292,cust_00781,shipping,2025-08-13,6425 Fake Spring Boulevard,,Minneapolis,MN,55401,US
+addr_01293,cust_00782,billing,2025-08-18,5117 Fake Elm Avenue,,Nashville,TN,37201,US
+addr_01294,cust_00782,shipping,2025-12-04,1868 Fake Meadow Place,,Salt Lake City,UT,84101,US
+addr_01295,cust_00783,billing,2025-05-06,1614 Fake Harbor Way,,Atlanta,GA,30301,US
+addr_01296,cust_00783,shipping,2026-07-01,1614 Fake Harbor Way,,Atlanta,GA,30301,US
+addr_01297,cust_00784,billing,2025-10-11,7481 Fake Ridge Court,,Richmond,VA,23219,US
+addr_01298,cust_00784,shipping,2026-03-27,7481 Fake Ridge Court,,Richmond,VA,23219,US
+addr_01299,cust_00785,billing,2025-12-17,4786 Fake Willow Boulevard,,Charlotte,NC,28202,US
+addr_01300,cust_00785,shipping,2026-06-29,4786 Fake Willow Boulevard,,Charlotte,NC,28202,US
+addr_01301,cust_00786,billing,2025-02-25,3968 Fake Lake Way,Suite 334,Salt Lake City,UT,84101,US
+addr_01302,cust_00786,shipping,2025-03-14,3968 Fake Lake Way,Suite 334,Salt Lake City,UT,84101,US
+addr_01303,cust_00787,billing,2024-05-16,969 Fake Forest Boulevard,Suite 75,Salt Lake City,UT,84101,US
+addr_01304,cust_00788,billing,2024-04-24,3425 Fake Ridge Lane,,Milwaukee,WI,53202,US
+addr_01305,cust_00788,shipping,2024-05-15,1805 Fake Oak Place,Suite 39,Raleigh,NC,27601,US
+addr_01306,cust_00789,billing,2025-04-29,5258 Fake Forest Place,Apt 323,Boston,MA,02108,US
+addr_01307,cust_00789,shipping,2025-04-29,6473 Fake Valley Avenue,,Atlanta,GA,30301,US
+addr_01308,cust_00790,billing,2026-01-30,3066 Fake Sunset Way,,Kansas City,MO,64105,US
+addr_01309,cust_00790,shipping,2026-03-27,7582 Fake Harbor Trail,,Sacramento,CA,95814,US
+addr_01310,cust_00791,billing,2026-06-24,9417 Fake Canyon Avenue,,Columbus,OH,43215,US
+addr_01311,cust_00791,shipping,2026-06-24,9417 Fake Canyon Avenue,,Columbus,OH,43215,US
+addr_01312,cust_00792,billing,2025-10-11,4553 Fake Pine Place,,Orlando,FL,32801,US
+addr_01313,cust_00792,shipping,2025-11-07,4553 Fake Pine Place,,Orlando,FL,32801,US
+addr_01314,cust_00793,billing,2024-01-17,2198 Fake Birch Place,,Denver,CO,80202,US
+addr_01315,cust_00794,billing,2024-12-06,2689 Fake Pine Lane,,Minneapolis,MN,55401,US
+addr_01316,cust_00794,shipping,2025-03-07,2689 Fake Pine Lane,,Minneapolis,MN,55401,US
+addr_01317,cust_00795,billing,2025-01-12,4712 Fake Spring Street,,Pittsburgh,PA,15222,US
+addr_01318,cust_00796,billing,2024-09-16,8468 Fake Ridge Trail,,Indianapolis,IN,46204,US
+addr_01319,cust_00796,shipping,2025-08-31,8468 Fake Ridge Trail,,Indianapolis,IN,46204,US
+addr_01320,cust_00797,billing,2025-06-09,8351 Fake Meadow Boulevard,,Tampa,FL,33602,US
+addr_01321,cust_00797,shipping,2025-09-06,8351 Fake Meadow Boulevard,,Tampa,FL,33602,US
+addr_01322,cust_00798,billing,2025-04-14,4663 Fake Prairie Lane,,Minneapolis,MN,55401,US
+addr_01323,cust_00799,billing,2025-02-06,6482 Fake Harbor Trail,Suite 86,Seattle,WA,98101,US
+addr_01324,cust_00799,shipping,2026-02-03,6482 Fake Harbor Trail,Suite 86,Seattle,WA,98101,US
+addr_01325,cust_00800,billing,2024-04-27,7499 Fake Spring Place,,Richmond,VA,23219,US
+addr_01326,cust_00800,shipping,2024-04-27,7499 Fake Spring Place,,Richmond,VA,23219,US
+addr_01327,cust_00801,billing,2025-06-20,652 Fake Cedar Drive,,Seattle,WA,98101,US
+addr_01328,cust_00801,shipping,2026-05-23,2615 Fake Maple Trail,,Orlando,FL,32801,US
+addr_01329,cust_00802,billing,2024-09-20,1606 Fake Elm Drive,,Sacramento,CA,95814,US
+addr_01330,cust_00802,shipping,2024-12-13,1606 Fake Elm Drive,,Sacramento,CA,95814,US
+addr_01331,cust_00803,billing,2024-09-10,5685 Fake Forest Road,,Atlanta,GA,30301,US
+addr_01332,cust_00804,billing,2025-11-08,812 Fake Willow Boulevard,,Charlotte,NC,28202,US
+addr_01333,cust_00805,billing,2025-04-24,5435 Fake Summit Place,,Salt Lake City,UT,84101,US
+addr_01334,cust_00805,shipping,2025-06-05,8517 Fake Summit Boulevard,Apt 385,Chicago,IL,60601,US
+addr_01335,cust_00806,billing,2025-12-05,185 Fake Forest Trail,,Kansas City,MO,64105,US
+addr_01336,cust_00806,shipping,2025-12-05,185 Fake Forest Trail,,Kansas City,MO,64105,US
+addr_01337,cust_00807,billing,2026-05-01,4059 Fake Spring Trail,,Minneapolis,MN,55401,US
+addr_01338,cust_00807,shipping,2026-05-30,7729 Fake Willow Way,,Phoenix,AZ,85001,US
+addr_01339,cust_00808,billing,2024-02-09,1392 Fake Spring Boulevard,,San Diego,CA,92101,US
+addr_01340,cust_00809,billing,2024-10-23,9854 Fake Ridge Court,,Richmond,VA,23219,US
+addr_01341,cust_00809,shipping,2025-01-10,9854 Fake Ridge Court,,Richmond,VA,23219,US
+addr_01342,cust_00810,billing,2025-09-05,1753 Fake Pine Way,Apt 380,Raleigh,NC,27601,US
+addr_01343,cust_00810,shipping,2025-10-14,1753 Fake Pine Way,Apt 380,Raleigh,NC,27601,US
+addr_01344,cust_00811,billing,2025-07-29,6802 Fake Oak Road,,Orlando,FL,32801,US
+addr_01345,cust_00812,billing,2025-09-27,977 Fake Canyon Lane,,Seattle,WA,98101,US
+addr_01346,cust_00813,billing,2023-11-15,928 Fake Highland Court,,Salt Lake City,UT,84101,US
+addr_01347,cust_00813,shipping,2024-04-12,928 Fake Highland Court,,Salt Lake City,UT,84101,US
+addr_01348,cust_00814,billing,2024-09-28,1130 Fake Forest Road,Apt 94,Kansas City,MO,64105,US
+addr_01349,cust_00814,shipping,2025-01-25,1130 Fake Forest Road,Apt 94,Kansas City,MO,64105,US
+addr_01350,cust_00815,billing,2025-12-19,6710 Fake River Avenue,,Richmond,VA,23219,US
+addr_01351,cust_00815,shipping,2026-06-12,6710 Fake River Avenue,,Richmond,VA,23219,US
+addr_01352,cust_00816,billing,2025-12-23,7736 Fake Highland Street,Suite 5,Austin,TX,78701,US
+addr_01353,cust_00816,shipping,2026-01-29,7736 Fake Highland Street,Suite 5,Austin,TX,78701,US
+addr_01354,cust_00817,billing,2024-11-30,7304 Fake Elm Trail,Suite 355,Tampa,FL,33602,US
+addr_01355,cust_00817,shipping,2025-10-14,7529 Fake Prairie Avenue,,Austin,TX,78701,US
+addr_01356,cust_00818,billing,2026-01-19,4545 Fake Willow Road,,Tampa,FL,33602,US
+addr_01357,cust_00819,billing,2025-01-01,2783 Fake Cedar Avenue,Suite 110,Boston,MA,02108,US
+addr_01358,cust_00819,shipping,2025-01-01,2783 Fake Cedar Avenue,Suite 110,Boston,MA,02108,US
+addr_01359,cust_00820,billing,2023-09-19,6647 Fake Sunset Way,,Phoenix,AZ,85001,US
+addr_01360,cust_00821,billing,2025-11-15,6335 Fake Pine Boulevard,Apt 189,Sacramento,CA,95814,US
+addr_01361,cust_00822,billing,2026-02-06,7907 Fake Pine Way,,Charlotte,NC,28202,US
+addr_01362,cust_00822,shipping,2026-02-06,7907 Fake Pine Way,,Charlotte,NC,28202,US
+addr_01363,cust_00823,billing,2025-02-16,1943 Fake Spring Way,Apt 16,Charlotte,NC,28202,US
+addr_01364,cust_00823,shipping,2025-02-16,1943 Fake Spring Way,Apt 16,Charlotte,NC,28202,US
+addr_01365,cust_00824,billing,2025-08-18,9878 Fake Prairie Drive,,Kansas City,MO,64105,US
+addr_01366,cust_00824,shipping,2025-08-18,9878 Fake Prairie Drive,,Kansas City,MO,64105,US
+addr_01367,cust_00825,billing,2026-04-18,2938 Fake Valley Street,Suite 383,Boise,ID,83702,US
+addr_01368,cust_00826,billing,2024-10-20,929 Fake Forest Trail,Suite 182,Richmond,VA,23219,US
+addr_01369,cust_00826,shipping,2025-06-10,929 Fake Forest Trail,Suite 182,Richmond,VA,23219,US
+addr_01370,cust_00827,billing,2025-09-05,5369 Fake Lake Street,,Charlotte,NC,28202,US
+addr_01371,cust_00827,shipping,2025-09-05,5369 Fake Lake Street,,Charlotte,NC,28202,US
+addr_01372,cust_00828,billing,2026-04-04,567 Fake Sunset Court,,Minneapolis,MN,55401,US
+addr_01373,cust_00828,shipping,2026-04-11,3091 Fake Highland Street,Suite 111,Minneapolis,MN,55401,US
+addr_01374,cust_00829,billing,2023-12-12,6152 Fake Meadow Lane,Suite 308,Charlotte,NC,28202,US
+addr_01375,cust_00829,shipping,2024-04-20,6152 Fake Meadow Lane,Suite 308,Charlotte,NC,28202,US
+addr_01376,cust_00830,billing,2023-10-19,4469 Fake Lake Place,,Salt Lake City,UT,84101,US
+addr_01377,cust_00830,shipping,2024-02-14,4469 Fake Lake Place,,Salt Lake City,UT,84101,US
+addr_01378,cust_00831,billing,2026-07-06,782 Fake Pine Trail,Apt 69,Boston,MA,02108,US
+addr_01379,cust_00831,shipping,2026-07-06,782 Fake Pine Trail,Apt 69,Boston,MA,02108,US
+addr_01380,cust_00832,billing,2026-07-14,185 Fake Birch Street,,Seattle,WA,98101,US
+addr_01381,cust_00832,shipping,2026-07-20,7550 Fake Forest Place,,Denver,CO,80202,US
+addr_01382,cust_00833,billing,2026-05-11,1330 Fake Spring Street,Apt 93,Indianapolis,IN,46204,US
+addr_01383,cust_00833,shipping,2026-06-15,1330 Fake Spring Street,Apt 93,Indianapolis,IN,46204,US
+addr_01384,cust_00834,billing,2026-05-03,6763 Fake Meadow Trail,,Dallas,TX,75201,US
+addr_01385,cust_00834,shipping,2026-05-24,4823 Fake Valley Boulevard,,Boise,ID,83702,US
+addr_01386,cust_00835,billing,2025-10-20,8732 Fake Forest Drive,Suite 334,Milwaukee,WI,53202,US
+addr_01387,cust_00835,shipping,2026-03-03,8732 Fake Forest Drive,Suite 334,Milwaukee,WI,53202,US
+addr_01388,cust_00836,billing,2024-07-11,9998 Fake Ridge Street,Apt 287,Richmond,VA,23219,US
+addr_01389,cust_00836,shipping,2025-04-21,9677 Fake Meadow Trail,,Sacramento,CA,95814,US
+addr_01390,cust_00837,billing,2025-01-04,7431 Fake Elm Drive,Apt 66,Dallas,TX,75201,US
+addr_01391,cust_00837,shipping,2025-10-16,7431 Fake Elm Drive,Apt 66,Dallas,TX,75201,US
+addr_01392,cust_00838,billing,2025-02-08,1396 Fake Harbor Lane,,Orlando,FL,32801,US
+addr_01393,cust_00838,shipping,2026-03-08,1372 Fake Pine Road,,Boise,ID,83702,US
+addr_01394,cust_00839,billing,2025-01-08,6753 Fake Pine Street,,Denver,CO,80202,US
+addr_01395,cust_00839,shipping,2025-08-20,5280 Fake Pine Avenue,Suite 108,Boston,MA,02108,US
+addr_01396,cust_00840,billing,2024-02-24,6982 Fake Cedar Street,Apt 134,Seattle,WA,98101,US
+addr_01397,cust_00840,shipping,2024-05-10,1656 Fake Sunset Street,,Chicago,IL,60601,US
+addr_01398,cust_00841,billing,2026-02-09,918 Fake Highland Avenue,Apt 216,Tampa,FL,33602,US
+addr_01399,cust_00841,shipping,2026-02-09,288 Fake Highland Lane,,Nashville,TN,37201,US
+addr_01400,cust_00842,billing,2025-10-05,7985 Fake Valley Boulevard,,Atlanta,GA,30301,US
+addr_01401,cust_00842,shipping,2025-11-01,2144 Fake Spring Road,,Boise,ID,83702,US
+addr_01402,cust_00843,billing,2026-03-16,9642 Fake Birch Avenue,,Austin,TX,78701,US
+addr_01403,cust_00844,billing,2025-10-24,6542 Fake Sunset Avenue,,Boise,ID,83702,US
+addr_01404,cust_00845,billing,2023-11-29,7802 Fake Cedar Avenue,,Richmond,VA,23219,US
+addr_01405,cust_00845,shipping,2024-11-16,1373 Fake River Boulevard,,Portland,OR,97201,US
+addr_01406,cust_00846,billing,2025-11-24,3716 Fake Maple Avenue,Suite 220,Dallas,TX,75201,US
+addr_01407,cust_00846,shipping,2026-02-13,2606 Fake Prairie Place,,Pittsburgh,PA,15222,US
+addr_01408,cust_00847,billing,2024-08-14,1092 Fake Sunset Avenue,,Tampa,FL,33602,US
+addr_01409,cust_00847,shipping,2024-10-16,1092 Fake Sunset Avenue,,Tampa,FL,33602,US
+addr_01410,cust_00848,billing,2026-05-09,5099 Fake Elm Drive,,Denver,CO,80202,US
+addr_01411,cust_00849,billing,2025-11-03,7012 Fake Meadow Way,,Nashville,TN,37201,US
+addr_01412,cust_00849,shipping,2025-12-09,7012 Fake Meadow Way,,Nashville,TN,37201,US
+addr_01413,cust_00850,billing,2023-12-20,6064 Fake Harbor Trail,,Denver,CO,80202,US
+addr_01414,cust_00851,billing,2025-07-19,1268 Fake Maple Way,Apt 147,Chicago,IL,60601,US
+addr_01415,cust_00852,billing,2023-12-24,8203 Fake Highland Court,Suite 3,Kansas City,MO,64105,US
+addr_01416,cust_00852,shipping,2024-09-02,8203 Fake Highland Court,Suite 3,Kansas City,MO,64105,US
+addr_01417,cust_00853,billing,2024-11-16,6369 Fake Willow Road,,Tampa,FL,33602,US
+addr_01418,cust_00853,shipping,2025-06-28,4985 Fake Valley Street,Apt 153,Charlotte,NC,28202,US
+addr_01419,cust_00854,billing,2024-11-05,9334 Fake Lake Road,,Dallas,TX,75201,US
+addr_01420,cust_00854,shipping,2024-12-11,9334 Fake Lake Road,,Dallas,TX,75201,US
+addr_01421,cust_00855,billing,2026-02-03,7522 Fake Spring Road,,Indianapolis,IN,46204,US
+addr_01422,cust_00855,shipping,2026-07-23,7522 Fake Spring Road,,Indianapolis,IN,46204,US
+addr_01423,cust_00856,billing,2025-01-21,4718 Fake Highland Avenue,,Columbus,OH,43215,US
+addr_01424,cust_00857,billing,2025-10-27,285 Fake Valley Place,Apt 243,Salt Lake City,UT,84101,US
+addr_01425,cust_00857,shipping,2026-06-11,285 Fake Valley Place,Apt 243,Salt Lake City,UT,84101,US
+addr_01426,cust_00858,billing,2025-10-12,7081 Fake Meadow Lane,,Orlando,FL,32801,US
+addr_01427,cust_00858,shipping,2026-06-09,7081 Fake Meadow Lane,,Orlando,FL,32801,US
+addr_01428,cust_00859,billing,2026-05-13,8691 Fake Summit Drive,,Indianapolis,IN,46204,US
+addr_01429,cust_00859,shipping,2026-06-09,8691 Fake Summit Drive,,Indianapolis,IN,46204,US
+addr_01430,cust_00860,billing,2024-06-19,7303 Fake Maple Boulevard,,Dallas,TX,75201,US
+addr_01431,cust_00860,shipping,2025-08-08,7303 Fake Maple Boulevard,,Dallas,TX,75201,US

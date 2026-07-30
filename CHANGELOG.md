@@ -272,3 +272,31 @@ seasonality calendar.
   domain must start with `fake` or be the deleted-account placeholder
   (`deleted.kinetic.invalid`) -- never a real-looking domain. 25/25 checks
   pass.
+
+## 2026-07-30 — Phase 1: `customer_addresses` (table 5 of 47)
+
+- Who gets an address: **billing** for every subscriber-path customer (a
+  trial requires a card up front, even if they never converted) or anyone
+  with at least one order; **shipping** additionally for anyone with a merch
+  order (courses are digital, nothing to ship). Soft-deleted customers get
+  **zero** address rows -- full erasure, stricter than the name/email scrub
+  in `customers`, since address has no downstream revenue-table dependency
+  the way order/subscription history does.
+- Addresses made obviously fake the same way emails were: every street
+  address is guaranteed non-existent by construction --
+  "<number> Fake <word> <suffix>" (e.g. "5075 Fake Canyon Road"). No real
+  street is named "Fake ___", so the full address can never resolve to an
+  actual deliverable location. City/state/zip are drawn from 25 real U.S.
+  metros for plausible geographic variety in later analytics -- safe to keep
+  realistic since a city/state/zip alone identifies no one; only the
+  guaranteed-fake street makes the full address non-deliverable.
+- 30% of customers needing shipping get a *different* address than their
+  billing address (gift shipping, work address, etc. -- realistic messiness);
+  70% ship to the same address as billing.
+- Built `generator/validate_customer_addresses.py` — 21 checks. Notably:
+  exact set-equality checks confirming *precisely* the right customers have a
+  billing address and *precisely* the right customers have a shipping
+  address (no missing, no extra), zero address rows for deleted customers,
+  shipping `created_at` matches the customer's first merch-order date exactly
+  for all 582 shipping rows, and every street address contains the literal
+  word "Fake". All 21 checks passed on the first run.
