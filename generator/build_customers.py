@@ -50,8 +50,11 @@ LAST_NAMES = [
     "Cook", "Rogers", "Gutierrez", "Ortiz", "Morgan", "Cooper", "Peterson", "Bailey",
     "Reed", "Kelly", "Howard", "Ramos", "Kim", "Cox", "Ward", "Richardson",
 ]
-EMAIL_DOMAINS = ["gmail.com", "yahoo.com", "icloud.com", "outlook.com", "hotmail.com",
-                  "aol.com", "comcast.net", "protonmail.com"]
+# "fake" prefix on every domain so no generated address can collide with (or be
+# mistaken for) a real person's real email address, while the domain still
+# reads as "gmail-shaped" etc. for realism.
+EMAIL_DOMAINS = ["fakegmail.com", "fakeyahoo.com", "fakeicloud.com", "fakeoutlook.com",
+                  "fakehotmail.com", "fakeaol.com", "fakecomcast.net", "fakeprotonmail.com"]
 EMAIL_DOMAIN_WEIGHTS = [0.40, 0.15, 0.15, 0.10, 0.08, 0.04, 0.05, 0.03]
 
 

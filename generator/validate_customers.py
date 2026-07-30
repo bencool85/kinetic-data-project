@@ -35,6 +35,10 @@ def run():
           customers[["first_name", "last_name", "email"]].notna().all().all())
     check("Structural", "email is unique", customers["email"].is_unique)
     check("Structural", "email contains exactly one '@'", (customers["email"].str.count("@") == 1).all())
+    real_looking_domains = ~customers["email"].str.split("@").str[1].str.startswith(("fake", "deleted."))
+    check("Structural", "every email domain is clearly fake (prefixed 'fake...' or the deleted-account placeholder) -- never a real-looking domain",
+          (~real_looking_domains).all(),
+          f"offending domains: {sorted(customers.loc[real_looking_domains, 'email'].str.split('@').str[1].unique())}")
     check("Structural", "created_at parses as a valid datetime",
           pd.to_datetime(customers["created_at"], errors="coerce").notna().all())
     check("Structural", "created_at falls within [START_DATE, END_DATE]",

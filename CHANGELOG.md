@@ -260,3 +260,15 @@ seasonality calendar.
   sequential RNG per customer (documented earlier in this project); the data
   is still fully reproducible from the seed, just different-looking row by
   row than the prior (buggy) version.
+
+## 2026-07-30 — Emails made unambiguously fake
+
+- Ben asked that no generated email address could be mistaken for a real
+  person's real email. Prefixed every domain with "fake" (gmail.com ->
+  fakegmail.com, yahoo.com -> fakeyahoo.com, etc. across all 8 domains) --
+  still reads as "gmail-shaped" for realism, but can never collide with (or
+  be confused for) an actual address.
+- Added a permanent structural check to `validate_customers.py`: every email
+  domain must start with `fake` or be the deleted-account placeholder
+  (`deleted.kinetic.invalid`) -- never a real-looking domain. 25/25 checks
+  pass.
