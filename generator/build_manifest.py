@@ -28,8 +28,8 @@ FILES = [
     (".gitignore", "Repo config", "Excludes Python __pycache__ from git/sync"),
     ("File_Manifest.xlsx", "Docs", "This file — running log of every file committed to the folder"),
     ("generator/sim_utils.py", "Code", "Shared weighted date/channel sampling helpers"),
-    ("generator/build_anonymous_population.py", "Code", "Phase 0 Step 4: builds the ~2,000-person anonymous ghost population"),
-    ("generator/simulate_customers.py", "Code", "Phase 0 Steps 5-6: per-customer master timeline + attribution ground truth"),
+    ("generator/build_anonymous_population.py", "Code", "Phase 0 Step 4: builds the ~2,000-person anonymous ghost population (anon_id now hash-derived, not uuid4 -- reproducibility fix)"),
+    ("generator/simulate_customers.py", "Code", "Phase 0 Steps 5-6: per-customer master timeline + attribution ground truth (fixed: course_merch_only orders now reconciled against the eventual subscription window; pre_signup_anon_id now hash-derived, not uuid4)"),
     ("internal/_sim_anonymous_population.csv", "Internal artifact", "Anonymous visitors who never become tracked customers; source of guest merch orders"),
     ("internal/_sim_customer_timeline.json", "Internal artifact", "Full nested ground-truth simulation for all 100 customers (signup, trial, subscriptions, orders, churn)"),
     ("internal/_sim_customer_timeline_summary.csv", "Internal artifact", "Flattened, spreadsheet-readable summary of the customer timeline"),
@@ -53,7 +53,7 @@ FILES = [
     ("generator/build_customer_addresses.py", "Code", "Phase 1: builds customer_addresses (billing/shipping, obviously-fake streets)"),
     ("generator/validate_customer_addresses.py", "Code", "Phase 1: 5-layer validation for customer_addresses"),
     ("data/customer_addresses.csv", "Shipped table", "Phase 1: customer_addresses table (1,431 rows)"),
-    ("generator/build_devices.py", "Code", "Phase 1: builds devices (customer + anonymous-ghost devices)"),
+    ("generator/build_devices.py", "Code", "Phase 1: builds devices (customer + anonymous-ghost devices; 2nd-device anon_id now hash-derived, not uuid4)"),
     ("generator/validate_devices.py", "Code", "Phase 1: 5-layer validation for devices"),
     ("data/devices.csv", "Shipped table", "Phase 1: devices table (18,042 rows: known-customer + ghost devices)"),
     ("generator/build_identity_map.py", "Code", "Phase 1: builds identity_map (anonymous_id -> customer_id resolution events)"),
@@ -74,6 +74,9 @@ FILES = [
     ("generator/build_discount_codes.py", "Code", "Phase 3: builds discount_codes (hand-curated list: evergreen + seasonal promo codes) -- built first in Phase 3 since orders needs it"),
     ("generator/validate_discount_codes.py", "Code", "Phase 3: 5-layer validation for discount_codes"),
     ("data/discount_codes.csv", "Shipped table", "Phase 3: discount_codes table (7 rows)"),
+    ("generator/build_orders.py", "Code", "Phase 3: builds orders (customer course/merch + guest merch), cross-validated against subscriptions.csv"),
+    ("generator/validate_orders.py", "Code", "Phase 3: 5-layer validation for orders, incl. the no-course-during-subscription cross-check"),
+    ("data/orders.csv", "Shipped table", "Phase 3: orders table (3,650 rows: 1,061 course + 1,332 customer-merch + 1,257 guest-merch)"),
 ]
 
 

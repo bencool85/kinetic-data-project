@@ -707,3 +707,80 @@ seasonality calendar.
   a code only ever used inside its valid window, actual redemption rate)
   are deferred to `orders`, once it exists and can actually reference these
   codes -- noted in the docstring rather than faked here. All 19 pass.
+
+## 2026-07-30 — Built + validated `orders` (2 of 5) -- and caught two real bugs, one all the way back in Phase 0
+
+- Sourced from the timeline's `order_events` (known customers) plus the
+  anonymous population's one-time guest merch purchases. Global
+  chronological `order_id` across BOTH populations combined (not grouped by
+  customer, unlike most other tables) -- a real storefront's order sequence
+  isn't customer-grouped.
+- Two things invented at this layer (discount codes and redemption don't
+  exist in the master timeline): `subtotal` is reverse-matched against the
+  exact price-tier list + discount formula `simulate_customers.py` already
+  used (not float division, to avoid any rounding drift), and
+  `discount_code_id`/`discount_code_amount` layer real `discount_codes.csv`
+  redemptions onto otherwise-eligible orders at
+  `ORDER_DISCOUNT_CODE_REDEMPTION_RATE` (12%).
+- **Bug #1 -- a real business-rule violation traced back to Phase 0.**
+  `validate_orders.py`'s central cross-check (no course order during an
+  active subscription) is the first check in this whole project to test a
+  Phase 3 table against Phase 2's real `subscriptions.csv` rather than just
+  the internal timeline -- and it found 16 real violations. Root cause: the
+  course_merch_only -> email-reactivation-conversion pathway generates a
+  customer's organic order history BEFORE it's known whether (or when) the
+  email trigger will convert them into a subscriber -- so that initial
+  order generation necessarily uses `sub_windows=[]`. For the ~18 customers
+  where the trigger DOES convert, some of those already-generated orders
+  retroactively land inside the new subscription window, which didn't exist
+  yet at generation time. Fixed with a new
+  `_reconcile_orders_with_subscription_windows()` step in
+  `simulate_customers.py`, run once sub_windows is finally known: any
+  pre-existing COURSE order landing in the window is dropped (a hard
+  violation), and any pre-existing MERCH order landing in the window is
+  retroactively re-flagged `subscriber_discount_applied` and re-priced at
+  the standard 20% discount (it was drawn at full price, not knowing a
+  subscription would exist). This is a pure post-hoc filter -- it consumes
+  zero additional random draws, so it doesn't perturb any other simulated
+  value (confirmed: re-ran the full simulation and every headline number --
+  98 active subscribers, 174 converted, 18 email-triggered conversions, 13
+  still active -- came back byte-identical).
+- **Bug #2 -- discovered while re-running Phase 0 to apply the fix above,
+  and much more consequential: `pre_signup_anonymous_id` was generated with
+  `uuid.uuid4()`, not the seeded rng.** uuid4() draws from `os.urandom`,
+  completely invisible to (and unaffected by) the numpy seed -- meaning
+  every rerun of `simulate_customers.py` mints a BRAND NEW anon_id for
+  every one of the 860 customers, while every other simulated value stays
+  identical. `devices.csv` and `identity_map.csv` were built from a
+  PREVIOUS run's anon_ids, at a different time, by different scripts --
+  so re-running the timeline for the order-reconciliation fix silently
+  broke both of those already-shipped tables' exact-match validator checks
+  (849/849 mismatches). This had been flagged as a known, "non-blocking"
+  limitation back when `identity_map` was built (only ID uniqueness
+  mattered, not exact reproducibility, or so it seemed) -- this is the
+  first time the dataset actually needed a Phase-0 rebuild, and it showed
+  that limitation was live, not cosmetic. Fixed at the root: replaced
+  `uuid.uuid4().hex[:16]` with a deterministic hash of `customer_id`
+  (`hashlib.md5`, zero rng draws, so it can't perturb anything else) in
+  `simulate_customers.py`. Found and fixed the identical pattern in two
+  more places while at it, for the same future-safety reason (neither was
+  actively broken today, but both were the same latent landmine):
+  `build_anonymous_population.py`'s ghost `anon_id` (code fixed; NOT
+  regenerated, since nothing needed it and it would have pointlessly
+  changed 17,050 already-fine IDs) and `build_devices.py`'s 2nd-device
+  `anonymous_id` (fixed and regenerated, since devices.csv needed rebuilding
+  anyway).
+- Regenerated the timeline (2nd time, now with both fixes), then rebuilt
+  `devices.csv` and `identity_map.csv` from it -- same exact row counts as
+  before (18,042 / 992), only the anon_id strings changed shape (hash-based
+  instead of random). **Re-ran every previously-shipped validator as a full
+  safety sweep**: all 12 prior tables (products through discount_codes)
+  still pass in full -- 18/18, 18/18, 19/19, 25/25, 21/21, 20/20, 17/17,
+  23/23, 28/28, 22/22, 24/24, 19/19 -- confirming the two fixes changed
+  nothing else in the dataset.
+- Rebuilt `orders.csv` against the corrected timeline: 3,650 orders (down
+  from 3,666 -- the 16 dropped course-during-subscription violations),
+  $189,408.79 total revenue. `validate_orders.py`: 23 checks, including the
+  now-passing cross-check against `subscriptions.csv` (0 violations, down
+  from 16) and an exact row-count reconciliation against the timeline +
+  anonymous population. All 23 pass.

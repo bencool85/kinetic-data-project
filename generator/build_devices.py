@@ -19,8 +19,8 @@ Soft-deleted customers get ZERO device rows, same full-erasure treatment as
 Output: data/devices.csv
 """
 import datetime
+import hashlib
 import json
-import uuid
 import numpy as np
 import pandas as pd
 
@@ -93,7 +93,10 @@ def build_devices(seed=SEED + 5):
             rows.append({
                 "device_id": f"dev_{device_num:06d}",
                 "customer_id": cid,
-                "anonymous_id": "anon_" + uuid.uuid4().hex[:16],
+                # Deterministic (hash of device_num), not uuid.uuid4() -- see
+                # the identical fix + rationale in simulate_customers.py's
+                # pre_signup_anon_id.
+                "anonymous_id": "anon_" + hashlib.md5(f"seconddevice_{device_num}".encode()).hexdigest()[:16],
                 "device_type": str(rng.choice(DEVICE_TYPES, p=DEVICE_TYPE_P)),
                 "first_seen_at": second_first_seen.isoformat(),
                 "last_seen_at": max(second_first_seen, last_activity).isoformat(),

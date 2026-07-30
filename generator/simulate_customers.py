@@ -19,8 +19,8 @@ Output:
   internal/_sim_attribution_ground_truth.json   (true acquisition/reactivation channel)
 """
 import datetime
+import hashlib
 import json
-import uuid
 import numpy as np
 import pandas as pd
 from dateutil.relativedelta import relativedelta
@@ -163,6 +163,38 @@ def is_covered(date, windows):
     return any(start <= date <= end for start, end in windows)
 
 
+def _reconcile_orders_with_subscription_windows(orders, sub_windows):
+    """For the course_merch_only -> email-reactivation-conversion pathway,
+    a customer's ORIGINAL organic order history is generated before we even
+    know whether (or when) the email trigger will convert them -- so it's
+    generated with sub_windows=[] (see the caller). If it later DOES convert,
+    some of those pre-existing orders can retroactively fall inside the new
+    subscription window, which is now known. Two real problems that causes,
+    fixed here as a post-hoc reconciliation once sub_windows is finally known:
+    1. A pre-existing COURSE order landing inside the subscription window is
+       a hard business-rule violation (no course purchase during an active
+       subscription) -- dropped entirely.
+    2. A pre-existing MERCH order landing inside the window was drawn at
+       full (non-subscriber) price, since it didn't know a subscription
+       would exist yet -- retroactively flagged subscriber_discount_applied
+       and re-priced at the standard 20% discount, so pricing matches what
+       a real subscriber checkout would have shown.
+    Found via Phase 3's `orders` table validation cross-checking against
+    Phase 2's real `subscriptions.csv` -- the master timeline had never been
+    checked against actual subscription windows for this specific pathway."""
+    reconciled = []
+    for o in orders:
+        date = datetime.date.fromisoformat(o["date"])
+        if o["order_type"] == "course" and is_covered(date, sub_windows):
+            continue  # drop -- would be an impossible course-during-subscription order
+        if o["order_type"] == "merch" and is_covered(date, sub_windows) and not o.get("subscriber_discount_applied", False):
+            o = dict(o)
+            o["amount"] = round(o["amount"] * (1 - SUBSCRIBER_MERCH_DISCOUNT), 2)
+            o["subscriber_discount_applied"] = True
+        reconciled.append(o)
+    return reconciled
+
+
 def _draw_order(rng, order_type, discounted=False):
     if order_type == "course":
         price = round(float(rng.choice(COURSE_PRICE_TIERS, p=COURSE_PRICE_WEIGHTS)), 2)
@@ -303,7 +335,17 @@ def simulate_all_customers(seed=SEED + 2):
 
         pre_signup_gap = int(rng.integers(0, 15))
         pre_signup_first_seen = max(START_DATE, signup_date - datetime.timedelta(days=pre_signup_gap))
-        pre_signup_anon_id = "anon_" + uuid.uuid4().hex[:16]
+        # Deterministic (hash of customer_id), NOT uuid.uuid4() -- uuid4() draws
+        # from os.urandom, invisible to (and unaffected by) the seeded rng, so a
+        # rerun of this script would mint a completely different anon_id for
+        # every customer while leaving every OTHER random draw identical. That
+        # silently breaks devices.csv/identity_map.csv (built by separate
+        # scripts, at a different time, from whatever anon_ids this file had
+        # when THEY last ran) without changing anything else -- caught when a
+        # routine rebuild here broke both of those already-shipped tables'
+        # exact-match validator checks. A hash keyed on customer_id needs no
+        # rng draws at all, so it doesn't perturb any other simulated value.
+        pre_signup_anon_id = "anon_" + hashlib.md5(f"presignup_{customer_id}".encode()).hexdigest()[:16]
 
         account_type = "subscriber" if rng.random() < EVER_SUBSCRIBE_RATE else "course_merch_only"
 
@@ -353,6 +395,7 @@ def simulate_all_customers(seed=SEED + 2):
                     intervals, sub_events, churn_date, reactivations, churn_segment = simulate_subscription_lifecycle(
                         rng, trial_end_date, initial_plan, END_DATE)
                     sub_windows = active_subscription_windows(intervals)
+                    orders = _reconcile_orders_with_subscription_windows(orders, sub_windows)
                     post_orders = generate_orders(
                         rng, trial_end_date, END_DATE, "subscriber", sub_windows, churn_date)
                     orders = orders + post_orders

@@ -7,7 +7,7 @@ checkouts in the eventual `orders` table.
 Output: internal/_sim_anonymous_population.csv
 """
 import datetime
-import uuid
+import hashlib
 import numpy as np
 import pandas as pd
 
@@ -24,8 +24,10 @@ def build_anonymous_population(seed=SEED + 1):
     channel_mix = load_channel_mix()
 
     rows = []
-    for _ in range(N_ANONYMOUS):
-        anon_id = "anon_" + uuid.uuid4().hex[:16]
+    for i in range(N_ANONYMOUS):
+        # Deterministic (hash of index), not uuid.uuid4() -- see the identical
+        # fix + rationale in simulate_customers.py's pre_signup_anon_id.
+        anon_id = "anon_" + hashlib.md5(f"ghost_{i}".encode()).hexdigest()[:16]
         # Bound explicitly by START_DATE/END_DATE: the calendar's last week_start
         # is a few days before END_DATE, and the day-of-week offset sampled inside
         # sample_weighted_date can otherwise push a date past END_DATE -- an

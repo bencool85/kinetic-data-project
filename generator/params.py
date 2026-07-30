@@ -76,6 +76,12 @@ PAST_DUE_WINDOW_DAYS = 14         # "recently renewed" = current_period_start wi
 # byte-for-byte duplicate row (same subscription/type/timestamp, new event_id).
 DUPLICATE_WEBHOOK_RATE = 0.03
 
+# Phase 3 (orders table) -- discount codes don't exist anywhere in the master
+# timeline (Phase 0 never modeled promo codes), so redemption is layered on
+# at build time: a share of otherwise-eligible orders (valid code window,
+# matching applies_to, min_order_amount met) get one applied.
+ORDER_DISCOUNT_CODE_REDEMPTION_RATE = 0.12
+
 # New acquisition pathway: a course/merch-only customer (never subscribed) who
 # eventually receives a targeted "come try a membership" email based on their own
 # purchase history and starts a trial because of it. Timing is relative to their
