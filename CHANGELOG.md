@@ -229,3 +229,34 @@ seasonality calendar.
   maps to exactly one row, and `created_at`'s date + `signup_source` match the
   timeline's `signup_date`/`signup_source` exactly for all 860 customers (0
   mismatches) -- not sampled, checked for every row. All 22 checks passed.
+
+## 2026-07-30 — Bug fix: opt-in flags didn't account for email/push touchpoints
+
+- Ben caught a real gap in `customers`: `email_opt_in`/`push_opt_in` were
+  rolled independently of the timeline, with no guarantee that a customer
+  who was actually reactivated (or, for email, converted via the
+  merch-to-subscriber trigger) via that channel was also opted into it --
+  logically, you can't receive a marketing email/push you never opted into.
+  Checked the shipped data directly: 9 of 860 customers were touched by email
+  (reactivated or converted via email) but had `email_opt_in=False` -- a real
+  violation. Push had zero violations this run, but only by chance (0 of the
+  25 reactivations happened to land on the push channel this seed) -- the
+  underlying bug applied equally to both.
+- Fixed in `generator/build_customers.py`: a customer's reactivation history
+  (and, for email, the merch-to-subscriber trigger) is now checked *before*
+  rolling opt-in -- anyone touched by a channel gets that opt-in forced True,
+  rather than left to chance. Soft-deleted accounts still force both opt-ins
+  False regardless of history (deletion legitimately overrides a customer's
+  past opt-in state, since they could have opted in, received the email
+  years ago, then since deleted their account).
+- Added 2 permanent checks to `generator/validate_customers.py` so this can't
+  silently regress: every non-deleted customer touched by an email
+  touchpoint has `email_opt_in=True` (49 customers touched, 0 violations),
+  and the same for push (0 touched this run, 0 violations). Re-ran the full
+  22+2=24-check suite; all pass.
+- Note: fixing this reshuffled the shared RNG stream for unrelated fields
+  (names, is_deleted draws) for customers after the first email-touched one
+  in generation order -- an accepted, known consequence of using one
+  sequential RNG per customer (documented earlier in this project); the data
+  is still fully reproducible from the seed, just different-looking row by
+  row than the prior (buggy) version.

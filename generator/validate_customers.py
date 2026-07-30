@@ -80,6 +80,37 @@ def run():
     check("Business rule", "non-deleted accounts do NOT use the deleted-account placeholder name",
           (customers.loc[~customers["is_deleted"], "first_name"] != "Deleted").all())
 
+    # A customer can only have received a marketing email/push if they were
+    # opted in at the time it was sent -- so anyone the timeline shows as
+    # reactivated (or converted via the merch-to-subscriber email trigger) via
+    # that channel must currently be opted in, UNLESS they've since deleted
+    # their account (deletion legitimately overrides historical opt-in state).
+    email_touched, push_touched = set(), set()
+    for t in timeline:
+        cid = customer_id_for(t["customer_id"])
+        channels = {r["channel"] for r in t["reactivations"]}
+        if t["trial"] and t["trial"].get("trigger") == "email_reactivation":
+            channels.add("email")
+        if "email" in channels:
+            email_touched.add(cid)
+        if "push" in channels:
+            push_touched.add(cid)
+
+    non_deleted_ids = set(customers.loc[~customers["is_deleted"], "customer_id"])
+    email_must_opt_in = (email_touched & non_deleted_ids)
+    push_must_opt_in = (push_touched & non_deleted_ids)
+    opted_in_email = set(customers.loc[customers["email_opt_in"], "customer_id"])
+    opted_in_push = set(customers.loc[customers["push_opt_in"], "customer_id"])
+
+    check("Business rule",
+          "every non-deleted customer reactivated/converted via an email touchpoint has email_opt_in=True",
+          email_must_opt_in <= opted_in_email,
+          f"{len(email_must_opt_in)} touched by email; violations: {sorted(email_must_opt_in - opted_in_email)}")
+    check("Business rule",
+          "every non-deleted customer reactivated via a push touchpoint has push_opt_in=True",
+          push_must_opt_in <= opted_in_push,
+          f"{len(push_must_opt_in)} touched by push; violations: {sorted(push_must_opt_in - opted_in_push)}")
+
     # --- 5. Distributional sanity ---
     check("Distributional", f"is_deleted rate is close to the {0.02:.0%} target",
           abs(customers["is_deleted"].mean() - 0.02) < 0.02,

@@ -87,15 +87,29 @@ def build_customers(seed=SEED + 3):
         signup_seconds = int(rng.integers(0, 86400))
         created_at = datetime.datetime.combine(signup_date, datetime.time()) + datetime.timedelta(seconds=signup_seconds)
 
+        # A customer can only have received a marketing email/push if they were
+        # opted in at the time -- so anyone the timeline shows as reactivated
+        # (or converted via the merch-to-subscriber trigger) via that channel
+        # MUST be opted in, not just probabilistically likely to be.
+        reactivation_channels = {r["channel"] for r in t["reactivations"]}
+        if t["trial"] and t["trial"].get("trigger") == "email_reactivation":
+            reactivation_channels.add("email")
+        touched_by_email = "email" in reactivation_channels
+        touched_by_push = "push" in reactivation_channels
+
         is_deleted = bool(rng.random() < IS_DELETED_RATE)
         if is_deleted:
+            # Deletion scrubs current state regardless of history -- a customer
+            # can legitimately have received a win-back email years ago and
+            # since deleted their account, so opt-ins are forced False here
+            # even for someone who was touched_by_email/push earlier.
             first_name, last_name = "Deleted", "User"
             email = f"deleted_user_{sim_id:05d}@deleted.kinetic.invalid"
             email_opt_in, push_opt_in = False, False
         else:
             first_name, last_name = first, last
-            email_opt_in = bool(rng.random() < EMAIL_OPT_IN_RATE)
-            push_opt_in = bool(rng.random() < PUSH_OPT_IN_RATE)
+            email_opt_in = True if touched_by_email else bool(rng.random() < EMAIL_OPT_IN_RATE)
+            push_opt_in = True if touched_by_push else bool(rng.random() < PUSH_OPT_IN_RATE)
 
         rows.append({
             "customer_id": customer_id,
