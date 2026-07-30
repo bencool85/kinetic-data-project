@@ -1,0 +1,5 @@
+plan_id,tier,billing_interval,price,currency,is_active,created_at
+plan_basic_monthly,basic,month,19.99,usd,True,2023-08-01
+plan_basic_annual,basic,year,179.0,usd,True,2023-08-01
+plan_plus_monthly,plus,month,34.99,usd,True,2023-08-01
+plan_plus_annual,plus,year,314.0,usd,True,2023-08-01

@@ -21,6 +21,8 @@ TRIAL_DAYS = 7
 BASIC_MONTHLY = 19.99
 BASIC_ANNUAL = 179.00
 PLUS_MONTHLY = 34.99
+PLUS_ANNUAL = 314.00     # ~25.4% off monthly-equivalent, same discount ratio as Basic
+                          # (Basic: 179.00 / (19.99*12) = 74.6% of monthly-equivalent)
 
 # Behavioral rates (defaults agreed in planning; tune here if needed)
 EVER_SUBSCRIBE_RATE = 0.60       # % of all customers who ever start a trial/subscription

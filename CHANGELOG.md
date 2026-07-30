@@ -183,6 +183,8 @@ seasonality calendar.
   verifies against both the full and discounted price, while guest purchases
   (never subscribed, never discounted) are checked against full price only.
   All 18 checks passed on the first run.
+- Added `PLUS_ANNUAL = 314.00` to `params.py` (~25.4% off monthly-equivalent,
+  the same discount ratio as `BASIC_ANNUAL`).
 - Built `generator/build_product_variants.py` -> `data/product_variants.csv`
   (21 variants across 12 products): courses get a single "Standard Access"
   variant (digital, no sizing); the tee/shorts/pullover get S/M/L/XL; the cap
@@ -196,3 +198,15 @@ seasonality calendar.
   work for the first time: checked both directions (every variant resolves to
   a real product, and every product has at least one sellable variant so
   nothing in the catalog is orphaned). All 18 checks passed on the first run.
+- Built `generator/build_subscription_plans.py` -> `data/subscription_plans.csv`
+  (4 rows: Basic/Plus x monthly/annual, Stripe-shaped: tier, billing_interval,
+  price, currency).
+- Built `generator/validate_subscription_plans.py` — 19 checks. Flagged an
+  open gap for later phases: the Phase 0 master timeline only tracks plan
+  *tier* per subscription interval ("basic"/"plus"), not billing_interval
+  (monthly vs. annual) -- that split doesn't exist in the ground truth yet, so
+  Phase 2 (`subscriptions`) will need to assign monthly-vs-annual itself when
+  it builds real interval rows. Business-rule checks confirmed both annual
+  plans are genuinely discounted vs. paying monthly (not just relabeled), and
+  that Plus's annual discount ratio (25.2%) is consistent with Basic's
+  (25.4%) rather than an arbitrary number. All 19 checks passed.

@@ -44,6 +44,9 @@ FILES = [
     ("generator/build_product_variants.py", "Code", "Phase 1: builds product_variants (sizes for apparel, single variant elsewhere)"),
     ("generator/validate_product_variants.py", "Code", "Phase 1: 5-layer validation for product_variants, including FK to products"),
     ("data/product_variants.csv", "Shipped table", "Phase 1: product_variants table (21 variants across 12 products)"),
+    ("generator/build_subscription_plans.py", "Code", "Phase 1: builds subscription_plans (Basic/Plus x monthly/annual)"),
+    ("generator/validate_subscription_plans.py", "Code", "Phase 1: 5-layer validation for subscription_plans"),
+    ("data/subscription_plans.csv", "Shipped table", "Phase 1: subscription_plans table (4 plans)"),
 ]
 
 
