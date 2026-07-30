@@ -31,3 +31,18 @@ All notable decisions and file changes for this project, in plain English.
 
 **Next up:** Phase 0 — build the master timeline generator, anonymous population, and
 seasonality calendar.
+
+## 2026-07-30 — Phase 0, Steps 1-3: parameters, seasonality calendar, channel mix
+
+- `generator/params.py` — all global constants (100 customers, 2,000 anonymous ghosts,
+  Aug 2023-Jul 2026 date range, trial/pricing/rate assumptions).
+- `generator/build_calendar.py` — builds the weekly seasonality multiplier and the
+  channel-mix-over-time schedule.
+- Output: `internal/_sim_seasonality_calendar.csv`, `internal/_sim_channel_mix_schedule.csv`,
+  `internal/seasonality_preview.png` (visual sanity check).
+- Realized shape: yearly avg multiplier grows 1.15 (2023) -> 2.31 (2026); monthly shape
+  peaks in January (2.93) and November (2.12), dips in summer (Jun-Aug ~1.1-1.5) as
+  intended. Channel mix drifts Meta 28%->20%, TikTok 10%->25%, Snap 8%->5% over the
+  3 years.
+- Awaiting review before proceeding to Steps 4-6 (anonymous population + per-customer
+  master timelines).
