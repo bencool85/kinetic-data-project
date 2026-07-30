@@ -53,6 +53,9 @@ FILES = [
     ("generator/build_customer_addresses.py", "Code", "Phase 1: builds customer_addresses (billing/shipping, obviously-fake streets)"),
     ("generator/validate_customer_addresses.py", "Code", "Phase 1: 5-layer validation for customer_addresses"),
     ("data/customer_addresses.csv", "Shipped table", "Phase 1: customer_addresses table (1,431 rows)"),
+    ("generator/build_devices.py", "Code", "Phase 1: builds devices (customer + anonymous-ghost devices)"),
+    ("generator/validate_devices.py", "Code", "Phase 1: 5-layer validation for devices"),
+    ("data/devices.csv", "Shipped table", "Phase 1: devices table (18,042 rows: known-customer + ghost devices)"),
 ]
 
 

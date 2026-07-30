@@ -11,7 +11,7 @@ import uuid
 import numpy as np
 import pandas as pd
 
-from params import SEED, N_ANONYMOUS, GUEST_MERCH_CONVERSION_RATE, END_DATE
+from params import SEED, N_ANONYMOUS, GUEST_MERCH_CONVERSION_RATE, START_DATE, END_DATE
 from sim_utils import load_calendar, load_channel_mix, sample_weighted_date, sample_channel
 
 MERCH_PRICE_TIERS = [24.99, 34.99, 49.99, 64.99, 89.99, 120.00]
@@ -26,7 +26,13 @@ def build_anonymous_population(seed=SEED + 1):
     rows = []
     for _ in range(N_ANONYMOUS):
         anon_id = "anon_" + uuid.uuid4().hex[:16]
-        first_seen = sample_weighted_date(calendar, rng)
+        # Bound explicitly by START_DATE/END_DATE: the calendar's last week_start
+        # is a few days before END_DATE, and the day-of-week offset sampled inside
+        # sample_weighted_date can otherwise push a date past END_DATE -- an
+        # impossible state (a visitor "first seen" after the dataset's own
+        # observation window ends). Found via devices.py validation catching 47
+        # ghosts with first_seen_date up to 3 days past END_DATE.
+        first_seen = sample_weighted_date(calendar, rng, start_date=START_DATE, end_date=END_DATE)
         channel = sample_channel(channel_mix, rng, first_seen)
         num_sessions = int(rng.choice([1, 2, 3], p=[0.70, 0.22, 0.08]))
 

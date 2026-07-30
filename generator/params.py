@@ -110,3 +110,7 @@ EMAIL_OPT_IN_RATE = 0.88   # opted into marketing email at signup (high -- it's 
 PUSH_OPT_IN_RATE = 0.45    # opted into push notifications (lower -- requires a separate device permission grant)
 IS_DELETED_RATE = 0.02     # soft-deleted accounts (GDPR-style request); PII scrubbed, customer_id and
                            # historical rows (orders/subscriptions/etc.) are preserved for referential integrity
+
+# Phase 1 - devices table
+SECOND_DEVICE_RATE = 0.20   # of non-deleted customers, % who also have a 2nd device on file
+DEVICE_TYPE_WEIGHTS = {"ios": 0.45, "android": 0.35, "web": 0.20}  # fitness app skews mobile

@@ -300,3 +300,38 @@ seasonality calendar.
   shipping `created_at` matches the customer's first merch-order date exactly
   for all 582 shipping rows, and every street address contains the literal
   word "Fake". All 21 checks passed on the first run.
+
+## 2026-07-30 — Phase 1: `devices` (table 6 of 47) + a real Phase 0 bug found via validation
+
+- Built `generator/build_devices.py` -> `data/devices.csv` (18,042 rows): a
+  primary device per non-deleted customer carrying their exact
+  `pre_signup_anonymous_id` from the timeline (~20% also get a 2nd device),
+  plus one device per anonymous ghost (17,050, `customer_id` null),
+  per Ben's earlier decision that the ghost population should get device
+  records too. Deleted customers get zero devices (same full-erasure pattern
+  as `customer_addresses`).
+- **Validation caught two real correctness bugs, both fixed at the source:**
+  1. 47 of 17,050 anonymous ghosts had `first_seen_date` up to 3 days *past*
+     `END_DATE` -- an impossible state (first seen after the dataset's own
+     observation window ends). Root cause: `build_anonymous_population.py`
+     (Phase 0) called `sample_weighted_date()` without `start_date`/`end_date`
+     bounds, so the calendar's last week (`week_start` a few days before
+     `END_DATE`) plus a random 0-6-day offset could overshoot. Fixed by
+     passing explicit bounds, matching how every other date-sampling call
+     in this project already does it. **Regenerated
+     `internal/_sim_anonymous_population.csv`** -- only the 47 affected rows
+     changed (clamped to `END_DATE`); guest-purchase rate stayed at 7.4%,
+     nothing else moved.
+  2. 4 customer devices inherited a `last_seen_at` past `END_DATE` from the
+     `trial_in_progress` edge case (a trial that hadn't resolved yet when the
+     dataset window closed, added in an earlier fix) -- its recorded
+     `trial.end` is legitimately up to `TRIAL_DAYS` past `END_DATE`. Fixed
+     `_last_activity_date()` in `build_devices.py` to clip at `END_DATE`.
+  Both were only surfaced because `validate_devices.py` checks
+  `last_seen_at <= END_DATE` for every row -- exactly the kind of
+  impossible-scenario check this project is built around.
+- Built `generator/validate_devices.py` — 20 checks, including an exact
+  reconciliation that every customer's primary device carries their precise
+  `pre_signup_anonymous_id` (0 mismatches of 849), and that the ghost and
+  customer anonymous_id namespaces never collide. All 20 checks passed after
+  the two fixes above.
