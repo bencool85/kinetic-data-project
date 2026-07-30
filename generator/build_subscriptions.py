@@ -35,7 +35,11 @@ timeline, since Phase 0 doesn't model billing-object-level detail):
   - `past_due`: a Stripe dunning/grace-period status -- a renewal payment
     attempt just failed but the subscription hasn't been canceled (yet).
     Applied to a small share of subscriptions that renewed very recently
-    (see PAST_DUE_RATE / PAST_DUE_WINDOW_DAYS in params.py).
+    (see PAST_DUE_RATE / PAST_DUE_WINDOW_DAYS in params.py). `past_due_since`
+    records exactly when that failed attempt happened -- added (2026-07-30,
+    same day as the initial build) once `subscription_events` needed a
+    single source of truth for the matching unresolved payment_failed event,
+    rather than letting the two tables each invent their own date.
   - `paused` is a valid Stripe status (and listed in schema_reference.md's
     enum) but is NOT modeled/populated here -- 0 rows will have this status.
     Flagged explicitly rather than silently omitted; easy to add later if
@@ -190,10 +194,18 @@ def build_subscription_objects(timeline, seed=SEED + 7):
 
     # --- past_due overlay: a small share of just-renewed active subscriptions ---
     # are currently in a payment-failure grace period rather than cleanly active.
+    # past_due_since records exactly when that renewal payment attempt failed --
+    # needed by subscription_events (Phase 2, table 2) to log the matching
+    # unresolved payment_failed event, so the two tables can't drift apart on
+    # "why is this subscription past_due."
     for obj in objects:
+        obj["past_due_since"] = None
         if obj["status"] == "active" and (END_DATE - obj["current_period_start"]).days <= PAST_DUE_WINDOW_DAYS:
             if rng.random() < PAST_DUE_RATE:
                 obj["status"] = "past_due"
+                days_since_renewal = (END_DATE - obj["current_period_start"]).days
+                offset = int(rng.integers(0, max(1, days_since_renewal + 1)))
+                obj["past_due_since"] = obj["current_period_start"] + datetime.timedelta(days=offset)
 
     return objects
 
@@ -220,6 +232,7 @@ def build_subscriptions():
             "current_period_end": obj["current_period_end"].isoformat(),
             "canceled_at": obj["canceled_at"].isoformat() if obj["canceled_at"] else None,
             "cancel_reason": obj["cancel_reason"],
+            "past_due_since": obj["past_due_since"].isoformat() if obj["past_due_since"] else None,
             "created_at": created_at.isoformat(),
         })
 

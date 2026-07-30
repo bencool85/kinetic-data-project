@@ -559,3 +559,67 @@ seasonality calendar.
   directly, rather than joining on a fragile CSV heuristic) to confirm every
   converted subscription's plan_id tier matches the timeline's own interval
   tier exactly (0 mismatches out of 576). All 27 checks pass.
+
+## 2026-07-30 — Added `past_due_since` to subscriptions (amendment)
+
+- While designing `subscription_events`, realized the past_due overlay
+  (added in the previous entry) never actually recorded WHEN the failed
+  renewal payment happened -- just flipped `status` to `past_due` with no
+  supporting date. Added `past_due_since` to `subscriptions.csv` (nullable,
+  populated only for `past_due` rows) so `subscription_events` has a single
+  source of truth for the matching unresolved `payment_failed` event,
+  instead of each table inventing its own date and risking drift.
+- Additive, non-breaking change -- re-ran `validate_subscriptions.py` with
+  one new check (`past_due_since` populated iff status='past_due', and
+  falls between current_period_start and END_DATE). 28/28 checks pass (up
+  from 27), same 576 rows, byte-identical otherwise (same seed).
+
+## 2026-07-30 — Phase 2 continues: built + validated `subscription_events` (2 of 3)
+
+- The event log behind every `subscriptions.csv` row. event_type vocabulary
+  matches `schema_reference.md` exactly: trial_started, trial_converted,
+  trial_expired, canceled_during_trial, renewed, upgraded, downgraded,
+  payment_failed, canceled, resumed.
+- Built by importing `build_subscription_objects()` directly from
+  `build_subscriptions.py` (the same in-memory objects, not a re-parse of
+  the CSV) -- single source of truth, so the two tables can't drift apart on
+  subscription_id/customer_id/dates.
+- Two kinds of source events:
+  1. Directly derivable from each subscription object's own fields, no new
+     invention: trial_started, trial_converted, trial_expired,
+     canceled_during_trial, and the past_due overlay's own payment_failed
+     (using the exact `past_due_since` date added in the amendment above).
+  2. Pulled straight from the master timeline's raw `subscription_events`
+     list (payment_failed blips + the unresolved one at involuntary churn,
+     upgraded/downgraded, canceled, resumed) -- matched to the right
+     subscription_id via (sim_customer_id, interval_id). old_plan/new_plan
+     for upgraded/downgraded aren't stored on the raw event, but are fully
+     implied by event_type in this design (upgraded is always
+     basic->plus, downgraded always plus->basic, since the simulation only
+     ever does one binary tier swap per interval) -- filled in here.
+  `renewed` events don't exist anywhere in the timeline at all -- generated
+  by cycling the same billing-interval math `subscriptions.py` already uses,
+  from each object's origin date up to its current_period_start.
+- **Added the "duplicate webhook-style events" messiness explicitly
+  promised in `schema_reference.md`'s own intro** (previously unaddressed):
+  a new `DUPLICATE_WEBHOOK_RATE` param (0.03) controls a share of events
+  that get a byte-for-byte duplicate row -- same subscription/type/
+  timestamp, only `event_id` differs -- simulating Stripe's at-least-once
+  webhook delivery. Landed at 2.93%, within tolerance.
+- 2,424 total events. Caught and fixed a real bug while validating: the
+  intra-day time-of-day offset was originally assigned AFTER duplicating
+  rows, keyed off each row's own `event_id` -- since the duplicate gets a
+  different `event_id` than its original, this gave the "duplicate" a
+  DIFFERENT timestamp than the event it was supposed to be a byte-for-byte
+  copy of, defeating the whole point. Fixed by assigning the time-of-day
+  offset BEFORE duplication (keyed on row position instead), so a
+  duplicated row now carries the exact same full timestamp as its original.
+- `validate_subscription_events.py`: 22 checks across all 5 layers,
+  including exact-date cross-checks against `subscriptions.csv` for every
+  directly-derivable event type (trial_started/converted/expired,
+  canceled_during_trial, real canceled, the past_due payment_failed), an
+  independently-recomputed `renewed`-event-count check (0 mismatches across
+  576 subscription objects), and a duplicate-detection check that uses a
+  natural key (subscription_id + event_type + event_at) rather than
+  `event_id`, since real duplicate detection in a webhook pipeline can't
+  rely on the receiver assigning the same ingestion id twice. All 22 pass.

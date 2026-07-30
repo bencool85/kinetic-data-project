@@ -65,6 +65,9 @@ FILES = [
     ("generator/build_subscriptions.py", "Code", "Phase 2: builds subscriptions (Stripe-shaped subscription objects; assigns billing_interval + next-renewal date, resolving the long-flagged Phase 2 gap)"),
     ("generator/validate_subscriptions.py", "Code", "Phase 2: 5-layer validation for subscriptions"),
     ("data/subscriptions.csv", "Shipped table", "Phase 2: subscriptions table (576 rows: one Stripe-shaped subscription object per trial-or-interval)"),
+    ("generator/build_subscription_events.py", "Code", "Phase 2: builds subscription_events (event log behind every subscription: trial_started/converted/expired, renewed, upgraded/downgraded, payment_failed, canceled, resumed)"),
+    ("generator/validate_subscription_events.py", "Code", "Phase 2: 5-layer validation for subscription_events"),
+    ("data/subscription_events.csv", "Shipped table", "Phase 2: subscription_events table (2,424 rows, incl. ~3% deliberate duplicate webhook-style rows)"),
 ]
 
 

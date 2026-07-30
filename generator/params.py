@@ -69,6 +69,13 @@ ANNUAL_BILLING_SHARE = 0.20      # of subscriptions, % that choose annual over m
 PAST_DUE_RATE = 0.06             # of recently-renewed active subscriptions, % currently in a payment-failure grace period
 PAST_DUE_WINDOW_DAYS = 14         # "recently renewed" = current_period_start within this many days of END_DATE
 
+# Phase 2 (subscription_events table) -- realistic messiness explicitly called
+# out in schema_reference.md's intro ("duplicate webhook-style events"): Stripe
+# webhooks are at-least-once delivery, so a real ingestion pipeline sees the
+# exact same event redelivered occasionally. A small share of events get a
+# byte-for-byte duplicate row (same subscription/type/timestamp, new event_id).
+DUPLICATE_WEBHOOK_RATE = 0.03
+
 # New acquisition pathway: a course/merch-only customer (never subscribed) who
 # eventually receives a targeted "come try a membership" email based on their own
 # purchase history and starts a trial because of it. Timing is relative to their

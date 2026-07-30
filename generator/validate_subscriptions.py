@@ -31,7 +31,7 @@ def run():
     timeline = json.load(open("../internal/_sim_customer_timeline.json"))
 
     for col in ["trial_start", "trial_end", "start_date", "current_period_start",
-                "current_period_end", "canceled_at", "created_at"]:
+                "current_period_end", "canceled_at", "past_due_since", "created_at"]:
         subs[col] = pd.to_datetime(subs[col])
 
     # --- 1. Structural ---
@@ -107,6 +107,11 @@ def run():
                       "grace-period window of END_DATE (that's the only reason it's past_due, not canceled)",
           ((pd.Timestamp(END_DATE) - subs.loc[past_due, "current_period_start"]).dt.days <= 14).all()
           if past_due.any() else True)
+    check("Structural", "past_due_since populated if and only if status == 'past_due', and falls "
+                      "between current_period_start and END_DATE",
+          (subs["status"].eq("past_due") == subs["past_due_since"].notna()).all()
+          and (subs.loc[past_due, "past_due_since"] >= subs.loc[past_due, "current_period_start"]).all()
+          and (subs.loc[past_due, "past_due_since"] <= pd.Timestamp(END_DATE)).all())
 
     # --- 4. Business-rule invariants ---
     # Reconstruct, per customer, the set of tiers the timeline actually assigned
