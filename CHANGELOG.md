@@ -358,3 +358,26 @@ seasonality calendar.
 - One Phase 1 table remains: `segments` (definitions only). Products,
   product_variants, subscription_plans, customers, customer_addresses,
   devices, and identity_map are done.
+
+## 2026-07-30 — Phase 1 complete: `segments` (table 8 of 47)
+
+- Built `generator/build_segments.py` -> `data/segments.csv` (10 rows,
+  definitions only -- membership is Phase 4): 7 customer-grain segments
+  (Active Subscriber, Lapsed 0-30/31-90/90+ Days, Course/Merch-Only-Never-
+  Subscribed, Trial In Progress, High-LTV Customer) and 3 anonymous_device-
+  grain ad-platform audiences (Website Visitors - Last 30 Days on
+  google_search, Cart Abandoners on meta, Lookalike - Recent Converters on
+  tiktok), per the agreed small-scope design.
+- The Lookalike audience's `created_at` is deliberately later than the
+  others: a lookalike/similar-audience algorithm needs a real seed audience
+  of converters to model itself on, so it can't have existed since day 1.
+  Computed directly from the simulation -- the 50th real conversion lands
+  ~429 days after START_DATE -- and dated it ~2 weeks after that.
+- Built `generator/validate_segments.py` — 14 checks, including a direct
+  check that >=50 real conversions existed in the timeline by the Lookalike
+  segment's `created_at` (50 did, exactly at the threshold by construction).
+  All 14 checks passed.
+- **This completes Phase 1** (8 of 8 tables: products, product_variants,
+  subscription_plans, customers, customer_addresses, devices, identity_map,
+  segments). Next up per `docs/generation_plan.md`: Phase 2 (subscriptions,
+  subscription_events, invoices).
