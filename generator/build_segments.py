@@ -9,10 +9,26 @@ independently). Two grains distinguished by audience_grain:
   paid-media platform's ad-set-level table (built in Phase 7) will get a
   nullable targeting_segment_id -> segments.segment_id pointing at these.
 
-Small, curated list per the agreed scope: 9 customer-grain + 3
-anonymous-grain (grew from the originally-agreed 7 customer-grain by two --
-see the "Lapsed - Still Buying" and "High Churn Risk" segments below, each
-added to fix or fill a real gap rather than force-fit into the original 7).
+9 customer-grain segments (grew from the originally-agreed 7 by two -- see
+the "Lapsed - Still Buying" and "High Churn Risk" segments below, each added
+to fix or fill a real gap rather than force-fit into the original 7).
+
+Anonymous-grain segments: Ben's instruction was that every anonymous-grain
+audience concept needs a version on every platform capable of receiving a
+retargeting pixel -- not just the one platform it happened to be drafted on.
+All 6 paid-media platforms in this project's scope (meta, google_search,
+youtube, dv360, snap, tiktok) support pixel-based custom/retargeting
+audiences, so each of the 3 concepts (Website Visitors - Last 30 Days, Cart
+Abandoners, Lookalike - Recent Converters) now gets one row per platform: 3
+concepts x 6 platforms = 18 anonymous-grain rows (up from 3). segment_name is
+disambiguated per platform (e.g. "Cart Abandoners - Meta", "Cart Abandoners -
+Google Search", ...) since segment_name must stay unique. created_at is kept
+identical across all 6 platform-versions of a given concept -- simpler, and
+there's no real reason the same underlying audience concept would be built on
+different platforms at meaningfully different times.
+
+27 total segments: 9 customer-grain + 18 anonymous-grain.
+
 The "Lookalike - Recent Converters" audience's created_at is deliberately
 later than the others -- a lookalike/similar-audience algorithm needs an
 existing seed audience of real converters to build from, so it couldn't have
@@ -77,15 +93,29 @@ CUSTOMER_SEGMENTS = [
      "churn_propensity_model", datetime.date(2024, 10, 25)),  # ~2 weeks after the 20th real churn in the simulation
 ]
 
-# (segment_name, description, ad_platform, created_at)
-ANONYMOUS_SEGMENTS = [
+# (concept_name, description, created_at) -- each concept gets one row per
+# platform below, across all 6 platforms capable of receiving a retargeting
+# pixel.
+ANONYMOUS_CONCEPTS = [
     ("Website Visitors - Last 30 Days", "Anonymous devices with a tracked site visit in the trailing 30 days.",
-     "google_search", START_DATE + datetime.timedelta(days=30)),
+     START_DATE + datetime.timedelta(days=30)),
     ("Cart Abandoners", "Anonymous devices that began checkout without completing a purchase.",
-     "meta", START_DATE + datetime.timedelta(days=30)),
+     START_DATE + datetime.timedelta(days=30)),
     ("Lookalike - Recent Converters", "Ad-platform lookalike/similar audience modeled on recently converted subscribers.",
-     "tiktok", datetime.date(2024, 10, 17)),  # ~2 weeks after the 50th real conversion in the simulation
+     datetime.date(2024, 10, 17)),  # ~2 weeks after the 50th real conversion in the simulation
 ]
+
+# Every paid-media platform in scope supports pixel-based custom/retargeting
+# audiences, so every concept above is replicated across all 6.
+PLATFORMS = ["meta", "google_search", "youtube", "dv360", "snap", "tiktok"]
+PLATFORM_LABELS = {
+    "meta": "Meta",
+    "google_search": "Google Search",
+    "youtube": "YouTube",
+    "dv360": "DV360",
+    "snap": "Snap",
+    "tiktok": "TikTok",
+}
 
 
 def _fake_platform_audience_id(platform, i):
@@ -94,9 +124,25 @@ def _fake_platform_audience_id(platform, i):
         return str(23_850_000_000_000_000 + i)          # Meta: large numeric object id
     if platform == "google_search":
         return str(800_000_000_000 + i)                  # Google Ads: numeric UserList id
+    if platform == "youtube":
+        return str(900_000_000_000 + i)                  # YouTube: shares Google Ads infra, distinct UserList id range
+    if platform == "dv360":
+        return str(5_000_000_000 + i)                     # DV360: numeric audience id, smaller id space than Google Ads
+    if platform == "snap":
+        return _snap_uuid(i)                              # Snap: UUID-shaped audience segment id
     if platform == "tiktok":
         return str(7_100_000_000_000_000_000 + i)        # TikTok: long numeric audience id
     return str(100000 + i)
+
+
+def _snap_uuid(i):
+    # Deterministic (not uuid.uuid4() -- that's not seed-reproducible), but
+    # shaped like a real UUID, since Snap's Marketing API keys audiences by UUID.
+    # zfill pads on the LEFT, so i's actual varying digits sit at the END of h --
+    # take the last 30 chars (not the first 30) so small values of i don't all
+    # collapse to the same mostly-zero id.
+    h = format(i, "x").zfill(32)[-30:]
+    return f"{h[0:8]}-{h[8:12]}-4{h[12:15]}-a{h[15:18]}-{h[18:30]}"
 
 
 def build_segments():
@@ -117,19 +163,21 @@ def build_segments():
             "is_active": True,
         })
 
-    for name, description, platform, created_at in ANONYMOUS_SEGMENTS:
-        seg_num += 1
-        rows.append({
-            "segment_id": f"seg_{seg_num:03d}",
-            "segment_name": name,
-            "audience_grain": "anonymous_device",
-            "description": description,
-            "source_system": None,
-            "ad_platform": platform,
-            "platform_audience_id": _fake_platform_audience_id(platform, seg_num),
-            "created_at": created_at.isoformat(),
-            "is_active": True,
-        })
+    for concept_name, description, created_at in ANONYMOUS_CONCEPTS:
+        for platform in PLATFORMS:
+            seg_num += 1
+            label = PLATFORM_LABELS[platform]
+            rows.append({
+                "segment_id": f"seg_{seg_num:03d}",
+                "segment_name": f"{concept_name} - {label}",
+                "audience_grain": "anonymous_device",
+                "description": description,
+                "source_system": None,
+                "ad_platform": platform,
+                "platform_audience_id": _fake_platform_audience_id(platform, seg_num),
+                "created_at": created_at.isoformat(),
+                "is_active": True,
+            })
 
     return pd.DataFrame(rows)
 

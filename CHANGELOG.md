@@ -445,3 +445,49 @@ seasonality calendar.
   section, alongside the earlier-flagged billing_interval gap, so both
   are checked against when those phases actually get built rather than
   forgotten.
+
+## 2026-07-30 — Replicated anonymous-grain segments across all 6 ad platforms
+
+- Ben's comment: the anonymous-grain audiences shouldn't exist on just one
+  platform each (e.g. Cart Abandoners only on Meta) -- every platform that
+  can receive a retargeting pixel should get its own version. All 6
+  paid-media platforms in this project's scope (meta, google_search,
+  youtube, dv360, snap, tiktok) genuinely support pixel-based
+  custom/retargeting audiences, so each of the 3 concepts (Website Visitors
+  - Last 30 Days, Cart Abandoners, Lookalike - Recent Converters) now gets
+  one row per platform instead of one row total.
+- Anonymous-grain rows grew from 3 to 18 (3 concepts x 6 platforms). Total
+  segments: 27 (9 customer-grain + 18 anonymous-grain), up from 12.
+- `segment_name` disambiguated per platform to preserve uniqueness (e.g.
+  "Cart Abandoners - Meta", "Cart Abandoners - Google Search", ... "Cart
+  Abandoners - TikTok"). `created_at` kept identical across all 6
+  platform-versions of a given concept -- no real reason the same
+  underlying audience concept would be built on different platforms at
+  meaningfully different times.
+- Extended `_fake_platform_audience_id()` with realistic id shapes for the
+  3 new platforms: YouTube (shares Google Ads infra, so numeric UserList-id
+  shaped, in its own range so it never collides with Google Search's ids),
+  DV360 (numeric, smaller id space), and Snap (UUID-shaped, since Snap's
+  Marketing API keys audiences by UUID -- deterministic, not
+  `uuid.uuid4()`, for reproducibility).
+- Caught and fixed a real bug in the first pass at the Snap UUID generator:
+  it zero-padded `i` on the left then sliced from the front of the padded
+  string, which discarded the actual varying digits (at the end, since
+  zfill pads left) for every small `i` -- collapsing seg_026's Snap id to
+  the same near-all-zero UUID as several neighbors. Fixed by slicing the
+  last 30 characters instead of the first 30, verified via the "unique
+  platform_audience_id" check (previously failing, now passing with all
+  27 ids unique).
+- Updated `validate_segments.py`: the distributional check now expects 27
+  total (9 customer, 18 anonymous, was 12/9/3); the Lookalike/converter-seed
+  temporal check now matches by `segment_name.str.startswith(...)` instead
+  of an exact name (since the plain "Lookalike - Recent Converters" name no
+  longer exists on its own -- it's now 6 platform-suffixed rows) plus a new
+  check confirming all 6 share the same `created_at`; added a new
+  completeness check confirming each of the 3 concepts has exactly 6 rows,
+  one per platform, with no platform missing or duplicated. 23/23 checks
+  pass (up from 20, net of the 3 new checks above).
+- Also corrected `File_Manifest.xlsx`'s segments descriptions, which had
+  drifted stale (still said "10 definitions: 7 customer-grain, 3 anonymous"
+  from an earlier count) -- now accurately reflects 27 rows / 9 customer /
+  18 anonymous.

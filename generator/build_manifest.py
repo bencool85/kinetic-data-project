@@ -59,9 +59,9 @@ FILES = [
     ("generator/build_identity_map.py", "Code", "Phase 1: builds identity_map (anonymous_id -> customer_id resolution events)"),
     ("generator/validate_identity_map.py", "Code", "Phase 1: 5-layer validation for identity_map"),
     ("data/identity_map.csv", "Shipped table", "Phase 1: identity_map table (992 rows)"),
-    ("generator/build_segments.py", "Code", "Phase 1: builds segments (10 definitions: 7 customer-grain, 3 anonymous)"),
+    ("generator/build_segments.py", "Code", "Phase 1: builds segments (27 definitions: 9 customer-grain, 18 anonymous -- 3 audience concepts x 6 ad platforms)"),
     ("generator/validate_segments.py", "Code", "Phase 1: 5-layer validation for segments"),
-    ("data/segments.csv", "Shipped table", "Phase 1: segments table (10 rows) -- completes Phase 1 (all 8 tables)"),
+    ("data/segments.csv", "Shipped table", "Phase 1: segments table (27 rows) -- completes Phase 1 (all 8 tables)"),
 ]
 
 

@@ -9,6 +9,15 @@ real cross-check against the simulation: the "Lookalike - Recent Converters"
 audience can't predate having a real seed audience of converters to model it
 on, so its created_at must fall after a meaningful number of conversions
 already exist in the master timeline.
+
+Each of the 3 anonymous-grain audience concepts (Website Visitors - Last 30
+Days, Cart Abandoners, Lookalike - Recent Converters) is replicated across
+all 6 paid-media platforms (every platform in scope can receive a
+retargeting pixel), so segment_name is disambiguated per platform (e.g.
+"Cart Abandoners - Meta") -- checks that reference a specific concept match
+on segment_name.str.startswith(...) rather than an exact name, and a new
+completeness check confirms all 6 platforms are present, exactly once each,
+per concept.
 """
 import datetime
 import json
@@ -48,8 +57,10 @@ def run():
 
     conversions = sorted(datetime.date.fromisoformat(t["trial"]["end"]) for t in timeline
                           if t["trial"] and t["trial"]["outcome"] == "converted")
-    lookalike_created = pd.to_datetime(
-        segments.loc[segments["segment_name"] == "Lookalike - Recent Converters", "created_at"].iloc[0]).date()
+    lookalike_rows = segments.loc[segments["segment_name"].str.startswith("Lookalike - Recent Converters")]
+    check("Temporal", "all 6 platform-versions of the Lookalike audience share the same created_at",
+          lookalike_rows["created_at"].nunique() == 1)
+    lookalike_created = pd.to_datetime(lookalike_rows["created_at"].iloc[0]).date()
     seed_size_at_creation = sum(1 for d in conversions if d <= lookalike_created)
     check("Temporal", "the Lookalike audience's created_at falls after a real seed audience of >=50 converters already exists in the simulation",
           seed_size_at_creation >= 50, f"{seed_size_at_creation} converters existed by {lookalike_created}")
@@ -77,6 +88,21 @@ def run():
     check("Business rule", "every ad_platform value is one of the project's 6 paid-media platforms",
           anon_rows["ad_platform"].isin(["meta", "google_search", "youtube", "dv360", "snap", "tiktok"]).all())
 
+    # Every anonymous-grain audience concept must exist on all 6 platforms --
+    # not just the one platform it happened to be drafted on originally.
+    VALID_PLATFORMS = {"meta", "google_search", "youtube", "dv360", "snap", "tiktok"}
+    concept_prefixes = ["Website Visitors - Last 30 Days", "Cart Abandoners", "Lookalike - Recent Converters"]
+    completeness_ok = True
+    completeness_detail = []
+    for prefix in concept_prefixes:
+        rows_for_concept = anon_rows[anon_rows["segment_name"].str.startswith(prefix)]
+        platforms_present = set(rows_for_concept["ad_platform"])
+        if len(rows_for_concept) != 6 or platforms_present != VALID_PLATFORMS:
+            completeness_ok = False
+            completeness_detail.append(f"{prefix}: {len(rows_for_concept)} rows, platforms={sorted(platforms_present)}")
+    check("Business rule", "each of the 3 anonymous-grain audience concepts exists on all 6 platforms, exactly once each (no platform missing or duplicated)",
+          completeness_ok, "; ".join(completeness_detail))
+
     still_buying_lapsed = 0
     for t in timeline:
         if t["churn_date"] is None:
@@ -98,6 +124,8 @@ def run():
     )
     check("Business rule", "the 'High Churn Risk' segment's low-engagement half (active + engagement_tier='regular') isn't vacuous",
           active_regular_tier > 0, f"{active_regular_tier} currently-active 'regular'-tier subscribers in the timeline")
+    check("Business rule", "platform_audience_id shapes are non-empty strings for every anonymous-grain row (incl. the new youtube/dv360/snap id shapes)",
+          anon_rows["platform_audience_id"].astype(str).str.len().gt(0).all())
     churn_risk_desc = segments.loc[segments["segment_name"].str.startswith("High Churn Risk"), "description"].iloc[0]
     check("Business rule", "'High Churn Risk' segment's description explicitly flags its Phase 2/5 dependency (so it isn't silently treated as fully computable today)",
           "Phase 2" in churn_risk_desc)
@@ -110,8 +138,9 @@ def run():
                   .str.cat(sep=" ").lower() for kw in ["no purchase", "quiet", "still buying"]))
 
     # --- 5. Distributional sanity ---
-    check("Distributional", "12 total segments: 9 customer-grain, 3 anonymous_device-grain, as designed",
-          len(segments) == 12 and len(customer_rows) == 9 and len(anon_rows) == 3)
+    check("Distributional", "27 total segments: 9 customer-grain, 18 anonymous_device-grain "
+                             "(3 concepts x 6 platforms), as designed",
+          len(segments) == 27 and len(customer_rows) == 9 and len(anon_rows) == 18)
 
     n_fail = sum(1 for _, _, ok, _ in results if not ok)
     for layer, name, ok, detail in results:

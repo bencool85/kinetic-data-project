@@ -8,6 +8,21 @@ seg_006,Trial In Progress,customer,Currently within an active (unresolved) subsc
 seg_007,High-LTV Customer,customer,Lifetime order + subscription revenue in the top decile of the customer base.,internal_crm,,,2023-08-01,True
 seg_008,Lapsed - Still Buying (Courses/Merch),customer,"Subscription has lapsed (any duration), but the customer has placed at least one course or merch order since their subscription ended.",internal_crm,,,2023-08-01,True
 seg_009,"High Churn Risk (Renewal Approaching, Low Engagement)",customer,Active subscriber approaching their next renewal/billing decision with below-average recent product engagement. Flags subscribers at elevated risk of voluntary churn at their next renewal. NOTE: full computation depends on Phase 2 (subscriptions.billing_interval + next renewal date) and ideally Phase 5 (real usage-event recency/frequency) -- membership can't be fully computed until then.,churn_propensity_model,,,2024-10-25,True
-seg_010,Website Visitors - Last 30 Days,anonymous_device,Anonymous devices with a tracked site visit in the trailing 30 days.,,google_search,800000000010,2023-08-31,True
-seg_011,Cart Abandoners,anonymous_device,Anonymous devices that began checkout without completing a purchase.,,meta,23850000000000011,2023-08-31,True
-seg_012,Lookalike - Recent Converters,anonymous_device,Ad-platform lookalike/similar audience modeled on recently converted subscribers.,,tiktok,7100000000000000012,2024-10-17,True
+seg_010,Website Visitors - Last 30 Days - Meta,anonymous_device,Anonymous devices with a tracked site visit in the trailing 30 days.,,meta,23850000000000010,2023-08-31,True
+seg_011,Website Visitors - Last 30 Days - Google Search,anonymous_device,Anonymous devices with a tracked site visit in the trailing 30 days.,,google_search,800000000011,2023-08-31,True
+seg_012,Website Visitors - Last 30 Days - YouTube,anonymous_device,Anonymous devices with a tracked site visit in the trailing 30 days.,,youtube,900000000012,2023-08-31,True
+seg_013,Website Visitors - Last 30 Days - DV360,anonymous_device,Anonymous devices with a tracked site visit in the trailing 30 days.,,dv360,5000000013,2023-08-31,True
+seg_014,Website Visitors - Last 30 Days - Snap,anonymous_device,Anonymous devices with a tracked site visit in the trailing 30 days.,,snap,00000000-0000-4000-a000-00000000000e,2023-08-31,True
+seg_015,Website Visitors - Last 30 Days - TikTok,anonymous_device,Anonymous devices with a tracked site visit in the trailing 30 days.,,tiktok,7100000000000000015,2023-08-31,True
+seg_016,Cart Abandoners - Meta,anonymous_device,Anonymous devices that began checkout without completing a purchase.,,meta,23850000000000016,2023-08-31,True
+seg_017,Cart Abandoners - Google Search,anonymous_device,Anonymous devices that began checkout without completing a purchase.,,google_search,800000000017,2023-08-31,True
+seg_018,Cart Abandoners - YouTube,anonymous_device,Anonymous devices that began checkout without completing a purchase.,,youtube,900000000018,2023-08-31,True
+seg_019,Cart Abandoners - DV360,anonymous_device,Anonymous devices that began checkout without completing a purchase.,,dv360,5000000019,2023-08-31,True
+seg_020,Cart Abandoners - Snap,anonymous_device,Anonymous devices that began checkout without completing a purchase.,,snap,00000000-0000-4000-a000-000000000014,2023-08-31,True
+seg_021,Cart Abandoners - TikTok,anonymous_device,Anonymous devices that began checkout without completing a purchase.,,tiktok,7100000000000000021,2023-08-31,True
+seg_022,Lookalike - Recent Converters - Meta,anonymous_device,Ad-platform lookalike/similar audience modeled on recently converted subscribers.,,meta,23850000000000022,2024-10-17,True
+seg_023,Lookalike - Recent Converters - Google Search,anonymous_device,Ad-platform lookalike/similar audience modeled on recently converted subscribers.,,google_search,800000000023,2024-10-17,True
+seg_024,Lookalike - Recent Converters - YouTube,anonymous_device,Ad-platform lookalike/similar audience modeled on recently converted subscribers.,,youtube,900000000024,2024-10-17,True
+seg_025,Lookalike - Recent Converters - DV360,anonymous_device,Ad-platform lookalike/similar audience modeled on recently converted subscribers.,,dv360,5000000025,2024-10-17,True
+seg_026,Lookalike - Recent Converters - Snap,anonymous_device,Ad-platform lookalike/similar audience modeled on recently converted subscribers.,,snap,00000000-0000-4000-a000-00000000001a,2024-10-17,True
+seg_027,Lookalike - Recent Converters - TikTok,anonymous_device,Ad-platform lookalike/similar audience modeled on recently converted subscribers.,,tiktok,7100000000000000027,2024-10-17,True
