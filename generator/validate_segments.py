@@ -127,8 +127,9 @@ def run():
     check("Business rule", "platform_audience_id shapes are non-empty strings for every anonymous-grain row (incl. the new youtube/dv360/snap id shapes)",
           anon_rows["platform_audience_id"].astype(str).str.len().gt(0).all())
     churn_risk_desc = segments.loc[segments["segment_name"].str.startswith("High Churn Risk"), "description"].iloc[0]
-    check("Business rule", "'High Churn Risk' segment's description explicitly flags its Phase 2/5 dependency (so it isn't silently treated as fully computable today)",
-          "Phase 2" in churn_risk_desc)
+    check("Business rule", "'High Churn Risk' segment's description explicitly flags its remaining Phase 5 dependency "
+                          "(Phase 2's part -- billing_interval/next-renewal-date -- is resolved as of the subscriptions table)",
+          "Phase 5" in churn_risk_desc)
     check("Business rule", "'High Churn Risk' segment uses a distinct source_system ('churn_propensity_model') from the plain rule-based segments",
           segments.loc[segments["segment_name"].str.startswith("High Churn Risk"), "source_system"].iloc[0] == "churn_propensity_model")
     check("Business rule", "no lapsed-time-bucket segment's description re-bakes a purchase-activity condition into a time bucket "

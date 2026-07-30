@@ -62,6 +62,9 @@ FILES = [
     ("generator/build_segments.py", "Code", "Phase 1: builds segments (27 definitions: 9 customer-grain, 18 anonymous -- 3 audience concepts x 6 ad platforms)"),
     ("generator/validate_segments.py", "Code", "Phase 1: 5-layer validation for segments"),
     ("data/segments.csv", "Shipped table", "Phase 1: segments table (27 rows) -- completes Phase 1 (all 8 tables)"),
+    ("generator/build_subscriptions.py", "Code", "Phase 2: builds subscriptions (Stripe-shaped subscription objects; assigns billing_interval + next-renewal date, resolving the long-flagged Phase 2 gap)"),
+    ("generator/validate_subscriptions.py", "Code", "Phase 2: 5-layer validation for subscriptions"),
+    ("data/subscriptions.csv", "Shipped table", "Phase 2: subscriptions table (576 rows: one Stripe-shaped subscription object per trial-or-interval)"),
 ]
 
 

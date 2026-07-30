@@ -491,3 +491,71 @@ seasonality calendar.
   drifted stale (still said "10 definitions: 7 customer-grain, 3 anonymous"
   from an earlier count) -- now accurately reflects 27 rows / 9 customer /
   18 anonymous.
+
+## 2026-07-30 — Phase 2 begins: built + validated `subscriptions` (1 of 3)
+
+- Ben said proceed into Phase 2. First table: `subscriptions` -- Stripe-shaped
+  billing objects, fully separate from storefront commerce (orders/payments
+  come in Phase 3).
+- Key design decision: one row per Stripe *subscription object*, not one row
+  per customer or even one row per timeline interval. Specifically:
+  - A customer's trial + its first interval (if the trial converts) are the
+    SAME subscription object -- real Stripe subscriptions start `trialing`
+    and move to `active` on conversion without getting a new ID. This also
+    naturally covers trials that never convert (`canceled_during_trial`,
+    `expired_passively`, still-unresolved `trial_in_progress`): each gets
+    exactly one subscription object that just never leaves `trialing` or
+    that lands straight in `canceled`.
+  - Every later interval (a win-back reactivation after a full cancellation)
+    is a genuinely NEW subscription object -- a real resubscribe, created
+    straight into `active` with no trial.
+  - 576 total subscription objects, reconciling EXACTLY against the
+    timeline's own trial/interval structure (verified 1:1, not just
+    approximately).
+- **Resolved the long-flagged "billing_interval isn't in the master
+  timeline" gap** (tracked in `generation_plan.md`'s Cross-phase consistency
+  commitments since the `subscription_plans` table): neither billing_interval
+  (monthly/annual) nor a plan tier for never-converted trials exist in Phase
+  0 at all, so both are assigned here, once per subscription object, using
+  this script's own seeded rng (~20% choose annual). `current_period_start`/
+  `current_period_end` are computed by cycling forward from the object's
+  start date -- for any open (active/past_due) subscription this guarantees
+  `current_period_end` lands strictly after END_DATE, i.e. a real,
+  still-future renewal date. That's exactly what the `segments` table's
+  "High Churn Risk" segment has been waiting on since Phase 1 -- updated its
+  description in `build_segments.py` to drop the now-resolved Phase 2
+  dependency (only the Phase 5 engagement-proxy half is still open), and
+  marked the commitment resolved in `generation_plan.md`. Re-ran
+  `validate_segments.py` after that description edit -- still 23/23.
+- Two more small mechanics layered on at this phase only (neither exists in
+  the master timeline -- Phase 0 doesn't model billing-object-level detail):
+  - `past_due`: a Stripe dunning/grace-period status for a small share of
+    subscriptions that just renewed and are currently failing a payment
+    retry but haven't been canceled yet. Landed exactly 1 subscription in
+    this status this run -- combined with 97 `active`, that's 98 currently-
+    open subscriptions, matching the long-established "98 active
+    subscribers" figure from the Phase 0 analysis EXACTLY.
+  - `paused` is a valid Stripe status (and listed in `schema_reference.md`'s
+    enum) but is intentionally NOT modeled here -- 0 rows. Flagged explicitly
+    in the table's docstring and checked by a validator assertion, rather
+    than silently omitted.
+- Caught and fixed a real distributional bug while validating: the
+  `canceled_during_trial` outcome was initially tagged `cancel_reason =
+  "voluntary"`, the same label used for real post-conversion voluntary
+  churns. That diluted the INVOLUNTARY_CHURN_SHARE (25%) check against real
+  churns -- actual came out to 13% because trial cancellations (which are
+  always voluntary by definition, a much larger and mechanically unrelated
+  population) were mixed in. Fixed by giving trial cancellations their own
+  distinct reason, `trial_canceled`, separate from real `voluntary`/
+  `involuntary` churns. Involuntary share came back to 23.8%, within the
+  expected band.
+- Added two new params to `params.py`: `ANNUAL_BILLING_SHARE` (0.20) and
+  `PAST_DUE_RATE`/`PAST_DUE_WINDOW_DAYS` (0.06 / 14 days).
+- `validate_subscriptions.py`: 27 checks across all 5 layers, including an
+  exact row-count reconciliation against the timeline (576 = 576), an exact
+  match on currently-open-subscription count against the timeline's own
+  count of open intervals (98 = 98), and a check that re-derives the same
+  subscription objects in-memory (importing `build_subscription_objects()`
+  directly, rather than joining on a fragile CSV heuristic) to confirm every
+  converted subscription's plan_id tier matches the timeline's own interval
+  tier exactly (0 mismatches out of 576). All 27 checks pass.

@@ -55,6 +55,20 @@ PAYMENT_BLIP_PROBS = {0: 0.75, 1: 0.20, 2: 0.05}  # resolved payment-failure bli
 REACTIVATION_CHANNEL_WEIGHTS = {"email": 0.50, "push": 0.15, "organic": 0.35}
 LAPSED_STILL_BUYING_RATE = 0.10        # of currently-lapsed subscribers, % who still buy courses/merch since lapsing (down from 0.30)
 
+# Phase 2 (subscriptions table) -- billing_interval isn't part of the Phase 0
+# master timeline (only plan *tier* is), so it's assigned here, once per
+# subscription object, at build time. This is also what resolves the
+# long-flagged "billing_interval isn't in the master timeline" gap (see
+# generation_plan.md's Cross-phase consistency commitments).
+ANNUAL_BILLING_SHARE = 0.20      # of subscriptions, % that choose annual over monthly billing
+# Past_due is a Stripe dunning-grace-period status: a renewal payment attempt
+# just failed but the subscription hasn't been canceled (yet) -- also not in
+# the master timeline (Phase 0 only models payment failures as either
+# instantly-resolved noise or an immediate involuntary churn), so it's layered
+# on at build time for a small share of subscriptions that just renewed.
+PAST_DUE_RATE = 0.06             # of recently-renewed active subscriptions, % currently in a payment-failure grace period
+PAST_DUE_WINDOW_DAYS = 14         # "recently renewed" = current_period_start within this many days of END_DATE
+
 # New acquisition pathway: a course/merch-only customer (never subscribed) who
 # eventually receives a targeted "come try a membership" email based on their own
 # purchase history and starts a trial because of it. Timing is relative to their

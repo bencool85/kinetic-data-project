@@ -76,20 +76,22 @@ CUSTOMER_SEGMENTS = [
     # Predictive segment (its own source_system, distinct from the simple
     # rule-based segments above -- this one is a model output, not a plain
     # SQL filter). Two conditions: (1) a renewal/billing decision is coming
-    # up -- requires the subscription's billing_interval and a computed
-    # next-renewal-date, which don't exist until Phase 2's `subscriptions`
-    # table; (2) below-average recent engagement -- for now, proxied by
-    # engagement_tier == "regular" (the lower of the only two tiers the
-    # simulation currently assigns to *active* subscribers; "casual" is
-    # reserved for lapsed/never-subscribed customers, so it can't be used as
-    # the active-subscriber low-engagement signal today). Once Phase 5's real
-    # app/web usage events exist, that should replace the tier proxy with an
-    # actual recency/frequency signal.
+    # up -- RESOLVED as of Phase 2's `subscriptions` table, which assigns
+    # billing_interval and computes current_period_end (a real, future-dated
+    # next-renewal date) for every open subscription; (2) below-average
+    # recent engagement -- still proxied by engagement_tier == "regular" (the
+    # lower of the only two tiers the simulation currently assigns to
+    # *active* subscribers; "casual" is reserved for lapsed/never-subscribed
+    # customers, so it can't be used as the active-subscriber low-engagement
+    # signal today). Once Phase 5's real app/web usage events exist, that
+    # should replace the tier proxy with an actual recency/frequency signal
+    # -- this half is still an open dependency, flagged in the description.
     ("High Churn Risk (Renewal Approaching, Low Engagement)",
      "Active subscriber approaching their next renewal/billing decision with below-average recent "
      "product engagement. Flags subscribers at elevated risk of voluntary churn at their next renewal. "
-     "NOTE: full computation depends on Phase 2 (subscriptions.billing_interval + next renewal date) and "
-     "ideally Phase 5 (real usage-event recency/frequency) -- membership can't be fully computed until then.",
+     "Renewal timing is computable today from subscriptions.current_period_end (Phase 2). "
+     "NOTE: the engagement half still depends on Phase 5 (real usage-event recency/frequency) -- "
+     "until then it's proxied by engagement_tier, so membership can't be fully computed yet.",
      "churn_propensity_model", datetime.date(2024, 10, 25)),  # ~2 weeks after the 20th real churn in the simulation
 ]
 

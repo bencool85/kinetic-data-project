@@ -63,11 +63,15 @@ These are gaps or dependencies surfaced while building earlier phases, deliberat
 fixed at the time because the table that would resolve them doesn't exist yet. Each is a
 concrete promise that a later phase must keep — checked here so it isn't forgotten:
 
-1. **Billing interval isn't in the master timeline.** Subscription intervals only carry
-   plan *tier* ("basic"/"plus"), not billing_interval (monthly vs. annual). Phase 2's
-   `subscriptions` table must assign billing_interval itself (and derive a next-renewal
-   date from it) — this is also what the `segments` table's "High Churn Risk" segment
-   needs for its "renewal approaching" half.
+1. **✅ RESOLVED (Phase 2, `subscriptions` table).** Billing interval wasn't in the
+   master timeline — subscription intervals only carried plan *tier* ("basic"/"plus").
+   `build_subscriptions.py` now assigns `billing_interval` itself (once per Stripe-shaped
+   subscription object) and computes `current_period_start`/`current_period_end` by
+   cycling forward from the object's start date — for any open (active/past_due)
+   subscription this guarantees a real, future-dated `current_period_end`, i.e. an actual
+   next-renewal date. This is what the `segments` table's "High Churn Risk" segment
+   needed for its "renewal approaching" half; its description has been updated to drop
+   the Phase 2 dependency (only the Phase 5 engagement half remains open, see #2 below).
 2. **"Low engagement" needs a real usage signal, not just the engagement_tier proxy.**
    The `segments` table's "High Churn Risk (Renewal Approaching, Low Engagement)" segment
    currently proxies low engagement with `engagement_tier == "regular"` (the only
