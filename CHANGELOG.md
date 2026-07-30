@@ -58,3 +58,23 @@ seasonality calendar.
   (1) written locally, (2) added/updated as a row in `File_Manifest.xlsx`, (3) sent and
   committed to the synced Mac folder, (4) committed to git — every time, no exceptions.
 - Added `.gitignore` for Python `__pycache__`.
+
+## 2026-07-30 — Phase 0, Steps 4-8: anonymous population + customer master timelines
+
+- `generator/build_anonymous_population.py` — generated ~2,000 anonymous "ghost"
+  visitors (7.3% convert to a guest merch purchase, matching the ~8% target).
+- `generator/simulate_customers.py` — the core Phase 0 simulation: for each of the
+  100 customers, simulates signup, trial, subscription intervals (with churn and
+  win-back), order events, and engagement tier as one ground-truth timeline.
+- Output: `internal/_sim_anonymous_population.csv`, `internal/_sim_customer_timeline.json`
+  (full nested ground truth), `internal/_sim_customer_timeline_summary.csv` (flattened),
+  `internal/_sim_attribution_ground_truth.json` (true acquisition/reactivation channel).
+- Self-check results: 58/100 ever subscribed (target 60), trial conversion realized
+  70.7% (target 65%, within normal variance), signups tracked the growth curve
+  (11/33/35/21 by year), churn split 24 voluntary/11 involuntary (~69/31 vs 75/25
+  target). 266 customer orders (114 course, 152 merch) + 146 guest orders.
+- **Flagged for review:** only 22.4% (13/58) of ever-subscribed customers are still
+  active today — a consequence of ~11-month mean tenure + only 25% win-back rate.
+  Awaiting Ben's call on whether to keep this churn severity or loosen it.
+- Initially missed syncing this batch to Ben's folder until asked — fixed; this is
+  now happening as part of the same step, not a follow-up.

@@ -1,0 +1,643 @@
+[
+  {
+    "customer_id": 1,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2024-02-03",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 2,
+    "true_acquisition_channel": "organic_direct",
+    "true_acquisition_date": "2023-09-22",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 3,
+    "true_acquisition_channel": "snap",
+    "true_acquisition_date": "2024-09-18",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 4,
+    "true_acquisition_channel": "tiktok",
+    "true_acquisition_date": "2026-04-16",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 5,
+    "true_acquisition_channel": "organic_direct",
+    "true_acquisition_date": "2025-01-12",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 6,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2024-10-30",
+    "reactivation_events": [
+      {
+        "interval_id": 2,
+        "channel": "organic",
+        "reactivated_at": "2025-07-06"
+      }
+    ]
+  },
+  {
+    "customer_id": 7,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2026-03-28",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 8,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2024-01-10",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 9,
+    "true_acquisition_channel": "organic_direct",
+    "true_acquisition_date": "2024-06-21",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 10,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2024-11-26",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 11,
+    "true_acquisition_channel": "snap",
+    "true_acquisition_date": "2025-03-05",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 12,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2023-11-03",
+    "reactivation_events": [
+      {
+        "interval_id": 2,
+        "channel": "organic",
+        "reactivated_at": "2024-06-10"
+      }
+    ]
+  },
+  {
+    "customer_id": 13,
+    "true_acquisition_channel": "youtube",
+    "true_acquisition_date": "2024-05-08",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 14,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2025-07-15",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 15,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2025-09-05",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 16,
+    "true_acquisition_channel": "tiktok",
+    "true_acquisition_date": "2024-09-02",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 17,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2025-11-20",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 18,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2024-02-07",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 19,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2024-07-13",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 20,
+    "true_acquisition_channel": "tiktok",
+    "true_acquisition_date": "2023-11-18",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 21,
+    "true_acquisition_channel": "organic_direct",
+    "true_acquisition_date": "2024-06-12",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 22,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2024-10-24",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 23,
+    "true_acquisition_channel": "youtube",
+    "true_acquisition_date": "2025-09-26",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 24,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2026-01-04",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 25,
+    "true_acquisition_channel": "youtube",
+    "true_acquisition_date": "2025-10-24",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 26,
+    "true_acquisition_channel": "tiktok",
+    "true_acquisition_date": "2025-11-04",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 27,
+    "true_acquisition_channel": "tiktok",
+    "true_acquisition_date": "2026-01-28",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 28,
+    "true_acquisition_channel": "organic_direct",
+    "true_acquisition_date": "2025-02-20",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 29,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2025-01-07",
+    "reactivation_events": [
+      {
+        "interval_id": 2,
+        "channel": "organic",
+        "reactivated_at": "2025-09-14"
+      }
+    ]
+  },
+  {
+    "customer_id": 30,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2026-01-17",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 31,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2025-08-23",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 32,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2024-12-13",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 33,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2025-03-19",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 34,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2023-11-01",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 35,
+    "true_acquisition_channel": "organic_direct",
+    "true_acquisition_date": "2024-07-13",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 36,
+    "true_acquisition_channel": "organic_direct",
+    "true_acquisition_date": "2026-02-03",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 37,
+    "true_acquisition_channel": "dv360",
+    "true_acquisition_date": "2023-09-28",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 38,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2024-09-21",
+    "reactivation_events": [
+      {
+        "interval_id": 2,
+        "channel": "organic",
+        "reactivated_at": "2025-04-28"
+      },
+      {
+        "interval_id": 3,
+        "channel": "email",
+        "reactivated_at": "2025-09-28"
+      }
+    ]
+  },
+  {
+    "customer_id": 39,
+    "true_acquisition_channel": "tiktok",
+    "true_acquisition_date": "2025-09-30",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 40,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2024-01-31",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 41,
+    "true_acquisition_channel": "tiktok",
+    "true_acquisition_date": "2024-11-15",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 42,
+    "true_acquisition_channel": "tiktok",
+    "true_acquisition_date": "2025-12-19",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 43,
+    "true_acquisition_channel": "tiktok",
+    "true_acquisition_date": "2026-01-13",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 44,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2024-11-09",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 45,
+    "true_acquisition_channel": "youtube",
+    "true_acquisition_date": "2026-03-30",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 46,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2024-11-19",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 47,
+    "true_acquisition_channel": "dv360",
+    "true_acquisition_date": "2025-01-03",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 48,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2025-11-24",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 49,
+    "true_acquisition_channel": "youtube",
+    "true_acquisition_date": "2023-08-17",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 50,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2026-06-02",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 51,
+    "true_acquisition_channel": "organic_direct",
+    "true_acquisition_date": "2024-01-17",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 52,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2026-01-11",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 53,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2024-12-10",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 54,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2023-12-27",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 55,
+    "true_acquisition_channel": "snap",
+    "true_acquisition_date": "2023-12-02",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 56,
+    "true_acquisition_channel": "snap",
+    "true_acquisition_date": "2025-01-07",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 57,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2023-09-12",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 58,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2024-09-30",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 59,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2026-02-21",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 60,
+    "true_acquisition_channel": "organic_direct",
+    "true_acquisition_date": "2026-01-17",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 61,
+    "true_acquisition_channel": "organic_direct",
+    "true_acquisition_date": "2025-02-27",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 62,
+    "true_acquisition_channel": "tiktok",
+    "true_acquisition_date": "2024-07-14",
+    "reactivation_events": [
+      {
+        "interval_id": 2,
+        "channel": "email",
+        "reactivated_at": "2025-06-21"
+      }
+    ]
+  },
+  {
+    "customer_id": 63,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2025-02-16",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 64,
+    "true_acquisition_channel": "snap",
+    "true_acquisition_date": "2023-09-27",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 65,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2025-04-05",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 66,
+    "true_acquisition_channel": "dv360",
+    "true_acquisition_date": "2025-01-28",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 67,
+    "true_acquisition_channel": "youtube",
+    "true_acquisition_date": "2026-04-04",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 68,
+    "true_acquisition_channel": "tiktok",
+    "true_acquisition_date": "2025-02-20",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 69,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2025-01-29",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 70,
+    "true_acquisition_channel": "tiktok",
+    "true_acquisition_date": "2026-02-10",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 71,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2024-06-11",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 72,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2024-05-21",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 73,
+    "true_acquisition_channel": "organic_direct",
+    "true_acquisition_date": "2025-10-12",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 74,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2025-11-15",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 75,
+    "true_acquisition_channel": "tiktok",
+    "true_acquisition_date": "2024-05-12",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 76,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2025-08-21",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 77,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2024-01-14",
+    "reactivation_events": [
+      {
+        "interval_id": 2,
+        "channel": "organic",
+        "reactivated_at": "2026-03-21"
+      }
+    ]
+  },
+  {
+    "customer_id": 78,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2026-01-23",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 79,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2026-03-27",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 80,
+    "true_acquisition_channel": "organic_direct",
+    "true_acquisition_date": "2025-10-02",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 81,
+    "true_acquisition_channel": "tiktok",
+    "true_acquisition_date": "2024-09-05",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 82,
+    "true_acquisition_channel": "organic_direct",
+    "true_acquisition_date": "2026-02-11",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 83,
+    "true_acquisition_channel": "youtube",
+    "true_acquisition_date": "2024-02-08",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 84,
+    "true_acquisition_channel": "tiktok",
+    "true_acquisition_date": "2026-02-22",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 85,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2024-01-08",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 86,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2025-03-03",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 87,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2025-08-18",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 88,
+    "true_acquisition_channel": "dv360",
+    "true_acquisition_date": "2026-07-28",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 89,
+    "true_acquisition_channel": "organic_direct",
+    "true_acquisition_date": "2025-01-17",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 90,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2024-06-18",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 91,
+    "true_acquisition_channel": "tiktok",
+    "true_acquisition_date": "2025-08-20",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 92,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2026-03-15",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 93,
+    "true_acquisition_channel": "tiktok",
+    "true_acquisition_date": "2025-06-02",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 94,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2025-11-12",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 95,
+    "true_acquisition_channel": "snap",
+    "true_acquisition_date": "2025-01-06",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 96,
+    "true_acquisition_channel": "dv360",
+    "true_acquisition_date": "2025-04-16",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 97,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2024-02-07",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 98,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2023-12-14",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 99,
+    "true_acquisition_channel": "meta",
+    "true_acquisition_date": "2024-11-03",
+    "reactivation_events": []
+  },
+  {
+    "customer_id": 100,
+    "true_acquisition_channel": "google_search",
+    "true_acquisition_date": "2026-04-07",
+    "reactivation_events": []
+  }
+]

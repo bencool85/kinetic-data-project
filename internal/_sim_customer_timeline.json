@@ -1,0 +1,4191 @@
+[
+  {
+    "customer_id": 1,
+    "signup_date": "2024-02-03",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_90e58f7332874ec6",
+    "pre_signup_first_seen": "2024-01-31",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2024-02-19",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2024-06-29",
+        "amount": 129.0
+      },
+      {
+        "order_type": "course",
+        "date": "2024-06-30",
+        "amount": 99.0
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-01-07",
+        "amount": 89.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-02-10",
+        "amount": 89.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2025-11-29",
+        "amount": 149.0
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 2,
+    "signup_date": "2023-09-22",
+    "signup_source": "organic_direct",
+    "pre_signup_anonymous_id": "anon_6f1727ac660742f4",
+    "pre_signup_first_seen": "2023-09-11",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2023-09-22",
+      "end": "2023-09-29",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2023-09-29",
+        "end": null,
+        "end_reason": "ongoing"
+      }
+    ],
+    "subscription_events": [],
+    "order_events": [],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 3,
+    "signup_date": "2024-09-18",
+    "signup_source": "snap",
+    "pre_signup_anonymous_id": "anon_21e5c95b44f24a97",
+    "pre_signup_first_seen": "2024-09-14",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2024-09-18",
+      "end": "2024-09-25",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "plus",
+        "start": "2024-09-25",
+        "end": "2026-04-25",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "canceled",
+        "event_at": "2026-04-25",
+        "interval_id": 1,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2024-12-04",
+        "amount": 27.99,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-10-12",
+        "amount": 71.99,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-10-30",
+        "amount": 71.99,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-03-09",
+        "amount": 19.99,
+        "subscriber_discount_applied": true
+      }
+    ],
+    "churn_date": "2026-04-25",
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 4,
+    "signup_date": "2026-04-16",
+    "signup_source": "tiktok",
+    "pre_signup_anonymous_id": "anon_52ab1e2a824a414c",
+    "pre_signup_first_seen": "2026-04-08",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2026-04-16",
+      "end": "2026-04-23",
+      "outcome": "canceled_during_trial"
+    },
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2026-05-31",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 5,
+    "signup_date": "2025-01-12",
+    "signup_source": "organic_direct",
+    "pre_signup_anonymous_id": "anon_2552482c115d4b36",
+    "pre_signup_first_seen": "2025-01-02",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2025-01-12",
+      "end": "2025-01-19",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2025-01-19",
+        "end": "2025-05-19",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "canceled",
+        "event_at": "2025-05-19",
+        "interval_id": 1,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2026-03-15",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-06-17",
+        "amount": 49.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": "2025-05-19",
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 6,
+    "signup_date": "2024-10-30",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_6b88cd0609564c04",
+    "pre_signup_first_seen": "2024-10-25",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2024-10-30",
+      "end": "2024-11-06",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2024-11-06",
+        "end": "2025-02-06",
+        "end_reason": "voluntary"
+      },
+      {
+        "interval_id": 2,
+        "plan": "basic",
+        "start": "2025-07-06",
+        "end": null,
+        "end_reason": "ongoing"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "canceled",
+        "event_at": "2025-02-06",
+        "interval_id": 1,
+        "reason": "voluntary"
+      },
+      {
+        "event_type": "resumed",
+        "event_at": "2025-07-06",
+        "interval_id": 2
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2025-07-26",
+        "amount": 27.99,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-10-08",
+        "amount": 39.99,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-01-30",
+        "amount": 27.99,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-03-19",
+        "amount": 19.99,
+        "subscriber_discount_applied": true
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": [
+      {
+        "interval_id": 2,
+        "channel": "organic",
+        "reactivated_at": "2025-07-06"
+      }
+    ]
+  },
+  {
+    "customer_id": 7,
+    "signup_date": "2026-03-28",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_971f13bfdcbb4b93",
+    "pre_signup_first_seen": "2026-03-21",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2026-04-12",
+        "amount": 99.0
+      },
+      {
+        "order_type": "course",
+        "date": "2026-05-01",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2026-06-23",
+        "amount": 9.99
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-06-23",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-06-27",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 8,
+    "signup_date": "2024-01-10",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_6c15571e15ed43c9",
+    "pre_signup_first_seen": "2024-01-04",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2024-10-28",
+        "amount": 79.0
+      },
+      {
+        "order_type": "course",
+        "date": "2025-04-20",
+        "amount": 79.0
+      },
+      {
+        "order_type": "course",
+        "date": "2025-05-03",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2025-08-09",
+        "amount": 129.0
+      },
+      {
+        "order_type": "course",
+        "date": "2026-02-16",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2026-04-14",
+        "amount": 129.0
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 9,
+    "signup_date": "2024-06-21",
+    "signup_source": "organic_direct",
+    "pre_signup_anonymous_id": "anon_aa75e972acd84b4c",
+    "pre_signup_first_seen": "2024-06-07",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2024-07-02",
+        "amount": 79.0
+      },
+      {
+        "order_type": "course",
+        "date": "2024-11-12",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2024-11-16",
+        "amount": 129.0
+      },
+      {
+        "order_type": "course",
+        "date": "2025-02-21",
+        "amount": 9.99
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-02-25",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2026-04-02",
+        "amount": 129.0
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-05-07",
+        "amount": 120.0,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2026-07-24",
+        "amount": 99.0
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 10,
+    "signup_date": "2024-11-26",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_7b17b898c68043f8",
+    "pre_signup_first_seen": "2024-11-12",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2025-03-05",
+        "amount": 79.0
+      },
+      {
+        "order_type": "course",
+        "date": "2025-06-30",
+        "amount": 9.99
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-07-04",
+        "amount": 89.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-12-04",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 11,
+    "signup_date": "2025-03-05",
+    "signup_source": "snap",
+    "pre_signup_anonymous_id": "anon_8b009a71fb574efc",
+    "pre_signup_first_seen": "2025-03-04",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2025-03-07",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2025-03-23",
+        "amount": 129.0
+      },
+      {
+        "order_type": "course",
+        "date": "2025-07-19",
+        "amount": 9.99
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-12-04",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 12,
+    "signup_date": "2023-11-03",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_3196d6198f7f431d",
+    "pre_signup_first_seen": "2023-10-24",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2023-11-03",
+      "end": "2023-11-10",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "plus",
+        "start": "2023-11-10",
+        "end": "2023-12-10",
+        "end_reason": "voluntary"
+      },
+      {
+        "interval_id": 2,
+        "plan": "basic",
+        "start": "2024-06-10",
+        "end": "2024-07-10",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "payment_failed",
+        "event_at": "2023-12-03",
+        "interval_id": 1,
+        "resolved": true
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2023-12-10",
+        "interval_id": 1,
+        "reason": "voluntary"
+      },
+      {
+        "event_type": "resumed",
+        "event_at": "2024-06-10",
+        "interval_id": 2
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2024-07-10",
+        "interval_id": 2,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2025-01-27",
+        "amount": 49.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-02-20",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-03-11",
+        "amount": 89.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": "2024-07-10",
+    "engagement_tier": "regular",
+    "reactivations": [
+      {
+        "interval_id": 2,
+        "channel": "organic",
+        "reactivated_at": "2024-06-10"
+      }
+    ]
+  },
+  {
+    "customer_id": 13,
+    "signup_date": "2024-05-08",
+    "signup_source": "youtube",
+    "pre_signup_anonymous_id": "anon_d8f96ecb7c9c4e55",
+    "pre_signup_first_seen": "2024-04-29",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2024-05-08",
+      "end": "2024-05-15",
+      "outcome": "expired_passively"
+    },
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2024-11-27",
+        "amount": 89.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-03-08",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-10-26",
+        "amount": 64.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-05-15",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 14,
+    "signup_date": "2025-07-15",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_0211d99c60024aad",
+    "pre_signup_first_seen": "2025-07-11",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2025-07-15",
+      "end": "2025-07-22",
+      "outcome": "canceled_during_trial"
+    },
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [],
+    "churn_date": null,
+    "engagement_tier": "power",
+    "reactivations": []
+  },
+  {
+    "customer_id": 15,
+    "signup_date": "2025-09-05",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_36d3a1c81bf44ab1",
+    "pre_signup_first_seen": "2025-08-25",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2026-03-30",
+        "amount": 9.99
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-04-30",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 16,
+    "signup_date": "2024-09-02",
+    "signup_source": "tiktok",
+    "pre_signup_anonymous_id": "anon_53e7b646b0c54067",
+    "pre_signup_first_seen": "2024-09-01",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2025-10-26",
+        "amount": 99.0
+      },
+      {
+        "order_type": "course",
+        "date": "2026-03-09",
+        "amount": 79.0
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 17,
+    "signup_date": "2025-11-20",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_a11a1ecf5ebf43c8",
+    "pre_signup_first_seen": "2025-11-18",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2026-01-24",
+        "amount": 9.99
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 18,
+    "signup_date": "2024-02-07",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_0eb48ed4e17f4efa",
+    "pre_signup_first_seen": "2024-01-31",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2025-03-12",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2025-04-21",
+        "amount": 9.99
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 19,
+    "signup_date": "2024-07-13",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_2e0af5f9093a4e28",
+    "pre_signup_first_seen": "2024-06-30",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2024-07-13",
+      "end": "2024-07-20",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "plus",
+        "start": "2024-07-20",
+        "end": "2024-08-20",
+        "end_reason": "involuntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "upgraded",
+        "event_at": "2024-08-20",
+        "interval_id": 1
+      },
+      {
+        "event_type": "payment_failed",
+        "event_at": "2024-08-20",
+        "interval_id": 1,
+        "resolved": false
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2024-08-20",
+        "interval_id": 1,
+        "reason": "involuntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2026-02-17",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-02-28",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-06-30",
+        "amount": 49.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-07-15",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": "2024-08-20",
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 20,
+    "signup_date": "2023-11-18",
+    "signup_source": "tiktok",
+    "pre_signup_anonymous_id": "anon_e10a22a91b104964",
+    "pre_signup_first_seen": "2023-11-07",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2023-11-18",
+      "end": "2023-11-25",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "plus",
+        "start": "2023-11-25",
+        "end": "2023-12-25",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "canceled",
+        "event_at": "2023-12-25",
+        "interval_id": 1,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2023-12-20",
+        "amount": 71.99,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2024-03-15",
+        "amount": 120.0,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2024-08-20",
+        "amount": 49.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": "2023-12-25",
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 21,
+    "signup_date": "2024-06-12",
+    "signup_source": "organic_direct",
+    "pre_signup_anonymous_id": "anon_0e7fe4992a2b428a",
+    "pre_signup_first_seen": "2024-06-01",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2024-06-12",
+      "end": "2024-06-19",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "plus",
+        "start": "2024-06-19",
+        "end": "2025-04-19",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "upgraded",
+        "event_at": "2024-07-19",
+        "interval_id": 1
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2025-04-19",
+        "interval_id": 1,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2026-02-26",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-04-16",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": "2025-04-19",
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 22,
+    "signup_date": "2024-10-24",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_1538265262be49a1",
+    "pre_signup_first_seen": "2024-10-18",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2024-10-24",
+      "end": "2024-10-31",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2024-10-31",
+        "end": "2024-11-30",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "downgraded",
+        "event_at": "2024-11-30",
+        "interval_id": 1
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2024-11-30",
+        "interval_id": 1,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2025-04-07",
+        "amount": 89.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-01-19",
+        "amount": 49.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": "2024-11-30",
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 23,
+    "signup_date": "2025-09-26",
+    "signup_source": "youtube",
+    "pre_signup_anonymous_id": "anon_66bbbc29991947b6",
+    "pre_signup_first_seen": "2025-09-21",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2025-11-30",
+        "amount": 49.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2025-12-22",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2026-02-12",
+        "amount": 79.0
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-07-12",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 24,
+    "signup_date": "2026-01-04",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_b54f4de8ec0749b0",
+    "pre_signup_first_seen": "2026-01-01",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2026-01-04",
+      "end": "2026-01-11",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2026-01-11",
+        "end": "2026-04-11",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "payment_failed",
+        "event_at": "2026-02-10",
+        "interval_id": 1,
+        "resolved": true
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2026-04-11",
+        "interval_id": 1,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [],
+    "churn_date": "2026-04-11",
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 25,
+    "signup_date": "2025-10-24",
+    "signup_source": "youtube",
+    "pre_signup_anonymous_id": "anon_6ae3995971a343ca",
+    "pre_signup_first_seen": "2025-10-21",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2025-10-24",
+      "end": "2025-10-31",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "plus",
+        "start": "2025-10-31",
+        "end": "2025-11-30",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "canceled",
+        "event_at": "2025-11-30",
+        "interval_id": 1,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2026-01-31",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": "2025-11-30",
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 26,
+    "signup_date": "2025-11-04",
+    "signup_source": "tiktok",
+    "pre_signup_anonymous_id": "anon_6946bf379e30452c",
+    "pre_signup_first_seen": "2025-10-28",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2025-11-04",
+      "end": "2025-11-11",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2025-11-11",
+        "end": "2026-04-11",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "canceled",
+        "event_at": "2026-04-11",
+        "interval_id": 1,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2025-12-04",
+        "amount": 51.99,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-06-09",
+        "amount": 49.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": "2026-04-11",
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 27,
+    "signup_date": "2026-01-28",
+    "signup_source": "tiktok",
+    "pre_signup_anonymous_id": "anon_76577bedb0504a01",
+    "pre_signup_first_seen": "2026-01-25",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2026-06-09",
+        "amount": 99.0
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-06-29",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-07-29",
+        "amount": 49.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 28,
+    "signup_date": "2025-02-20",
+    "signup_source": "organic_direct",
+    "pre_signup_anonymous_id": "anon_3c5d472d0ca94d21",
+    "pre_signup_first_seen": "2025-02-06",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2025-03-05",
+        "amount": 64.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-10-22",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2025-12-15",
+        "amount": 9.99
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 29,
+    "signup_date": "2025-01-07",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_fe40bfbd254f455e",
+    "pre_signup_first_seen": "2024-12-25",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2025-01-07",
+      "end": "2025-01-14",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "plus",
+        "start": "2025-01-14",
+        "end": "2025-04-14",
+        "end_reason": "involuntary"
+      },
+      {
+        "interval_id": 2,
+        "plan": "basic",
+        "start": "2025-09-14",
+        "end": null,
+        "end_reason": "ongoing"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "upgraded",
+        "event_at": "2025-02-14",
+        "interval_id": 1
+      },
+      {
+        "event_type": "payment_failed",
+        "event_at": "2025-04-14",
+        "interval_id": 1,
+        "resolved": false
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2025-04-14",
+        "interval_id": 1,
+        "reason": "involuntary"
+      },
+      {
+        "event_type": "resumed",
+        "event_at": "2025-09-14",
+        "interval_id": 2
+      }
+    ],
+    "order_events": [],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": [
+      {
+        "interval_id": 2,
+        "channel": "organic",
+        "reactivated_at": "2025-09-14"
+      }
+    ]
+  },
+  {
+    "customer_id": 30,
+    "signup_date": "2026-01-17",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_790195ae25d14b31",
+    "pre_signup_first_seen": "2026-01-15",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2026-01-17",
+      "end": "2026-01-24",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2026-01-24",
+        "end": "2026-02-24",
+        "end_reason": "involuntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "payment_failed",
+        "event_at": "2026-02-24",
+        "interval_id": 1,
+        "resolved": false
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2026-02-24",
+        "interval_id": 1,
+        "reason": "involuntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2026-05-05",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-05-25",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": "2026-02-24",
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 31,
+    "signup_date": "2025-08-23",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_ae6c1b56d9db488f",
+    "pre_signup_first_seen": "2025-08-10",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2025-08-23",
+      "end": "2025-08-30",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "plus",
+        "start": "2025-08-30",
+        "end": "2026-01-30",
+        "end_reason": "involuntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "payment_failed",
+        "event_at": "2025-12-24",
+        "interval_id": 1,
+        "resolved": true
+      },
+      {
+        "event_type": "upgraded",
+        "event_at": "2025-10-30",
+        "interval_id": 1
+      },
+      {
+        "event_type": "payment_failed",
+        "event_at": "2026-01-30",
+        "interval_id": 1,
+        "resolved": false
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2026-01-30",
+        "interval_id": 1,
+        "reason": "involuntary"
+      }
+    ],
+    "order_events": [],
+    "churn_date": "2026-01-30",
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 32,
+    "signup_date": "2024-12-13",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_63cd6325fb034e27",
+    "pre_signup_first_seen": "2024-12-07",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2024-12-13",
+      "end": "2024-12-20",
+      "outcome": "expired_passively"
+    },
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2025-07-19",
+        "amount": 64.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-11-28",
+        "amount": 49.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-12-10",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-02-17",
+        "amount": 64.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 33,
+    "signup_date": "2025-03-19",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_35cdd416873b4bfa",
+    "pre_signup_first_seen": "2025-03-17",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2025-06-24",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2026-02-08",
+        "amount": 79.0
+      },
+      {
+        "order_type": "course",
+        "date": "2026-05-02",
+        "amount": 129.0
+      },
+      {
+        "order_type": "course",
+        "date": "2026-05-18",
+        "amount": 9.99
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 34,
+    "signup_date": "2023-11-01",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_a2a7730be73048d2",
+    "pre_signup_first_seen": "2023-10-20",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2023-11-01",
+      "end": "2023-11-08",
+      "outcome": "expired_passively"
+    },
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2023-12-19",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2024-05-09",
+        "amount": 89.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2024-06-12",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 35,
+    "signup_date": "2024-07-13",
+    "signup_source": "organic_direct",
+    "pre_signup_anonymous_id": "anon_eee51e09402d4140",
+    "pre_signup_first_seen": "2024-07-05",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2024-07-13",
+      "end": "2024-07-20",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "plus",
+        "start": "2024-07-20",
+        "end": "2024-08-20",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "canceled",
+        "event_at": "2024-08-20",
+        "interval_id": 1,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2024-10-12",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-01-30",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-07-05",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-07-14",
+        "amount": 64.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": "2024-08-20",
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 36,
+    "signup_date": "2026-02-03",
+    "signup_source": "organic_direct",
+    "pre_signup_anonymous_id": "anon_b2259b5282b0478a",
+    "pre_signup_first_seen": "2026-01-21",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2026-02-08",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2026-02-26",
+        "amount": 79.0
+      },
+      {
+        "order_type": "course",
+        "date": "2026-03-01",
+        "amount": 79.0
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-07-18",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 37,
+    "signup_date": "2023-09-28",
+    "signup_source": "dv360",
+    "pre_signup_anonymous_id": "anon_859f47bf39c84de6",
+    "pre_signup_first_seen": "2023-09-16",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2023-09-28",
+      "end": "2023-10-05",
+      "outcome": "expired_passively"
+    },
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2025-04-29",
+        "amount": 49.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-11-30",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-05-08",
+        "amount": 64.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 38,
+    "signup_date": "2024-09-21",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_c201183e4a3c4236",
+    "pre_signup_first_seen": "2024-09-13",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2024-09-21",
+      "end": "2024-09-28",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "plus",
+        "start": "2024-09-28",
+        "end": "2025-01-28",
+        "end_reason": "involuntary"
+      },
+      {
+        "interval_id": 2,
+        "plan": "basic",
+        "start": "2025-04-28",
+        "end": "2025-05-28",
+        "end_reason": "voluntary"
+      },
+      {
+        "interval_id": 3,
+        "plan": "basic",
+        "start": "2025-09-28",
+        "end": null,
+        "end_reason": "ongoing"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "payment_failed",
+        "event_at": "2025-01-28",
+        "interval_id": 1,
+        "resolved": false
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2025-01-28",
+        "interval_id": 1,
+        "reason": "involuntary"
+      },
+      {
+        "event_type": "resumed",
+        "event_at": "2025-04-28",
+        "interval_id": 2
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2025-05-28",
+        "interval_id": 2,
+        "reason": "voluntary"
+      },
+      {
+        "event_type": "resumed",
+        "event_at": "2025-09-28",
+        "interval_id": 3
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2024-12-20",
+        "amount": 27.99,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-07-09",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-09-05",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-02-14",
+        "amount": 51.99,
+        "subscriber_discount_applied": true
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "power",
+    "reactivations": [
+      {
+        "interval_id": 2,
+        "channel": "organic",
+        "reactivated_at": "2025-04-28"
+      },
+      {
+        "interval_id": 3,
+        "channel": "email",
+        "reactivated_at": "2025-09-28"
+      }
+    ]
+  },
+  {
+    "customer_id": 39,
+    "signup_date": "2025-09-30",
+    "signup_source": "tiktok",
+    "pre_signup_anonymous_id": "anon_f8038c2cc5274b2a",
+    "pre_signup_first_seen": "2025-09-22",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2025-09-30",
+      "end": "2025-10-07",
+      "outcome": "expired_passively"
+    },
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 40,
+    "signup_date": "2024-01-31",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_bdb1ebd9fe604f14",
+    "pre_signup_first_seen": "2024-01-27",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2024-01-31",
+      "end": "2024-02-07",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2024-02-07",
+        "end": "2024-03-07",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "canceled",
+        "event_at": "2024-03-07",
+        "interval_id": 1,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2024-12-05",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-01-06",
+        "amount": 89.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": "2024-03-07",
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 41,
+    "signup_date": "2024-11-15",
+    "signup_source": "tiktok",
+    "pre_signup_anonymous_id": "anon_5af00660970f40ee",
+    "pre_signup_first_seen": "2024-11-12",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2025-02-19",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2025-03-03",
+        "amount": 79.0
+      },
+      {
+        "order_type": "course",
+        "date": "2025-05-14",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2025-07-04",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2025-08-27",
+        "amount": 9.99
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-11-03",
+        "amount": 64.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2026-04-18",
+        "amount": 9.99
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-05-18",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 42,
+    "signup_date": "2025-12-19",
+    "signup_source": "tiktok",
+    "pre_signup_anonymous_id": "anon_d39e78448c2742a4",
+    "pre_signup_first_seen": "2025-12-07",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2026-01-21",
+        "amount": 89.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2026-07-05",
+        "amount": 9.99
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 43,
+    "signup_date": "2026-01-13",
+    "signup_source": "tiktok",
+    "pre_signup_anonymous_id": "anon_7076480750b04783",
+    "pre_signup_first_seen": "2025-12-31",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2026-02-17",
+        "amount": 9.99
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-02-19",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2026-03-31",
+        "amount": 99.0
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-06-17",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2026-07-09",
+        "amount": 9.99
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 44,
+    "signup_date": "2024-11-09",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_4d8f6d9bed2c410a",
+    "pre_signup_first_seen": "2024-11-03",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2024-11-29",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-12-03",
+        "amount": 64.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2026-01-04",
+        "amount": 129.0
+      },
+      {
+        "order_type": "course",
+        "date": "2026-07-23",
+        "amount": 9.99
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 45,
+    "signup_date": "2026-03-30",
+    "signup_source": "youtube",
+    "pre_signup_anonymous_id": "anon_58323bce61b541b0",
+    "pre_signup_first_seen": "2026-03-28",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2026-03-30",
+      "end": "2026-04-06",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2026-04-06",
+        "end": null,
+        "end_reason": "ongoing"
+      }
+    ],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2026-06-28",
+        "amount": 27.99,
+        "subscriber_discount_applied": true
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 46,
+    "signup_date": "2024-11-19",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_7404982034824ecd",
+    "pre_signup_first_seen": "2024-11-09",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2025-03-29",
+        "amount": 99.0
+      },
+      {
+        "order_type": "course",
+        "date": "2025-09-25",
+        "amount": 129.0
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 47,
+    "signup_date": "2025-01-03",
+    "signup_source": "dv360",
+    "pre_signup_anonymous_id": "anon_4a75780b807c4eb9",
+    "pre_signup_first_seen": "2024-12-23",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2025-02-16",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2025-04-18",
+        "amount": 79.0
+      },
+      {
+        "order_type": "course",
+        "date": "2025-07-31",
+        "amount": 9.99
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-07-31",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2026-01-22",
+        "amount": 99.0
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-02-04",
+        "amount": 64.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2026-02-13",
+        "amount": 149.0
+      },
+      {
+        "order_type": "course",
+        "date": "2026-02-17",
+        "amount": 79.0
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-04-11",
+        "amount": 120.0,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-06-01",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 48,
+    "signup_date": "2025-11-24",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_639a45d1f5d8455d",
+    "pre_signup_first_seen": "2025-11-15",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2025-12-17",
+        "amount": 64.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2026-01-22",
+        "amount": 99.0
+      },
+      {
+        "order_type": "course",
+        "date": "2026-04-16",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2026-06-21",
+        "amount": 79.0
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 49,
+    "signup_date": "2023-08-17",
+    "signup_source": "youtube",
+    "pre_signup_anonymous_id": "anon_01218a57225e46c3",
+    "pre_signup_first_seen": "2023-08-10",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2023-08-17",
+      "end": "2023-08-24",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2023-08-24",
+        "end": "2024-10-24",
+        "end_reason": "involuntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "payment_failed",
+        "event_at": "2024-10-24",
+        "interval_id": 1,
+        "resolved": false
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2024-10-24",
+        "interval_id": 1,
+        "reason": "involuntary"
+      }
+    ],
+    "order_events": [],
+    "churn_date": "2024-10-24",
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 50,
+    "signup_date": "2026-06-02",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_c1a991ab16e34e7f",
+    "pre_signup_first_seen": "2026-05-29",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2026-06-02",
+      "end": "2026-06-09",
+      "outcome": "canceled_during_trial"
+    },
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 51,
+    "signup_date": "2024-01-17",
+    "signup_source": "organic_direct",
+    "pre_signup_anonymous_id": "anon_58fdcb9648744fec",
+    "pre_signup_first_seen": "2024-01-07",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2024-03-06",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2024-06-07",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2024-10-29",
+        "amount": 9.99
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 52,
+    "signup_date": "2026-01-11",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_6af15c9f97174445",
+    "pre_signup_first_seen": "2026-01-04",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2026-01-11",
+      "end": "2026-01-18",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2026-01-18",
+        "end": null,
+        "end_reason": "ongoing"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "payment_failed",
+        "event_at": "2026-05-10",
+        "interval_id": 1,
+        "resolved": true
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2026-02-04",
+        "amount": 96.0,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-05-11",
+        "amount": 27.99,
+        "subscriber_discount_applied": true
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "power",
+    "reactivations": []
+  },
+  {
+    "customer_id": 53,
+    "signup_date": "2024-12-10",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_bee5442b7ba44eaf",
+    "pre_signup_first_seen": "2024-11-28",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2024-12-10",
+      "end": "2024-12-17",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "plus",
+        "start": "2024-12-17",
+        "end": "2025-04-17",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "payment_failed",
+        "event_at": "2025-02-04",
+        "interval_id": 1,
+        "resolved": true
+      },
+      {
+        "event_type": "payment_failed",
+        "event_at": "2025-04-05",
+        "interval_id": 1,
+        "resolved": true
+      },
+      {
+        "event_type": "upgraded",
+        "event_at": "2025-01-17",
+        "interval_id": 1
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2025-04-17",
+        "interval_id": 1,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [],
+    "churn_date": "2025-04-17",
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 54,
+    "signup_date": "2023-12-27",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_0d8f878da7a74627",
+    "pre_signup_first_seen": "2023-12-19",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2023-12-27",
+      "end": "2024-01-03",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "plus",
+        "start": "2024-01-03",
+        "end": null,
+        "end_reason": "ongoing"
+      }
+    ],
+    "subscription_events": [],
+    "order_events": [],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 55,
+    "signup_date": "2023-12-02",
+    "signup_source": "snap",
+    "pre_signup_anonymous_id": "anon_13f8a4df12694a36",
+    "pre_signup_first_seen": "2023-11-28",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2023-12-02",
+      "end": "2023-12-09",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "plus",
+        "start": "2023-12-09",
+        "end": "2024-01-09",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "payment_failed",
+        "event_at": "2023-12-31",
+        "interval_id": 1,
+        "resolved": true
+      },
+      {
+        "event_type": "payment_failed",
+        "event_at": "2023-12-31",
+        "interval_id": 1,
+        "resolved": true
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2024-01-09",
+        "interval_id": 1,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2024-02-13",
+        "amount": 64.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2024-03-28",
+        "amount": 49.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2024-05-29",
+        "amount": 49.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-04-02",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-11-05",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-01-08",
+        "amount": 64.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": "2024-01-09",
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 56,
+    "signup_date": "2025-01-07",
+    "signup_source": "snap",
+    "pre_signup_anonymous_id": "anon_40ec547e08024806",
+    "pre_signup_first_seen": "2024-12-31",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2026-01-18",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2026-03-01",
+        "amount": 79.0
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-03-06",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-03-26",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 57,
+    "signup_date": "2023-09-12",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_8999631bec33439e",
+    "pre_signup_first_seen": "2023-09-11",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2023-09-12",
+      "end": "2023-09-19",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2023-09-19",
+        "end": "2025-04-19",
+        "end_reason": "involuntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "payment_failed",
+        "event_at": "2025-04-19",
+        "interval_id": 1,
+        "resolved": false
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2025-04-19",
+        "interval_id": 1,
+        "reason": "involuntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2023-12-05",
+        "amount": 39.99,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-01-18",
+        "amount": 71.99,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-01-19",
+        "amount": 27.99,
+        "subscriber_discount_applied": true
+      }
+    ],
+    "churn_date": "2025-04-19",
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 58,
+    "signup_date": "2024-09-30",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_3fa42170d2b244c4",
+    "pre_signup_first_seen": "2024-09-20",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2024-09-30",
+      "end": "2024-10-07",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2024-10-07",
+        "end": "2025-02-07",
+        "end_reason": "involuntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "payment_failed",
+        "event_at": "2025-02-07",
+        "interval_id": 1,
+        "resolved": false
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2025-02-07",
+        "interval_id": 1,
+        "reason": "involuntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2024-12-04",
+        "amount": 71.99,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-01-12",
+        "amount": 71.99,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-01-26",
+        "amount": 96.0,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-04-12",
+        "amount": 49.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": "2025-02-07",
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 59,
+    "signup_date": "2026-02-21",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_a90e43313cc548b6",
+    "pre_signup_first_seen": "2026-02-16",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2026-04-12",
+        "amount": 79.0
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-05-05",
+        "amount": 64.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2026-05-12",
+        "amount": 99.0
+      },
+      {
+        "order_type": "course",
+        "date": "2026-06-06",
+        "amount": 9.99
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 60,
+    "signup_date": "2026-01-17",
+    "signup_source": "organic_direct",
+    "pre_signup_anonymous_id": "anon_153c325b0a0d4c96",
+    "pre_signup_first_seen": "2026-01-17",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2026-01-17",
+      "end": "2026-01-24",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2026-01-24",
+        "end": null,
+        "end_reason": "ongoing"
+      }
+    ],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2026-04-07",
+        "amount": 96.0,
+        "subscriber_discount_applied": true
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 61,
+    "signup_date": "2025-02-27",
+    "signup_source": "organic_direct",
+    "pre_signup_anonymous_id": "anon_74fe583955cb4cc3",
+    "pre_signup_first_seen": "2025-02-20",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2025-05-27",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2025-07-10",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2025-09-13",
+        "amount": 99.0
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 62,
+    "signup_date": "2024-07-14",
+    "signup_source": "tiktok",
+    "pre_signup_anonymous_id": "anon_b264cee09d9c4e27",
+    "pre_signup_first_seen": "2024-07-08",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2024-07-14",
+      "end": "2024-07-21",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "plus",
+        "start": "2024-07-21",
+        "end": "2024-11-21",
+        "end_reason": "involuntary"
+      },
+      {
+        "interval_id": 2,
+        "plan": "basic",
+        "start": "2025-06-21",
+        "end": "2025-08-21",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "upgraded",
+        "event_at": "2024-08-21",
+        "interval_id": 1
+      },
+      {
+        "event_type": "payment_failed",
+        "event_at": "2024-11-21",
+        "interval_id": 1,
+        "resolved": false
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2024-11-21",
+        "interval_id": 1,
+        "reason": "involuntary"
+      },
+      {
+        "event_type": "resumed",
+        "event_at": "2025-06-21",
+        "interval_id": 2
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2025-08-21",
+        "interval_id": 2,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [],
+    "churn_date": "2025-08-21",
+    "engagement_tier": "regular",
+    "reactivations": [
+      {
+        "interval_id": 2,
+        "channel": "email",
+        "reactivated_at": "2025-06-21"
+      }
+    ]
+  },
+  {
+    "customer_id": 63,
+    "signup_date": "2025-02-16",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_8785f0a7676d4dad",
+    "pre_signup_first_seen": "2025-02-12",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2025-02-16",
+      "end": "2025-02-23",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2025-02-23",
+        "end": "2025-11-23",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "payment_failed",
+        "event_at": "2025-04-14",
+        "interval_id": 1,
+        "resolved": true
+      },
+      {
+        "event_type": "payment_failed",
+        "event_at": "2025-07-17",
+        "interval_id": 1,
+        "resolved": true
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2025-11-23",
+        "interval_id": 1,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2025-06-22",
+        "amount": 27.99,
+        "subscriber_discount_applied": true
+      }
+    ],
+    "churn_date": "2025-11-23",
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 64,
+    "signup_date": "2023-09-27",
+    "signup_source": "snap",
+    "pre_signup_anonymous_id": "anon_7a7c9dfbb30c4e0f",
+    "pre_signup_first_seen": "2023-09-15",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2023-09-27",
+      "end": "2023-10-04",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2023-10-04",
+        "end": "2025-08-04",
+        "end_reason": "involuntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "payment_failed",
+        "event_at": "2025-08-04",
+        "interval_id": 1,
+        "resolved": false
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2025-08-04",
+        "interval_id": 1,
+        "reason": "involuntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2024-02-01",
+        "amount": 51.99,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2024-06-14",
+        "amount": 71.99,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2024-07-12",
+        "amount": 71.99,
+        "subscriber_discount_applied": true
+      }
+    ],
+    "churn_date": "2025-08-04",
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 65,
+    "signup_date": "2025-04-05",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_5cadafb6f28b4468",
+    "pre_signup_first_seen": "2025-04-03",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2025-04-05",
+      "end": "2025-04-12",
+      "outcome": "canceled_during_trial"
+    },
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [],
+    "churn_date": null,
+    "engagement_tier": "power",
+    "reactivations": []
+  },
+  {
+    "customer_id": 66,
+    "signup_date": "2025-01-28",
+    "signup_source": "dv360",
+    "pre_signup_anonymous_id": "anon_2b84ca5bd42b462e",
+    "pre_signup_first_seen": "2025-01-17",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2025-09-02",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2025-09-04",
+        "amount": 79.0
+      },
+      {
+        "order_type": "course",
+        "date": "2026-01-13",
+        "amount": 79.0
+      },
+      {
+        "order_type": "course",
+        "date": "2026-01-16",
+        "amount": 9.99
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-04-11",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2026-06-23",
+        "amount": 9.99
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 67,
+    "signup_date": "2026-04-04",
+    "signup_source": "youtube",
+    "pre_signup_anonymous_id": "anon_40df3970d1e24567",
+    "pre_signup_first_seen": "2026-03-25",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2026-04-04",
+      "end": "2026-04-11",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2026-04-11",
+        "end": null,
+        "end_reason": "ongoing"
+      }
+    ],
+    "subscription_events": [],
+    "order_events": [],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 68,
+    "signup_date": "2025-02-20",
+    "signup_source": "tiktok",
+    "pre_signup_anonymous_id": "anon_d5a900e551cf4bbf",
+    "pre_signup_first_seen": "2025-02-12",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2025-02-20",
+      "end": "2025-02-27",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2025-02-27",
+        "end": "2025-11-27",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "payment_failed",
+        "event_at": "2025-07-24",
+        "interval_id": 1,
+        "resolved": true
+      },
+      {
+        "event_type": "payment_failed",
+        "event_at": "2025-06-09",
+        "interval_id": 1,
+        "resolved": true
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2025-11-27",
+        "interval_id": 1,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [],
+    "churn_date": "2025-11-27",
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 69,
+    "signup_date": "2025-01-29",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_14e6ae78cceb404a",
+    "pre_signup_first_seen": "2025-01-17",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2025-04-22",
+        "amount": 79.0
+      },
+      {
+        "order_type": "course",
+        "date": "2025-11-16",
+        "amount": 9.99
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-05-01",
+        "amount": 49.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 70,
+    "signup_date": "2026-02-10",
+    "signup_source": "tiktok",
+    "pre_signup_anonymous_id": "anon_c3dae441e41c448d",
+    "pre_signup_first_seen": "2026-02-05",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2026-02-10",
+      "end": "2026-02-17",
+      "outcome": "expired_passively"
+    },
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2026-04-10",
+        "amount": 64.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-05-27",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "power",
+    "reactivations": []
+  },
+  {
+    "customer_id": 71,
+    "signup_date": "2024-06-11",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_f3347d11817b461f",
+    "pre_signup_first_seen": "2024-05-30",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2024-06-11",
+      "end": "2024-06-18",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "plus",
+        "start": "2024-06-18",
+        "end": "2025-07-18",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "upgraded",
+        "event_at": "2024-11-18",
+        "interval_id": 1
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2025-07-18",
+        "interval_id": 1,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [],
+    "churn_date": "2025-07-18",
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 72,
+    "signup_date": "2024-05-21",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_f9e73055d91c4a2d",
+    "pre_signup_first_seen": "2024-05-11",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2024-05-21",
+      "end": "2024-05-28",
+      "outcome": "canceled_during_trial"
+    },
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 73,
+    "signup_date": "2025-10-12",
+    "signup_source": "organic_direct",
+    "pre_signup_anonymous_id": "anon_7cfca74670d54815",
+    "pre_signup_first_seen": "2025-10-10",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2025-10-12",
+      "end": "2025-10-19",
+      "outcome": "expired_passively"
+    },
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [],
+    "churn_date": null,
+    "engagement_tier": "power",
+    "reactivations": []
+  },
+  {
+    "customer_id": 74,
+    "signup_date": "2025-11-15",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_97ae62ac95b8464a",
+    "pre_signup_first_seen": "2025-11-05",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2025-11-17",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2025-12-10",
+        "amount": 9.99
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-05-28",
+        "amount": 89.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 75,
+    "signup_date": "2024-05-12",
+    "signup_source": "tiktok",
+    "pre_signup_anonymous_id": "anon_508e00d601e044bd",
+    "pre_signup_first_seen": "2024-05-10",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2024-10-03",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2025-04-16",
+        "amount": 99.0
+      },
+      {
+        "order_type": "course",
+        "date": "2025-05-23",
+        "amount": 149.0
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-06-23",
+        "amount": 64.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-09-05",
+        "amount": 64.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-05-11",
+        "amount": 64.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 76,
+    "signup_date": "2025-08-21",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_a58ffb012fc2407b",
+    "pre_signup_first_seen": "2025-08-20",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2025-08-21",
+      "end": "2025-08-28",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2025-08-28",
+        "end": "2025-09-28",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "payment_failed",
+        "event_at": "2025-09-20",
+        "interval_id": 1,
+        "resolved": true
+      },
+      {
+        "event_type": "downgraded",
+        "event_at": "2025-09-28",
+        "interval_id": 1
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2025-09-28",
+        "interval_id": 1,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2026-05-21",
+        "amount": 49.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": "2025-09-28",
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 77,
+    "signup_date": "2024-01-14",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_05c30baee3074b71",
+    "pre_signup_first_seen": "2024-01-02",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2024-01-14",
+      "end": "2024-01-21",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2024-01-21",
+        "end": "2025-12-21",
+        "end_reason": "involuntary"
+      },
+      {
+        "interval_id": 2,
+        "plan": "basic",
+        "start": "2026-03-21",
+        "end": null,
+        "end_reason": "ongoing"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "payment_failed",
+        "event_at": "2025-12-21",
+        "interval_id": 1,
+        "resolved": false
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2025-12-21",
+        "interval_id": 1,
+        "reason": "involuntary"
+      },
+      {
+        "event_type": "resumed",
+        "event_at": "2026-03-21",
+        "interval_id": 2
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2024-07-05",
+        "amount": 27.99,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2024-08-01",
+        "amount": 51.99,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-01-18",
+        "amount": 27.99,
+        "subscriber_discount_applied": true
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "power",
+    "reactivations": [
+      {
+        "interval_id": 2,
+        "channel": "organic",
+        "reactivated_at": "2026-03-21"
+      }
+    ]
+  },
+  {
+    "customer_id": 78,
+    "signup_date": "2026-01-23",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_a74be65d75cb42d8",
+    "pre_signup_first_seen": "2026-01-13",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2026-04-14",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2026-07-29",
+        "amount": 9.99
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 79,
+    "signup_date": "2026-03-27",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_4950b0f3133246d2",
+    "pre_signup_first_seen": "2026-03-19",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2026-03-27",
+      "end": "2026-04-03",
+      "outcome": "canceled_during_trial"
+    },
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2026-07-19",
+        "amount": 64.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "power",
+    "reactivations": []
+  },
+  {
+    "customer_id": 80,
+    "signup_date": "2025-10-02",
+    "signup_source": "organic_direct",
+    "pre_signup_anonymous_id": "anon_0a49ffc149af458d",
+    "pre_signup_first_seen": "2025-09-20",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2025-11-06",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2026-03-19",
+        "amount": 9.99
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-07-18",
+        "amount": 120.0,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 81,
+    "signup_date": "2024-09-05",
+    "signup_source": "tiktok",
+    "pre_signup_anonymous_id": "anon_510a2bb896f34f2b",
+    "pre_signup_first_seen": "2024-08-22",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2024-09-05",
+      "end": "2024-09-12",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2024-09-12",
+        "end": null,
+        "end_reason": "ongoing"
+      }
+    ],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2025-02-23",
+        "amount": 27.99,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-03-18",
+        "amount": 39.99,
+        "subscriber_discount_applied": true
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 82,
+    "signup_date": "2026-02-11",
+    "signup_source": "organic_direct",
+    "pre_signup_anonymous_id": "anon_f43ea820cd854d75",
+    "pre_signup_first_seen": "2026-02-06",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2026-04-15",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-04-28",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2026-05-26",
+        "amount": 9.99
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 83,
+    "signup_date": "2024-02-08",
+    "signup_source": "youtube",
+    "pre_signup_anonymous_id": "anon_85fdb326ad504adf",
+    "pre_signup_first_seen": "2024-02-07",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2024-02-08",
+      "end": "2024-02-15",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2024-02-15",
+        "end": "2024-09-15",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "canceled",
+        "event_at": "2024-09-15",
+        "interval_id": 1,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2025-02-02",
+        "amount": 49.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-07-23",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-12-18",
+        "amount": 89.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-06-13",
+        "amount": 49.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": "2024-09-15",
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 84,
+    "signup_date": "2026-02-22",
+    "signup_source": "tiktok",
+    "pre_signup_anonymous_id": "anon_70074ea7d640491a",
+    "pre_signup_first_seen": "2026-02-18",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2026-02-22",
+      "end": "2026-03-01",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "plus",
+        "start": "2026-03-01",
+        "end": null,
+        "end_reason": "ongoing"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "payment_failed",
+        "event_at": "2026-05-15",
+        "interval_id": 1,
+        "resolved": true
+      }
+    ],
+    "order_events": [],
+    "churn_date": null,
+    "engagement_tier": "power",
+    "reactivations": []
+  },
+  {
+    "customer_id": 85,
+    "signup_date": "2024-01-08",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_bf3246cea0ae4989",
+    "pre_signup_first_seen": "2023-12-30",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2024-01-08",
+      "end": "2024-01-15",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2024-01-15",
+        "end": "2024-08-15",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "canceled",
+        "event_at": "2024-08-15",
+        "interval_id": 1,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2024-06-03",
+        "amount": 39.99,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-02-01",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-03-27",
+        "amount": 49.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": "2024-08-15",
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 86,
+    "signup_date": "2025-03-03",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_d10f7fa996d24a6b",
+    "pre_signup_first_seen": "2025-03-01",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2025-05-30",
+        "amount": 9.99
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-02-11",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2026-03-26",
+        "amount": 9.99
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 87,
+    "signup_date": "2025-08-18",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_cb8b5f3d7aac4997",
+    "pre_signup_first_seen": "2025-08-08",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2025-10-20",
+        "amount": 9.99
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-12-07",
+        "amount": 64.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2026-02-21",
+        "amount": 79.0
+      },
+      {
+        "order_type": "course",
+        "date": "2026-03-27",
+        "amount": 79.0
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 88,
+    "signup_date": "2026-07-28",
+    "signup_source": "dv360",
+    "pre_signup_anonymous_id": "anon_a5ad2b579b114920",
+    "pre_signup_first_seen": "2026-07-22",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2026-07-28",
+      "end": "2026-08-04",
+      "outcome": "expired_passively"
+    },
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 89,
+    "signup_date": "2025-01-17",
+    "signup_source": "organic_direct",
+    "pre_signup_anonymous_id": "anon_843907d58ebf4a0a",
+    "pre_signup_first_seen": "2025-01-06",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2025-07-03",
+        "amount": 129.0
+      },
+      {
+        "order_type": "course",
+        "date": "2025-09-06",
+        "amount": 149.0
+      },
+      {
+        "order_type": "course",
+        "date": "2025-11-30",
+        "amount": 79.0
+      },
+      {
+        "order_type": "course",
+        "date": "2025-12-19",
+        "amount": 129.0
+      },
+      {
+        "order_type": "course",
+        "date": "2026-04-08",
+        "amount": 79.0
+      },
+      {
+        "order_type": "course",
+        "date": "2026-05-27",
+        "amount": 99.0
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 90,
+    "signup_date": "2024-06-18",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_618768dbc2824f43",
+    "pre_signup_first_seen": "2024-06-09",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2024-06-18",
+      "end": "2024-06-25",
+      "outcome": "expired_passively"
+    },
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [],
+    "churn_date": null,
+    "engagement_tier": "regular",
+    "reactivations": []
+  },
+  {
+    "customer_id": 91,
+    "signup_date": "2025-08-20",
+    "signup_source": "tiktok",
+    "pre_signup_anonymous_id": "anon_19a2d9ea2a7d4b5b",
+    "pre_signup_first_seen": "2025-08-09",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2025-08-20",
+      "end": "2025-08-27",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "basic",
+        "start": "2025-08-27",
+        "end": null,
+        "end_reason": "ongoing"
+      }
+    ],
+    "subscription_events": [],
+    "order_events": [],
+    "churn_date": null,
+    "engagement_tier": "power",
+    "reactivations": []
+  },
+  {
+    "customer_id": 92,
+    "signup_date": "2026-03-15",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_b1e927344bfa495f",
+    "pre_signup_first_seen": "2026-03-02",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2026-05-22",
+        "amount": 79.0
+      },
+      {
+        "order_type": "course",
+        "date": "2026-06-28",
+        "amount": 129.0
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 93,
+    "signup_date": "2025-06-02",
+    "signup_source": "tiktok",
+    "pre_signup_anonymous_id": "anon_9ac3bae4c07941b6",
+    "pre_signup_first_seen": "2025-05-19",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2025-10-02",
+        "amount": 99.0
+      },
+      {
+        "order_type": "course",
+        "date": "2025-10-31",
+        "amount": 129.0
+      },
+      {
+        "order_type": "course",
+        "date": "2025-11-03",
+        "amount": 9.99
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-05-24",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 94,
+    "signup_date": "2025-11-12",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_78fbb91a47eb4e0b",
+    "pre_signup_first_seen": "2025-10-30",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2025-11-12",
+      "end": "2025-11-19",
+      "outcome": "converted"
+    },
+    "subscription_intervals": [
+      {
+        "interval_id": 1,
+        "plan": "plus",
+        "start": "2025-11-19",
+        "end": "2026-03-19",
+        "end_reason": "voluntary"
+      }
+    ],
+    "subscription_events": [
+      {
+        "event_type": "upgraded",
+        "event_at": "2026-02-19",
+        "interval_id": 1
+      },
+      {
+        "event_type": "canceled",
+        "event_at": "2026-03-19",
+        "interval_id": 1,
+        "reason": "voluntary"
+      }
+    ],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2026-01-17",
+        "amount": 39.99,
+        "subscriber_discount_applied": true
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-07-21",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": "2026-03-19",
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 95,
+    "signup_date": "2025-01-06",
+    "signup_source": "snap",
+    "pre_signup_anonymous_id": "anon_16e9c2637a724951",
+    "pre_signup_first_seen": "2024-12-27",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2025-01-06",
+      "end": "2025-01-13",
+      "outcome": "expired_passively"
+    },
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2025-10-09",
+        "amount": 49.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-07-14",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "power",
+    "reactivations": []
+  },
+  {
+    "customer_id": 96,
+    "signup_date": "2025-04-16",
+    "signup_source": "dv360",
+    "pre_signup_anonymous_id": "anon_50be0db9ecf04cc0",
+    "pre_signup_first_seen": "2025-04-14",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2025-12-17",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2026-01-18",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2026-04-13",
+        "amount": 9.99
+      },
+      {
+        "order_type": "merch",
+        "date": "2026-04-29",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 97,
+    "signup_date": "2024-02-07",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_e08c73e7097444af",
+    "pre_signup_first_seen": "2024-01-31",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "course",
+        "date": "2024-04-25",
+        "amount": 99.0
+      },
+      {
+        "order_type": "merch",
+        "date": "2024-06-23",
+        "amount": 64.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2024-07-26",
+        "amount": 129.0
+      },
+      {
+        "order_type": "course",
+        "date": "2025-05-29",
+        "amount": 79.0
+      },
+      {
+        "order_type": "course",
+        "date": "2025-09-01",
+        "amount": 9.99
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-10-13",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2026-04-23",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2026-05-29",
+        "amount": 9.99
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 98,
+    "signup_date": "2023-12-14",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_68034705ba6a4dd6",
+    "pre_signup_first_seen": "2023-12-14",
+    "account_type": "subscriber",
+    "trial": {
+      "start": "2023-12-14",
+      "end": "2023-12-21",
+      "outcome": "expired_passively"
+    },
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [],
+    "churn_date": null,
+    "engagement_tier": "power",
+    "reactivations": []
+  },
+  {
+    "customer_id": 99,
+    "signup_date": "2024-11-03",
+    "signup_source": "meta",
+    "pre_signup_anonymous_id": "anon_84d1665941744992",
+    "pre_signup_first_seen": "2024-10-30",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2024-11-30",
+        "amount": 120.0,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2025-06-11",
+        "amount": 9.99
+      },
+      {
+        "order_type": "merch",
+        "date": "2025-07-10",
+        "amount": 24.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2026-03-06",
+        "amount": 149.0
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  },
+  {
+    "customer_id": 100,
+    "signup_date": "2026-04-07",
+    "signup_source": "google_search",
+    "pre_signup_anonymous_id": "anon_97977140cbf040fa",
+    "pre_signup_first_seen": "2026-03-25",
+    "account_type": "course_merch_only",
+    "trial": null,
+    "subscription_intervals": [],
+    "subscription_events": [],
+    "order_events": [
+      {
+        "order_type": "merch",
+        "date": "2026-05-18",
+        "amount": 34.99,
+        "subscriber_discount_applied": false
+      },
+      {
+        "order_type": "course",
+        "date": "2026-06-14",
+        "amount": 9.99
+      },
+      {
+        "order_type": "course",
+        "date": "2026-06-27",
+        "amount": 79.0
+      }
+    ],
+    "churn_date": null,
+    "engagement_tier": "casual",
+    "reactivations": []
+  }
+]

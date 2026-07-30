@@ -29,6 +29,24 @@ BASIC_PLAN_SHARE = 0.75          # of those who convert, % choosing Basic vs Plu
 
 GUEST_MERCH_CONVERSION_RATE = 0.08  # % of anonymous ghosts who make a guest merch purchase
 
+# Subscription lifecycle (Phase 0 Step 5)
+SUBSCRIPTION_MEAN_TENURE_MONTHS = 11   # mean interval length before churn (exponential draw)
+PLAN_CHANGE_PROBABILITY = 0.20         # chance of one upgrade/downgrade mid-interval
+INVOLUNTARY_CHURN_SHARE = 0.25         # of intervals that end, fraction ending via payment failure
+WINBACK_PROBABILITY = 0.25             # chance a churned subscriber eventually resubscribes
+WINBACK_GAP_MONTHS_RANGE = (1, 7)      # months between churn and win-back, if it happens
+PAYMENT_BLIP_PROBS = {0: 0.75, 1: 0.20, 2: 0.05}  # resolved payment-failure blips per interval
+REACTIVATION_CHANNEL_WEIGHTS = {"email": 0.50, "push": 0.15, "organic": 0.35}
+
+# Order behavior
+COURSE_ORDERS_PER_YEAR_NONSUB_RANGE = (1, 4)  # course/merch-only accounts, per active year
+MERCH_ORDERS_PER_YEAR_RANGE = (0, 3)           # any account, per active year
+COURSE_PRICE_TIERS = [9.99, 79.00, 99.00, 129.00, 149.00]
+COURSE_PRICE_WEIGHTS = [0.45, 0.20, 0.15, 0.12, 0.08]
+MERCH_PRICE_TIERS = [24.99, 34.99, 49.99, 64.99, 89.99, 120.00]
+MERCH_PRICE_WEIGHTS = [0.25, 0.25, 0.20, 0.15, 0.10, 0.05]
+SUBSCRIBER_MERCH_DISCOUNT = 0.20        # 20% off for active subscribers
+
 # Channel mix at start and end of the date range (interpolated linearly over time)
 CHANNEL_MIX_START = {
     "meta": 0.28, "google_search": 0.22, "youtube": 0.08,

@@ -27,6 +27,13 @@ FILES = [
     ("internal/seasonality_preview.png", "Chart", "Visual sanity-check of the seasonality calendar"),
     (".gitignore", "Repo config", "Excludes Python __pycache__ from git/sync"),
     ("File_Manifest.xlsx", "Docs", "This file — running log of every file committed to the folder"),
+    ("generator/sim_utils.py", "Code", "Shared weighted date/channel sampling helpers"),
+    ("generator/build_anonymous_population.py", "Code", "Phase 0 Step 4: builds the ~2,000-person anonymous ghost population"),
+    ("generator/simulate_customers.py", "Code", "Phase 0 Steps 5-6: per-customer master timeline + attribution ground truth"),
+    ("internal/_sim_anonymous_population.csv", "Internal artifact", "Anonymous visitors who never become tracked customers; source of guest merch orders"),
+    ("internal/_sim_customer_timeline.json", "Internal artifact", "Full nested ground-truth simulation for all 100 customers (signup, trial, subscriptions, orders, churn)"),
+    ("internal/_sim_customer_timeline_summary.csv", "Internal artifact", "Flattened, spreadsheet-readable summary of the customer timeline"),
+    ("internal/_sim_attribution_ground_truth.json", "Internal artifact", "True acquisition/reactivation channel per customer, kept separate from intentionally messy shipped UTM data"),
 ]
 
 
