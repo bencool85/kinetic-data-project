@@ -335,3 +335,26 @@ seasonality calendar.
   `pre_signup_anonymous_id` (0 mismatches of 849), and that the ghost and
   customer anonymous_id namespaces never collide. All 20 checks passed after
   the two fixes above.
+
+## 2026-07-30 — Phase 1: `identity_map` (table 7 of 47)
+
+- Built `generator/build_identity_map.py` -> `data/identity_map.csv` (992
+  rows) from `devices.csv` + `customers.csv` rather than the raw timeline,
+  since devices.csv already carries the customer_id every known device
+  resolved to. One row per customer-linked device: the primary device
+  (carrying the customer's exact `pre_signup_anonymous_id`) resolves at
+  `resolution_type="signup"`, timestamped to the customer's `created_at`
+  exactly (not their earlier `first_seen_at` -- the anonymous_id has no
+  customer_id link until the account exists); any 2nd device resolves at
+  `resolution_type="login"`, timestamped to that device's `first_seen_at`.
+  Soft-deleted customers have zero rows, automatically, since devices.csv
+  already excludes them.
+- Built `generator/validate_identity_map.py` — 17 checks, including exact
+  parity between identity_map and devices (992 = 992, no orphans either
+  direction), an exact match on every signup resolution's anonymous_id vs.
+  the timeline's `pre_signup_anonymous_id` (0 mismatches of 849), and
+  `resolved_at` never preceding the device's own `first_seen_at`. All 17
+  checks passed.
+- One Phase 1 table remains: `segments` (definitions only). Products,
+  product_variants, subscription_plans, customers, customer_addresses,
+  devices, and identity_map are done.
