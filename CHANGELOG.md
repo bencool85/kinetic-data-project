@@ -210,3 +210,22 @@ seasonality calendar.
   plans are genuinely discounted vs. paying monthly (not just relabeled), and
   that Plus's annual discount ratio (25.2%) is consistent with Basic's
   (25.4%) rather than an arbitrary number. All 19 checks passed.
+- Added `EMAIL_OPT_IN_RATE` (88%), `PUSH_OPT_IN_RATE` (45%), and
+  `IS_DELETED_RATE` (2%) to `params.py`.
+- Built `generator/build_customers.py` -> `data/customers.csv` (860 rows) —
+  the first table derived directly from the master timeline. Defines the
+  `customer_id_for()` mapping (timeline integer id N -> shipped `cust_{N:05d}`)
+  that every later table referencing a customer will import, so the mapping
+  can't drift between tables. Synthetic name/email generation (no `faker`
+  available -- confirmed no new pip packages can be installed in this
+  sandbox), with collision-safe unique emails. Soft-deleted accounts (~2%)
+  get PII scrubbed (placeholder name, `deleted_user_NNNNN@deleted.kinetic.invalid`
+  email, both opt-ins forced False) while `customer_id` and all historical
+  rows in other tables stay intact -- a realistic "messy data" touch matching
+  the project's original intentional-messiness scope.
+- Built `generator/validate_customers.py` — 22 checks. Because this table
+  comes straight from the timeline, the key validation is a direct 1:1
+  reconciliation: same row count (860 vs. 860), every timeline customer_id
+  maps to exactly one row, and `created_at`'s date + `signup_source` match the
+  timeline's `signup_date`/`signup_source` exactly for all 860 customers (0
+  mismatches) -- not sampled, checked for every row. All 22 checks passed.

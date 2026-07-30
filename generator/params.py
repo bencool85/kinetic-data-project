@@ -104,3 +104,9 @@ GROWTH_END_MULTIPLIER = 2.4
 
 # Week-to-week random noise (multiplicative, normal distribution stdev)
 WEEKLY_NOISE_STDEV = 0.10
+
+# Phase 1 - customers table
+EMAIL_OPT_IN_RATE = 0.88   # opted into marketing email at signup (high -- it's how they signed up)
+PUSH_OPT_IN_RATE = 0.45    # opted into push notifications (lower -- requires a separate device permission grant)
+IS_DELETED_RATE = 0.02     # soft-deleted accounts (GDPR-style request); PII scrubbed, customer_id and
+                           # historical rows (orders/subscriptions/etc.) are preserved for referential integrity

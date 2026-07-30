@@ -47,6 +47,9 @@ FILES = [
     ("generator/build_subscription_plans.py", "Code", "Phase 1: builds subscription_plans (Basic/Plus x monthly/annual)"),
     ("generator/validate_subscription_plans.py", "Code", "Phase 1: 5-layer validation for subscription_plans"),
     ("data/subscription_plans.csv", "Shipped table", "Phase 1: subscription_plans table (4 plans)"),
+    ("generator/build_customers.py", "Code", "Phase 1: builds customers table from the master timeline; defines customer_id mapping"),
+    ("generator/validate_customers.py", "Code", "Phase 1: 5-layer validation for customers, incl. 1:1 reconciliation vs. the timeline"),
+    ("data/customers.csv", "Shipped table", "Phase 1: customers table (860 rows, one per simulated customer)"),
 ]
 
 
