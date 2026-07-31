@@ -83,6 +83,9 @@ FILES = [
     ("generator/build_payments.py", "Code", "Phase 3: builds payments (one Stripe-shaped Charge attempt per row; models realistic declined-then-retried charge attempts)"),
     ("generator/validate_payments.py", "Code", "Phase 3: 5-layer validation for payments"),
     ("data/payments.csv", "Shipped table", "Phase 3: payments table (3,964 rows: 3,650 succeeded + 314 failed retry attempts)"),
+    ("generator/build_refunds.py", "Code", "Phase 3: builds refunds (against a small share of orders' succeeded payments) -- completes Phase 3 (all 5 tables)"),
+    ("generator/validate_refunds.py", "Code", "Phase 3: 5-layer validation for refunds"),
+    ("data/refunds.csv", "Shipped table", "Phase 3: refunds table (159 rows, 4.4% of orders) -- completes Phase 3"),
 ]
 
 

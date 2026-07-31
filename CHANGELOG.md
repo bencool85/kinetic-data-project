@@ -851,3 +851,39 @@ seasonality calendar.
   86.5% card / 10.1% paypal / 3.5% apple_pay.
   `validate_payments.py`: **16/16 checks passed on the first run** -- no
   bugs found.
+
+## 2026-07-30 — Phase 3: build + validate refunds (5 of 5) -- Phase 3 complete
+
+- `generator/build_refunds.py` -- a small share of orders (`ORDER_REFUND_RATE`
+  = 4.5%) later get refunded against their own succeeded payment, reused
+  directly from `payments.csv` (never a failed attempt -- you can't refund a
+  charge that never went through). Most refunds are full
+  (`PARTIAL_REFUND_SHARE` = 25% are partial instead) -- a discretionary
+  adjustment, since every order here is a single line item, not a
+  partial-quantity return. `refunded_at` lands 1-21 days after `order_date`,
+  clipped so it never lands after END_DATE; orders placed on END_DATE itself
+  are excluded from refund eligibility entirely (no runway left in the
+  dataset's observation window for a refund to land).
+- `generator/validate_refunds.py` -- 5-layer suite, central checks being:
+  every refund's `payment_id` is genuinely the SUCCEEDED payment for its own
+  order; `refund.amount` never exceeds the order's `total_amount` (the
+  "refund ≤ order total" convention documented in `generation_plan.md`);
+  `refunded_at` is always after `order_date` and never after END_DATE; and
+  at most one refund per order (no double refunds in this design).
+- One validator bug caught and fixed during this build (not a data bug): the
+  END_DATE boundary check initially compared full timestamps
+  (`refunded_at <= pd.Timestamp(END_DATE)`, i.e. midnight), but
+  `build_refunds.py` timestamps refunds at noon -- so a refund correctly
+  landing ON END_DATE itself was flagged as "after" it. Fixed by comparing
+  at calendar-date granularity (`refunded_at.dt.date <= END_DATE`), matching
+  how END_DATE is used as a boundary everywhere else in this project (e.g.
+  `devices.py`'s `last_seen_at`). The underlying data was correct all along;
+  only the check's granularity was wrong.
+- Result: 159 refunds (4.4% of all 3,650 orders -- within the realistic
+  2-7% band checked distributionally), 116 full + 43 partial (27.0% partial
+  share, within the configured 25% ± band), $6,546.82 total refunded.
+  `validate_refunds.py`: **17/17 checks passed** after the one validator fix
+  above.
+- **Phase 3 is now complete**: discount_codes, orders, order_line_items,
+  payments, refunds -- all 5 tables built, cross-validated against each
+  other and against Phase 2's subscriptions.csv, and synced.
