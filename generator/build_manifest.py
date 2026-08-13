@@ -98,6 +98,9 @@ FILES = [
     ("generator/build_app_sessions.py", "Code", "Phase 5: builds app_sessions (in-app fitness usage, driven by real subscription intervals + course orders, keyed off engagement_tier)"),
     ("generator/validate_app_sessions.py", "Code", "Phase 5: 5-layer validation for app_sessions"),
     ("data/app_sessions.csv", "Shipped table", "Phase 5: app_sessions table (19,610 rows across 496 customers)"),
+    ("generator/build_app_events.py", "Code", "Phase 5: builds app_events (class_started/workout_completed/workout_abandoned/streak_achieved -- streaks derived from real consecutive session dates) -- completes Phase 5"),
+    ("generator/validate_app_events.py", "Code", "Phase 5: 5-layer validation for app_events"),
+    ("data/app_events.csv", "Shipped table", "Phase 5: app_events table (39,370 rows) -- completes Phase 5"),
 ]
 
 

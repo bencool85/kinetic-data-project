@@ -1107,3 +1107,46 @@ seasonality calendar.
   within 10 points of the overall device population's own mix.
   `validate_app_sessions.py`: **12/12 checks passed** after the one fix
   above.
+
+## 2026-07-30 — Phase 5: build + validate app_events (4 of 4) -- Phase 5 complete
+
+- `generator/build_app_events.py` -- fitness-specific event vocabulary
+  within each app_sessions.csv row: `class_started` (near the session's own
+  started_at, picking a workout_type from a 7-type taxonomy),
+  `workout_completed` or `workout_abandoned` (exactly one of the two, near
+  ended_at or partway through the session for abandons -- 85% complete),
+  and `streak_achieved`.
+- `streak_achieved` is NOT randomly sprinkled -- it's computed from each
+  customer's own REAL distinct session dates in app_sessions.csv
+  (consecutive-day runs, no gap). The first session on the day a run first
+  reaches one of 3/7/14/30/60/100 days gets the event with that exact
+  streak_days value. Every streak is independently re-derivable from
+  app_sessions.csv alone.
+- `generator/validate_app_events.py` -- 5-layer suite, central checks
+  being: every session has exactly one class_started and exactly one of
+  workout_completed/workout_abandoned; workout_completed's duration_minutes
+  matches that session's real duration exactly; and -- the most important
+  check in this table -- streak_achieved events are independently
+  RE-DERIVED in the validator from app_sessions.csv's own dates and checked
+  for an EXACT match against the build's output, proving the streak signal
+  is genuinely computed, not invented.
+- One real bug caught and fixed proactively during this build (same class
+  already fixed twice this phase, in web_sessions.csv and web_events.csv):
+  `workout_abandoned`'s timestamp was computed as
+  `started_at + duration * a_float_fraction`, producing fractional-second
+  timestamps that would have broken pandas' single-format datetime parsing
+  the same way. Recognized the pattern from the earlier fixes and rounded
+  to whole seconds before the first validation run, rather than discovering
+  it via a crash again.
+- Result: 39,370 app_events (19,610 class_started, 16,580
+  workout_completed, 3,030 workout_abandoned, 150 streak_achieved -- 125 at
+  the 3-day threshold, 25 at 7-day; nobody in this dataset strings together
+  a real 14+ consecutive-day streak, which is itself a realistic outcome of
+  Poisson-scattered session dates rather than guaranteed-daily attendance).
+  `validate_app_events.py`: **15/15 checks passed on the first validation
+  run** (after the proactive fix above).
+- **Phase 5 is now complete**: web_sessions, web_events, app_sessions,
+  app_events -- all 4 tables built, cross-validated against each other and
+  against Phase 2/3's subscriptions/orders, with app usage volume
+  consistently keyed off the same `engagement_tier` signal throughout, per
+  generation_plan.md's cross-phase commitment #2.
