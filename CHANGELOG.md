@@ -1698,3 +1698,30 @@ seasonality calendar.
   pypi.org (so `duckdb` can't be pip-installed here) and motherduck.com
   directly, so this stage is intentionally handed off as a script + step-
   by-step instructions rather than executed in-session.
+
+## 2026-08-13 — MotherDuck token handling: gitignored .env, not synced
+
+- User provided a live MotherDuck read/write access token in chat.
+  Deliberately did **not** write it into any git-tracked or Mac-synced
+  project file -- this project's git history gets committed and the
+  whole folder gets synced to iCloud on every change, and a credential
+  baked into either would be effectively permanent/hard to revoke even
+  after deletion (recoverable from git history) and unnecessarily
+  exposed (iCloud sync). It also isn't needed there: the loader script
+  only runs on the user's own machine, never inside the Cowork cloud
+  sandbox (confirmed last entry -- sandbox has no route to
+  motherduck.com).
+- Added `.env` / `*.env` / `warehouse/.env` to `.gitignore`.
+- `warehouse/load_to_motherduck.py` now optionally auto-loads
+  `warehouse/.env` (a tiny manual parser, no new dependency) if present,
+  falling back to the `motherduck_token` shell env var either way --
+  explicit `export` always wins over the file. Stored the token in
+  `warehouse/.env` inside this session's own (ephemeral, non-synced)
+  workspace only, for reference during this session.
+- **Not** added to `File_Manifest.xlsx` row content or synced to the
+  user's Mac folder, by design -- only the (secret-free) `.gitignore`
+  and script changes were. Advised the user to regenerate the token in
+  MotherDuck's settings since it was pasted into a chat transcript, and
+  to set it directly via `export motherduck_token=...` on their own
+  machine (or their own local `warehouse/.env`, kept off git) as the
+  actual long-term home for it.
