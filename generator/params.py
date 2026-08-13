@@ -164,3 +164,88 @@ PARTIAL_REFUND_SHARE = 0.25          # of refunded orders, % that are partial ra
 PARTIAL_REFUND_FRACTION_RANGE = (0.20, 0.70)  # partial refund amount, as a fraction of the order total
 REFUND_REASON_WEIGHTS = {"requested_by_customer": 0.70, "product_unacceptable": 0.20, "duplicate": 0.05, "fraudulent": 0.05}
 REFUND_DELAY_DAYS_RANGE = (1, 21)    # days between order_date and the refund being processed
+
+# =========================================================================
+# Phase 7 - Paid media (6 platforms). No user-level joins from ad-platform
+# tables to our own data (schema_reference.md) -- attribution only via UTM
+# on web_sessions. So these tables are NOT reconciled row-for-row against
+# orders/sessions the way Braze was; they're built from the SAME shared
+# levers that drove web_sessions' own utm_source volume in the first place
+# (_sim_channel_mix_schedule.csv's per-channel weekly share and
+# _sim_seasonality_calendar.csv's weekly demand multiplier), so spend/
+# impressions/clicks move with the same seasonality and channel-mix shape
+# web_sessions already shows -- validated distributionally (correlation),
+# not via exact-count reconciliation, since real ad platforms' own
+# self-reported numbers never tie out exactly to site-side session counts
+# either (that's realistic messiness, not a bug).
+PAID_MEDIA_CHANNELS = ["meta", "google_search", "youtube", "dv360", "snap", "tiktok"]
+
+# The 5 objectives, shared vocabulary across all 6 platforms -- matches
+# web_sessions.csv's own utm_campaign suffixes (e.g. "meta_retargeting"),
+# per generation_plan.md convention #2 (clean channel-level attribution,
+# fuzzy campaign-level attribution -- the shipped ad-platform campaign
+# names are deliberately more elaborate than the utm_campaign values).
+AD_OBJECTIVES = ["prospecting", "retargeting", "lookalike", "conversion", "brand_lift"]
+# Retargeting and lookalike objectives target one of segments.csv's 18
+# anonymous-grain custom audiences (3 concepts x 6 platforms); prospecting/
+# conversion/brand_lift are broad-audience and carry no targeting segment.
+AD_OBJECTIVE_TARGETS_SEGMENT = {"prospecting": False, "retargeting": True, "lookalike": True,
+                                 "conversion": False, "brand_lift": False}
+
+# Evergreen (always-on) objectives split total daily platform spend by this
+# weight; brand_lift is NOT part of this split -- it's a handful of short,
+# separately-budgeted awareness flights layered on top (see per-platform
+# flight dates), which is how real brand-lift studies actually run.
+AD_OBJECTIVE_SPEND_SHARE = {"prospecting": 0.35, "conversion": 0.30, "retargeting": 0.20, "lookalike": 0.15}
+
+# Whole-business average daily paid-media spend (all 6 platforms combined),
+# before the channel_mix_schedule split and seasonality multiplier are
+# applied. Calibrated loosely against this dataset's scale (860 customers,
+# ~2,000-ghost prospecting pool) -- not meant to imply a real CAC benchmark.
+BASE_DAILY_AD_SPEND_TOTAL = 950.0
+AD_SPEND_NOISE_SD = 0.15          # daily lognormal noise on top of the deterministic seasonality*mix baseline
+AD_PAUSE_DAY_RATE = 0.04          # share of active-campaign days with zero delivery (no insights row at all,
+                                   # same convention a real ad platform's reporting API uses -- no row, not a zero row)
+
+# --- Meta ---
+META_ACCOUNT_ID = "act_10150083647201234"
+# Meta's post-2022 "Outcome-Driven Ad Experience" objective enum.
+META_OBJECTIVE_BY_AD_OBJECTIVE = {
+    "prospecting": "OUTCOME_TRAFFIC", "retargeting": "OUTCOME_SALES", "lookalike": "OUTCOME_SALES",
+    "conversion": "OUTCOME_SALES", "brand_lift": "OUTCOME_AWARENESS",
+}
+# Calibrated to what BASE_DAILY_AD_SPEND_TOTAL's seasonality/channel-mix
+# split actually realizes on a typical (non-peak) day for meta's ~24% avg
+# channel share, so the declared budget is a believable "typical day" figure
+# rather than a number disconnected from realized spend (peak-season days
+# legitimately run above it -- real advertisers raise budgets seasonally too).
+META_DAILY_BUDGET_CENTS = {"prospecting": 14000, "conversion": 12000, "retargeting": 8000, "lookalike": 6000}
+META_BRAND_LIFT_FLIGHTS = [   # (flight start, flight length days, lifetime_budget_cents) -- timed near BFCM each year
+    (datetime.date(2023, 11, 13), 18, 350000),
+    (datetime.date(2024, 11, 11), 18, 380000),
+    (datetime.date(2025, 11, 10), 18, 400000),
+]
+META_CPM_RANGE_BY_OBJECTIVE = {"prospecting": (8, 14), "retargeting": (10, 18), "lookalike": (9, 15),
+                                "conversion": (11, 20), "brand_lift": (4, 8)}
+META_CTR_RANGE_BY_OBJECTIVE = {"prospecting": (0.008, 0.015), "retargeting": (0.020, 0.035), "lookalike": (0.012, 0.020),
+                                "conversion": (0.010, 0.018), "brand_lift": (0.004, 0.008)}
+META_FREQUENCY_RANGE = (1.2, 3.0)
+# Conditional funnel rates (each stage as a fraction of the PREVIOUS stage,
+# not of link_click) -- guarantees monotonic non-increasing action counts by
+# construction: link_click >= landing_page_view >= add_to_cart >=
+# initiate_checkout >= purchase.
+# Calibrated so SUMMED self-attributed "purchase" actions across all 6
+# platforms land within a believable multiple (not 10-20x) of the
+# business's actual total real purchases (orders + subscription
+# conversions, ~4,200 over the 3-year window) -- ad platforms' own pixels
+# genuinely over-claim relative to site-side truth (multi-touch overlap,
+# generous attribution windows), but not by an order of magnitude per
+# platform, or the sum across 6 platforms would be absurd.
+META_ACTION_FUNNEL_BY_OBJECTIVE = {
+    "prospecting": {"link_click_rate": 0.90, "to_lpv": 0.75, "to_atc": 0.06, "to_checkout": 0.30, "to_purchase": 0.15},
+    "retargeting": {"link_click_rate": 0.94, "to_lpv": 0.85, "to_atc": 0.25, "to_checkout": 0.45, "to_purchase": 0.30},
+    "lookalike":   {"link_click_rate": 0.93, "to_lpv": 0.78, "to_atc": 0.13, "to_checkout": 0.40, "to_purchase": 0.25},
+    "conversion":  {"link_click_rate": 0.93, "to_lpv": 0.80, "to_atc": 0.16, "to_checkout": 0.45, "to_purchase": 0.25},
+    "brand_lift":  {"link_click_rate": 0.85, "to_lpv": 0.50, "to_atc": 0.02, "to_checkout": 0.20, "to_purchase": 0.10},
+}
+META_VIDEO_VIEW_RATE_BY_OBJECTIVE = {"prospecting": 0.22, "brand_lift": 0.40}  # of impressions, video-forward objectives only

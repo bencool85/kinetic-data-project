@@ -1315,3 +1315,78 @@ seasonality calendar.
   braze_email_events, braze_push_campaigns, braze_push_events). 25 of 47
   tables now shipped. Phase 7 (paid media: Meta, Google Search, YouTube,
   DV360, Snap, TikTok) is next, pending further instruction.
+
+## 2026-08-13 — Phase 7: build + validate Meta (1 of 6 paid-media platforms)
+
+- Phase 7 is 22 tables across 6 platforms (schema_reference.md), the last
+  phase. Working unit for this phase is **one platform at a time** rather
+  than one table at a time (still fully built + validated table by table
+  within each platform) -- otherwise this would be 22 separate sync
+  cycles for tables that are only ever meaningful together.
+- **New shared design, since ad-platform tables have NO user-level join to
+  our own data** (schema_reference.md is explicit about this -- attribution
+  only via UTM on web_sessions): rather than exact-count reconciliation
+  (the Braze pattern), Phase 7 tables are validated by confirming their
+  spend/volume tracks the SAME underlying levers that already drove
+  web_sessions.csv's own per-channel session volume --
+  `_sim_seasonality_calendar.csv`'s weekly demand multiplier and
+  `_sim_channel_mix_schedule.csv`'s per-channel weekly share. New shared
+  helper `generator/paid_media_common.py` centralizes this for all 6
+  platforms' daily performance tables.
+- `generator/build_meta_campaigns.py` -- 7 campaigns: 4 evergreen
+  (prospecting/retargeting/lookalike/conversion, always-on for the full
+  3-year window, daily_budget-paced) + 3 flighted brand_lift campaigns
+  timed near BFCM each year (lifetime_budget-paced, COMPLETED status),
+  which is how real brand-lift awareness studies actually run -- short
+  bursts, not an always-on line item.
+- `generator/build_meta_ads.py` -- functions as the ad-set-level entity
+  (targeting, optimization_goal) since Meta's real Campaign > Ad Set > Ad
+  hierarchy collapses to just meta_campaigns/meta_ads here
+  (schema_reference.md lists no separate ad_sets table). 10 ads total.
+  targeting_segment_id populated only for retargeting (split across its 2
+  ads: one per segments.csv's "Website Visitors" / "Cart Abandoners"
+  Meta segment) and lookalike (segments.csv's Meta lookalike segment) --
+  prospecting/conversion/brand_lift stay broad.
+- `generator/build_meta_ad_insights_daily.py` -- 7,396 rows. Each day's
+  total Meta spend = `BASE_DAILY_AD_SPEND_TOTAL x seasonality multiplier x
+  meta's channel-mix share x lognormal noise`, split across the 4
+  evergreen objectives by fixed weight (summing to exactly 1.0) then
+  across that objective's ads; brand_lift flights spend their own
+  lifetime_budget independently across their own flight days.
+  **One real bug caught before shipping**: `lifetime_budget` is stored in
+  cents (Meta API convention, same as `daily_budget`), but the brand_lift
+  daily-spend split initially divided it directly without converting to
+  dollars -- inflated 3 flights' realized spend to ~$1.13M against a
+  combined $11,300 in declared budgets (a ~100x overshoot, and it pushed
+  total Meta spend to $1.55M against an expected ~$440-450K). Caught by
+  sanity-checking the printed total against a hand-computed expectation
+  before writing the validator, not by the validator itself -- fixed the
+  cents-to-dollars conversion and recalibrated `META_DAILY_BUDGET_CENTS`
+  to match what the seasonality/mix formula actually realizes for a
+  typical (non-peak) day. Rebuilt: total Meta spend now $429,401 (blended
+  $12.11 CPM, 1.52% CTR -- both in realistic paid-social ranges).
+- `generator/build_meta_ad_actions_daily.py` -- 35,504 rows. Derived
+  DIRECTLY from meta_ad_insights_daily.csv's own clicks/impressions (not
+  independently redrawn), same "derive from an already-shipped upstream
+  table" pattern app_events.py used for streak_achieved -- guarantees the
+  click-driven funnel (link_click -> landing_page_view -> add_to_cart ->
+  initiate_checkout -> purchase) is monotonically non-increasing by
+  construction. **Funnel conversion rates recalibrated before shipping**
+  after a first pass produced 19,249 self-attributed "purchase" actions
+  from Meta ALONE -- ~5x the business's entire actual purchase volume
+  across all channels combined (3,849), which would have made summing all
+  6 platforms' claimed purchases absurd. Retuned to land Meta's total at
+  6,543 claimed purchases (1.70x actual total real purchases) -- a
+  believable single-platform over-attribution multiple (real ad
+  platforms' pixels do over-claim vs. site-side truth via multi-touch
+  overlap and generous attribution windows, just not by 5-20x).
+- Validation: `validate_meta_campaigns.py` 13/13, `validate_meta_ads.py`
+  10/10, `validate_meta_ad_insights_daily.py` **17/17 (includes two
+  correlation checks: weekly Meta spend vs. web_sessions.csv's own
+  meta-attributed weekly session count, Pearson r=0.678 across 157 weeks;
+  and weekly spend vs. the underlying seasonality x channel-mix formula
+  directly, r=0.919 -- confirms the daily noise/pause layer didn't drown
+  out the cross-phase signal)**, `validate_meta_ad_actions_daily.py`
+  12/12. **52/52 checks passed across all 4 Meta tables.**
+- Meta (1 of 6 Phase 7 platforms) complete. 29 of 47 tables now shipped.
+  Next: Google Search.

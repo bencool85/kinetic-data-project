@@ -115,6 +115,19 @@ FILES = [
     ("generator/build_braze_push_events.py", "Code", "Phase 6: builds braze_push_events (Send/Open/Click/Bounce/Unsubscribe funnel, gated on push_opt_in as a hard delivery precondition) -- completes Phase 6 (all 4 tables)"),
     ("generator/validate_braze_push_events.py", "Code", "Phase 6: 5-layer validation for braze_push_events"),
     ("data/braze_push_events.csv", "Shipped table", "Phase 6: braze_push_events table (9,897 rows, 7,851 sends) -- completes Phase 6 (25 of 47 tables shipped; Phase 7 paid media remains)"),
+    ("generator/paid_media_common.py", "Code", "Phase 7: shared helpers used by all 6 platforms' daily performance tables -- maps any date to the seasonality calendar/channel-mix week and draws each day's per-channel spend baseline"),
+    ("generator/build_meta_campaigns.py", "Code", "Phase 7 (Meta 1/4): builds meta_campaigns (4 evergreen objective campaigns + 3 flighted brand_lift campaigns timed near BFCM)"),
+    ("generator/validate_meta_campaigns.py", "Code", "Phase 7: 5-layer validation for meta_campaigns"),
+    ("data/meta_campaigns.csv", "Shipped table", "Phase 7 (Meta 1/4): meta_campaigns table (7 rows)"),
+    ("generator/build_meta_ads.py", "Code", "Phase 7 (Meta 2/4): builds meta_ads (functions as the ad-set-level entity -- targeting_segment_id for retargeting/lookalike only)"),
+    ("generator/validate_meta_ads.py", "Code", "Phase 7: 5-layer validation for meta_ads"),
+    ("data/meta_ads.csv", "Shipped table", "Phase 7 (Meta 2/4): meta_ads table (10 rows)"),
+    ("generator/build_meta_ad_insights_daily.py", "Code", "Phase 7 (Meta 3/4): builds meta_ad_insights_daily (spend/impressions/clicks driven by the shared seasonality calendar + channel-mix schedule)"),
+    ("generator/validate_meta_ad_insights_daily.py", "Code", "Phase 7: 5-layer validation for meta_ad_insights_daily, incl. weekly-spend-vs-web_sessions correlation check"),
+    ("data/meta_ad_insights_daily.csv", "Shipped table", "Phase 7 (Meta 3/4): meta_ad_insights_daily table (7,396 rows)"),
+    ("generator/build_meta_ad_actions_daily.py", "Code", "Phase 7 (Meta 4/4): builds meta_ad_actions_daily (normalized actions array, derived directly from meta_ad_insights_daily.csv's own clicks) -- completes Meta (1 of 6 platforms)"),
+    ("generator/validate_meta_ad_actions_daily.py", "Code", "Phase 7: 5-layer validation for meta_ad_actions_daily"),
+    ("data/meta_ad_actions_daily.csv", "Shipped table", "Phase 7 (Meta 4/4): meta_ad_actions_daily table (35,504 rows) -- completes Meta"),
 ]
 
 
