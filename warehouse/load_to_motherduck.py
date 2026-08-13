@@ -87,8 +87,18 @@ def main():
         sys.exit(f"No CSV files found in {DATA_DIR}")
 
     print(f"Found {len(csv_paths)} CSV files in {DATA_DIR}")
-    print(f"Connecting to MotherDuck, database '{DATABASE_NAME}' ...")
-    con = duckdb.connect(f"md:{DATABASE_NAME}")
+    print("Connecting to MotherDuck (organization-level, no specific database yet) ...")
+    # Connect "bare" (no database name after md:) rather than straight to
+    # md:{DATABASE_NAME} -- connecting directly to a database name that
+    # doesn't exist yet fails ("Failed to attach ... no database/share
+    # named 'kinetic' found"), since md:<name> attaches to an EXISTING
+    # database rather than creating one. Creating it explicitly via SQL
+    # first, then USE-ing it, works whether this is the very first run
+    # (database doesn't exist yet) or a later run (it already does).
+    con = duckdb.connect("md:")
+    print(f"Creating database '{DATABASE_NAME}' if it doesn't already exist ...")
+    con.execute(f"CREATE DATABASE IF NOT EXISTS {DATABASE_NAME}")
+    con.execute(f"USE {DATABASE_NAME}")
 
     loaded = []
     for path in csv_paths:

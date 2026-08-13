@@ -1725,3 +1725,14 @@ seasonality calendar.
   to set it directly via `export motherduck_token=...` on their own
   machine (or their own local `warehouse/.env`, kept off git) as the
   actual long-term home for it.
+
+## 2026-08-13 — Fix: load_to_motherduck.py couldn't create a new database
+
+- First real run on the user's machine failed: `duckdb.connect("md:kinetic")`
+  threw `Failed to attach 'kinetic': no database/share named 'kinetic'
+  found`. `md:<name>` attaches to an EXISTING MotherDuck database -- it
+  doesn't create one, which the script had wrongly assumed.
+- **Fixed**: connect bare (`md:`, no database name) first, then
+  `CREATE DATABASE IF NOT EXISTS kinetic` and `USE kinetic` via SQL
+  before creating any tables. Idempotent -- safe to re-run on a later
+  session once the database already exists.
