@@ -109,6 +109,9 @@ FILES = [
     ("generator/build_braze_email_events.py", "Code", "Phase 6: builds braze_email_events (Send/Open/Click/Bounce/Unsubscribe funnel, derived from real trial/payment-failure/order/cart/reactivation sources)"),
     ("generator/validate_braze_email_events.py", "Code", "Phase 6: 5-layer validation for braze_email_events"),
     ("data/braze_email_events.csv", "Shipped table", "Phase 6: braze_email_events table (26,328 rows, 18,187 sends)"),
+    ("generator/build_braze_push_campaigns.py", "Code", "Phase 6: builds braze_push_campaigns (hand-curated: 5 triggered + 2 broadcast, push-appropriate subset) -- built before events table needs it"),
+    ("generator/validate_braze_push_campaigns.py", "Code", "Phase 6: 5-layer validation for braze_push_campaigns"),
+    ("data/braze_push_campaigns.csv", "Shipped table", "Phase 6: braze_push_campaigns table (7 rows)"),
 ]
 
 

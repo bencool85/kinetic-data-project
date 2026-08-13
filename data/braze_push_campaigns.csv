@@ -1,0 +1,8 @@
+campaign_id,campaign_name,campaign_type,trigger_event,description,created_at,is_active
+camp_push_001,Trial Ending Reminder - Push,triggered,trial_ending,"Push variant of the email trial-ending reminder, ~2 days before trial_end.",2023-08-01,True
+camp_push_002,Payment Failed - Push,triggered,payment_failed,"Push variant of the dunning email, fired on subscription_events.csv payment_failed events.",2023-08-01,True
+camp_push_003,Win-Back Lapsed Subscriber - Push,triggered,reactivation,Fires for win-back reactivations whose true channel (in the master timeline) is push.,2023-08-01,True
+camp_push_004,Streak Celebration,triggered,streak_achieved,Fires on every app_events.csv streak_achieved milestone (3/7/14/30/60/100 days).,2023-08-01,True
+camp_push_005,Order Shipped - Push,triggered,order_placed,Push shipping notification for known-customer orders only -- guests have no device to push to.,2023-08-01,True
+camp_push_006,New Class Launch,broadcast,,"Occasional broadcast announcing new course/class content, sent to push-opted-in customers.",2023-08-01,True
+camp_push_007,Weekly Motivation Push,broadcast,,Higher-cadence broadcast than email's newsletter -- push is cheap and low-friction.,2023-08-01,True

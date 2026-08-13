@@ -1234,3 +1234,28 @@ seasonality calendar.
   null external_user_id, exactly the guest-order-confirmation share.
   `validate_braze_email_events.py`: **13/13 checks passed** after the
   web_events.csv fix.
+
+## 2026-07-30 — Phase 6: build + validate braze_push_campaigns (3 of 4)
+
+- `generator/build_braze_push_campaigns.py` -- built before the push events
+  table needs it, same reasoning as every other campaigns-then-events
+  pairing in this project. A push-appropriate SUBSET of triggers, not a
+  blind mirror of the 9 email campaigns -- push fits different moments
+  (streak celebrations, urgent re-engagement) and doesn't fit others
+  (nobody expects an abandoned-cart push; guests have no device to push to
+  at all, so push's order_placed campaign is deliberately narrower in
+  scope than email's, known-customers-only).
+  - Triggered (5): Trial Ending Reminder (push variant of email's),
+    Payment Failed (urgent enough for both channels), Win-Back Lapsed
+    Subscriber (filtered to the master timeline's channel=='push'
+    reactivations -- may realistically be a quiet campaign if that
+    population is small or empty in this dataset's specific draw), Streak
+    Celebration (ties directly to app_events.csv's streak_achieved), Order
+    Shipped (known customers only).
+  - Broadcast (2): New Class Launch (occasional) and Weekly Motivation
+    Push (higher cadence than email's monthly newsletter -- push is
+    cheaper and lower-friction, realistically).
+- `generator/validate_braze_push_campaigns.py` -- same lightweight
+  definitions-table validation class as braze_email_campaigns.csv.
+- Result: 7 campaigns. `validate_braze_push_campaigns.py`: **11/11 checks
+  passed** on the first run.
