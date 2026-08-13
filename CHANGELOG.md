@@ -1064,3 +1064,46 @@ seasonality calendar.
   vs. orders.csv's 3,650 rows, the 17-row gap being exactly the orders
   belonging to soft-deleted customers). `validate_web_events.py`: **15/15
   checks passed** after the two fixes above.
+
+## 2026-07-30 — Phase 5: build + validate app_sessions (3 of 4)
+
+- `generator/build_app_sessions.py` -- in-app fitness usage (NOT the
+  marketing/storefront browsing already covered by web_sessions).
+  customer_id is always present here (the app requires being logged in;
+  there's no anonymous app usage in this dataset), and there's no UTM
+  attribution. Two independent, non-invented reasons a customer gets rows:
+  1. **Real subscription intervals** (the same population as
+     customer_segment_membership's seg_001) get ongoing sessions across
+     [start_date, canceled_at-or-END_DATE], at a weekly rate keyed by
+     `engagement_tier` (power/regular/casual) -- the direct fulfillment of
+     generation_plan.md's cross-phase commitment #2: usage volume must be
+     sized off the SAME engagement signal already driving segment
+     membership and web_sessions' filler browsing volume, not a separately
+     invented one. Usage stops the moment a subscription lapses.
+  2. **Course orders** (any known, non-deleted customer, independent of
+     subscription status) get a burst of 3-10 sessions in the 45 days after
+     the order date, working through the purchased content.
+  Merch-only customers get zero rows (nothing to access in-app). Every
+  session is pinned to the customer's PRIMARY device (devices.csv's first
+  row per customer_id) and `platform` mirrors that device's own
+  device_type exactly, never independently re-rolled.
+- `generator/validate_app_sessions.py` -- 5-layer suite, central checks
+  being: every session's device_id genuinely belongs to that same
+  customer_id in devices.csv; platform matches that device's device_type
+  exactly; every session date falls inside either a real subscription
+  interval or a course's 45-day access window for that customer (no usage
+  invented with no underlying reason); and customers with neither a real
+  subscription interval nor a course order get zero rows.
+- One validator-calibration issue caught and fixed (not a data bug): the
+  "distinct customers with usage" check initially required an EXACT match
+  against the eligible population, but 5 casual-tier subscribers with
+  ~1-month tenure legitimately drew zero sessions from the Poisson process
+  (~18% chance of zero opens before churning at that rate/tenure combo) --
+  a realistic "signed up, barely used it, canceled" outcome, not a bug.
+  Loosened to a small tolerance band instead of an exact match.
+- Result: 19,610 app_sessions across 496 of 501 eligible customers (496 vs
+  501 -- the 5-customer gap being exactly those legitimate zero-usage
+  churners). Platform mix (40.3% ios / 34.2% android / 25.5% web) lands
+  within 10 points of the overall device population's own mix.
+  `validate_app_sessions.py`: **12/12 checks passed** after the one fix
+  above.

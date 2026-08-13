@@ -95,6 +95,9 @@ FILES = [
     ("generator/build_web_events.py", "Code", "Phase 5: builds web_events (page_view/product_view/add_to_cart/begin_checkout/purchase/search; every order gets exactly one purchase event)"),
     ("generator/validate_web_events.py", "Code", "Phase 5: 5-layer validation for web_events"),
     ("data/web_events.csv", "Shipped table", "Phase 5: web_events table (117,706 rows)"),
+    ("generator/build_app_sessions.py", "Code", "Phase 5: builds app_sessions (in-app fitness usage, driven by real subscription intervals + course orders, keyed off engagement_tier)"),
+    ("generator/validate_app_sessions.py", "Code", "Phase 5: 5-layer validation for app_sessions"),
+    ("data/app_sessions.csv", "Shipped table", "Phase 5: app_sessions table (19,610 rows across 496 customers)"),
 ]
 
 
