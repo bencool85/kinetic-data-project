@@ -45,14 +45,37 @@ import duckdb
 
 DATABASE_NAME = "kinetic"
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+ENV_FILE = Path(__file__).resolve().parent / ".env"
+
+
+def _load_dotenv(path):
+    """Tiny manual .env loader (KEY=value per line) -- avoids adding a
+    python-dotenv dependency just for one optional file. Only sets a var if
+    it isn't already present in the environment, so an explicit `export`
+    always wins over the .env file. NEVER commit this .env file to git --
+    it holds a live MotherDuck access token; it's already excluded via
+    .gitignore."""
+    if not path.is_file():
+        return
+    for line in path.read_text().splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        key, value = key.strip(), value.strip().strip("'\"")
+        os.environ.setdefault(key, value)
 
 
 def main():
+    _load_dotenv(ENV_FILE)
+
     if not os.environ.get("motherduck_token"):
         sys.exit(
             "ERROR: motherduck_token environment variable is not set.\n"
             "Get a token at app.motherduck.com -> Settings -> Create token, then run:\n"
-            "  export motherduck_token='<your token>'"
+            "  export motherduck_token='<your token>'\n"
+            "(or drop it into a warehouse/.env file as motherduck_token=<token> --\n"
+            "that file is gitignored and never gets committed or synced automatically)."
         )
 
     if not DATA_DIR.is_dir():
