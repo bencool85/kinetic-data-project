@@ -1617,3 +1617,63 @@ seasonality calendar.
   held its promise: every one of the 47 tables, built across 7 phases and
   many sessions, remains mutually consistent by construction -- no
   cross-table impossible scenarios anywhere in the dataset.
+
+## 2026-08-13 — Post-completion: cross-dataset alignment audit (7 checks)
+
+- New script `generator/audit_cross_dataset_alignment.py` -- **not** part
+  of the standard build/validate pipeline (it doesn't ship a table). Its
+  job is different from the 47 per-table validators: it checks whether
+  AGGREGATE signals across every table agree with each other and with the
+  shared seasonality calendar/channel-mix schedule, using correlation,
+  growth-ratio, and volatility comparisons rather than exact-count
+  reconciliation. Run standalone: `python3 audit_cross_dataset_alignment.py`.
+- **Check 1 (aggregate spend vs. demand)**: PASS. Total weekly ad spend
+  across all 6 platforms correlates strongly with weekly web_sessions,
+  signups, orders, and revenue, and tracks the seasonality multiplier
+  directly.
+- **Check 2 (channel mix consistency)**: PASS. Actual weekly spend share
+  per platform tracks `_sim_channel_mix_schedule.csv`'s intended mix,
+  both per-platform and project-wide.
+- **Check 3 (calendar-anchored events)**: PASS with a noted, non-bug
+  finding -- BFCM brand_lift flights ran in all 3 Novembers
+  (2023/2024/2025), but `discount_codes.csv` only has a matching holiday
+  code + Braze "Seasonal Sale Promo" send for 2024. 2023 and Nov-2025
+  brand-awareness campaigns ran with no accompanying promo mechanism.
+  Left as-is (documented, not a data error) pending user direction.
+- **Check 4 (long-run growth trend)**: PASS. Business volume shows the
+  ~2.4x growth baked into the seasonality calendar; marketing efficiency
+  (spend/signup) stays stable across quarters.
+- **Check 5 (renewal/lag structure)**: PASS with a noted, non-bug finding
+  -- renewal invoice volume does NOT show lower detrended volatility than
+  fresh subscription starts, contrary to the initial hypothesis.
+  Explainable by short average subscriber tenure and only 3 years of
+  history limiting cohort-blending depth, plus annual-billing
+  subscribers echoing their exact origin week a year later. Not a bug.
+- **Check 6 (day-of-week / hour-of-day)**: **found and fixed a real
+  issue.** Day-of-week is confirmed uniform everywhere (no table was
+  ever designed with day-of-week weighting -- correct). Hour-of-day
+  surfaced that all 38 `merch_to_sub_trigger` Braze email sends landed
+  at exactly midnight (00:00:00) -- that one trigger type's code path in
+  `build_braze_email_events.py` never called the `_random_time_of_day()`
+  helper every other trigger type uses, so its sends inherited a bare
+  date (implicit midnight) instead of a randomized business-hours time.
+  **Fixed**: `merch_to_sub_trigger` now draws a random 6am-9pm send time
+  like `trial_started`/`trial_ending`/`reactivation` do. Rebuilt
+  `data/braze_email_events.csv` (26,335 rows, up from 26,328 -- the fix
+  adds 2 extra `rng` draws per merch_to_sub_trigger row, which shifts the
+  shared RNG stream for every send generated afterward, so the funnel's
+  downstream open/click/bounce/unsubscribe outcomes differ slightly on a
+  handful of rows even though the underlying populations and rates are
+  unchanged). Re-ran `validate_braze_email_events.py`: **13/13 passed.**
+  Confirmed web_sessions' own hour-of-day weighting (7am-11pm, 98.6% of
+  sessions) is correct-by-design, not a gap.
+- **Check 7 (timezone/precision sweep)**: PASS. Swept all 47 tables'
+  49 datetime/date-only columns (after fixing the sweep's own
+  timestamp-sniffing heuristic, which initially false-flagged numeric
+  and text columns like phone numbers and state codes) -- zero stray
+  timezone suffixes, zero sub-second fractions, zero mixed date/datetime
+  formatting within any column, across the entire dataset.
+- **Net result**: 6 of 7 checks passed clean; 1 check (day-of-week/
+  hour-of-day) caught a real, fixed bug; 2 checks (3 and 5) surfaced
+  genuine, explainable characteristics worth keeping visible to the user
+  rather than silently accepting.

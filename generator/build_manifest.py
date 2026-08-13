@@ -108,7 +108,7 @@ FILES = [
     ("data/web_events.csv", "Shipped table", "Phase 5: web_events table (117,706 rows; retroactively rebuilt for the whole-second timestamp fix, same counts/logic)"),
     ("generator/build_braze_email_events.py", "Code", "Phase 6: builds braze_email_events (Send/Open/Click/Bounce/Unsubscribe funnel, derived from real trial/payment-failure/order/cart/reactivation sources)"),
     ("generator/validate_braze_email_events.py", "Code", "Phase 6: 5-layer validation for braze_email_events"),
-    ("data/braze_email_events.csv", "Shipped table", "Phase 6: braze_email_events table (26,328 rows, 18,187 sends)"),
+    ("data/braze_email_events.csv", "Shipped table", "Phase 6: braze_email_events table (26,335 rows, 18,187 sends) -- updated 2026-08-13 by the cross-dataset audit's Check 6 fix (merch_to_sub_trigger send time-of-day)"),
     ("generator/build_braze_push_campaigns.py", "Code", "Phase 6: builds braze_push_campaigns (hand-curated: 5 triggered + 2 broadcast, push-appropriate subset) -- built before events table needs it"),
     ("generator/validate_braze_push_campaigns.py", "Code", "Phase 6: 5-layer validation for braze_push_campaigns"),
     ("data/braze_push_campaigns.csv", "Shipped table", "Phase 6: braze_push_campaigns table (7 rows)"),
@@ -182,6 +182,8 @@ FILES = [
     ("generator/build_tiktok_reports_daily.py", "Code", "Phase 7 (TikTok 4/4): builds tiktok_reports_daily (spend/impressions/video_views, TikTok's always-video ad format) -- completes TikTok (6 of 6 platforms) AND all 47 tables"),
     ("generator/validate_tiktok_reports_daily.py", "Code", "Phase 7: 5-layer validation for tiktok_reports_daily, incl. weekly-spend-vs-web_sessions correlation check"),
     ("data/tiktok_reports_daily.csv", "Shipped table", "Phase 7 (TikTok 4/4): tiktok_reports_daily table (7,416 rows) -- completes TikTok, Phase 7, and the full 47-table dataset"),
+    ("generator/audit_cross_dataset_alignment.py", "Code", "Post-completion cross-dataset alignment audit -- NOT a shipped-table script. 7 checks: aggregate spend vs. demand, channel mix vs. schedule, calendar-event alignment, long-run growth trend, renewal/lag structure, day-of-week/hour-of-day, timezone/precision sweep. Found and fixed a real bug (Check 6 -- merch_to_sub_trigger Braze sends all landing at exactly midnight); Checks 3 and 5 surfaced genuine, documented (non-bug) characteristics."),
+    ("docs/cross_dataset_alignment_audit.md", "Docs", "Write-up of the 7-check cross-dataset alignment audit's results, including the merch_to_sub_trigger bug fix and the two documented (non-bug) findings from Checks 3 and 5"),
 ]
 
 

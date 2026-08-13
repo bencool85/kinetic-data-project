@@ -163,8 +163,9 @@ def build_braze_email_events(seed=SEED + 19):
         if row["first_date"] <= signup_date:
             continue  # direct signup, never course/merch-only -- no triggering email exists
         lead = int(rng.integers(*MERCH_TO_SUB_LEAD_DAYS_RANGE))
-        send_at = row["first_date"] - datetime.timedelta(days=lead)
-        add_send("merch_to_sub_trigger", cid, email_by_customer.get(cid), send_at.to_pydatetime())
+        send_date = (row["first_date"] - datetime.timedelta(days=lead)).date()
+        send_at = datetime.datetime.combine(send_date, _random_time_of_day(rng))
+        add_send("merch_to_sub_trigger", cid, email_by_customer.get(cid), send_at)
 
     # --- order_placed (known-customer + guest) ---
     for order in orders.itertuples():
