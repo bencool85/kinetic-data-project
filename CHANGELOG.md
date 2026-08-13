@@ -1259,3 +1259,59 @@ seasonality calendar.
   definitions-table validation class as braze_email_campaigns.csv.
 - Result: 7 campaigns. `validate_braze_push_campaigns.py`: **11/11 checks
   passed** on the first run.
+
+## 2026-07-30 — Phase 6: build + validate braze_push_events (4 of 4) — Phase 6 complete
+
+- `generator/build_braze_push_events.py` -- final Phase 6 table. Same
+  dot-path `users.messages.pushnotification.*` naming as email, with
+  `device_id`/`platform` in place of `email_address`. Reuses the same real
+  source populations braze_email_events.py established (trial_ending and
+  payment_failed from subscriptions.csv/subscription_events.csv;
+  reactivation from the master timeline, this time filtered to
+  `channel == "push"`; order_placed from orders.csv, but known-customers
+  ONLY since guests have no device to push to) plus one population with no
+  email analog: streak_achieved, sourced directly from app_events.csv's
+  own streak_achieved milestones, tying this table directly to Phase 5.
+  Two broadcasts: New Class Launch (6 fixed calendar dates) and Weekly
+  Motivation Push (bi-weekly, but only a random 40% sample of the eligible
+  list per send -- realistic frequency capping, since no real push
+  provider blasts its whole opted-in base every two weeks forever).
+- **`push_opt_in` is a hard delivery precondition, not just a marketing
+  filter**: every triggered and broadcast send is gated on
+  `push_opt_in == True` before it's ever generated. This is a deliberate
+  asymmetry from email, where a transactional message can always
+  technically be attempted against an address on file -- push requires an
+  OS-level permission grant, so a customer who never granted it
+  categorically cannot receive one.
+  Every send is pinned to the customer's PRIMARY device (devices.csv's
+  first row per `customer_id`, the same convention app_sessions.csv
+  already established), and `platform` mirrors that device's own
+  `device_type` exactly.
+- Reused the `send_id` design from braze_email_events.py (one send_id per
+  send, shared across its own funnel events) from the start, having
+  already learned that lesson mid-build on the email table.
+- `generator/validate_braze_push_events.py` -- 19-check, 5-layer suite.
+  Central checks: exactly one Send per send_id and every
+  Open/Click/Bounce/Unsubscribe strictly after its own Send;
+  external_user_id is NEVER null (push, unlike email, has no
+  guest-checkout case); every external_user_id on every row has
+  `push_opt_in == True` in customers.csv; device_id/platform are
+  internally consistent with devices.csv's own primary-device convention;
+  and two exact-count reconciliations against real source tables --
+  order_placed's Send count vs. orders.csv's own eligible (known-customer
+  + push-opted-in + has-a-device) row count (1,049 = 1,049) and
+  streak_achieved's Send count vs. app_events.csv's own streak_achieved
+  population for push-opted-in customers (74 = 74). Also checked
+  proactively for the fractional-second timestamp bug class that recurred
+  multiple times earlier this session (web_sessions, web_events) -- clean
+  on this table from the start.
+- Result: 9,897 braze_push_events (7,851 sends: 1,590 opens, 220 clicks,
+  205 bounces, 31 unsubscribes -- 20.3% open rate, 2.6% bounce rate, both
+  in realistic push-marketing ranges, and both directionally consistent
+  with push trailing email on opens and running higher on bounces).
+  `validate_braze_push_events.py`: **19/19 checks passed on the first
+  run** -- no bugs found in this table.
+- **Phase 6 complete** (all 4 tables: braze_email_campaigns,
+  braze_email_events, braze_push_campaigns, braze_push_events). 25 of 47
+  tables now shipped. Phase 7 (paid media: Meta, Google Search, YouTube,
+  DV360, Snap, TikTok) is next, pending further instruction.
