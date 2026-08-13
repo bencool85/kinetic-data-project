@@ -1390,3 +1390,54 @@ seasonality calendar.
   12/12. **52/52 checks passed across all 4 Meta tables.**
 - Meta (1 of 6 Phase 7 platforms) complete. 29 of 47 tables now shipped.
   Next: Google Search.
+
+## 2026-08-13 — Phase 7: build + validate Google Search (2 of 6 paid-media platforms)
+
+- `generator/build_google_search_campaigns.py` -- 5 evergreen campaigns
+  (one per objective, same 5-objective vocabulary as Meta). Unlike Meta,
+  ALL 5 are always-on here, including the brand_lift analog ("Search -
+  Brand Term Defense") -- a real search advertiser never pauses bidding on
+  their own brand name the way a flighted awareness study pauses, so
+  making it evergreen (not a flight) is the more realistic choice for this
+  platform specifically. Documented as a deliberate platform-specific
+  divergence from Meta's pattern, not an inconsistency.
+- `generator/build_google_search_ad_groups.py` -- 8 ad groups.
+  targeting_segment_id populated only for the 2 RLSA (retargeting) ad
+  groups (segments.csv's Google Search "Website Visitors" / "Cart
+  Abandoners") and the 1 similar-audiences (lookalike) ad group.
+- **Build order deliberately inverted from schema_reference.md's listed
+  table order**: built `google_search_keyword_performance_daily` (the
+  granular, keyword-level ground truth -- no separate keywords dimension
+  table exists in the schema, so each ad group's 2-4 keywords are defined
+  once in-script and reused deterministically across every day) BEFORE
+  `google_search_performance_daily`, then derived the latter as an EXACT
+  aggregation up to ad_group/day grain. Same "derive the coarser table
+  from an already-shipped finer one" reasoning used for meta_ad_actions,
+  just inverted since here the finer grain is the one schema lists second.
+  This guarantees the two tables reconcile exactly, checked as an
+  exact-count business-rule check (not a plausibility band) in
+  `validate_google_search_performance_daily.py`.
+- Same seasonality-calendar x channel-mix-schedule spend driver as Meta,
+  via the shared `paid_media_common.py` helpers -- google_search's own
+  ~20% average channel share.
+- **One calibration adjustment made before shipping** (informed directly
+  by the Meta over-attribution lesson): a first pass at
+  `GOOGLE_SEARCH_CONVERSION_RATE_BY_OBJECTIVE` produced 12,038
+  self-attributed conversions -- 3.13x the business's actual total real
+  purchases (3,849), just outside the believable single-platform range
+  established for Meta (1.70x). Retuned down ~25% to 9,297 claimed
+  conversions (2.42x) before ever running the validator, since search's
+  higher intent legitimately supports a somewhat higher ratio than paid
+  social's.
+- Validation: `validate_google_search_campaigns.py` 11/11,
+  `validate_google_search_ad_groups.py` 10/10,
+  `validate_google_search_keyword_performance_daily.py` **17/17
+  (includes the same weekly-spend-vs-web_sessions correlation check
+  pattern as Meta's, Pearson r=0.681 across 156 weeks)**,
+  `validate_google_search_performance_daily.py` **11/11 (central check:
+  every ad_group/day row's impressions/clicks/cost_micros/conversions
+  reconcile EXACTLY against the sum of that ad_group/day's own keyword
+  rows -- $350,535.12 total cost matches to the penny at both grains)**.
+  **49/49 checks passed across all 4 Google Search tables.**
+- Google Search (2 of 6 Phase 7 platforms) complete. 33 of 47 tables now
+  shipped. Next: YouTube.

@@ -128,6 +128,18 @@ FILES = [
     ("generator/build_meta_ad_actions_daily.py", "Code", "Phase 7 (Meta 4/4): builds meta_ad_actions_daily (normalized actions array, derived directly from meta_ad_insights_daily.csv's own clicks) -- completes Meta (1 of 6 platforms)"),
     ("generator/validate_meta_ad_actions_daily.py", "Code", "Phase 7: 5-layer validation for meta_ad_actions_daily"),
     ("data/meta_ad_actions_daily.csv", "Shipped table", "Phase 7 (Meta 4/4): meta_ad_actions_daily table (35,504 rows) -- completes Meta"),
+    ("generator/build_google_search_campaigns.py", "Code", "Phase 7 (Google Search 1/4): builds google_search_campaigns (5 evergreen objective campaigns, incl. an always-on brand-term defense campaign)"),
+    ("generator/validate_google_search_campaigns.py", "Code", "Phase 7: 5-layer validation for google_search_campaigns"),
+    ("data/google_search_campaigns.csv", "Shipped table", "Phase 7 (Google Search 1/4): google_search_campaigns table (5 rows)"),
+    ("generator/build_google_search_ad_groups.py", "Code", "Phase 7 (Google Search 2/4): builds google_search_ad_groups (targeting_segment_id for RLSA retargeting/similar-audience lookalike only)"),
+    ("generator/validate_google_search_ad_groups.py", "Code", "Phase 7: 5-layer validation for google_search_ad_groups"),
+    ("data/google_search_ad_groups.csv", "Shipped table", "Phase 7 (Google Search 2/4): google_search_ad_groups table (8 rows)"),
+    ("generator/build_google_search_keyword_performance_daily.py", "Code", "Phase 7 (Google Search 4/4 by build order): builds google_search_keyword_performance_daily -- the granular ground truth google_search_performance_daily aggregates from"),
+    ("generator/validate_google_search_keyword_performance_daily.py", "Code", "Phase 7: 5-layer validation for google_search_keyword_performance_daily, incl. weekly-spend-vs-web_sessions correlation check"),
+    ("data/google_search_keyword_performance_daily.csv", "Shipped table", "Phase 7 (Google Search 4/4 by build order): google_search_keyword_performance_daily table (19,932 rows)"),
+    ("generator/build_google_search_performance_daily.py", "Code", "Phase 7 (Google Search 3/4 by schema order): builds google_search_performance_daily, aggregated exactly from keyword_performance_daily.csv up to ad_group/day grain -- completes Google Search (2 of 6 platforms)"),
+    ("generator/validate_google_search_performance_daily.py", "Code", "Phase 7: 5-layer validation for google_search_performance_daily, incl. exact-sum reconciliation against keyword_performance_daily.csv"),
+    ("data/google_search_performance_daily.csv", "Shipped table", "Phase 7 (Google Search 3/4 by schema order): google_search_performance_daily table (8,751 rows) -- completes Google Search"),
 ]
 
 

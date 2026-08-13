@@ -249,3 +249,38 @@ META_ACTION_FUNNEL_BY_OBJECTIVE = {
     "brand_lift":  {"link_click_rate": 0.85, "to_lpv": 0.50, "to_atc": 0.02, "to_checkout": 0.20, "to_purchase": 0.10},
 }
 META_VIDEO_VIEW_RATE_BY_OBJECTIVE = {"prospecting": 0.22, "brand_lift": 0.40}  # of impressions, video-forward objectives only
+
+# --- Google Search ---
+# Unlike Meta, Search's brand_lift analog (a small always-on branded-term
+# defense campaign) is realistically evergreen, not a flighted study -- paying
+# a few cents per click to hold the #1 spot on your own brand name never
+# pauses. So all 5 objectives are evergreen for this platform, and the
+# spend-share dict below carries all 5 keys (sums to 1.0) instead of
+# reusing AD_OBJECTIVE_SPEND_SHARE's 4-key evergreen-only version.
+GOOGLE_SEARCH_CUSTOMER_ID = "123-456-7890"  # Google Ads' external customer ID format
+GOOGLE_SEARCH_OBJECTIVE_SPEND_SHARE = {"prospecting": 0.30, "conversion": 0.35, "retargeting": 0.15,
+                                        "lookalike": 0.10, "brand_lift": 0.10}
+GOOGLE_SEARCH_DAILY_BUDGET_MICROS = {   # calibrated the same way as META_DAILY_BUDGET_CENTS -- a believable
+    "prospecting": 100_000_000, "conversion": 120_000_000, "retargeting": 55_000_000,   # typical-day figure, in
+    "lookalike": 35_000_000, "brand_lift": 35_000_000,                                  # micros ($1 = 1,000,000)
+}
+# Search CTR/CPC run in a very different range than paid social -- much
+# higher intent, much higher CTR, and cost is per-click (not CPM-driven).
+GOOGLE_SEARCH_CPC_RANGE_BY_OBJECTIVE = {"prospecting": (0.60, 1.40), "retargeting": (0.50, 1.00),
+                                         "lookalike": (0.70, 1.30), "conversion": (1.20, 2.50),
+                                         "brand_lift": (0.30, 0.70)}
+GOOGLE_SEARCH_CTR_RANGE_BY_OBJECTIVE = {"prospecting": (0.020, 0.040), "retargeting": (0.040, 0.080),
+                                         "lookalike": (0.030, 0.060), "conversion": (0.050, 0.100),
+                                         "brand_lift": (0.080, 0.150)}
+GOOGLE_SEARCH_QUALITY_SCORE_RANGE_BY_OBJECTIVE = {"prospecting": (4, 7), "retargeting": (5, 8),
+                                                   "lookalike": (5, 8), "conversion": (6, 9), "brand_lift": (8, 10)}
+# Conversion rate as a fraction of CLICKS (not a multi-stage funnel like Meta's
+# actions array -- Google Ads' own performance tables report a flat
+# `conversions` metric directly), calibrated the same way Meta's was: summed
+# across the whole platform, self-attributed conversions should land within a
+# believable multiple of the business's real total purchases, not 10-20x.
+GOOGLE_SEARCH_CONVERSION_RATE_BY_OBJECTIVE = {"prospecting": 0.008, "retargeting": 0.035, "lookalike": 0.015,
+                                               "conversion": 0.028, "brand_lift": 0.045}
+GOOGLE_SEARCH_AVG_CONVERSION_VALUE_RANGE = (40, 140)  # conversions_value per conversion, loosely AOV-shaped
+GOOGLE_SEARCH_MATCH_TYPE_WEIGHTS = {"EXACT": 0.35, "PHRASE": 0.40, "BROAD": 0.25}
+GOOGLE_SEARCH_KEYWORDS_PER_AD_GROUP_RANGE = (2, 4)
