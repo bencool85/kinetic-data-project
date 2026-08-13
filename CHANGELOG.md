@@ -887,3 +887,73 @@ seasonality calendar.
 - **Phase 3 is now complete**: discount_codes, orders, order_line_items,
   payments, refunds -- all 5 tables built, cross-validated against each
   other and against Phase 2's subscriptions.csv, and synced.
+
+## 2026-07-30 — Phase 4: build + validate customer_segment_membership -- Phase 4 complete
+
+- `generator/build_customer_segment_membership.py` -- effective-dated
+  (entered_at/exited_at) membership rows for the 9 customer-grain segments
+  in segments.csv, computed ENTIRELY from already-shipped behavioral data
+  (subscriptions.csv, orders.csv, invoices.csv, customers.csv) -- nothing
+  invented independently, per schema_reference.md's explicit requirement.
+  Anonymous-device segments (18 of the 27 total) never get rows here.
+- **seg_009 ("High Churn Risk") is deliberately skipped, 0 rows.**
+  segments.csv's own description says its engagement half depends on Phase
+  5 (real usage-event recency/frequency), which doesn't exist yet --
+  computing it now would mean inventing the missing signal, exactly the
+  kind of independently-invented data this project's whole design avoids.
+  It'll be built once Phase 5 ships real session/event data.
+- Design decision worth calling out: seg_002/003/004 (the "Lapsed N Days"
+  ladder) and seg_008 ("Lapsed - Still Buying") apply to ANY canceled
+  subscription object, not just real (converted) intervals -- a trial that
+  simply expired or was canceled sets `canceled_at` exactly the same way a
+  real interval's cancellation does, and segments.csv's own wording doesn't
+  restrict itself to paid intervals. A customer whose trial never converted
+  still enters the lapsed ladder at their trial's own cancellation date;
+  they just never pass through seg_001 (Active Subscriber) first.
+- seg_001 -> one row per real interval (entered_at=start_date,
+  exited_at=canceled_at). seg_002/003/004 -> a 0-30/31-90/90+ day ladder
+  per canceled object, each tier's exit clipped to the EARLIEST of its
+  natural day boundary or the customer's next subscription object starting;
+  a tier still open as of END_DATE gets exited_at=null and no later tier is
+  emitted (this is a point-in-time snapshot, not a log of future-scheduled
+  transitions). seg_005 -> only for customers with a genuine gap between
+  signup and their first subscription object (the 309 who never subscribed
+  at all, permanently, plus the 38 merch-to-sub-email customers,
+  temporarily) -- the 513 customers whose very first behavior IS starting a
+  trial never get a row, since they were never actually in that state.
+  seg_006 -> direct filter on status=='trialing' (3 rows). seg_007 ->
+  lifetime revenue (orders + paid invoices) in the top decile of the
+  eligible customer base, entered_at = the date each customer's own
+  running cumulative revenue first crosses the threshold. seg_008 -> a
+  qualifying course/merch order landing strictly between a cancellation and
+  the customer's next subscription object (if any).
+- Soft-deleted customers (11 of 860) get ZERO rows -- same full-erasure
+  treatment already applied to customer_addresses.csv and devices.csv, since
+  this is a marketing/segmentation table, not a transactional record needing
+  referential-integrity preservation.
+- One real bug caught and fixed during this build: the initial implementation
+  only iterated `subscriptions.csv` grouped by customer_id, which silently
+  skipped the 309 customers who have ZERO subscription rows at all --
+  meaning they got no seg_005 row despite being the clearest possible case
+  of "never subscribed." Caught by eyeballing the first build's output
+  (seg_005 = 38, suspiciously exactly the merch-to-sub-email count with the
+  309 "true" never-subscribed customers missing entirely). Fixed by handling
+  that population as an explicit separate pass before the per-subscription
+  loop.
+- One validator bug caught and fixed (not a data bug, same class as the
+  refunds-table fix earlier this session): the "entered_at is never before
+  signup" check initially compared full timestamps, but `trial_start` is a
+  date-only field stored at midnight while `customers.created_at` carries a
+  real time-of-day -- so a trial starting the same calendar day as signup
+  (the normal case) looked like it started "before" signup purely from
+  midnight being earlier than the actual signup time. Fixed to compare at
+  calendar-date granularity.
+- Result: 2,234 rows across 8 of 9 customer-grain segments (seg_001: 197,
+  seg_002: 465, seg_003: 454, seg_004: 411, seg_005: 347, seg_006: 3,
+  seg_007: 85, seg_008: 272). seg_007 (High-LTV) lands at exactly 10.0% of
+  the eligible customer base, matching its top-decile design intent.
+  `validate_customer_segment_membership.py`: **16/16 checks passed** after
+  the one validator fix above, including seg_001's entered_at dates and row
+  count reconciling exactly against subscriptions.csv's own real intervals,
+  and seg_006's row count matching the trialing-status count exactly.
+- **Phase 4 is now complete** (its only table).

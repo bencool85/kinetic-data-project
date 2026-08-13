@@ -86,6 +86,9 @@ FILES = [
     ("generator/build_refunds.py", "Code", "Phase 3: builds refunds (against a small share of orders' succeeded payments) -- completes Phase 3 (all 5 tables)"),
     ("generator/validate_refunds.py", "Code", "Phase 3: 5-layer validation for refunds"),
     ("data/refunds.csv", "Shipped table", "Phase 3: refunds table (159 rows, 4.4% of orders) -- completes Phase 3"),
+    ("generator/build_customer_segment_membership.py", "Code", "Phase 4: builds customer_segment_membership (effective-dated, derived entirely from subscriptions/orders/invoices -- seg_009 skipped, needs Phase 5) -- completes Phase 4"),
+    ("generator/validate_customer_segment_membership.py", "Code", "Phase 4: 5-layer validation for customer_segment_membership"),
+    ("data/customer_segment_membership.csv", "Shipped table", "Phase 4: customer_segment_membership table (2,234 rows across 8 of 9 customer-grain segments) -- completes Phase 4"),
 ]
 
 
