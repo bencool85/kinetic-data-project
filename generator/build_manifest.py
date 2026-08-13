@@ -92,6 +92,9 @@ FILES = [
     ("generator/build_web_sessions.py", "Code", "Phase 5: builds web_sessions (marketing-site browsing; known customers + anonymous ghosts, engagement_tier-driven volume)"),
     ("generator/validate_web_sessions.py", "Code", "Phase 5: 5-layer validation for web_sessions"),
     ("data/web_sessions.csv", "Shipped table", "Phase 5: web_sessions table (30,285 rows: 6,476 identity-resolved + 23,809 anonymous)"),
+    ("generator/build_web_events.py", "Code", "Phase 5: builds web_events (page_view/product_view/add_to_cart/begin_checkout/purchase/search; every order gets exactly one purchase event)"),
+    ("generator/validate_web_events.py", "Code", "Phase 5: 5-layer validation for web_events"),
+    ("data/web_events.csv", "Shipped table", "Phase 5: web_events table (117,706 rows)"),
 ]
 
 

@@ -1012,3 +1012,55 @@ seasonality calendar.
   desktop / 5.5% tablet (mobile-dominant, matching the fitness-app-skews-
   mobile assumption already used for devices.csv). `validate_web_sessions.py`:
   **13/13 checks passed** after the two fixes above.
+
+## 2026-07-30 — Phase 5: build + validate web_events (2 of 4)
+
+- `generator/build_web_events.py` -- page-level events within each
+  web_sessions.csv row: page_view/product_view/add_to_cart/begin_checkout/
+  purchase/search, per schema_reference.md's vocabulary. The central
+  guarantee: EVERY row in orders.csv (excluding soft-deleted customers'
+  orders, which have zero web_sessions rows by design) gets exactly one
+  `purchase` event, attached to a real session that both belongs to the
+  right identity and falls on the order's own order_date -- reusing
+  web_sessions.csv's own already-validated same-day-session invariants
+  rather than re-deciding session timing here.
+- Two real linkage problems solved to make that guarantee work, since
+  neither orders.csv nor web_sessions.csv carries a direct FK to the other:
+  (1) a customer with 2+ orders the same day has 2+ same-day sessions too,
+  with nothing on disk saying which belongs to which -- resolved by pairing
+  sessions (sorted by started_at) against orders (sorted by order_id)
+  within each (customer_id, date) group; (2) guest orders' `guest_email` is
+  randomly generated at build time with no link back to the originating
+  ghost, and 276 of the 1,257 guest purchasers collide with another ghost
+  on the only shared key (order_date, subtotal) -- resolved with a
+  candidate-order_id queue per key, popped one-per-ghost in the anonymous
+  population's own deterministic row order. Collisions are provably
+  interchangeable (identical date + amount), so any pairing within one is
+  equally correct.
+- Every purchase event's product_id is the customer's ACTUAL purchased
+  product, pulled from order_line_items.csv (single source of truth), not
+  re-decided independently.
+- `generator/validate_web_events.py` -- 5-layer suite, central checks being:
+  every eligible order has exactly one purchase event; every purchase
+  event's product_id matches order_line_items.csv exactly; every event's
+  occurred_at falls within its own session's time window; and every
+  known-customer purchase event's session genuinely belongs to that same
+  customer (the pairing logic never cross-wires two different customers).
+- One real bug caught and fixed during this build: the timestamp-spacing
+  helper called `np.random.default_rng()` fresh on every invocation instead
+  of using the shared seeded rng -- an unseeded, non-reproducible entropy
+  source that would silently break this script's reproducibility (a rerun
+  with the same seed would produce different event timestamps every time).
+  Caught by re-reading the draft before running it. Fixed by threading the
+  shared rng through explicitly.
+- One validator-calibration issue caught and fixed (not a data bug): the
+  cart-abandonment distributional check's expected band (0.5-4%) was a
+  guess that didn't match the build's own `CART_ABANDON_RATE` parameter (6%
+  of non-purchase sessions, which works out to ~5% of all sessions once
+  scaled by the ~88% of sessions that never purchase). Widened the band to
+  3-8% to match the actual designed rate rather than an arbitrary guess.
+- Result: 117,706 web_events (70,302 page_view, 30,211 product_view, 5,294
+  add_to_cart, 4,211 begin_checkout, 4,055 search, 3,633 purchase -- 3,633
+  vs. orders.csv's 3,650 rows, the 17-row gap being exactly the orders
+  belonging to soft-deleted customers). `validate_web_events.py`: **15/15
+  checks passed** after the two fixes above.
