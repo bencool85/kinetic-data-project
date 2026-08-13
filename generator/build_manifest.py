@@ -104,6 +104,11 @@ FILES = [
     ("generator/build_braze_email_campaigns.py", "Code", "Phase 6: builds braze_email_campaigns (hand-curated: 7 triggered + 2 broadcast) -- built first, events table needs it"),
     ("generator/validate_braze_email_campaigns.py", "Code", "Phase 6: 5-layer validation for braze_email_campaigns"),
     ("data/braze_email_campaigns.csv", "Shipped table", "Phase 6: braze_email_campaigns table (9 rows)"),
+    ("generator/build_web_events.py", "Code", "Phase 5: builds web_events (retroactive fix: timestamp offsets now rounded to whole seconds, fixing a latent fractional-second formatting bug across all 117,706 rows)"),
+    ("data/web_events.csv", "Shipped table", "Phase 5: web_events table (117,706 rows; retroactively rebuilt for the whole-second timestamp fix, same counts/logic)"),
+    ("generator/build_braze_email_events.py", "Code", "Phase 6: builds braze_email_events (Send/Open/Click/Bounce/Unsubscribe funnel, derived from real trial/payment-failure/order/cart/reactivation sources)"),
+    ("generator/validate_braze_email_events.py", "Code", "Phase 6: 5-layer validation for braze_email_events"),
+    ("data/braze_email_events.csv", "Shipped table", "Phase 6: braze_email_events table (26,328 rows, 18,187 sends)"),
 ]
 
 

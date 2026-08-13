@@ -90,7 +90,14 @@ def _spaced_timestamps(rng, started_at, ended_at, n):
     out = []
     for i in range(1, n + 1):
         jitter = float(rng.uniform(-step * 0.15, step * 0.15))
-        offset = min(duration, max(i, i * step + jitter))
+        # Whole seconds only -- the float offset here previously flowed
+        # straight into timedelta(seconds=offset), giving every row a
+        # fractional-second timestamp (all 117,706 of them). That was
+        # invisible to this table's OWN validator (a single consistent
+        # fractional format parses fine on its own) but broke downstream
+        # once braze_email_events.py mixed these with its own whole-second
+        # timestamps into one column pandas couldn't parse with one format.
+        offset = int(round(min(duration, max(i, i * step + jitter))))
         out.append(started_at + datetime.timedelta(seconds=offset))
 
     # Enforce strict monotonicity forward, then re-clip to ended_at and fix

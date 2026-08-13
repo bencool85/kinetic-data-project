@@ -1180,3 +1180,57 @@ seasonality calendar.
   would make the next table's derivation ambiguous).
 - Result: 9 campaigns. `validate_braze_email_campaigns.py`: **10/10 checks
   passed** on the first run.
+
+## 2026-07-30 — Phase 6: build + validate braze_email_events (2 of 4)
+
+- `generator/build_braze_email_events.py` -- dot-path event_type naming
+  (`users.messages.email.Send/.Open/.Click/.Bounce/.Unsubscribe`). Every
+  send traces to a real source in an earlier phase's shipped tables, keyed
+  off braze_email_campaigns.csv's own `trigger_event` vocabulary: every
+  trial object in subscriptions.csv (welcome + ~2-days-before-end
+  reminder), every deduped payment_failed row in subscription_events.csv,
+  the master timeline's own email-channel reactivations, the
+  merch-to-subscriber pathway's actual triggering send (same
+  signup-vs-trial_start gap customer_segment_membership.py's seg_005 uses),
+  every order in orders.csv (known-customer AND guest -- the one place
+  external_user_id is "almost" always populated, guests being the
+  exception), and web_events.csv's known-customer add_to_cart-without-
+  purchase sessions. Plus 2 broadcast sends (Monthly Newsletter every
+  month, Seasonal Sale Promo on discount_codes.csv's own real promo dates)
+  to the opted-in, non-deleted customer base that existed as of each send
+  date. Soft-deleted customers are excluded from every population, same
+  full-erasure treatment as customer_addresses/devices/web_sessions/
+  app_sessions.
+- Each send gets its own `send_id`, shared across that send's funnel events
+  -- without it, two sends of the same recurring broadcast campaign to the
+  same customer (different months' newsletters) would be ungroupable and
+  funnel ordering unverifiable from the shipped table alone. Caught this
+  gap while designing the table, before shipping it.
+- `generator/validate_braze_email_events.py` -- 5-layer suite, central
+  checks being: every send_id has exactly one Send event and every
+  Open/Click/Bounce/Unsubscribe for it occurs strictly after that Send;
+  external_user_id is null ONLY for order_placed's guest sends; and two
+  exact-count reconciliations against real source tables --
+  order_placed's Send count vs. orders.csv's own eligible row count
+  (3,633 = 3,633) and payment_failed's Send count vs.
+  subscription_events.csv's own deduped count (86 = 86).
+- **One real bug caught and fixed retroactively in a Phase 5 table**: while
+  building this table, mixing web_events.csv's own timestamps into a new
+  column alongside whole-second timestamps elsewhere broke pandas' single-
+  format datetime parsing -- tracing it back revealed `build_web_events.py`'s
+  `_spaced_timestamps()` had never actually been fixed for fractional
+  seconds (only its earlier unseeded-rng bug was) -- every one of
+  web_events.csv's 117,706 rows carried a fractional-second timestamp. This
+  was invisible to web_events.csv's own validator (one consistent
+  fractional format parses fine in isolation) and only surfaced once a
+  second table needed to mix timestamp sources. Fixed at the source
+  (offsets now rounded to whole seconds before use), rebuilt web_events.csv
+  (same 117,706 rows, same event-type breakdown, same purchase-event
+  reconciliation -- `validate_web_events.py` still 15/15), then rebuilt
+  braze_email_events.csv against the corrected file.
+- Result: 26,328 braze_email_events (18,187 sends: 6,322 opens, 1,341
+  clicks, 356 bounces, 122 unsubscribes -- 34.8% open rate, 2.0% bounce
+  rate, both in realistic email-marketing ranges). 8.2% of all rows have a
+  null external_user_id, exactly the guest-order-confirmation share.
+  `validate_braze_email_events.py`: **13/13 checks passed** after the
+  web_events.csv fix.
