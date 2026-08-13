@@ -149,6 +149,15 @@ FILES = [
     ("generator/build_youtube_performance_daily.py", "Code", "Phase 7 (YouTube 3/3): builds youtube_performance_daily (video_views/video_view_rate/average_cpv, spend-driven by the shared seasonality calendar + channel-mix schedule) -- completes YouTube (3 of 6 platforms)"),
     ("generator/validate_youtube_performance_daily.py", "Code", "Phase 7: 5-layer validation for youtube_performance_daily, incl. weekly-spend-vs-web_sessions correlation check"),
     ("data/youtube_performance_daily.csv", "Shipped table", "Phase 7 (YouTube 3/3): youtube_performance_daily table (6,394 rows) -- completes YouTube"),
+    ("generator/build_dv360_insertion_orders.py", "Code", "Phase 7 (DV360 1/3): builds dv360_insertion_orders (5 evergreen objective IOs, incl. a VIEWABLE_CPM awareness IO)"),
+    ("generator/validate_dv360_insertion_orders.py", "Code", "Phase 7: 5-layer validation for dv360_insertion_orders"),
+    ("data/dv360_insertion_orders.csv", "Shipped table", "Phase 7 (DV360 1/3): dv360_insertion_orders table (5 rows)"),
+    ("generator/build_dv360_line_items.py", "Code", "Phase 7 (DV360 2/3): builds dv360_line_items (targeting_segment_id for retargeting/lookalike only; brand_lift IO's line item is VIDEO type)"),
+    ("generator/validate_dv360_line_items.py", "Code", "Phase 7: 5-layer validation for dv360_line_items"),
+    ("data/dv360_line_items.csv", "Shipped table", "Phase 7 (DV360 2/3): dv360_line_items table (6 rows)"),
+    ("generator/build_dv360_performance_daily.py", "Code", "Phase 7 (DV360 3/3): builds dv360_performance_daily -- fragments each line_item/day into several (exchange, environment) rows, DV360's genuinely different real-time-bidding schema shape -- completes DV360 (4 of 6 platforms)"),
+    ("generator/validate_dv360_performance_daily.py", "Code", "Phase 7: 5-layer validation for dv360_performance_daily, incl. weekly-spend-vs-web_sessions correlation check and CONNECTED_TV-only-on-video-line-item check"),
+    ("data/dv360_performance_daily.csv", "Shipped table", "Phase 7 (DV360 3/3): dv360_performance_daily table (25,776 rows) -- completes DV360"),
 ]
 
 

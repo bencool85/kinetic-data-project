@@ -1491,3 +1491,46 @@ seasonality calendar.
   passed across all 3 YouTube tables** (after the mid-build fix).
 - YouTube (3 of 6 Phase 7 platforms) complete. 36 of 47 tables now
   shipped. Next: DV360.
+
+## 2026-08-13 — Phase 7: build + validate DV360 (4 of 6 paid-media platforms)
+
+- `generator/build_dv360_insertion_orders.py` -- 5 evergreen IOs (one per
+  objective, all always-on -- same reasoning as Search's brand-term
+  defense: a programmatic reach/awareness buy is a continuous line item on
+  this platform, not a flighted study). The brand_lift IO uses
+  PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM, DV360's real awareness-oriented goal
+  type.
+- `generator/build_dv360_line_items.py` -- 6 line items, same
+  targeting_segment_id split as every other platform (2 retargeting line
+  items, 1 lookalike). The brand_lift IO's line item is VIDEO type; every
+  other IO's stays DISPLAY.
+- `generator/build_dv360_performance_daily.py` -- 25,776 rows. This is the
+  table schema_reference.md calls out as genuinely different-shaped: real
+  DV360 buys run across many open-web exchanges in real time, so each
+  (line_item_id, date) fragments into 1-7 (exchange, environment) rows
+  here instead of the single row per entity/day every other platform
+  ships -- 5 exchanges (Google Ad Manager, AppNexus, OpenX, PubMatic,
+  Index Exchange) x up to 4 environments (WEB_OPTIMIZED,
+  WEB_NOT_OPTIMIZED, APP, and CONNECTED_TV -- CTV inventory reachable
+  ONLY by the video/brand_lift line item, the platform's real
+  differentiator vs. the other 5). Same seasonality-calendar x
+  channel-mix-schedule spend driver as every other platform, via
+  paid_media_common.py, at DV360's own ~7.5% average channel share.
+- **No bugs found this round** -- first pass landed cleanly: total spend
+  $132,525 matched the hand-computed expectation from the seasonality
+  formula within the usual noise/pause tolerance (no cents/units error
+  this time), and self-attributed conversions landed at 0.38x actual real
+  purchases -- appropriately LOWER than every other platform's ratio so
+  far, which is realistic (open-web display converts and self-attributes
+  at a lower rate than search/social), not something that needed
+  correcting.
+- Validation: `validate_dv360_insertion_orders.py` 12/12,
+  `validate_dv360_line_items.py` 12/12,
+  `validate_dv360_performance_daily.py` **16/16 (central checks: the
+  (line_item_id, date, exchange, environment) grain is unique -- the
+  genuinely finer grain vs. every other platform's (entity, date) grain --
+  CONNECTED_TV appears ONLY on the video line item, and the weekly
+  spend-vs-web_sessions correlation, r=0.572 across 156 weeks)**. **40/40
+  checks passed across all 3 DV360 tables, all on the first run.**
+- DV360 (4 of 6 Phase 7 platforms) complete. 39 of 47 tables now shipped.
+  Next: Snap.

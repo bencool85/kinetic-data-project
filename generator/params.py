@@ -332,3 +332,46 @@ YOUTUBE_CLICK_RATE_RANGE_BY_OBJECTIVE = {"prospecting": (0.0010, 0.0030), "retar
 YOUTUBE_CONVERSION_RATE_BY_OBJECTIVE = {"prospecting": 0.0005, "retargeting": 0.0026, "lookalike": 0.0009,
                                          "conversion": 0.0021, "brand_lift": 0.00013}
 YOUTUBE_AVG_CONVERSION_VALUE_RANGE = (40, 140)
+
+# --- DV360 (Google Programmatic, Display & Video 360) ---
+# Genuinely different schema shape than the other 5 platforms
+# (schema_reference.md's own callout): real-time bidding across many open-
+# web exchanges and environments, not a single owned/operated surface --
+# so dv360_performance_daily fragments EACH line_item/day into several
+# (exchange, environment) rows rather than one row per line_item/day, the
+# way Meta/YouTube/Snap/TikTok do. All 5 objective IOs are evergreen (a
+# "reach" / awareness IO on a programmatic platform is a continuous always-
+# on buy, not a flighted lift study -- same reasoning as Search's brand-term
+# defense, just for a different underlying reason).
+DV360_ADVERTISER_ID = "48213097"
+DV360_PERFORMANCE_GOAL_BY_OBJECTIVE = {
+    "prospecting": "PERFORMANCE_GOAL_TYPE_CPM", "retargeting": "PERFORMANCE_GOAL_TYPE_CPA",
+    "lookalike": "PERFORMANCE_GOAL_TYPE_CPM", "conversion": "PERFORMANCE_GOAL_TYPE_CPA",
+    "brand_lift": "PERFORMANCE_GOAL_TYPE_VIEWABLE_CPM",
+}
+DV360_OBJECTIVE_SPEND_SHARE = {"prospecting": 0.30, "conversion": 0.30, "retargeting": 0.15,
+                                "lookalike": 0.10, "brand_lift": 0.15}
+DV360_DAILY_BUDGET_MICROS = {"prospecting": 30_000_000, "conversion": 30_000_000, "retargeting": 15_000_000,
+                              "lookalike": 10_000_000, "brand_lift": 15_000_000}
+DV360_LINE_ITEM_TYPE_BY_OBJECTIVE = {   # real DV360 LineItemType enum values
+    "prospecting": "LINE_ITEM_TYPE_DISPLAY_DEFAULT", "retargeting": "LINE_ITEM_TYPE_DISPLAY_DEFAULT",
+    "lookalike": "LINE_ITEM_TYPE_DISPLAY_DEFAULT", "conversion": "LINE_ITEM_TYPE_DISPLAY_DEFAULT",
+    "brand_lift": "LINE_ITEM_TYPE_VIDEO_DEFAULT",
+}
+DV360_EXCHANGES = ["GOOGLE_AD_MANAGER", "APPNEXUS", "OPENX", "PUBMATIC", "INDEX_EXCHANGE"]
+DV360_EXCHANGE_WEIGHTS = [0.40, 0.18, 0.16, 0.14, 0.12]
+DV360_ENVIRONMENTS_DISPLAY = ["WEB_OPTIMIZED", "WEB_NOT_OPTIMIZED", "APP"]
+DV360_ENVIRONMENTS_DISPLAY_WEIGHTS = [0.55, 0.25, 0.20]
+# Video (brand_lift) line items also reach Connected TV inventory -- the
+# distinctive DV360 differentiator vs. the other 5 platforms.
+DV360_ENVIRONMENTS_VIDEO = ["WEB_OPTIMIZED", "WEB_NOT_OPTIMIZED", "APP", "CONNECTED_TV"]
+DV360_ENVIRONMENTS_VIDEO_WEIGHTS = [0.35, 0.15, 0.15, 0.35]
+DV360_CPM_RANGE_BY_OBJECTIVE = {"prospecting": (3, 8), "retargeting": (5, 11), "lookalike": (4, 9),
+                                 "conversion": (6, 13), "brand_lift": (7, 15)}  # video/CTV CPMs run higher
+DV360_CTR_RANGE_BY_OBJECTIVE = {"prospecting": (0.0015, 0.0040), "retargeting": (0.0040, 0.0090),
+                                 "lookalike": (0.0020, 0.0050), "conversion": (0.0035, 0.0080),
+                                 "brand_lift": (0.0008, 0.0020)}  # open-web display/video CTR runs far below search/social
+DV360_CONVERSION_RATE_BY_OBJECTIVE = {"prospecting": 0.006, "retargeting": 0.035, "lookalike": 0.012,
+                                       "conversion": 0.025, "brand_lift": 0.004}  # of clicks
+DV360_AVG_CONVERSION_VALUE_RANGE = (40, 140)
+DV360_EXCHANGE_ENV_COMBOS_PER_DAY_RANGE = (3, 7)  # how many (exchange, environment) rows a line_item/day fragments into
