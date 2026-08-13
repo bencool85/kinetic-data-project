@@ -1677,3 +1677,24 @@ seasonality calendar.
   hour-of-day) caught a real, fixed bug; 2 checks (3 and 5) surfaced
   genuine, explainable characteristics worth keeping visible to the user
   rather than silently accepting.
+
+## 2026-08-13 — Next stage: warehouse loading tooling (MotherDuck)
+
+- New `warehouse/load_to_motherduck.py` -- the dataset's first step
+  outside the 47-table build/validate pipeline, per the project's
+  original stated destination (`README.md`: raw data -> data platform ->
+  semantic layer/canonical metrics -> AI agents). Loads all 47 CSVs into
+  a free MotherDuck (hosted DuckDB) database, one table per CSV, with a
+  per-table row-count verification (MotherDuck vs. source CSV) printed
+  after the load.
+- Chosen over a Snowflake trial for this stage because Snowflake's free
+  trial is time-boxed (30 days / $400 credit, then the account is
+  suspended), while MotherDuck's free "Lite" tier is permanent and
+  comfortably covers this dataset's size (41MB / ~401K rows total vs.
+  MotherDuck's 10GB free storage limit). Plan is to migrate to Snowflake
+  later once the MotherDuck setup is solid, for the platform experience.
+- Must be run on the user's own machine, not inside the Cowork cloud
+  sandbox -- confirmed the sandbox's network allowlist blocks both
+  pypi.org (so `duckdb` can't be pip-installed here) and motherduck.com
+  directly, so this stage is intentionally handed off as a script + step-
+  by-step instructions rather than executed in-session.

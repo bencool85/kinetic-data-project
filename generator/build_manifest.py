@@ -184,6 +184,7 @@ FILES = [
     ("data/tiktok_reports_daily.csv", "Shipped table", "Phase 7 (TikTok 4/4): tiktok_reports_daily table (7,416 rows) -- completes TikTok, Phase 7, and the full 47-table dataset"),
     ("generator/audit_cross_dataset_alignment.py", "Code", "Post-completion cross-dataset alignment audit -- NOT a shipped-table script. 7 checks: aggregate spend vs. demand, channel mix vs. schedule, calendar-event alignment, long-run growth trend, renewal/lag structure, day-of-week/hour-of-day, timezone/precision sweep. Found and fixed a real bug (Check 6 -- merch_to_sub_trigger Braze sends all landing at exactly midnight); Checks 3 and 5 surfaced genuine, documented (non-bug) characteristics."),
     ("docs/cross_dataset_alignment_audit.md", "Docs", "Write-up of the 7-check cross-dataset alignment audit's results, including the merch_to_sub_trigger bug fix and the two documented (non-bug) findings from Checks 3 and 5"),
+    ("warehouse/load_to_motherduck.py", "Code", "Post-dataset-completion tooling -- loads all 47 CSVs into a free MotherDuck (hosted DuckDB) database, one table per CSV, with a row-count verification per table. Run on the user's own machine, not inside the Cowork cloud sandbox (MotherDuck needs outbound internet the sandbox doesn't have)."),
 ]
 
 
