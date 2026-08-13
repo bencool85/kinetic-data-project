@@ -158,6 +158,18 @@ FILES = [
     ("generator/build_dv360_performance_daily.py", "Code", "Phase 7 (DV360 3/3): builds dv360_performance_daily -- fragments each line_item/day into several (exchange, environment) rows, DV360's genuinely different real-time-bidding schema shape -- completes DV360 (4 of 6 platforms)"),
     ("generator/validate_dv360_performance_daily.py", "Code", "Phase 7: 5-layer validation for dv360_performance_daily, incl. weekly-spend-vs-web_sessions correlation check and CONNECTED_TV-only-on-video-line-item check"),
     ("data/dv360_performance_daily.csv", "Shipped table", "Phase 7 (DV360 3/3): dv360_performance_daily table (25,776 rows) -- completes DV360"),
+    ("generator/build_snap_campaigns.py", "Code", "Phase 7 (Snap 1/4): builds snap_campaigns (4 evergreen objective campaigns + 3 flighted brand_lift campaigns, flight budgets calibrated to avoid YouTube's earlier scale bug)"),
+    ("generator/validate_snap_campaigns.py", "Code", "Phase 7: 5-layer validation for snap_campaigns"),
+    ("data/snap_campaigns.csv", "Shipped table", "Phase 7 (Snap 1/4): snap_campaigns table (7 rows)"),
+    ("generator/build_snap_ad_squads.py", "Code", "Phase 7 (Snap 2/4): builds snap_ad_squads (Snap's own real ad-set-level targeting entity, unlike Meta -- targeting_segment_id for retargeting/lookalike only)"),
+    ("generator/validate_snap_ad_squads.py", "Code", "Phase 7: 5-layer validation for snap_ad_squads"),
+    ("data/snap_ad_squads.csv", "Shipped table", "Phase 7 (Snap 2/4): snap_ad_squads table (8 rows)"),
+    ("generator/build_snap_ads.py", "Code", "Phase 7 (Snap 3/4): builds snap_ads (creative-level entity, no targeting -- that lives on the ad squad)"),
+    ("generator/validate_snap_ads.py", "Code", "Phase 7: 5-layer validation for snap_ads"),
+    ("data/snap_ads.csv", "Shipped table", "Phase 7 (Snap 3/4): snap_ads table (10 rows)"),
+    ("generator/build_snap_stats_daily.py", "Code", "Phase 7 (Snap 4/4): builds snap_stats_daily (spend in Snap's own micro-currency unit, swipes as the click-equivalent) -- completes Snap (5 of 6 platforms)"),
+    ("generator/validate_snap_stats_daily.py", "Code", "Phase 7: 5-layer validation for snap_stats_daily, incl. weekly-spend-vs-web_sessions correlation check"),
+    ("data/snap_stats_daily.csv", "Shipped table", "Phase 7 (Snap 4/4): snap_stats_daily table (7,407 rows) -- completes Snap"),
 ]
 
 

@@ -1534,3 +1534,39 @@ seasonality calendar.
   checks passed across all 3 DV360 tables, all on the first run.**
 - DV360 (4 of 6 Phase 7 platforms) complete. 39 of 47 tables now shipped.
   Next: Snap.
+
+## 2026-08-13 — Phase 7: build + validate Snap (5 of 6 paid-media platforms)
+
+- `generator/build_snap_campaigns.py` -- 7 campaigns, same 4-evergreen +
+  3-flighted-brand_lift structure as Meta/YouTube. Flight budgets
+  ($900-1,100 lifetime, spread over each 18-day BFCM flight) were
+  calibrated UP FRONT this time to the same ~1.2x-of-evergreen-baseline
+  proportion Meta's flights land at, applying the lesson from YouTube's
+  build (where copying dollar figures across channels without rescaling
+  for a smaller channel share caused a real correlation-check failure).
+- `generator/build_snap_ad_squads.py` -- 8 ad squads. Snap's real API
+  genuinely has an explicit Ad Squad object (unlike Meta, where the
+  ad-set-level fields had to live on meta_ads.csv itself) -- so
+  targeting_segment_id lives on its own dedicated table here, the same 2
+  retargeting / 1 lookalike / rest-broad split as every other platform.
+- `generator/build_snap_ads.py` -- 10 ads, pure creative-level entity
+  (single_image/video/collection ad_type) with no targeting of its own.
+- `generator/build_snap_stats_daily.py` -- 7,407 rows. Spend reported in
+  Snap's own micro-currency unit (schema_reference.md's specific callout
+  for this table); "swipes" is Snap's click-equivalent (swipe-up rate),
+  and video_views is reported on every row since Snap ad units are
+  video-forward by default.
+- **No bugs found this round** -- the up-front budget calibration worked:
+  total spend $115,095 matched the hand-computed seasonality-formula
+  expectation (~$116,700 after typical pause-day loss) on the first
+  build, and self-attributed conversions landed at 0.63x actual real
+  purchases, comfortably inside the believable range.
+- Validation: `validate_snap_campaigns.py` 14/14,
+  `validate_snap_ad_squads.py` 11/11, `validate_snap_ads.py` 9/9,
+  `validate_snap_stats_daily.py` **13/13 (incl. the weekly spend-vs-
+  web_sessions correlation, r=0.429 across 156 weeks -- Snap's own ~6.5%
+  average channel share is the smallest of the 6 platforms, so a tighter-
+  but-still-passing correlation than Meta's is expected, not a red flag)**.
+  **47/47 checks passed across all 4 Snap tables, all on the first run.**
+- Snap (5 of 6 Phase 7 platforms) complete. 43 of 47 tables now shipped.
+  Next and last: TikTok.

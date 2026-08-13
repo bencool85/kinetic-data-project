@@ -375,3 +375,61 @@ DV360_CONVERSION_RATE_BY_OBJECTIVE = {"prospecting": 0.006, "retargeting": 0.035
                                        "conversion": 0.025, "brand_lift": 0.004}  # of clicks
 DV360_AVG_CONVERSION_VALUE_RANGE = (40, 140)
 DV360_EXCHANGE_ENV_COMBOS_PER_DAY_RANGE = (3, 7)  # how many (exchange, environment) rows a line_item/day fragments into
+
+# --- Snap ---
+# Structurally mirrors Meta most closely of any platform so far: real Snap
+# Ads API hierarchy is Campaign > Ad Squad > Ad (Ad Squad is Snap's own
+# name for the ad-set-level targeting entity), so unlike Meta this DOES get
+# its own targeting-level table (snap_ad_squads), with snap_ads one level
+# below it for creative. 4 evergreen objective campaigns + 3 flighted
+# brand_lift campaigns, same BFCM timing as Meta/YouTube.
+SNAP_AD_ACCOUNT_ID = "8a7e6f5d-4c3b-4a2f-9e1d-0c1b2a3d4e5f"
+SNAP_OBJECTIVE_BY_AD_OBJECTIVE = {   # Snap Ads API campaign objective enum
+    "prospecting": "AWARENESS", "retargeting": "WEB_CONVERSIONS", "lookalike": "WEB_CONVERSIONS",
+    "conversion": "WEB_CONVERSIONS", "brand_lift": "AWARENESS",
+}
+SNAP_DAILY_BUDGET_MICRO = {"prospecting": 9_000_000, "conversion": 8_000_000,
+                            "retargeting": 5_000_000, "lookalike": 3_500_000}
+# Flight daily rate calibrated to the SAME ~1.2x-of-evergreen-baseline
+# proportion Meta's flights land at (see YouTube's build script docstring
+# for why this matters -- copying dollar figures across channels without
+# rescaling for a smaller channel share was a real bug caught there).
+SNAP_BRAND_LIFT_FLIGHTS = [   # (flight start, flight length days, lifetime_budget_micro)
+    (datetime.date(2023, 11, 13), 18, 900_000_000),
+    (datetime.date(2024, 11, 11), 18, 1_000_000_000),
+    (datetime.date(2025, 11, 10), 18, 1_100_000_000),
+]
+SNAP_CPM_RANGE_BY_OBJECTIVE = {"prospecting": (5, 10), "retargeting": (7, 14), "lookalike": (6, 12),
+                                "conversion": (8, 16), "brand_lift": (3, 7)}
+# "swipe" is Snap's click-equivalent (swipe-up rate off an impression).
+SNAP_SWIPE_RATE_RANGE_BY_OBJECTIVE = {"prospecting": (0.004, 0.010), "retargeting": (0.012, 0.025),
+                                       "lookalike": (0.006, 0.014), "conversion": (0.010, 0.022),
+                                       "brand_lift": (0.002, 0.006)}
+SNAP_CONVERSION_RATE_BY_OBJECTIVE = {"prospecting": 0.004, "retargeting": 0.028, "lookalike": 0.009,
+                                      "conversion": 0.020, "brand_lift": 0.002}  # of swipes
+SNAP_AVG_CONVERSION_VALUE_RANGE = (40, 140)
+SNAP_VIDEO_VIEW_RATE_RANGE = (0.35, 0.55)  # of impressions -- Snap ad units are video-forward by default
+
+# --- TikTok ---
+TIKTOK_ADVERTISER_ID = "7012345678901234567"
+TIKTOK_OBJECTIVE_BY_AD_OBJECTIVE = {   # TikTok Ads Manager objective_type enum
+    "prospecting": "REACH", "retargeting": "CONVERSIONS", "lookalike": "CONVERSIONS",
+    "conversion": "CONVERSIONS", "brand_lift": "REACH",
+}
+TIKTOK_DAILY_BUDGET_MICRO = {"prospecting": 16_000_000, "conversion": 15_000_000,
+                              "retargeting": 8_000_000, "lookalike": 6_000_000}
+TIKTOK_BRAND_LIFT_FLIGHTS = [   # (flight start, flight length days, lifetime_budget_micro) -- tiktok's own avg
+                                 # channel share runs close to Google Search's, so flight budgets scale similarly
+    (datetime.date(2023, 11, 13), 18, 2_300_000_000),
+    (datetime.date(2024, 11, 11), 18, 2_500_000_000),
+    (datetime.date(2025, 11, 10), 18, 2_700_000_000),
+]
+TIKTOK_CPM_RANGE_BY_OBJECTIVE = {"prospecting": (4, 9), "retargeting": (6, 13), "lookalike": (5, 11),
+                                  "conversion": (7, 15), "brand_lift": (3, 6)}
+TIKTOK_CTR_RANGE_BY_OBJECTIVE = {"prospecting": (0.005, 0.012), "retargeting": (0.015, 0.030),
+                                  "lookalike": (0.008, 0.018), "conversion": (0.013, 0.026),
+                                  "brand_lift": (0.003, 0.007)}
+TIKTOK_CONVERSION_RATE_BY_OBJECTIVE = {"prospecting": 0.004, "retargeting": 0.030, "lookalike": 0.010,
+                                        "conversion": 0.022, "brand_lift": 0.0015}  # of clicks
+TIKTOK_AVG_CONVERSION_VALUE_RANGE = (40, 140)
+TIKTOK_VIDEO_VIEW_RATE_RANGE = (0.55, 0.80)  # of impressions -- TikTok ad units are always video
