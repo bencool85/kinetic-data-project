@@ -1570,3 +1570,50 @@ seasonality calendar.
   **47/47 checks passed across all 4 Snap tables, all on the first run.**
 - Snap (5 of 6 Phase 7 platforms) complete. 43 of 47 tables now shipped.
   Next and last: TikTok.
+
+## 2026-08-13 — Phase 7: build + validate TikTok (6 of 6) — PROJECT COMPLETE (47/47 tables)
+
+- `generator/build_tiktok_campaigns.py` -- 7 campaigns, same 4-evergreen +
+  3-flighted-brand_lift structure as Meta/YouTube/Snap. Flight budgets
+  ($2,300-2,700 lifetime) calibrated up front to TikTok's own ~17.5%
+  average channel share (2nd-largest of the 6 platforms) using the same
+  proportion-of-evergreen-baseline approach validated on Snap.
+- `generator/build_tiktok_adgroups.py` -- 8 ad groups. Real TikTok
+  hierarchy is Campaign > Ad Group > Ad, structurally identical in shape
+  to Snap's Campaign > Ad Squad > Ad -- so, like Snap, TikTok gets its own
+  explicit targeting-level table rather than folding targeting into the
+  creative table the way Meta does. Same 2 retargeting / 1 lookalike /
+  rest-broad split as every other platform.
+- `generator/build_tiktok_ads.py` -- 10 ads, pure creative-level entity
+  (SINGLE_VIDEO/SPARK_AD/COLLECTION formats).
+- `generator/build_tiktok_reports_daily.py` -- 7,416 rows. TikTok ad units
+  are always video, so every row reports a high video-view share of
+  impressions (>=50%), unlike Snap's mixed image/video/collection
+  inventory.
+- **No bugs found this round** -- the calibration-up-front discipline
+  established after YouTube held: total spend $334,173 matched the
+  hand-verified deterministic seasonality-formula total ($343,045 raw,
+  ~$336,500 after typical pause/objective-loss) within normal noise, and
+  self-attributed conversions landed at 2.69x actual real purchases --
+  the higher end of the range but still within the same generous band
+  used for YouTube (TikTok being the 2nd-highest-spend platform after
+  Meta makes a higher absolute over-attribution volume expected, not
+  suspicious).
+- Validation: `validate_tiktok_campaigns.py` 13/13,
+  `validate_tiktok_adgroups.py` 11/11, `validate_tiktok_ads.py` 8/8,
+  `validate_tiktok_reports_daily.py` **14/14 (incl. the weekly
+  spend-vs-web_sessions correlation, r=0.858 across 156 weeks -- the
+  strongest of any platform's correlation check this phase, consistent
+  with TikTok's large, stable channel share)**. **46/46 checks passed
+  across all 4 TikTok tables, all on the first run.**
+- **TikTok (6 of 6 Phase 7 platforms) complete. Phase 7 (all 22
+  paid-media tables across 6 platforms) complete. All 47 of 47 tables in
+  the Kinetic dataset are now built, validated, and shipped.**
+- **Final full-suite validation**: re-ran all 47 tables' validators
+  end-to-end in one pass after TikTok shipped, to confirm nothing had
+  regressed across the whole project. **All 47 validators passed, 720
+  checks total, zero failures.** This is the project's closing
+  confirmation that the single shared master-timeline design (Phase 0)
+  held its promise: every one of the 47 tables, built across 7 phases and
+  many sessions, remains mutually consistent by construction -- no
+  cross-table impossible scenarios anywhere in the dataset.

@@ -170,6 +170,18 @@ FILES = [
     ("generator/build_snap_stats_daily.py", "Code", "Phase 7 (Snap 4/4): builds snap_stats_daily (spend in Snap's own micro-currency unit, swipes as the click-equivalent) -- completes Snap (5 of 6 platforms)"),
     ("generator/validate_snap_stats_daily.py", "Code", "Phase 7: 5-layer validation for snap_stats_daily, incl. weekly-spend-vs-web_sessions correlation check"),
     ("data/snap_stats_daily.csv", "Shipped table", "Phase 7 (Snap 4/4): snap_stats_daily table (7,407 rows) -- completes Snap"),
+    ("generator/build_tiktok_campaigns.py", "Code", "Phase 7 (TikTok 1/4): builds tiktok_campaigns (4 evergreen objective campaigns + 3 flighted brand_lift campaigns)"),
+    ("generator/validate_tiktok_campaigns.py", "Code", "Phase 7: 5-layer validation for tiktok_campaigns"),
+    ("data/tiktok_campaigns.csv", "Shipped table", "Phase 7 (TikTok 1/4): tiktok_campaigns table (7 rows)"),
+    ("generator/build_tiktok_adgroups.py", "Code", "Phase 7 (TikTok 2/4): builds tiktok_adgroups (TikTok's own real ad-set-level targeting entity -- targeting_segment_id for retargeting/lookalike only)"),
+    ("generator/validate_tiktok_adgroups.py", "Code", "Phase 7: 5-layer validation for tiktok_adgroups"),
+    ("data/tiktok_adgroups.csv", "Shipped table", "Phase 7 (TikTok 2/4): tiktok_adgroups table (8 rows)"),
+    ("generator/build_tiktok_ads.py", "Code", "Phase 7 (TikTok 3/4): builds tiktok_ads (creative-level entity, no targeting -- that lives on the ad group)"),
+    ("generator/validate_tiktok_ads.py", "Code", "Phase 7: 5-layer validation for tiktok_ads"),
+    ("data/tiktok_ads.csv", "Shipped table", "Phase 7 (TikTok 3/4): tiktok_ads table (10 rows)"),
+    ("generator/build_tiktok_reports_daily.py", "Code", "Phase 7 (TikTok 4/4): builds tiktok_reports_daily (spend/impressions/video_views, TikTok's always-video ad format) -- completes TikTok (6 of 6 platforms) AND all 47 tables"),
+    ("generator/validate_tiktok_reports_daily.py", "Code", "Phase 7: 5-layer validation for tiktok_reports_daily, incl. weekly-spend-vs-web_sessions correlation check"),
+    ("data/tiktok_reports_daily.csv", "Shipped table", "Phase 7 (TikTok 4/4): tiktok_reports_daily table (7,416 rows) -- completes TikTok, Phase 7, and the full 47-table dataset"),
 ]
 
 
