@@ -957,3 +957,58 @@ seasonality calendar.
   count reconciling exactly against subscriptions.csv's own real intervals,
   and seg_006's row count matching the trialing-status count exactly.
 - **Phase 4 is now complete** (its only table).
+
+## 2026-07-30 — Phase 5: build + validate web_sessions (1 of 4)
+
+- `generator/build_web_sessions.py` -- marketing-site/storefront browsing
+  sessions (NOT in-app fitness usage -- that's app_sessions/app_events,
+  later in this phase). Two populations, both derived from already-decided
+  ground truth rather than invented independently:
+  - **Anonymous ghosts (17,050)**: `_sim_anonymous_population.csv` already
+    carries `num_sessions` (decided back in Phase 0) and `channel` per
+    ghost -- this table just realizes those exact counts as real session
+    rows. Guest purchasers' LAST session lands exactly on their
+    `guest_purchase_date`, so `web_events` (table 2 of 4) has a session to
+    hang a `purchase` event off later.
+  - **Known, non-deleted customers**: 1-3 pre-signup sessions (same
+    distributional shape as the ghost population), the last of which is the
+    exact signup moment (`customer_id` populates from that session onward,
+    never before); a session on every `reactivations` win-back date
+    (utm_source = that event's own channel); a session on every
+    known-customer order date; plus tier-driven "filler" organic browsing
+    sessions across their active tenure (power > regular > casual) --
+    THE Phase 5 usage signal generation_plan.md's cross-phase commitment #2
+    requires. app_sessions/app_events (later in this phase) must size their
+    own volume off this same `engagement_tier`, not invent a separate signal.
+  - Soft-deleted customers (11) get zero rows, same full-erasure treatment
+    as customer_addresses.csv/devices.csv. Only new-acquisition and
+    reactivation sessions carry real UTM attribution; every return-visit
+    and filler session is organic/direct (utm fields null), matching how
+    real web analytics only attributes new/re-marketing traffic.
+- `generator/validate_web_sessions.py` -- 5-layer suite, central checks
+  being: unique anonymous_id count exactly equals eligible customers +
+  ghosts (17,899 = 17,899, nothing invented or dropped); customer_id is
+  null before signup and populated from the signup session onward, never
+  null again after; every known-customer order has a same-day session;
+  every ghost's own session count matches `num_sessions` exactly; and every
+  guest purchaser's last session lands exactly on `guest_purchase_date`.
+- Two real bugs caught and fixed during this build:
+  1. Guest purchasers with exactly 1 session had that session placed on
+     `first_seen_date` unconditionally, even when their purchase happened
+     days later (mean gap ~6.7 days, up to 13) -- meaning their one and
+     only session missed the actual purchase day entirely. Fixed to place
+     a single session directly on `guest_purchase_date` when there's only
+     one to place.
+  2. A `.gamma()`-distributed session duration produced fractional-second
+     `ended_at` timestamps, creating a mixed-precision timestamp column
+     (some rows with microseconds, most without) that pandas couldn't parse
+     with one format string. Fixed by rounding session duration to whole
+     seconds -- also caught a latent `rng.choice(..., replace=False)` crash
+     risk for guest purchasers with a same-day (gap=0) purchase and 3
+     sessions (3 real cases in the data), fixed with a capped/padded
+     offset-sampling approach.
+- Result: 30,285 web_sessions (6,476 identity-resolved to a customer_id,
+  23,809 anonymous-only). Device category split: 54.5% mobile / 40.3%
+  desktop / 5.5% tablet (mobile-dominant, matching the fitness-app-skews-
+  mobile assumption already used for devices.csv). `validate_web_sessions.py`:
+  **13/13 checks passed** after the two fixes above.
