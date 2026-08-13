@@ -1441,3 +1441,53 @@ seasonality calendar.
   **49/49 checks passed across all 4 Google Search tables.**
 - Google Search (2 of 6 Phase 7 platforms) complete. 33 of 47 tables now
   shipped. Next: YouTube.
+
+## 2026-08-13 — Phase 7: build + validate YouTube (3 of 6 paid-media platforms)
+
+- `generator/build_youtube_campaigns.py` -- 7 campaigns, structurally
+  mirroring Meta (4 evergreen + 3 flighted brand_lift near BFCM) rather
+  than Google Search's all-evergreen pattern, because YouTube Brand Lift
+  is a real, commonly-run Google measurement product delivered via
+  bumper/non-skippable formats -- a flighted study is the realistic choice
+  here, unlike Search's always-on brand-term defense.
+- `generator/build_youtube_ad_groups.py` -- 9 ad groups, same
+  targeting_segment_id discipline as every other platform (retargeting
+  splits across 2 ad groups, one per YouTube retargeting segment;
+  lookalike gets 1 targeted ad group; everything else broad).
+- `generator/build_youtube_performance_daily.py` -- 6,394 rows. Video
+  economics modeled cost-per-view-first (spend -> video_views ->
+  impressions via view_rate -> clicks via a small companion-banner rate),
+  the inverse of Meta's impression-first model, since that's what
+  TrueView/bumper billing actually optimizes for. Bumper/non-skippable
+  brand_lift rows get a much higher realized video_view_rate (0.85-0.98)
+  than skippable TrueView objectives (0.20-0.35) -- unskippable formats
+  count nearly every impression as a view.
+- **One real bug caught by the validator itself** (not just a pre-emptive
+  sanity check this time): `validate_youtube_performance_daily.py`'s
+  weekly-spend-vs-web_sessions correlation check FAILED on the first run
+  (r=0.338, below the 0.4 threshold). Investigation traced it to
+  `YOUTUBE_BRAND_LIFT_FLIGHTS`' lifetime budgets -- copied at roughly
+  Meta's dollar scale ($12-14K/flight) without rescaling for YouTube's
+  much smaller ~9% average channel share (vs. Meta's ~24%), so each
+  18-day flight was injecting spend at ~4.4x YouTube's own evergreen daily
+  baseline (vs. Meta's flights running at a proportionate ~1.2x) -- three
+  huge, formula-unexplained spikes per year overwhelming a 156-week
+  correlation. A second bug surfaced while fixing the first: rebuilding
+  `youtube_performance_daily.csv` alone after editing the budget in
+  params.py produced NO change at all, because the daily build script
+  reads `lifetime_budget_micros` from the already-shipped
+  `youtube_campaigns.csv` file, not from params.py directly --
+  `youtube_campaigns.csv` had to be rebuilt first. Rescaled the flight
+  budgets to ~$2,500-2,900 (proportionate to Meta's flight/baseline
+  ratio), rebuilt campaigns -> ad_groups -> performance_daily in that
+  order: correlation recovered to r=0.625, total YouTube spend dropped
+  from $199,689 to a more sensible $170,407.
+- Validation: `validate_youtube_campaigns.py` 14/14,
+  `validate_youtube_ad_groups.py` 11/11,
+  `validate_youtube_performance_daily.py` **13/13 (after the fix above;
+  includes a check that brand_lift's view_rate is structurally much
+  higher than the skippable objectives', and the weekly spend-vs-
+  web_sessions correlation, r=0.625 across 156 weeks)**. **38/38 checks
+  passed across all 3 YouTube tables** (after the mid-build fix).
+- YouTube (3 of 6 Phase 7 platforms) complete. 36 of 47 tables now
+  shipped. Next: DV360.

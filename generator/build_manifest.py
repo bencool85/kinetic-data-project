@@ -140,6 +140,15 @@ FILES = [
     ("generator/build_google_search_performance_daily.py", "Code", "Phase 7 (Google Search 3/4 by schema order): builds google_search_performance_daily, aggregated exactly from keyword_performance_daily.csv up to ad_group/day grain -- completes Google Search (2 of 6 platforms)"),
     ("generator/validate_google_search_performance_daily.py", "Code", "Phase 7: 5-layer validation for google_search_performance_daily, incl. exact-sum reconciliation against keyword_performance_daily.csv"),
     ("data/google_search_performance_daily.csv", "Shipped table", "Phase 7 (Google Search 3/4 by schema order): google_search_performance_daily table (8,751 rows) -- completes Google Search"),
+    ("generator/build_youtube_campaigns.py", "Code", "Phase 7 (YouTube 1/3): builds youtube_campaigns (4 evergreen objective campaigns + 3 flighted brand_lift campaigns, mirroring Meta's structure since YouTube Brand Lift is a real flighted measurement product)"),
+    ("generator/validate_youtube_campaigns.py", "Code", "Phase 7: 5-layer validation for youtube_campaigns"),
+    ("data/youtube_campaigns.csv", "Shipped table", "Phase 7 (YouTube 1/3): youtube_campaigns table (7 rows)"),
+    ("generator/build_youtube_ad_groups.py", "Code", "Phase 7 (YouTube 2/3): builds youtube_ad_groups (targeting_segment_id for retargeting/lookalike only)"),
+    ("generator/validate_youtube_ad_groups.py", "Code", "Phase 7: 5-layer validation for youtube_ad_groups"),
+    ("data/youtube_ad_groups.csv", "Shipped table", "Phase 7 (YouTube 2/3): youtube_ad_groups table (9 rows)"),
+    ("generator/build_youtube_performance_daily.py", "Code", "Phase 7 (YouTube 3/3): builds youtube_performance_daily (video_views/video_view_rate/average_cpv, spend-driven by the shared seasonality calendar + channel-mix schedule) -- completes YouTube (3 of 6 platforms)"),
+    ("generator/validate_youtube_performance_daily.py", "Code", "Phase 7: 5-layer validation for youtube_performance_daily, incl. weekly-spend-vs-web_sessions correlation check"),
+    ("data/youtube_performance_daily.csv", "Shipped table", "Phase 7 (YouTube 3/3): youtube_performance_daily table (6,394 rows) -- completes YouTube"),
 ]
 
 

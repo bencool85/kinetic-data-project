@@ -284,3 +284,51 @@ GOOGLE_SEARCH_CONVERSION_RATE_BY_OBJECTIVE = {"prospecting": 0.008, "retargeting
 GOOGLE_SEARCH_AVG_CONVERSION_VALUE_RANGE = (40, 140)  # conversions_value per conversion, loosely AOV-shaped
 GOOGLE_SEARCH_MATCH_TYPE_WEIGHTS = {"EXACT": 0.35, "PHRASE": 0.40, "BROAD": 0.25}
 GOOGLE_SEARCH_KEYWORDS_PER_AD_GROUP_RANGE = (2, 4)
+
+# --- YouTube (Google Ads, advertising_channel_type == VIDEO) ---
+# Structurally mirrors Meta, not Google Search: YouTube's brand_lift is a
+# REAL, common measurement product (Google literally sells "YouTube Brand
+# Lift" studies run via bumper/non-skippable ad formats), so -- unlike
+# Search's always-on brand-term defense -- it's realistically a flighted
+# campaign here too, same reasoning as Meta's.
+YOUTUBE_CUSTOMER_ID = GOOGLE_SEARCH_CUSTOMER_ID  # same Google Ads account as Search, different channel type
+YOUTUBE_AD_FORMAT_BY_OBJECTIVE = {   # advertising_channel_sub_type equivalent
+    "prospecting": "VIDEO_TRUE_VIEW_IN_STREAM", "retargeting": "VIDEO_ACTION",
+    "lookalike": "VIDEO_TRUE_VIEW_IN_STREAM", "conversion": "VIDEO_ACTION", "brand_lift": "VIDEO_BUMPER",
+}
+YOUTUBE_BIDDING_STRATEGY_BY_OBJECTIVE = {
+    "prospecting": "TARGET_CPV", "retargeting": "MAXIMIZE_CONVERSIONS", "lookalike": "TARGET_CPV",
+    "conversion": "MAXIMIZE_CONVERSIONS", "brand_lift": "TARGET_CPM",
+}
+YOUTUBE_DAILY_BUDGET_MICROS = {"prospecting": 45_000_000, "conversion": 40_000_000,
+                                "retargeting": 20_000_000, "lookalike": 15_000_000}
+# Flight daily rate calibrated to roughly the SAME proportion of YouTube's
+# own (much smaller, ~9%-share) evergreen daily baseline that Meta's flights
+# were of Meta's baseline (~1.2x) -- an earlier pass here copied Meta-scale
+# dollar figures without rescaling for YouTube's smaller channel share,
+# which produced flight-week spend spikes ~4.4x the evergreen baseline
+# instead of ~1.2x, badly hurting the spend-vs-seasonality-formula
+# correlation check (a real bug, caught by that check, not just cosmetic).
+YOUTUBE_BRAND_LIFT_FLIGHTS = [   # (flight start, flight length days, lifetime_budget_micros) -- same BFCM timing as Meta's
+    (datetime.date(2023, 11, 13), 18, 2_500_000_000),
+    (datetime.date(2024, 11, 11), 18, 2_700_000_000),
+    (datetime.date(2025, 11, 10), 18, 2_900_000_000),
+]
+YOUTUBE_CPV_RANGE_BY_OBJECTIVE = {"prospecting": (0.015, 0.035), "retargeting": (0.020, 0.045),
+                                   "lookalike": (0.018, 0.038), "conversion": (0.025, 0.050),
+                                   "brand_lift": (0.008, 0.020)}
+# video_view_rate = video_views / impressions -- skippable TrueView formats
+# run 20-35%; bumper/non-skippable brand_lift ads count nearly every
+# impression as a view since the viewer can't skip.
+YOUTUBE_VIEW_RATE_RANGE_BY_OBJECTIVE = {"prospecting": (0.20, 0.30), "retargeting": (0.25, 0.35),
+                                         "lookalike": (0.22, 0.32), "conversion": (0.25, 0.35),
+                                         "brand_lift": (0.90, 0.98)}
+YOUTUBE_CLICK_RATE_RANGE_BY_OBJECTIVE = {"prospecting": (0.0010, 0.0030), "retargeting": (0.0030, 0.0060),
+                                          "lookalike": (0.0015, 0.0035), "conversion": (0.0030, 0.0060),
+                                          "brand_lift": (0.0005, 0.0015)}
+# Conversion rate as a fraction of VIDEO_VIEWS (view-through + click
+# conversions combined, the way YouTube actually reports them) -- calibrated
+# the same "believable single-platform multiple" way as Meta/Search.
+YOUTUBE_CONVERSION_RATE_BY_OBJECTIVE = {"prospecting": 0.0005, "retargeting": 0.0026, "lookalike": 0.0009,
+                                         "conversion": 0.0021, "brand_lift": 0.00013}
+YOUTUBE_AVG_CONVERSION_VALUE_RANGE = (40, 140)
