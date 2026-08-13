@@ -1,0 +1,10 @@
+campaign_id,campaign_name,campaign_type,trigger_event,description,created_at,is_active
+camp_email_001,Trial Welcome Series,triggered,trial_started,Fires when a subscription trial begins (direct signup or merch-to-subscriber pathway).,2023-08-01,True
+camp_email_002,Trial Ending Reminder,triggered,trial_ending,"Fires ~2 days before a trial's scheduled end, prompting conversion.",2023-08-01,True
+camp_email_003,Payment Failed - Update Card,triggered,payment_failed,Dunning email fired on every subscription_events.csv payment_failed event.,2023-08-01,True
+camp_email_004,Win-Back Lapsed Subscriber,triggered,reactivation,Fires for win-back reactivations whose true channel (in the master timeline) is email.,2023-08-01,True
+camp_email_005,Merch to Subscriber Offer,triggered,merch_to_sub_trigger,The actual 'come try a membership' send that triggers the merch-to-subscriber pathway's trial start.,2023-08-01,True
+camp_email_006,Order Confirmation,triggered,order_placed,Fires on every order (known-customer and guest checkout alike).,2023-08-01,True
+camp_email_007,Abandoned Cart Reminder,triggered,cart_abandoned,Fires for known-customer sessions with an add_to_cart but no purchase (web_events.csv).,2023-08-01,True
+camp_email_008,Monthly Newsletter,broadcast,,"Recurring broadcast to email-opted-in customers, sent on the 1st of each month.",2023-08-01,True
+camp_email_009,Seasonal Sale Promo,broadcast,,Broadcast timed to discount_codes.csv's HOLIDAY2024/JANRESET10_2025/JANRESET10_2026 windows.,2023-08-01,True

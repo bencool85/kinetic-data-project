@@ -1150,3 +1150,33 @@ seasonality calendar.
   against Phase 2/3's subscriptions/orders, with app usage volume
   consistently keyed off the same `engagement_tier` signal throughout, per
   generation_plan.md's cross-phase commitment #2.
+
+## 2026-07-30 — Phase 6: build + validate braze_email_campaigns (1 of 4)
+
+- `generator/build_braze_email_campaigns.py` -- built first within Phase 6,
+  same reason discount_codes came first in Phase 3: braze_email_events
+  (table 2 of 4) needs real campaign definitions to send against. A small,
+  hand-curated list (like discount_codes/segments/subscription_plans were)
+  -- 9 campaigns, 7 triggered + 2 broadcast.
+  - Triggered campaigns each name a `trigger_event` that maps to a REAL
+    source already sitting in an earlier phase's shipped tables: trial
+    starts (subscriptions.csv), trial-ending reminders, payment failures
+    (subscription_events.csv), win-back reactivations whose true channel is
+    email (the master timeline's `reactivations` list -- same field
+    web_sessions.csv already used), the merch-to-subscriber pathway's
+    actual triggering send, order confirmations (orders.csv), and
+    abandoned-cart reminders (web_events.csv's add_to_cart-without-purchase
+    sessions). braze_email_events.py will derive real send volume from
+    these sources, not invent recipients independently.
+  - The two broadcast campaigns aren't tied to individual behavior --
+    "Monthly Newsletter" is a recurring calendar send, and "Seasonal Sale
+    Promo" is deliberately timed to discount_codes.csv's own
+    HOLIDAY2024/JANRESET10_2025/JANRESET10_2026 valid windows, since those
+    are the real codes such a promo would be advertising.
+- `generator/validate_braze_email_campaigns.py` -- lighter-weight
+  definitions-table validation (same class as discount_codes.csv/
+  segments.csv's own validators): trigger_event drawn from a closed,
+  derivable vocabulary; no two campaigns claiming the same trigger (which
+  would make the next table's derivation ambiguous).
+- Result: 9 campaigns. `validate_braze_email_campaigns.py`: **10/10 checks
+  passed** on the first run.

@@ -101,6 +101,9 @@ FILES = [
     ("generator/build_app_events.py", "Code", "Phase 5: builds app_events (class_started/workout_completed/workout_abandoned/streak_achieved -- streaks derived from real consecutive session dates) -- completes Phase 5"),
     ("generator/validate_app_events.py", "Code", "Phase 5: 5-layer validation for app_events"),
     ("data/app_events.csv", "Shipped table", "Phase 5: app_events table (39,370 rows) -- completes Phase 5"),
+    ("generator/build_braze_email_campaigns.py", "Code", "Phase 6: builds braze_email_campaigns (hand-curated: 7 triggered + 2 broadcast) -- built first, events table needs it"),
+    ("generator/validate_braze_email_campaigns.py", "Code", "Phase 6: 5-layer validation for braze_email_campaigns"),
+    ("data/braze_email_campaigns.csv", "Shipped table", "Phase 6: braze_email_campaigns table (9 rows)"),
 ]
 
 
