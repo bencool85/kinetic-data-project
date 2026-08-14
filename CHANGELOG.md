@@ -1736,3 +1736,39 @@ seasonality calendar.
   `CREATE DATABASE IF NOT EXISTS kinetic` and `USE kinetic` via SQL
   before creating any tables. Idempotent -- safe to re-run on a later
   session once the database already exists.
+- **Confirmed working**: user ran the fixed script against their own
+  MotherDuck account -- all 47 tables loaded, all 47 row counts matched
+  their source CSVs exactly. First successful end-to-end migration of
+  the dataset out of flat files into a queryable warehouse.
+
+## 2026-08-13 — First analysis queries: warehouse/analysis_queries.sql
+
+- 6 starter SQL queries against the `kinetic` MotherDuck database:
+  monthly paid media spend by partner, directly attributed revenue by
+  paid/owned channel, active subscribers by month, non-subscription
+  revenue by month, monthly churn rate, and top 5 grossing products per
+  year.
+- The paid-vs-owned attribution query (#2) surfaces a real methodology
+  split inherent to this dataset's design (no user-level ad-platform
+  joins, per `docs/schema_reference.md`): storefront orders attribute
+  via session-level UTM (order -> purchase web_event -> session ->
+  utm_source, true last-click), while subscription/invoice revenue has
+  no session to join through and instead uses `customers.signup_source`
+  (first-touch) applied to every invoice for that customer. Both
+  methods are used and documented in-line rather than picking one
+  silently. ~0.5% of storefront orders (17 of 3,650) have no matching
+  purchase event and are bucketed as `untracked` rather than folded into
+  `owned`.
+- The active-subscribers and churn-rate queries share an "actually
+  converted to paid" definition: a subscription canceled during its own
+  trial (`canceled_at <= trial_end`) never became a paying subscriber
+  and is excluded from both active counts and churn counts, regardless
+  of the `status` column.
+- Validated all 6 queries' logic against the source CSVs in pandas
+  before handing them off (active-subscriber counts grow plausibly from
+  0 to 100 over the 3-year window; monthly churn lands in a believable
+  single-digit-percent range; spend/revenue/top-product numbers are
+  sane) -- couldn't execute the actual SQL/MotherDuck connection from
+  this cloud sandbox (no network route to motherduck.com), so this was
+  the available substitute for the project's usual "validate before
+  shipping" discipline.
