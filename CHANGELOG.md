@@ -1795,3 +1795,37 @@ seasonality calendar.
 - Treated as a one-off (SendUserFile only, not persisted as a Cowork
   artifact) since it visualizes one specific pasted query result, not a
   dashboard the user asked to keep returning to.
+
+## 2026-08-14 — Live MotherDuck Dive: all 6 queries as one dashboard
+
+- Now that the `mcp__MotherDuck__*` tools are connected directly in this
+  session, I queried the live `kinetic` database myself (no more
+  copy/paste needed) and built a MotherDuck "Dive" -- a saved,
+  interactive dashboard app that re-runs the actual SQL against the
+  real database every time it's opened, rather than a static image
+  built from one-time results.
+- Covers all 6 requested queries in one page: paid media spend by
+  partner, attributed revenue by paid/owned channel, active
+  subscribers by month, non-subscription revenue by month, churn rate
+  by month, and top 5 grossing products per year -- plus a KPI row
+  (total paid media spend, storefront revenue, total orders, current
+  active subscribers).
+- Followed the MotherDuck MCP server's own required workflow: called
+  `get_dive_guide` before writing any chart code, used the platform's
+  house visual style (its own palette/spacing/KPI-row conventions,
+  distinct from the general `dataviz` skill used for the earlier
+  one-off HTML chart), converted every numeric value defensively
+  (DuckDB BIGINT/DECIMAL values arrive as non-primitive objects, not
+  plain JS numbers), and filled missing months with a generated date
+  spine so gaps don't silently disappear from the charts.
+- Live-validated all 6 queries via direct MCP calls against the real
+  database before building the dashboard -- results matched the
+  earlier pandas/paste validation.
+- Saved via `save_dive`, then re-opened via `view_dive` to confirm the
+  saved source matches exactly. Local source-of-truth copy kept at
+  `warehouse/kinetic_dive.tsx` per the project's sync discipline, since
+  the dashboard itself lives on MotherDuck's servers, not in this
+  folder.
+- `kinetic` database is not yet shared with Ben's MotherDuck
+  organization -- asked whether to share it so others could view the
+  Dive; not yet actioned pending his answer.
