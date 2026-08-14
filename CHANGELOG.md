@@ -1829,3 +1829,41 @@ seasonality calendar.
 - `kinetic` database is not yet shared with Ben's MotherDuck
   organization -- asked whether to share it so others could view the
   Dive; not yet actioned pending his answer.
+
+## 2026-08-14 — Dive v2: 8 persona-specific user stories added (CEO/CMO/CFO/PMM)
+
+- User asked for 3 user-story dashboard requests per persona (CEO, CMO, CFO,
+  Performance Marketing Manager -- 8 stories total) built directly into the
+  live Dive, not just described. Explored the schema for every table
+  involved (customers, subscriptions, invoices, orders, discount_codes,
+  payments, refunds, web_sessions, web_events, app_sessions, all 6 ad
+  platforms' campaign + performance tables) and live-validated each new
+  query against the real kinetic database before writing any chart code.
+- Restructured the Dive into 5 tabs (Overview / CEO / CMO / CFO /
+  Performance Marketing) using `useDiveState` so the active tab is part of
+  the shareable link, rather than one long page of 14+ sections.
+- CEO: revenue growth rate + net-new-vs-churned paying subscribers + CAC
+  payback trend; revenue mix across subscription/course/merch.
+- CMO: acquisition funnel (sessions -> trial starts -> paid conversions) by
+  channel; retention and app engagement by original acquisition channel.
+- CFO: CAC and LTV:CAC by acquisition cohort; discount code cost + failed
+  payment recovery rate + a net-margin proxy.
+- Performance Marketing: campaign-level spend and platform-self-reported
+  efficiency across all 38 real campaigns (sorted worst-CAC-first so an
+  underperformer surfaces immediately); CTR/CVR benchmarked by platform and
+  ad format.
+- Three modeling limits surfaced and documented directly in the dashboard
+  copy rather than silently glossed over: (1) this dataset has no
+  per-product cost data, so "net margin proxy" (gross revenue minus
+  discounts minus refunds) is shown instead of true gross margin; (2)
+  failed-payment recovery rate is 100% by construction, since the dataset
+  only ships orders that eventually completed -- shown as a data-integrity
+  check, not a leaky-bucket signal; (3) there is no join key tying an
+  individual ad-platform campaign to a specific site session (utm_campaign
+  is an independently-generated theme tag, confirmed by reading
+  generator/build_web_sessions.py), so campaign-level efficiency uses each
+  platform's own self-reported conversions rather than fabricating a false
+  attribution join -- called out explicitly in the dashboard text.
+- Updated the same saved Dive (dive_id 58909b4e-..., now version 2) via
+  `update_dive`, then re-verified with `view_dive`. Local source-of-truth
+  copy at `warehouse/kinetic_dive.tsx` updated to match exactly and synced.
