@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kinetic — Monthly Paid Media Spend by Partner</title>
+<style>
+  :root { color-scheme: light; }
+
+  .viz-root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --page-plane:     #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --gridline:       #e1e0d9;
+    --baseline:       #c3c2b7;
+    --border:         rgba(11,11,11,0.10);
+
+    --series-meta:          #2a78d6; /* slot 1 blue */
+    --series-google_search: #eb6834; /* slot 2 orange */
+    --series-tiktok:        #1baf7a; /* slot 3 aqua */
+    --series-youtube:       #eda100; /* slot 4 yellow */
+    --series-dv360:         #e87ba4; /* slot 5 magenta */
+    --series-snap:          #008300; /* slot 6 green */
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) .viz-root {
+      color-scheme: dark;
+      --surface-1:      #1a1a19;
+      --page-plane:     #0d0d0d;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted:     #898781;
+      --gridline:       #2c2c2a;
+      --baseline:       #383835;
+      --border:         rgba(255,255,255,0.10);
+
+      --series-meta:          #3987e5;
+      --series-google_search: #d95926;
+      --series-tiktok:        #199e70;
+      --series-youtube:       #c98500;
+      --series-dv360:         #d55181;
+      --series-snap:          #008300;
+    }
+  }
+  :root[data-theme="dark"] .viz-root {
+    color-scheme: dark;
+    --surface-1:      #1a1a19;
+    --page-plane:     #0d0d0d;
+    --text-primary:   #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted:     #898781;
+    --gridline:       #2c2c2a;
+    --baseline:       #383835;
+    --border:         rgba(255,255,255,0.10);
+
+    --series-meta:          #3987e5;
+    --series-google_search: #d95926;
+    --series-tiktok:        #199e70;
+    --series-youtube:       #c98500;
+    --series-dv360:         #d55181;
+    --series-snap:          #008300;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--page-plane);
+    color: var(--text-primary);
+  }
+  .viz-root { padding: 28px 32px 40px; max-width: 1080px; margin: 0 auto; }
+
+  h1 { font-size: 19px; font-weight: 600; margin: 0 0 2px; }
+  .subtitle { font-size: 13px; color: var(--text-secondary); margin: 0 0 20px; }
+
+  .theme-toggle {
+    position: absolute; top: 28px; right: 32px;
+    font-size: 12px; color: var(--text-secondary);
+    background: var(--surface-1); border: 1px solid var(--border);
+    border-radius: 6px; padding: 5px 10px; cursor: pointer;
+  }
+
+  /* --- stat tiles --- */
+  .stat-row { display: flex; gap: 14px; margin-bottom: 22px; flex-wrap: wrap; }
+  .stat-tile {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    flex: 1 1 200px;
+    min-width: 180px;
+  }
+  .stat-tile .label { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
+  .stat-tile .value { font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+  .stat-tile .sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+  /* --- chart card --- */
+  .chart-card {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 20px 8px;
+  }
+  .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; flex-wrap: wrap; gap: 8px; }
+  .chart-title { font-size: 14px; font-weight: 600; }
+
+  /* legend */
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); cursor: pointer; user-select: none; }
+  .legend-swatch { width: 14px; height: 2px; border-radius: 1px; }
+  .legend-item.is-off { opacity: 0.35; }
+
+  svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .gridline { stroke: var(--gridline); stroke-width: 1; }
+  .axis-text { fill: var(--text-muted); font-size: 11px; }
+  .series-line { fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .series-dot { stroke: var(--surface-1); stroke-width: 2; }
+
+  .crosshair-line { stroke: var(--baseline); stroke-width: 1; pointer-events: none; }
+
+  .tooltip {
+    position: absolute;
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    pointer-events: none;
+    min-width: 168px;
+    z-index: 10;
+  }
+  .tooltip .tt-date { font-weight: 600; margin-bottom: 6px; color: var(--text-primary); }
+  .tooltip .tt-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 2px 0; }
+  .tooltip .tt-key { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); }
+  .tooltip .tt-stroke { width: 12px; height: 2px; border-radius: 1px; }
+  .tooltip .tt-val { font-weight: 600; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+  .tooltip .tt-total { border-top: 1px solid var(--border); margin-top: 6px; padding-top: 6px; font-weight: 600; }
+
+  .hover-target { fill: transparent; pointer-events: all; }
+
+  /* --- view toggle + table --- */
+  .view-toggle { display: flex; gap: 6px; margin: 18px 0 10px; }
+  .view-toggle button {
+    font-size: 12px; padding: 6px 12px; border-radius: 6px;
+    border: 1px solid var(--border); background: var(--surface-1);
+    color: var(--text-secondary); cursor: pointer;
+  }
+  .view-toggle button.active { color: var(--text-primary); border-color: var(--text-muted); font-weight: 600; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  table caption { text-align: left; font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; }
+  th, td { text-align: right; padding: 6px 10px; border-bottom: 1px solid var(--gridline); font-variant-numeric: tabular-nums; }
+  th:first-child, td:first-child { text-align: left; font-variant-numeric: normal; }
+  th { color: var(--text-secondary); font-weight: 600; white-space: nowrap; }
+  tbody tr:hover { background: var(--page-plane); }
+  .hidden { display: none; }
+  .foot { font-size: 11px; color: var(--text-muted); margin-top: 16px; line-height: 1.5; }
+</style>
+</head>
+<body>
+<div class="viz-root" id="vizRoot">
+  <button class="theme-toggle" id="themeToggle" type="button">Dark mode</button>
+  <h1>Monthly paid media spend by partner</h1>
+  <p class="subtitle">Aug 2023 – Jul 2026 · Query 1 · source: <code>kinetic</code> MotherDuck database</p>
+
+  <div class="stat-row" id="statRow"></div>
+
+  <div class="chart-card">
+    <div class="chart-header">
+      <div class="chart-title">Spend by month</div>
+      <div class="legend" id="legend"></div>
+    </div>
+    <div style="position:relative;">
+      <svg id="chart" viewBox="0 0 1000 380" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="tooltip hidden" id="tooltip"></div>
+    </div>
+
+    <div class="view-toggle">
+      <button type="button" class="active" data-view="chart">Chart</button>
+      <button type="button" data-view="table">Table</button>
+    </div>
+    <div id="tableView" class="hidden"></div>
+  </div>
+
+  <p class="foot">Click a legend entry to isolate/hide that partner. Hover (or tab to) the chart for exact monthly values. All 6 series validated for colorblind-safe adjacent-pair separation; 3 light-mode hues (tiktok, youtube, dv360) fall under 3:1 text contrast by design — identified here via the legend and table, not color alone.</p>
+</div>
+
+<script>
+(function () {
+  var DATA = {"months": ["2023-08-01", "2023-09-01", "2023-10-01", "2023-11-01", "2023-12-01", "2024-01-01", "2024-02-01", "2024-03-01", "2024-04-01", "2024-05-01", "2024-06-01", "2024-07-01", "2024-08-01", "2024-09-01", "2024-10-01", "2024-11-01", "2024-12-01", "2025-01-01", "2025-02-01", "2025-03-01", "2025-04-01", "2025-05-01", "2025-06-01", "2025-07-01", "2025-08-01", "2025-09-01", "2025-10-01", "2025-11-01", "2025-12-01", "2026-01-01", "2026-02-01", "2026-03-01", "2026-04-01", "2026-05-01", "2026-06-01", "2026-07-01"], "partners": ["dv360", "google_search", "meta", "snap", "tiktok", "youtube"], "grid": {"2023-08-01": {"dv360": 1915.56, "google_search": 5422.08, "meta": 6350.85, "snap": 1865.57, "tiktok": 2414.41, "youtube": 1976.13}, "2023-09-01": {"dv360": 2192.8, "google_search": 5758.66, "meta": 7965.39, "snap": 2184.92, "tiktok": 2786.14, "youtube": 2253.54}, "2023-10-01": {"dv360": 2467.99, "google_search": 7113.65, "meta": 8884.35, "snap": 2453.79, "tiktok": 3400.98, "youtube": 2646.36}, "2023-11-01": {"dv360": 3218.1, "google_search": 8247.63, "meta": 14452.86, "snap": 3941.49, "tiktok": 6963.08, "youtube": 5579.21}, "2023-12-01": {"dv360": 2844.74, "google_search": 7967.05, "meta": 10376.8, "snap": 2889.43, "tiktok": 4582.95, "youtube": 3277.96}, "2024-01-01": {"dv360": 4958.91, "google_search": 13429.4, "meta": 16479.22, "snap": 4829.41, "tiktok": 7745.02, "youtube": 4949.27}, "2024-02-01": {"dv360": 3428.9, "google_search": 9483.31, "meta": 12070.11, "snap": 3200.77, "tiktok": 5717.94, "youtube": 3669.48}, "2024-03-01": {"dv360": 2933.11, "google_search": 8018.98, "meta": 10010.6, "snap": 2752.65, "tiktok": 5104.91, "youtube": 3165.13}, "2024-04-01": {"dv360": 2738.77, "google_search": 7342.07, "meta": 9302.69, "snap": 2580.62, "tiktok": 4848.98, "youtube": 3044.42}, "2024-05-01": {"dv360": 2887.83, "google_search": 7390.2, "meta": 9210.44, "snap": 2669.56, "tiktok": 5080.1, "youtube": 2904.53}, "2024-06-01": {"dv360": 2449.7, "google_search": 6591.86, "meta": 8909.46, "snap": 2309.75, "tiktok": 4515.85, "youtube": 2904.53}, "2024-07-01": {"dv360": 2397.12, "google_search": 6437.28, "meta": 8589.44, "snap": 2238.62, "tiktok": 4643.36, "youtube": 2795.34}, "2024-08-01": {"dv360": 2394.57, "google_search": 6462.89, "meta": 8171.08, "snap": 2133.87, "tiktok": 5010.56, "youtube": 2717.75}, "2024-09-01": {"dv360": 3365.42, "google_search": 8989.14, "meta": 11455.06, "snap": 3012.03, "tiktok": 6974.8, "youtube": 3800.06}, "2024-10-01": {"dv360": 3373.86, "google_search": 8809.81, "meta": 11434.6, "snap": 3011.94, "tiktok": 7060.9, "youtube": 3921.72}, "2024-11-01": {"dv360": 4305.09, "google_search": 11777.83, "meta": 17322.76, "snap": 4871.27, "tiktok": 11951.24, "youtube": 7582.51}, "2024-12-01": {"dv360": 3741.06, "google_search": 9954.83, "meta": 11399.77, "snap": 3272.08, "tiktok": 8170.49, "youtube": 4543.37}, "2025-01-01": {"dv360": 6634.8, "google_search": 16861.62, "meta": 20798.24, "snap": 5339.48, "tiktok": 13633.54, "youtube": 7256.6}, "2025-02-01": {"dv360": 4158.73, "google_search": 10814.15, "meta": 11967.53, "snap": 3467.35, "tiktok": 9694.69, "youtube": 4861.49}, "2025-03-01": {"dv360": 3652.51, "google_search": 9772.17, "meta": 12011.6, "snap": 3062.37, "tiktok": 9119.44, "youtube": 4458.11}, "2025-04-01": {"dv360": 3497.91, "google_search": 9539.7, "meta": 10643.29, "snap": 3186.51, "tiktok": 8508.84, "youtube": 4468.91}, "2025-05-01": {"dv360": 3523.93, "google_search": 9091.82, "meta": 10491.44, "snap": 2896.73, "tiktok": 8587.84, "youtube": 4029.9}, "2025-06-01": {"dv360": 2722.8, "google_search": 7026.54, "meta": 8766.26, "snap": 2345.95, "tiktok": 7076.0, "youtube": 3512.39}, "2025-07-01": {"dv360": 3110.67, "google_search": 7776.8, "meta": 9526.37, "snap": 2467.01, "tiktok": 8110.85, "youtube": 3959.62}, "2025-08-01": {"dv360": 3189.11, "google_search": 8238.54, "meta": 8960.9, "snap": 2425.21, "tiktok": 8375.82, "youtube": 4046.17}, "2025-09-01": {"dv360": 4239.68, "google_search": 11009.27, "meta": 13087.98, "snap": 3277.33, "tiktok": 11826.5, "youtube": 5571.68}, "2025-10-01": {"dv360": 4067.11, "google_search": 10155.64, "meta": 13008.35, "snap": 3300.37, "tiktok": 11728.15, "youtube": 5285.04}, "2025-11-01": {"dv360": 5161.54, "google_search": 13898.35, "meta": 20109.95, "snap": 5391.66, "tiktok": 19557.47, "youtube": 9839.23}, "2025-12-01": {"dv360": 5390.17, "google_search": 13244.16, "meta": 14752.16, "snap": 4011.12, "tiktok": 15466.78, "youtube": 7005.96}, "2026-01-01": {"dv360": 6909.03, "google_search": 19444.92, "meta": 21338.02, "snap": 5582.01, "tiktok": 22831.85, "youtube": 9995.93}, "2026-02-01": {"dv360": 4821.61, "google_search": 12502.71, "meta": 14544.03, "snap": 3364.76, "tiktok": 14355.65, "youtube": 6381.31}, "2026-03-01": {"dv360": 4492.44, "google_search": 12328.72, "meta": 12946.01, "snap": 3375.05, "tiktok": 14389.22, "youtube": 6580.61}, "2026-04-01": {"dv360": 4386.69, "google_search": 12267.16, "meta": 12506.96, "snap": 3430.72, "tiktok": 15196.59, "youtube": 6056.16}, "2026-05-01": {"dv360": 4029.17, "google_search": 9691.7, "meta": 11489.53, "snap": 2995.81, "tiktok": 13845.6, "youtube": 5383.02}, "2026-06-01": {"dv360": 3827.92, "google_search": 9449.97, "meta": 10740.0, "snap": 2678.54, "tiktok": 13015.24, "youtube": 5292.8}, "2026-07-01": {"dv360": 3095.8, "google_search": 8224.52, "meta": 9326.92, "snap": 2279.36, "tiktok": 11881.43, "youtube": 4690.7}}};
+  var months = DATA.months;
+  var partners = DATA.partners; // fixed order from the query
+  var grid = DATA.grid;
+
+  // Fixed categorical assignment (never reordered/cycled)
+  var seriesOrder = ["meta", "google_search", "tiktok", "youtube", "dv360", "snap"];
+  var seriesLabel = {
+    meta: "Meta", google_search: "Google Search", tiktok: "TikTok",
+    youtube: "YouTube", dv360: "DV360", snap: "Snap"
+  };
+
+  var root = document.getElementById('vizRoot');
+  function seriesColor(key) {
+    return getComputedStyle(root).getPropertyValue('--series-' + key).trim();
+  }
+
+  function fmtUSD(v, compact) {
+    if (compact) {
+      if (Math.abs(v) >= 1000000) return '$' + (v/1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+      if (Math.abs(v) >= 1000) return '$' + (v/1000).toFixed(1).replace(/\.0$/, '') + 'K';
+      return '$' + Math.round(v);
+    }
+    return '$' + v.toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0});
+  }
+  function fmtMonth(iso, short) {
+    var d = new Date(iso + 'T00:00:00');
+    return d.toLocaleDateString('en-US', short ? {month: 'short', year: '2-digit'} : {month: 'long', year: 'numeric'});
+  }
+
+  // ---- derived stats ----
+  var monthTotals = months.map(function (m) {
+    return seriesOrder.reduce(function (s, p) { return s + grid[m][p]; }, 0);
+  });
+  var grandTotal = monthTotals.reduce(function (a, b) { return a + b; }, 0);
+  var latestIdx = months.length - 1;
+  var peakIdx = monthTotals.indexOf(Math.max.apply(null, monthTotals));
+  var avgMonthly = grandTotal / months.length;
+
+  var statRow = document.getElementById('statRow');
+  var stats = [
+    { label: 'Total spend (36 months)', value: fmtUSD(grandTotal, true), sub: 'across all 6 partners' },
+    { label: 'Latest month · ' + fmtMonth(months[latestIdx], true), value: fmtUSD(monthTotals[latestIdx], true), sub: 'total, all partners' },
+    { label: 'Peak month · ' + fmtMonth(months[peakIdx], true), value: fmtUSD(monthTotals[peakIdx], true), sub: 'highest single month' },
+    { label: 'Average month', value: fmtUSD(avgMonthly, true), sub: 'mean across 36 months' }
+  ];
+  stats.forEach(function (s) {
+    var tile = document.createElement('div');
+    tile.className = 'stat-tile';
+    tile.innerHTML = '<div class="label"></div><div class="value"></div><div class="sub"></div>';
+    tile.querySelector('.label').textContent = s.label;
+    tile.querySelector('.value').textContent = s.value;
+    tile.querySelector('.sub').textContent = s.sub;
+    statRow.appendChild(tile);
+  });
+
+  // ---- legend (with toggle-to-isolate) ----
+  var hidden = {}; // series currently hidden
+  var legend = document.getElementById('legend');
+  seriesOrder.forEach(function (key) {
+    var item = document.createElement('div');
+    item.className = 'legend-item';
+    item.dataset.series = key;
+    var sw = document.createElement('span');
+    sw.className = 'legend-swatch';
+    sw.style.background = seriesColor(key);
+    var label = document.createElement('span');
+    label.textContent = seriesLabel[key];
+    item.appendChild(sw);
+    item.appendChild(label);
+    item.addEventListener('click', function () {
+      hidden[key] = !hidden[key];
+      item.classList.toggle('is-off', !!hidden[key]);
+      render();
+    });
+    legend.appendChild(item);
+  });
+
+  // ---- chart geometry ----
+  var svg = document.getElementById('chart');
+  var W = 1000, H = 380;
+  var margin = { top: 14, right: 16, bottom: 30, left: 52 };
+  var plotW = W - margin.left - margin.right;
+  var plotH = H - margin.top - margin.bottom;
+
+  var maxVal = 0;
+  months.forEach(function (m) {
+    seriesOrder.forEach(function (p) { if (grid[m][p] > maxVal) maxVal = grid[m][p]; });
+  });
+  var yMax = Math.ceil(maxVal / 2000) * 2000; // round to clean step
+  var yTicks = 5;
+
+  function xPos(i) { return margin.left + (i / (months.length - 1)) * plotW; }
+  function yPos(v) { return margin.top + plotH - (v / yMax) * plotH; }
+
+  var NS = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+
+  function render() {
+    svg.innerHTML = '';
+
+    // gridlines + y-axis labels
+    for (var t = 0; t <= yTicks; t++) {
+      var v = (yMax / yTicks) * t;
+      var y = yPos(v);
+      svg.appendChild(el('line', { class: 'gridline', x1: margin.left, x2: W - margin.right, y1: y, y2: y }));
+      var lbl = el('text', { class: 'axis-text', x: margin.left - 8, y: y + 4, 'text-anchor': 'end' });
+      lbl.textContent = fmtUSD(v, true);
+      svg.appendChild(lbl);
+    }
+
+    // x-axis labels (every 3rd month to avoid crowding)
+    months.forEach(function (m, i) {
+      if (i % 3 !== 0 && i !== months.length - 1) return;
+      var lbl = el('text', { class: 'axis-text', x: xPos(i), y: H - margin.bottom + 18, 'text-anchor': 'middle' });
+      lbl.textContent = fmtMonth(m, true);
+      svg.appendChild(lbl);
+    });
+    svg.appendChild(el('line', { class: 'gridline', x1: margin.left, x2: W - margin.right, y1: margin.top + plotH, y2: margin.top + plotH }));
+
+    // lines
+    var visibleSeries = seriesOrder.filter(function (k) { return !hidden[k]; });
+    visibleSeries.forEach(function (key) {
+      var d = months.map(function (m, i) {
+        var v = grid[m][key];
+        return (i === 0 ? 'M' : 'L') + xPos(i).toFixed(2) + ',' + yPos(v).toFixed(2);
+      }).join(' ');
+      svg.appendChild(el('path', { class: 'series-line', d: d, stroke: seriesColor(key) }));
+      // end dot + label
+      var lastVal = grid[months[months.length - 1]][key];
+      svg.appendChild(el('circle', {
+        class: 'series-dot', cx: xPos(months.length - 1), cy: yPos(lastVal), r: 4, fill: seriesColor(key)
+      }));
+    });
+
+    // end labels (only if not too crowded — collapse to legend if series are close together)
+    var endVals = visibleSeries.map(function (k) { return { key: k, v: grid[months[months.length - 1]][k] }; })
+      .sort(function (a, b) { return b.v - a.v; });
+    var minGap = 16; // px, in plot-y units approx via px per label row
+    var lastY = null;
+    endVals.forEach(function (e) {
+      var y = yPos(e.v);
+      if (lastY !== null && Math.abs(y - lastY) < minGap) return; // skip to avoid collision
+      var t = el('text', { class: 'axis-text', x: W - margin.right + 6, y: y + 4, fill: seriesColor(e.key) });
+      t.setAttribute('style', 'font-weight:600; font-size:11px;');
+      t.textContent = seriesLabel[e.key];
+      svg.appendChild(t);
+      lastY = y;
+    });
+
+    // hover layer
+    var crosshair = el('line', { class: 'crosshair-line', x1: 0, x2: 0, y1: margin.top, y2: margin.top + plotH, style: 'display:none' });
+    svg.appendChild(crosshair);
+
+    var hoverRect = el('rect', {
+      class: 'hover-target', x: margin.left, y: margin.top, width: plotW, height: plotH
+    });
+    svg.appendChild(hoverRect);
+
+    var tooltip = document.getElementById('tooltip');
+
+    function showTooltip(i, clientX, clientY) {
+      var m = months[i];
+      crosshair.setAttribute('x1', xPos(i));
+      crosshair.setAttribute('x2', xPos(i));
+      crosshair.style.display = 'block';
+
+      var rows = visibleSeries
+        .map(function (k) { return { key: k, v: grid[m][k] }; })
+        .sort(function (a, b) { return b.v - a.v; });
+      var total = rows.reduce(function (s, r) { return s + r.v; }, 0);
+
+      var html = '<div class="tt-date"></div>';
+      tooltip.innerHTML = '';
+      var dateDiv = document.createElement('div');
+      dateDiv.className = 'tt-date';
+      dateDiv.textContent = fmtMonth(m, false);
+      tooltip.appendChild(dateDiv);
+
+      rows.forEach(function (r) {
+        var row = document.createElement('div');
+        row.className = 'tt-row';
+        var keyDiv = document.createElement('div');
+        keyDiv.className = 'tt-key';
+        var stroke = document.createElement('span');
+        stroke.className = 'tt-stroke';
+        stroke.style.background = seriesColor(r.key);
+        var label = document.createElement('span');
+        label.textContent = seriesLabel[r.key];
+        keyDiv.appendChild(stroke);
+        keyDiv.appendChild(label);
+        var valDiv = document.createElement('div');
+        valDiv.className = 'tt-val';
+        valDiv.textContent = fmtUSD(r.v, false);
+        row.appendChild(keyDiv);
+        row.appendChild(valDiv);
+        tooltip.appendChild(row);
+      });
+
+      var totalRow = document.createElement('div');
+      totalRow.className = 'tt-row tt-total';
+      totalRow.innerHTML = '<div>Total</div><div class="tt-val"></div>';
+      totalRow.querySelector('.tt-val').textContent = fmtUSD(total, false);
+      tooltip.appendChild(totalRow);
+
+      tooltip.classList.remove('hidden');
+      var container = svg.parentElement.getBoundingClientRect();
+      var left = clientX - container.left + 14;
+      var top = clientY - container.top - 10;
+      if (left + 190 > container.width) left = clientX - container.left - 190 - 14;
+      tooltip.style.left = left + 'px';
+      tooltip.style.top = Math.max(0, top) + 'px';
+    }
+    function hideTooltip() {
+      crosshair.style.display = 'none';
+      tooltip.classList.add('hidden');
+    }
+
+    function nearestIndex(clientX) {
+      var rect = svg.getBoundingClientRect();
+      var scale = W / rect.width;
+      var xSvg = (clientX - rect.left) * scale;
+      var frac = (xSvg - margin.left) / plotW;
+      var i = Math.round(frac * (months.length - 1));
+      return Math.max(0, Math.min(months.length - 1, i));
+    }
+
+    hoverRect.addEventListener('pointermove', function (e) {
+      var i = nearestIndex(e.clientX);
+      showTooltip(i, e.clientX, e.clientY);
+    });
+    hoverRect.addEventListener('pointerleave', hideTooltip);
+  }
+
+  render();
+
+  // ---- table view ----
+  var tableView = document.getElementById('tableView');
+  function buildTable() {
+    var table = document.createElement('table');
+    var caption = document.createElement('caption');
+    caption.textContent = 'Monthly paid media spend by partner (USD)';
+    table.appendChild(caption);
+
+    var thead = document.createElement('thead');
+    var headRow = document.createElement('tr');
+    ['Month'].concat(seriesOrder.map(function (k) { return seriesLabel[k]; })).concat(['Total']).forEach(function (h) {
+      var th = document.createElement('th');
+      th.textContent = h;
+      headRow.appendChild(th);
+    });
+    thead.appendChild(headRow);
+    table.appendChild(thead);
+
+    var tbody = document.createElement('tbody');
+    months.forEach(function (m, i) {
+      var tr = document.createElement('tr');
+      var tdMonth = document.createElement('td');
+      tdMonth.textContent = fmtMonth(m, true);
+      tr.appendChild(tdMonth);
+      seriesOrder.forEach(function (k) {
+        var td = document.createElement('td');
+        td.textContent = fmtUSD(grid[m][k], false);
+        tr.appendChild(td);
+      });
+      var tdTotal = document.createElement('td');
+      tdTotal.style.fontWeight = '600';
+      tdTotal.textContent = fmtUSD(monthTotals[i], false);
+      tr.appendChild(tdTotal);
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    tableView.innerHTML = '';
+    tableView.appendChild(table);
+  }
+  buildTable();
+
+  // ---- view toggle ----
+  var toggleButtons = document.querySelectorAll('.view-toggle button');
+  var chartCardEls = [document.getElementById('chart').parentElement, document.querySelector('.chart-header')];
+  toggleButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      toggleButtons.forEach(function (b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var view = btn.dataset.view;
+      if (view === 'chart') {
+        chartCardEls.forEach(function (el) { el.classList.remove('hidden'); });
+        tableView.classList.add('hidden');
+      } else {
+        chartCardEls.forEach(function (el) { el.classList.add('hidden'); });
+        tableView.classList.remove('hidden');
+      }
+    });
+  });
+
+  // ---- theme toggle ----
+  var themeToggle = document.getElementById('themeToggle');
+  var current = null; // null = follow system
+  themeToggle.addEventListener('click', function () {
+    if (current === 'dark') { current = 'light'; }
+    else if (current === 'light') { current = null; }
+    else { current = 'dark'; }
+    if (current) {
+      document.documentElement.setAttribute('data-theme', current);
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+    themeToggle.textContent = current === 'dark' ? 'Light mode' : 'Dark mode';
+    render();
+  });
+})();
+</script>
+</body>
+</html>

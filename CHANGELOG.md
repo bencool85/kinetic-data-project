@@ -1772,3 +1772,26 @@ seasonality calendar.
   this cloud sandbox (no network route to motherduck.com), so this was
   the available substitute for the project's usual "validate before
   shipping" discipline.
+
+## 2026-08-13 — First chart: warehouse/query1_paid_media_spend.html
+
+- User ran Query 1 in MotherDuck and pasted the actual output back;
+  visualized it as a self-contained interactive HTML chart (multi-line,
+  6 partners x 36 months) using the dataviz skill's procedure: form
+  (multi-line for "tell distinct series apart") -> categorical palette
+  (validated via the skill's own script, both light and dark surfaces,
+  before use) -> mark specs -> hover crosshair/tooltip -> accessibility
+  pass (legend + table view, since 3 of the 6 hues fall under 3:1 text
+  contrast on the light surface by the palette's own documented design).
+- Stat tiles up top (total spend, latest month, peak month, average
+  month) computed directly from the pasted data, cross-checked by hand:
+  $1.5M total matches the cross-dataset audit's Check 1 total
+  ($1,532,136.55) almost exactly; peak month Jan 2026 ($86.1K) lines up
+  with the New Year's-resolution acquisition surge documented in
+  `docs/business_context.md`'s seasonality calendar.
+- Rendered and screenshotted in a headless browser (light, hover
+  tooltip, dark mode, table view) before delivery to catch layout/JS
+  issues -- couldn't rely on "looks right in the editor" alone.
+- Treated as a one-off (SendUserFile only, not persisted as a Cowork
+  artifact) since it visualizes one specific pasted query result, not a
+  dashboard the user asked to keep returning to.
