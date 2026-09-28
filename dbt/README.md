@@ -23,14 +23,17 @@ database before moving on -- not the whole semantic layer in one shot.
 ## What's built so far
 
 - Staging: `customers`, `subscriptions`, `subscription_plans`, `invoices`,
-  `products` (the Phase 1/2 core entities)
-- Intermediate: `int_subscription_paid_periods` (resolves the trial-vs-paid
-  start date logic used everywhere else in this project)
-- Marts: `mart_mrr_monthly` (active subscriber count + MRR by month)
+  `products` (Phase 1/2 core entities); `orders`, `order_line_items`,
+  `payments`, `refunds`, `discount_codes` (Phase 3 storefront entities)
+- Intermediate: `int_subscription_paid_periods` (trial-vs-paid start date
+  logic), `int_orders_refunded` (per-order successfully-refunded amount)
+- Marts: `mart_mrr_monthly` (active subscribers + MRR/ARR by month),
+  `mart_storefront_revenue_monthly` (course/merch gross+net revenue, AOV,
+  guest-checkout share, discount-usage share, refund rate)
 
-Everything else in `docs/generation_plan.md`'s "Canonical metrics" list
-(ARR, churn, CAC/LTV, course/merch revenue, etc.) is still to come, table
-group by table group.
+Still to come, table group by table group: segment membership (Phase 4),
+web/app engagement (Phase 5), email/push funnels (Phase 6), paid media
+CAC/ROAS (Phase 7).
 
 ## Running it yourself
 

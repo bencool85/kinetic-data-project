@@ -13,3 +13,16 @@ models:
       - name: mrr_usd
         data_tests:
           - not_null
+
+  - name: mart_storefront_revenue_monthly
+    description: >
+      Canonical non-subscription (course + merch) storefront revenue by
+      month: gross/net revenue, AOV, guest-checkout share, discount-usage
+      share, refund rate. Note: net_revenue_usd is gross minus successful
+      refunds only -- not a true gross margin figure (no COGS data exists
+      in this dataset).
+    columns:
+      - name: year_month
+        data_tests: [not_null]
+      - name: order_count
+        data_tests: [not_null]

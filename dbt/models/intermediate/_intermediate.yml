@@ -10,3 +10,12 @@ models:
     columns:
       - name: subscription_id
         data_tests: [not_null, unique]
+
+  - name: int_orders_refunded
+    description: >
+      One row per order with at least one succeeded refund, with the total
+      refunded amount. Orders with no successful refund are absent (not a
+      zero row) -- always LEFT JOIN and COALESCE to 0 when using this.
+    columns:
+      - name: order_id
+        data_tests: [not_null, unique]

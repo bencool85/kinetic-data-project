@@ -48,3 +48,51 @@ models:
     columns:
       - name: product_id
         data_tests: [not_null, unique]
+
+  - name: stg_kinetic__orders
+    description: One row per order (customer or guest checkout).
+    columns:
+      - name: order_id
+        data_tests: [not_null, unique]
+
+  - name: stg_kinetic__order_line_items
+    description: One row per line item on an order.
+    columns:
+      - name: line_item_id
+        data_tests: [not_null, unique]
+      - name: order_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__orders')
+              field: order_id
+
+  - name: stg_kinetic__payments
+    description: One row per payment attempt against an order.
+    columns:
+      - name: payment_id
+        data_tests: [not_null, unique]
+      - name: order_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__orders')
+              field: order_id
+
+  - name: stg_kinetic__refunds
+    description: One row per refund issued against a payment.
+    columns:
+      - name: refund_id
+        data_tests: [not_null, unique]
+      - name: order_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__orders')
+              field: order_id
+
+  - name: stg_kinetic__discount_codes
+    description: One row per discount code definition.
+    columns:
+      - name: discount_code_id
+        data_tests: [not_null, unique]

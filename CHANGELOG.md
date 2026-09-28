@@ -1900,3 +1900,21 @@ seasonality calendar.
   `dbt_project.yml`; first staging models built and validated against the
   live `kinetic` database next. This is being built incrementally, phase by
   phase (same discipline as the original 47-table build), not all at once.
+
+## 2026-09-28 — dbt Phase 3: storefront revenue
+
+- Staging models for the storefront entities: `orders`, `order_line_items`,
+  `payments`, `refunds`, `discount_codes`.
+- New intermediate model `int_orders_refunded`: total successfully-refunded
+  amount per order (only `status = 'succeeded'` refunds count -- a
+  requested-but-failed refund shouldn't reduce reported revenue).
+- New mart `mart_storefront_revenue_monthly`: non-subscription (course +
+  merch) gross/net revenue, AOV, guest-checkout share, discount-usage
+  share, and refund rate by month. Net revenue is gross minus successful
+  refunds only -- explicitly documented as not a true gross margin figure,
+  since this dataset has no COGS data (same caveat already on the
+  MotherDuck Dive's CFO tab).
+- Validated against a hand-run equivalent query on the live `kinetic`
+  database before writing any dbt SQL: 2026-07 showed 246 orders,
+  $13,843.71 gross revenue, $56.28 AOV, 13.0% guest orders, 19.5% with a
+  discount applied, 4.5% of orders refunded ($649.59).

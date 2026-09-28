@@ -204,6 +204,14 @@ FILES = [
     ("dbt/models/intermediate/_intermediate.yml", "Code", "Tests for int_subscription_paid_periods"),
     ("dbt/models/marts/mart_mrr_monthly.sql", "Code", "First canonical metric mart: active subscribers + MRR/ARR by month, validated against a hand-run equivalent query on the live database (2026-07: 90 active subscribers, ~$2,133 MRR)"),
     ("dbt/models/marts/_marts.yml", "Code", "Tests for mart_mrr_monthly"),
+    ("dbt/README.md", "Docs", "Updated: what's built so far now includes the Phase 3 storefront staging models + mart_storefront_revenue_monthly"),
+    ("dbt/models/staging/kinetic/stg_kinetic__orders.sql", "Code", "Staging model: 1:1 pass-through of orders, plus is_guest_order/has_discount convenience booleans"),
+    ("dbt/models/staging/kinetic/stg_kinetic__order_line_items.sql", "Code", "Staging model: 1:1 pass-through of order_line_items"),
+    ("dbt/models/staging/kinetic/stg_kinetic__payments.sql", "Code", "Staging model: 1:1 pass-through of payments"),
+    ("dbt/models/staging/kinetic/stg_kinetic__refunds.sql", "Code", "Staging model: 1:1 pass-through of refunds"),
+    ("dbt/models/staging/kinetic/stg_kinetic__discount_codes.sql", "Code", "Staging model: 1:1 pass-through of discount_codes"),
+    ("dbt/models/intermediate/int_orders_refunded.sql", "Code", "Intermediate model: per-order total of succeeded refunds only (failed/pending refunds don't reduce reported revenue)"),
+    ("dbt/models/marts/mart_storefront_revenue_monthly.sql", "Code", "Second canonical metric mart: non-subscription (course+merch) gross/net revenue, AOV, guest-checkout share, discount-usage share, refund rate by month -- validated against a hand-run equivalent query on the live database (2026-07: 246 orders, $13,843.71 gross revenue, $56.28 AOV)"),
 ]
 
 
