@@ -9,7 +9,7 @@ from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment
 from openpyxl.utils import get_column_letter
 
-PROJECT_ROOT = "/home/claude/kinetic-project"
+PROJECT_ROOT = os.path.expanduser("~/Documents/kinetic-project")  # working git clone lives here now (see CHANGELOG 2026-09-28)
 OUTPUT_PATH = os.path.join(PROJECT_ROOT, "File_Manifest.xlsx")
 
 # (relative file path, category, description)
@@ -188,6 +188,22 @@ FILES = [
     ("warehouse/analysis_queries.sql", "Code", "6 starter SQL queries against the kinetic MotherDuck database: monthly paid media spend by partner, directly attributed revenue by paid/owned channel, active subscribers by month, non-subscription revenue by month, monthly churn rate, top 5 grossing products per year. Heavily commented to explain modeling choices (e.g. the paid/owned attribution methodology split between storefront orders and subscription invoices)."),
     ("warehouse/query1_paid_media_spend.html", "Deliverable", "One-off interactive chart visualizing Query 1's actual output (pasted by the user from their own MotherDuck run): monthly paid media spend by partner, Aug 2023-Jul 2026. Multi-line chart with hover tooltip, legend isolate-toggle, dark mode, and a table view -- built per the dataviz skill (validated categorical palette, accessible contrast handling)."),
     ("warehouse/kinetic_dive.tsx", "Deliverable", "Source for the 'Kinetic -- Marketing & Revenue Overview' MotherDuck Dive -- a live, hosted interactive dashboard (React/Recharts), now organized as 5 tabs. Overview tab: the original 6 starter queries + KPI row. CEO tab: revenue growth/net-new-vs-churned subscribers/CAC payback, revenue mix (subscription vs. course vs. merch). CMO tab: acquisition funnel by channel (sessions -> trial starts -> conversions), retention/app engagement by acquisition channel. CFO tab: CAC and LTV:CAC by acquisition cohort, discount code cost + failed-payment recovery rate + a documented net-margin proxy (no COGS data exists for a true gross margin). Performance Marketing tab: campaign-level spend and platform-self-reported efficiency across all 38 real campaigns (sorted worst-CAC-first), CTR/CVR by platform and ad format. Each new section documents its modeling limits explicitly (e.g. platform-reported vs. site-attributed conversions have no shared join key in this dataset). Re-runs live SQL against the kinetic database on every open. Saved to MotherDuck via the MCP tools; this file is the local source-of-truth copy for sync/history. Live at https://app.motherduck.com/dives/kinetic-marketing-revenue-overview-58909b4e-d301-4794-bb59-ce46f9dc73a6 (dive_id 58909b4e-d301-4794-bb59-ce46f9dc73a6, version 2)."),
+    ("README.md", "Docs", "Updated 2026-09-28: real project status (47/47 tables built+validated, live in MotherDuck) + direct link to the live Dive dashboard, replacing the stale 'planning complete, next step Phase 0' placeholder text"),
+    ("docs/cross_dataset_alignment_audit.md", "Docs", "Updated 2026-09-28: closed the one open item (brand_lift/holiday-discount-code asymmetry across the 3 Novembers) -- reviewed and confirmed intentional, no data changed"),
+    ("dbt/dbt_project.yml", "Code", "dbt project config for the new semantic layer -- staging views, intermediate views, mart tables"),
+    ("dbt/.gitignore", "Repo config", "Excludes dbt's target/, dbt_packages/, logs/ from git"),
+    ("dbt/README.md", "Docs", "How to install dbt-core + dbt-duckdb and run this project locally against MotherDuck (neither of Claude's environments can reach motherduck.com directly, so dbt run/test must be executed on the user's own machine)"),
+    ("dbt/models/staging/kinetic/_kinetic__sources.yml", "Code", "Declares all 47 raw kinetic tables as dbt sources, so every staging model references source() rather than a hardcoded table name"),
+    ("dbt/models/staging/kinetic/stg_kinetic__customers.sql", "Code", "Staging model: 1:1 pass-through of customers with light renaming"),
+    ("dbt/models/staging/kinetic/stg_kinetic__subscription_plans.sql", "Code", "Staging model: 1:1 pass-through of subscription_plans"),
+    ("dbt/models/staging/kinetic/stg_kinetic__subscriptions.sql", "Code", "Staging model: 1:1 pass-through of subscriptions"),
+    ("dbt/models/staging/kinetic/stg_kinetic__invoices.sql", "Code", "Staging model: 1:1 pass-through of invoices"),
+    ("dbt/models/staging/kinetic/stg_kinetic__products.sql", "Code", "Staging model: 1:1 pass-through of products"),
+    ("dbt/models/staging/kinetic/_kinetic__staging.yml", "Code", "not_null/unique/relationships tests for the Phase 1/2 staging models"),
+    ("dbt/models/intermediate/int_subscription_paid_periods.sql", "Code", "Intermediate model: resolves each subscription's true paid-start date (trial-vs-paid logic), defined once so every downstream mart agrees"),
+    ("dbt/models/intermediate/_intermediate.yml", "Code", "Tests for int_subscription_paid_periods"),
+    ("dbt/models/marts/mart_mrr_monthly.sql", "Code", "First canonical metric mart: active subscribers + MRR/ARR by month, validated against a hand-run equivalent query on the live database (2026-07: 90 active subscribers, ~$2,133 MRR)"),
+    ("dbt/models/marts/_marts.yml", "Code", "Tests for mart_mrr_monthly"),
 ]
 
 

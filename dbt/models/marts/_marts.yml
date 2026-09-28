@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: mart_mrr_monthly
+    description: >
+      Canonical Monthly Recurring Revenue and active-subscriber-count by
+      month. This is the one place MRR/ARR are defined for the whole
+      project -- dashboards and future marts should query this rather than
+      recomputing the trial/paid-start logic themselves.
+    columns:
+      - name: year_month
+        data_tests: [not_null]
+      - name: mrr_usd
+        data_tests:
+          - not_null

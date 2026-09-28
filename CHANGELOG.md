@@ -1867,3 +1867,36 @@ seasonality calendar.
 - Updated the same saved Dive (dive_id 58909b4e-..., now version 2) via
   `update_dive`, then re-verified with `view_dive`. Local source-of-truth
   copy at `warehouse/kinetic_dive.tsx` updated to match exactly and synced.
+
+## 2026-09-28 — Recovered git history pushed to GitHub; audit gap closed; dbt semantic layer started
+
+- Six weeks after the last session, the git history (52 commits, lost when the
+  prior cloud sandbox that held them was recycled) was recovered from a backup
+  tarball on Ben's Mac, verified intact (`git log` still showed all 52 commits,
+  clean working tree), and pushed to `github.com/bencool85/kinetic-data-project`.
+  All 595 objects transferred; the repo's `master` branch now matches this
+  project's full history.
+- Discovered along the way that this project's git working copy can no longer
+  live inside the iCloud-synced `Data_Engineering_Project_July2026` folder --
+  iCloud's "cloud-only" placeholder files can't be read through the automation
+  bridge used to drive the Mac (reads fail with a filesystem deadlock error),
+  and git's own internal write pattern (rapid small file changes on every
+  commit) doesn't mix well with iCloud sync regardless. The working git clone
+  now lives at `~/Documents/kinetic-project` -- a plain local, non-iCloud
+  folder -- with GitHub as the actual "access from anywhere" cloud copy. The
+  iCloud folder keeps its original job: a synced, human-browsable mirror of
+  the current files via `File_Manifest.xlsx`, not a git-tracked directory.
+- Closed the one open item from the cross-dataset alignment audit: the
+  brand_lift/holiday-discount-code asymmetry across the 3 Novembers (2023/
+  2024/2025) is being kept as-is, confirmed intentional realism rather than a
+  gap to fix. See `docs/cross_dataset_alignment_audit.md` for the resolution
+  note.
+- README updated with the project's actual current status (all 47 tables
+  built + validated, live in MotherDuck) and a direct link to the live Dive
+  dashboard.
+- Started a `dbt/` project -- the "semantic layer" step from this project's
+  original stated roadmap (raw data -> data platform -> semantic layer ->
+  AI agents). Scaffolded staging/intermediate/marts folder structure and
+  `dbt_project.yml`; first staging models built and validated against the
+  live `kinetic` database next. This is being built incrementally, phase by
+  phase (same discipline as the original 47-table build), not all at once.

@@ -23,5 +23,25 @@ kinetic-project/
 
 ## Status
 
-Planning complete. Next step: build Phase 0 (the master timeline simulation).
-See `docs/generation_plan.md` for the full build sequence.
+All 47 tables built, individually validated, and cross-dataset audited (see
+`docs/cross_dataset_alignment_audit.md`). Loaded into MotherDuck as the live
+`kinetic` database. A `dbt` semantic layer (staging -> intermediate -> marts,
+canonical metric definitions) is being built on top -- see `dbt/README.md`
+once that folder exists.
+
+## Live dashboard
+
+The MotherDuck Dive (5 tabs: Overview / CEO / CMO / CFO / Performance
+Marketing, 8 persona-specific stories, all live-queried against the real
+data) is here:
+
+https://app.motherduck.com/dives/kinetic-marketing-revenue-overview-58909b4e-d301-4794-bb59-ce46f9dc73a6
+
+## Source of truth
+
+- **This repo** (`github.com/bencool85/kinetic-data-project`) -- code,
+  generators, docs, full history.
+- **MotherDuck `kinetic` database** -- the live warehouse the Dive queries.
+- Working git clone lives at `~/Documents/kinetic-project` on Ben's Mac
+  (kept outside iCloud sync on purpose -- see `CHANGELOG.md`, 2026-09-28
+  entry, for why).

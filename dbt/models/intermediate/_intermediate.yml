@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: int_subscription_paid_periods
+    description: >
+      One row per subscription, with paid_start_date resolved (null if the
+      subscription was canceled during its trial and never actually paid).
+      This is the single source of truth for "is this subscription actively
+      paying as of date X" used by every mart below.
+    columns:
+      - name: subscription_id
+        data_tests: [not_null, unique]

@@ -1,0 +1,50 @@
+version: 2
+
+models:
+  - name: stg_kinetic__customers
+    description: One row per customer, 1:1 with the raw customers table.
+    columns:
+      - name: customer_id
+        data_tests: [not_null, unique]
+
+  - name: stg_kinetic__subscription_plans
+    description: One row per subscription plan (tier x billing interval).
+    columns:
+      - name: plan_id
+        data_tests: [not_null, unique]
+
+  - name: stg_kinetic__subscriptions
+    description: One row per subscription object (Stripe-shaped).
+    columns:
+      - name: subscription_id
+        data_tests: [not_null, unique]
+      - name: customer_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__customers')
+              field: customer_id
+      - name: plan_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__subscription_plans')
+              field: plan_id
+
+  - name: stg_kinetic__invoices
+    description: One row per invoice generated for a subscription.
+    columns:
+      - name: invoice_id
+        data_tests: [not_null, unique]
+      - name: subscription_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__subscriptions')
+              field: subscription_id
+
+  - name: stg_kinetic__products
+    description: One row per sellable product (course or merch).
+    columns:
+      - name: product_id
+        data_tests: [not_null, unique]

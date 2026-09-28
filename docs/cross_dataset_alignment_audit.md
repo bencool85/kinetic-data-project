@@ -44,6 +44,8 @@ Every brand_lift flight (Meta/YouTube/Snap/TikTok), Braze "Seasonal Sale Promo" 
 
 **Noted gap (not a bug):** brand_lift flights ran in all 3 Novembers (2023, 2024, 2025), but `discount_codes.csv` only has a matching holiday code (`HOLIDAY2024`) and Braze send for **2024**. The 2023 and November-2025 brand-awareness flights ran with no accompanying promo code or Braze campaign. This is a legitimate real-world pattern (companies run brand awareness without always pairing it with a discount), but it's asymmetric across the 3 years and worth flagging in case you'd rather it be consistent. Left as-is pending your call — no data was changed for this.
 
+**Resolved 2026-09-28:** Ben reviewed this and confirmed it should stay as-is -- real companies don't always pair brand-awareness spend with a promo code, so the asymmetry across the 3 Novembers is being kept as intentional, realistic variation rather than "fixed" for symmetry. No data changed. This closes the last open item from the original 47-table build.
+
 ## Check 4 — Long-run growth trend
 
 `params.py`'s `GROWTH_END_MULTIPLIER = 2.4` is baked into the seasonality calendar. Quarterly growth ratios (avg of last 2 quarters / avg of first 2):

@@ -1,0 +1,59 @@
+version: 2
+
+sources:
+  - name: kinetic
+    database: kinetic
+    schema: main
+    description: >
+      The 47 synthetic raw tables for the Kinetic project, generated
+      phase-by-phase per docs/generation_plan.md and individually validated.
+      Declared here so every staging model references a source(), not a
+      hardcoded table name.
+    tables:
+      - name: app_events
+      - name: app_sessions
+      - name: braze_email_campaigns
+      - name: braze_email_events
+      - name: braze_push_campaigns
+      - name: braze_push_events
+      - name: customer_addresses
+      - name: customer_segment_membership
+      - name: customers
+      - name: devices
+      - name: discount_codes
+      - name: dv360_insertion_orders
+      - name: dv360_line_items
+      - name: dv360_performance_daily
+      - name: google_search_ad_groups
+      - name: google_search_campaigns
+      - name: google_search_keyword_performance_daily
+      - name: google_search_performance_daily
+      - name: identity_map
+      - name: invoices
+      - name: meta_ad_actions_daily
+      - name: meta_ad_insights_daily
+      - name: meta_ads
+      - name: meta_campaigns
+      - name: order_line_items
+      - name: orders
+      - name: payments
+      - name: product_variants
+      - name: products
+      - name: refunds
+      - name: segments
+      - name: snap_ad_squads
+      - name: snap_ads
+      - name: snap_campaigns
+      - name: snap_stats_daily
+      - name: subscription_events
+      - name: subscription_plans
+      - name: subscriptions
+      - name: tiktok_adgroups
+      - name: tiktok_ads
+      - name: tiktok_campaigns
+      - name: tiktok_reports_daily
+      - name: web_events
+      - name: web_sessions
+      - name: youtube_ad_groups
+      - name: youtube_campaigns
+      - name: youtube_performance_daily
