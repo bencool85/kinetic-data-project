@@ -27,6 +27,7 @@ Read this first in a new chat, then the last few CHANGELOG.md entries.
 dbt (transformation tool run separately, not a database; models are SQL files; staging/intermediate/marts; views vs tables; source()/ref(); tests), the semantic layer vs marts, plain-language descriptions for agents, and "Skills". Also git basics: tarball, commit vs push, tokens. He learns best by asking questions while reading; answer them and do not move on until he confirms.
 
 ## Session setup to redo each time
+- Work from the Data-to-Agents Playbook (~/Documents/double-black-solutions/playbook/data-to-agents-playbook.html, published at https://claude.ai/artifact/Fp9K8mpVyvbzvRvqxc1ruo). At the end of every sub-batch, update its section 13 (Applied to Kinetic) status table and "Next up", republish to the same URL, and add a line to double-black-solutions/LOG.md. Propose changes to the framework itself (sections 00-12) to Ben before making them. The playbook is not in git; the local file is the source of truth.
 - Delete permission for ~/Documents is per session; ask only if needed (use mv to _to_delete otherwise).
 - Ask before any MotherDuck write. Ben has approved writes case by case.
 - Manifest: add a line in generator/build_manifest.py, then run with HOME="$HOME/mnt" python3 generator/build_manifest.py.

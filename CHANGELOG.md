@@ -2225,3 +2225,13 @@ seasonality calendar.
 ## 2026-09-29 — Added HANDOFF.md
 
 - New `HANDOFF.md` at the repo root: status, open decisions, decisions already made, what Ben already understands, per-session setup, and past pitfalls. Written so a new chat or project can start without this conversation.
+
+## 2026-09-29 — Playbook is now the working plan
+
+- Ben: work from the Data-to-Agents Playbook and update it as we go. Its
+  section 13 (Applied to Kinetic) now shows Phase 2 done (47/47), the
+  Phase 3 build order, and the 3 open decisions; republished to the same
+  page. The local copy and the published page had drifted (42 vs 46 of 47
+  staged); both now match.
+- HANDOFF.md: added the rule to update section 13 at the end of every
+  sub-batch.
