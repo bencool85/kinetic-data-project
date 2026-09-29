@@ -12,13 +12,15 @@ lifetime_budget_micro independently across its own flight days.
 
 Output: data/snap_stats_daily.csv
 """
+import copy
+
 import numpy as np
 import pandas as pd
 
 from params import (SEED, START_DATE, END_DATE, AD_OBJECTIVE_SPEND_SHARE, AD_PAUSE_DAY_RATE,
                      SNAP_CPM_RANGE_BY_OBJECTIVE, SNAP_SWIPE_RATE_RANGE_BY_OBJECTIVE,
                      SNAP_CONVERSION_RATE_BY_OBJECTIVE, SNAP_AVG_CONVERSION_VALUE_RANGE, SNAP_VIDEO_VIEW_RATE_RANGE)
-from paid_media_common import load_calendar_lookups, daily_channel_spend, date_range
+from paid_media_common import load_calendar_lookups, daily_channel_spend, date_range, cap_flight_at_budget
 
 
 def build_snap_stats_daily(seed=SEED + 70):
@@ -57,11 +59,14 @@ def build_snap_stats_daily(seed=SEED + 70):
         flight_start, flight_end = ad["start_date"], min(ad["end_date"], END_DATE)
         n_days = (flight_end - flight_start).days + 1
         daily_target = (campaign["lifetime_budget_micro"] / 1_000_000) / n_days
+        flight_days = []
         for d in date_range(flight_start, flight_end):
             if rng.random() < AD_PAUSE_DAY_RATE:
                 continue
             spend = daily_target * rng.lognormal(mean=0.0, sigma=0.20)
-            rows.append(_stats_row(rng, ad, d, spend, "brand_lift"))
+            state = copy.deepcopy(rng.bit_generator.state)
+            flight_days.append((state, ad, d, spend, _stats_row(rng, ad, d, spend, "brand_lift")))
+        rows.extend(cap_flight_at_budget(flight_days, (campaign["lifetime_budget_micro"] / 1_000_000), _stats_row, "spend_micro", 1e-6))
 
     df = pd.DataFrame(rows).sort_values(["date", "ad_id"]).reset_index(drop=True)
     return df

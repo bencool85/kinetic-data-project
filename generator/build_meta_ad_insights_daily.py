@@ -24,12 +24,14 @@ session gaps etc. elsewhere in this project).
 Output: data/meta_ad_insights_daily.csv
 """
 import datetime
+import copy
+
 import numpy as np
 import pandas as pd
 
 from params import (SEED, START_DATE, END_DATE, AD_OBJECTIVE_SPEND_SHARE, AD_PAUSE_DAY_RATE,
                      META_CPM_RANGE_BY_OBJECTIVE, META_CTR_RANGE_BY_OBJECTIVE, META_FREQUENCY_RANGE)
-from paid_media_common import load_calendar_lookups, daily_channel_spend, date_range
+from paid_media_common import load_calendar_lookups, daily_channel_spend, date_range, cap_flight_at_budget
 
 
 def build_meta_ad_insights_daily(seed=SEED + 30):
@@ -72,11 +74,14 @@ def build_meta_ad_insights_daily(seed=SEED + 30):
         # lifetime_budget is stored in cents (Meta API convention, same as
         # daily_budget) -- convert to dollars before spreading across days.
         daily_target = (campaign["lifetime_budget"] / 100) / n_days
+        flight_days = []
         for d in date_range(flight_start, flight_end):
             if rng.random() < AD_PAUSE_DAY_RATE:
                 continue
             spend = daily_target * rng.lognormal(mean=0.0, sigma=0.20)
-            rows.append(_insight_row(rng, ad, d, spend, "brand_lift"))
+            state = copy.deepcopy(rng.bit_generator.state)
+            flight_days.append((state, ad, d, spend, _insight_row(rng, ad, d, spend, "brand_lift")))
+        rows.extend(cap_flight_at_budget(flight_days, (campaign["lifetime_budget"] / 100), _insight_row, "spend", 1.0))
 
     df = pd.DataFrame(rows).sort_values(["date", "ad_id"]).reset_index(drop=True)
     return df

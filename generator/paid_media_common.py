@@ -64,3 +64,35 @@ def date_range(start_date, end_date):
     while d <= end_date:
         yield d
         d += datetime.timedelta(days=1)
+
+
+def cap_flight_at_budget(flight_days, budget_usd, row_fn, spend_col, to_usd):
+    """Added 2026-09-29. A lifetime-budget flight must never spend more than
+    its budget (real platforms stop billing there), but each flight day's
+    spend is a random draw around budget / n_days, so the total could land a
+    few percent over. If it does, scale that flight's days down proportionally
+    so it spends exactly its budget.
+
+    flight_days: list of (rng_state_before_row, ad, date, spend_usd, row)
+    tuples collected while building the flight. The saved rng state lets each
+    row be rebuilt with the SAME random rates (CPM, CTR, etc.) at the lower
+    spend, using a throwaway generator -- so the shared random stream, and
+    therefore every other row in the table, is untouched. A flight already
+    within budget is returned exactly as drawn.
+    """
+    rows = [r for (_, _, _, _, r) in flight_days]
+    total = sum(r[spend_col] * to_usd for r in rows)
+    if total <= budget_usd:
+        return rows
+    factor = budget_usd / total
+    for _ in range(20):  # per-row rounding can leave a few cents over; nudge down until it fits
+        rebuilt = []
+        for state, ad, d, spend, _row in flight_days:
+            replay = np.random.default_rng()
+            replay.bit_generator.state = state
+            rebuilt.append(row_fn(replay, ad, d, spend * factor, "brand_lift"))
+        new_total = sum(r[spend_col] * to_usd for r in rebuilt)
+        if new_total <= budget_usd:
+            return rebuilt
+        factor *= budget_usd / new_total * 0.9999
+    raise RuntimeError("could not fit flight within budget")

@@ -18,6 +18,8 @@ this is what real TrueView/bumper billing actually optimizes for.
 
 Output: data/youtube_performance_daily.csv
 """
+import copy
+
 import numpy as np
 import pandas as pd
 
@@ -25,7 +27,7 @@ from params import (SEED, START_DATE, END_DATE, AD_OBJECTIVE_SPEND_SHARE, AD_PAU
                      YOUTUBE_CPV_RANGE_BY_OBJECTIVE, YOUTUBE_VIEW_RATE_RANGE_BY_OBJECTIVE,
                      YOUTUBE_CLICK_RATE_RANGE_BY_OBJECTIVE, YOUTUBE_CONVERSION_RATE_BY_OBJECTIVE,
                      YOUTUBE_AVG_CONVERSION_VALUE_RANGE)
-from paid_media_common import load_calendar_lookups, daily_channel_spend, date_range
+from paid_media_common import load_calendar_lookups, daily_channel_spend, date_range, cap_flight_at_budget
 
 
 def build_youtube_performance_daily(seed=SEED + 50):
@@ -64,11 +66,14 @@ def build_youtube_performance_daily(seed=SEED + 50):
         flight_start, flight_end = ag["start_date"], min(ag["end_date"], END_DATE)
         n_days = (flight_end - flight_start).days + 1
         daily_target = (campaign["lifetime_budget_micros"] / 1_000_000) / n_days
+        flight_days = []
         for d in date_range(flight_start, flight_end):
             if rng.random() < AD_PAUSE_DAY_RATE:
                 continue
             spend = daily_target * rng.lognormal(mean=0.0, sigma=0.20)
-            rows.append(_perf_row(rng, ag, d, spend, "brand_lift"))
+            state = copy.deepcopy(rng.bit_generator.state)
+            flight_days.append((state, ag, d, spend, _perf_row(rng, ag, d, spend, "brand_lift")))
+        rows.extend(cap_flight_at_budget(flight_days, (campaign["lifetime_budget_micros"] / 1_000_000), _perf_row, "cost_micros", 1e-6))
 
     df = pd.DataFrame(rows).sort_values(["date", "ad_group_id"]).reset_index(drop=True)
     return df

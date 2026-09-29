@@ -503,7 +503,8 @@ def check_8_spend_vs_budget():
         cap, stricter than Google's 30.4x monthly cap) and each day <= 1.75x
         (Meta's daily allowance; Google allows 2x)
       * DV360 monthly budget: each calendar month <= the budget (even pacing)
-      * lifetime budgets (holiday flights): total <= 1.05x the budget
+      * lifetime budgets (holiday flights): total <= the budget (platforms
+        stop billing there; generator caps flights since 2026-09-29)
     """
     print("\n" + "=" * 100)
     print("CHECK 8 -- Spend vs. stored budget, every campaign on all 6 platforms")
@@ -567,10 +568,10 @@ def check_8_spend_vs_budget():
     for platform, df in lifetime_budgeted.items():
         tot = df.groupby("cid").agg(spend=("spend_usd", "sum"), budget=("budget_usd", "first"))
         tot["ratio"] = tot["spend"] / tot["budget"]
-        bad = int((tot["ratio"] > 1.05).sum())
+        bad = int((tot["ratio"] > 1.0).sum())
         problems += bad
         print(f"  {platform:<14} {len(tot)} flights, ratios {', '.join(f'{r:.3f}' for r in tot['ratio'])}"
-              f"{'' if bad == 0 else f'  <-- {bad} over 1.05x'}")
+              f"{'' if bad == 0 else f'  <-- {bad} over budget'}")
 
     if problems == 0:
         print("\n[PASS] No campaign on any platform spends more than its stored budget allows.")

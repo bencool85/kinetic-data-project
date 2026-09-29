@@ -94,3 +94,26 @@ Swept all 47 tables' 45 datetime columns and 34 date-only columns for formatting
 - `CHANGELOG.md`, `File_Manifest.xlsx` — updated.
 
 No other shipped table was touched. Checks 3 and 5's findings are documented above but no data was changed for either — they're real characteristics of a synthetic dataset built this way, not defects, and I wanted your read on whether you'd like them addressed before touching anything.
+
+## Check 8 — Spend vs. stored budget (added 2026-09-29)
+
+None of the per-table validators ever compared a campaign's budget to what
+it actually spent. Staging the paid-media tables surfaced that the original
+build stored flat launch-era "typical day" budgets for all 3 years while
+spend grew 2.4x, so later months spent far past them (TikTok up to ~20x) --
+an impossible scenario on any real ad platform.
+
+**Fixed.** Every always-on budget is now the campaign's *current* budget,
+sized from realized spend: every calendar week averages at or under it
+(Meta's weekly cap, stricter than Google's 30.4x monthly cap), no day above
+1.75x (Meta's daily allowance; Google allows 2x), and DV360's monthly budget
+covers its highest month. Only budget columns changed; spend untouched.
+
+Holiday brand-lift flights had a separate, smaller problem: random daily
+variation let 6 of 12 flights overshoot their lifetime budgets by 0.7-6.4%
+($430 total). **Fixed** by capping each flight at its budget in the spend
+generators (`paid_media_common.cap_flight_at_budget`), which only rescales
+an overshooting flight's own days and leaves every other row identical.
+
+Result after both fixes: 0 of 3,297 campaign-weeks over budget, 0 days
+over 1.75x, 0 of 180 DV360 months over, all 12 flights at or under budget.

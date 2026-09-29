@@ -256,6 +256,17 @@ FILES = [
     ("data/tiktok_campaigns.csv", "Shipped table", "Regenerated 2026-09-29: BUDGET_MODE_DAY budget_micro updated to current budgets (only that column, only the 4 evergreen rows changed)"),
     ("generator/audit_cross_dataset_alignment.py", "Code", "Updated 2026-09-29: new Check 8 -- spend vs stored budget for every campaign on all 6 platforms (weekly/daily limits for daily budgets, monthly for DV360, total for holiday flights)"),
     ("dbt/models/staging/kinetic/stg_kinetic__dv360_insertion_orders.sql", "Code", "Updated: budget known-issue note replaced -- budgets are now current budgets"),
+    ("generator/paid_media_common.py", "Code", "Updated 2026-09-29: new cap_flight_at_budget() -- rescales a holiday flight's days so it never spends past its lifetime budget, replaying the same random rates so every other row is unchanged"),
+    ("generator/build_meta_ad_insights_daily.py", "Code", "Updated 2026-09-29: holiday flights capped at their lifetime budget via cap_flight_at_budget()"),
+    ("generator/build_snap_stats_daily.py", "Code", "Updated 2026-09-29: holiday flights capped at their lifetime budget via cap_flight_at_budget()"),
+    ("generator/build_tiktok_reports_daily.py", "Code", "Updated 2026-09-29: holiday flights capped at their lifetime budget via cap_flight_at_budget()"),
+    ("generator/build_youtube_performance_daily.py", "Code", "Updated 2026-09-29: holiday flights capped at their lifetime budget via cap_flight_at_budget() (no-op today -- all YouTube flights were already under budget)"),
+    ("data/meta_ad_insights_daily.csv", "Shipped table", "Regenerated 2026-09-29: the 2023 and 2024 holiday flights (38 rows) trimmed to spend exactly their lifetime budget; every other row identical"),
+    ("data/meta_ad_actions_daily.csv", "Shipped table", "Regenerated 2026-09-29: re-derived from the trimmed insights rows -- only the 2023/2024 holiday flights' action rows changed (one initiate_checkout row on 2024-11-15 dropped to zero and is no longer emitted)"),
+    ("data/snap_stats_daily.csv", "Shipped table", "Regenerated 2026-09-29: the 2024 holiday flight (19 rows) trimmed to spend exactly its lifetime budget; every other row identical"),
+    ("data/tiktok_reports_daily.csv", "Shipped table", "Regenerated 2026-09-29: the 2023/2024/2025 holiday flights (56 rows) trimmed to spend exactly their lifetime budgets; every other row identical"),
+    ("docs/cross_dataset_alignment_audit.md", "Docs", "Updated 2026-09-29: added Check 8 (spend vs stored budget) with both fixes and results"),
+    ("generator/audit_cross_dataset_alignment.py", "Code", "Updated 2026-09-29: Check 8's flight limit tightened from 1.05x to 1.0x now that flights are capped"),
 ]
 
 

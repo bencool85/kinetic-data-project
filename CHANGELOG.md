@@ -2120,7 +2120,7 @@ seasonality calendar.
   $65-$150, Snap $35-$85, TikTok $130-$310; DV360 monthly $750-$2,250.
 - All 77 original validator checks on the 6 tables still pass.
 - New Check 8 in `audit_cross_dataset_alignment.py`: spend vs budget for
-  every campaign. Result after the fix: 0 of 4,216 campaign-weeks over,
+  every campaign. Result after the fix: 0 of 3,297 campaign-weeks over,
   0 days over 1.75x, 0 of 180 DV360 months over (worst 0.99x).
 - Applied the same 26 values to the live MotherDuck database (Ben
   approved the write; a first attempt errored on an integer overflow in my
@@ -2130,3 +2130,42 @@ seasonality calendar.
 - Check 8 also flagged 6 holiday flights that spent 0.7%-6.4% over their
   lifetime budgets ($430 total). Ben chose to cap flight spend at budget;
   that fix follows in the next entry.
+
+## 2026-09-29 — Fixed: holiday flights capped at their lifetime budget
+
+- Ben chose to cap flight spend at budget. 6 of 12 holiday brand-lift
+  flights had overshot their lifetime budgets by 0.7%-6.4% ($430 total):
+  Meta 2023/2024, Snap 2024, TikTok 2023/2024/2025. Cause: each flight
+  day's spend is a random draw around budget / days, and nothing capped
+  the total.
+- New `cap_flight_at_budget()` in `paid_media_common.py`, wired into the
+  Meta, Snap, TikTok and YouTube spend generators. If a flight's total
+  lands over budget, its days are scaled down proportionally so it spends
+  exactly the budget. Impressions/clicks etc. are rebuilt from the SAME
+  random rates (the saved random-generator state is replayed on a
+  throwaway copy), so the shared random stream -- and every other row in
+  each table -- is untouched. Confirmed each flight has exactly one ad, so
+  capping per ad equals capping per campaign.
+- Rebuilt meta_ad_insights_daily, meta_ad_actions_daily, snap_stats_daily,
+  tiktok_reports_daily, youtube_performance_daily. Diffed every row
+  against the previous files: only the 5 overshooting flights' rows
+  changed (38 Meta insights rows, their action rows, 19 Snap rows, 56
+  TikTok rows); YouTube identical; nothing outside those flights moved.
+  One Meta action row disappeared: on 2024-11-15 the trim took
+  initiate_checkout from 1 to 0, and zero-count actions aren't emitted
+  (same as Meta's API).
+- Total ad spend across all 6 platforms: $1,532,136.55 -> $1,531,706.93
+  (-$429.62, exactly the overshoot). Meta total is now $429,291.38 (the
+  Meta staging entry above quoted $429,401.02 before this fix).
+- All 69 validator checks on the 5 rebuilt tables pass. Audit checks 1
+  and 3 re-run: spend-vs-demand correlations unchanged in substance (web
+  sessions r=0.804, signups 0.659, orders 0.486, revenue 0.497); flight
+  dates unchanged. Check 8 now requires flights to be at or under budget
+  (was 1.05x) and passes: all 12 flights at or under.
+- Applied to live MotherDuck (Ben approved): for each table, the 5 flights'
+  old rows deleted and regenerated rows inserted in one transaction per
+  table (271 rows total). Verified all 4 tables match the CSVs exactly:
+  row counts plus exact whole-table totals of every numeric column. Also
+  confirmed from MotherDuck that every flight is at or under budget.
+- No dashboard logic changes; the Dive's paid-media spend totals drop by
+  the $430 (under 0.03%).
