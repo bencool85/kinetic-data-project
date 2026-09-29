@@ -276,6 +276,7 @@ FILES = [
     ("dbt/models/staging/kinetic/stg_kinetic__tiktok_adgroups.sql", "Code", "Phase 2 staging (paid media: TikTok): 1:1 pass-through of tiktok_adgroups"),
     ("dbt/models/staging/kinetic/stg_kinetic__tiktok_ads.sql", "Code", "Phase 2 staging (paid media: TikTok): 1:1 pass-through of tiktok_ads"),
     ("dbt/models/staging/kinetic/stg_kinetic__tiktok_reports_daily.sql", "Code", "Phase 2 staging (paid media: TikTok): ad-day reports with combined ad_day_id key, spend and CPM in micros and dollars, ctr_fraction"),
+    ("dbt/models/staging/kinetic/stg_kinetic__product_variants.sql", "Code", "Phase 2 staging (final table, 47 of 47): product variants with variant_option, price_adjustment_usd"),
     ("dbt/models/staging/kinetic/_kinetic__staging.yml", "Code", "Updated: tests for the 4 TikTok staging models -- all hand-verified against live data first"),
 ]
 

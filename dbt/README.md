@@ -23,7 +23,7 @@ database before moving on -- not the whole semantic layer in one shot.
 ## What's built so far
 
 - Staging: `customers`, `subscriptions`, `subscription_plans`, `invoices`,
-  `products` (Phase 1/2 core entities); `orders`, `order_line_items`,
+  `products`, `product_variants` (Phase 1/2 core entities); `orders`, `order_line_items`,
   `payments`, `refunds`, `discount_codes` (Phase 3 storefront entities);
   `customer_addresses`, `devices`, `identity_map`, `segments`,
   `customer_segment_membership`, `subscription_events` (Customer 360);
@@ -33,7 +33,7 @@ database before moving on -- not the whole semantic layer in one shot.
   tables (paid media: Meta); the 4 `google_search_*` tables (paid media:
   Google Search); the 3 `youtube_*` tables (paid media: YouTube); the 3
   `dv360_*` tables (paid media: DV360); the 4 `snap_*` tables (paid media:
-  Snap); the 4 `tiktok_*` tables (paid media: TikTok) -- 46 of 47 raw
+  Snap); the 4 `tiktok_*` tables (paid media: TikTok) -- 47 of 47 raw
   tables staged
 - Intermediate: `int_subscription_paid_periods` (trial-vs-paid start date
   logic), `int_orders_refunded` (per-order successfully-refunded amount)

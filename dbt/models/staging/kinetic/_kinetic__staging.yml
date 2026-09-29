@@ -663,3 +663,17 @@ models:
           - relationships:
               to: ref('stg_kinetic__tiktok_ads')
               field: ad_id
+
+  - name: stg_kinetic__product_variants
+    description: One row per purchasable variant of a product (size, or the single default option).
+    columns:
+      - name: variant_id
+        data_tests: [not_null, unique]
+      - name: product_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__products')
+              field: product_id
+      - name: sku
+        data_tests: [not_null, unique]

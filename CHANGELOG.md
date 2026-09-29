@@ -2209,3 +2209,15 @@ seasonality calendar.
   equals clicks / impressions and CPM equals spend / impressions x 1,000;
   conversion value averages $89.15, so it's dollars. Total TikTok spend
   $333,914.27 (after the flight cap).
+
+## 2026-09-29 — Phase 2 sub-batch 10: product_variants staging (Phase 2 complete)
+
+- Added `stg_kinetic__product_variants`, the last of the 47 raw tables. **All
+  47 raw tables are now staged; Phase 2 is complete.**
+- Renames: `option_value` -> `variant_option`, `price_adjustment` ->
+  `price_adjustment_usd`, `created_at` -> `variant_created_at`.
+- Hand-verified before writing tests: 21 variants, all `variant_id` and
+  `sku` unique and non-null; every variant points at a real product (0
+  orphans) and all 12 products have at least one; no negative price
+  adjustments (all $0); every variant was created on or after its
+  product's creation date; all 21 active.
