@@ -7,7 +7,7 @@ different question: do the 47 tables agree with EACH OTHER in aggregate --
 timing, seasonality, growth, and calendar structure -- in ways a per-table
 validator can't see by construction.
 
-Run whole-file for all 7 checks, or import and call check_N() individually.
+Run whole-file for all 8 checks, or import and call check_N() individually.
 Each check prints its own findings; nothing here raises/exits non-zero,
 since several of these are descriptive (growth trend, day-of-week pattern)
 rather than strict pass/fail.
@@ -493,6 +493,91 @@ def check_7_timezone_precision_sweep():
           "tables, not just assumed.")
 
 
+def check_8_spend_vs_budget():
+    """Added 2026-09-29. Does any campaign spend more than its stored budget
+    allows? None of the per-table validators compared budgets to spend, and
+    the original build stored flat "typical day" budgets while spend grew
+    2.4x -- so later months spent up to ~20x the stored budget. Limits used
+    (mainstream ad-platform rules):
+      * daily budgets: each calendar week <= 7x the budget (Meta's weekly
+        cap, stricter than Google's 30.4x monthly cap) and each day <= 1.75x
+        (Meta's daily allowance; Google allows 2x)
+      * DV360 monthly budget: each calendar month <= the budget (even pacing)
+      * lifetime budgets (holiday flights): total <= 1.05x the budget
+    """
+    print("\n" + "=" * 100)
+    print("CHECK 8 -- Spend vs. stored budget, every campaign on all 6 platforms")
+    print("=" * 100)
+
+    def load(daily_csv, id_col, spend_col, spend_div, camp_csv, camp_id_col, budget_col, budget_div, keep=None):
+        d = pd.read_csv(f"../data/{daily_csv}.csv", dtype={id_col: str})
+        d["spend_usd"] = d[spend_col] / spend_div
+        daily = d.groupby([id_col, "date"], as_index=False)["spend_usd"].sum().rename(columns={id_col: "cid"})
+        c = pd.read_csv(f"../data/{camp_csv}.csv", dtype={camp_id_col: str})
+        if keep is not None:
+            c = c[keep(c)]
+        c = c[c[budget_col].notna()][[camp_id_col, budget_col]].rename(columns={camp_id_col: "cid"})
+        c["budget_usd"] = c[budget_col] / budget_div
+        return daily.merge(c[["cid", "budget_usd"]], on="cid")
+
+    daily_budgeted = {
+        "meta": load("meta_ad_insights_daily", "campaign_id", "spend", 1, "meta_campaigns", "campaign_id", "daily_budget", 100),
+        "google_search": load("google_search_performance_daily", "campaign_id", "cost_micros", 1e6,
+                              "google_search_campaigns", "campaign_id", "campaign_budget_micros", 1e6),
+        "youtube": load("youtube_performance_daily", "campaign_id", "cost_micros", 1e6,
+                        "youtube_campaigns", "campaign_id", "campaign_budget_micros", 1e6),
+        "snap": load("snap_stats_daily", "campaign_id", "spend_micro", 1e6,
+                     "snap_campaigns", "campaign_id", "daily_budget_micro", 1e6),
+        "tiktok": load("tiktok_reports_daily", "campaign_id", "spend_micro", 1e6, "tiktok_campaigns", "campaign_id",
+                       "budget_micro", 1e6, keep=lambda c: c["budget_mode"] == "BUDGET_MODE_DAY"),
+    }
+    lifetime_budgeted = {
+        "meta": load("meta_ad_insights_daily", "campaign_id", "spend", 1, "meta_campaigns", "campaign_id", "lifetime_budget", 100),
+        "youtube": load("youtube_performance_daily", "campaign_id", "cost_micros", 1e6,
+                        "youtube_campaigns", "campaign_id", "lifetime_budget_micros", 1e6),
+        "snap": load("snap_stats_daily", "campaign_id", "spend_micro", 1e6,
+                     "snap_campaigns", "campaign_id", "lifetime_budget_micro", 1e6),
+        "tiktok": load("tiktok_reports_daily", "campaign_id", "spend_micro", 1e6, "tiktok_campaigns", "campaign_id",
+                       "budget_micro", 1e6, keep=lambda c: c["budget_mode"] == "BUDGET_MODE_TOTAL"),
+    }
+    dv = load("dv360_performance_daily", "insertion_order_id", "cost_micros", 1e6,
+              "dv360_insertion_orders", "insertion_order_id", "budget_micros", 1e6)
+
+    problems = 0
+    print(f"\n{'platform':<15}{'campaigns':>10}{'days':>8}{'days>1.75x':>12}{'weeks':>8}{'weeks>7x':>10}{'worst week':>12}")
+    for platform, df in daily_budgeted.items():
+        df["day_ratio"] = df["spend_usd"] / df["budget_usd"]
+        df["week"] = _weekly(df, "date")
+        wk = df.groupby(["cid", "week"]).agg(spend=("spend_usd", "sum"), budget=("budget_usd", "first"))
+        wk["ratio"] = wk["spend"] / (7 * wk["budget"])
+        bad_days, bad_weeks = int((df["day_ratio"] > 1.75).sum()), int((wk["ratio"] > 1.0).sum())
+        problems += bad_days + bad_weeks
+        print(f"{platform:<15}{df['cid'].nunique():>10}{len(df):>8}{bad_days:>12}{len(wk):>8}{bad_weeks:>10}"
+              f"{wk['ratio'].max():>11.2f}x")
+
+    dv["month"] = pd.to_datetime(dv["date"]).dt.to_period("M")
+    mo = dv.groupby(["cid", "month"]).agg(spend=("spend_usd", "sum"), budget=("budget_usd", "first"))
+    mo["ratio"] = mo["spend"] / mo["budget"]
+    bad_months = int((mo["ratio"] > 1.0).sum())
+    problems += bad_months
+    print(f"\ndv360 (monthly budget): {dv['cid'].nunique()} insertion orders, {len(mo)} months, "
+          f"{bad_months} over budget, worst month {mo['ratio'].max():.2f}x")
+
+    print("\nLifetime-budget flights (total spend / lifetime budget):")
+    for platform, df in lifetime_budgeted.items():
+        tot = df.groupby("cid").agg(spend=("spend_usd", "sum"), budget=("budget_usd", "first"))
+        tot["ratio"] = tot["spend"] / tot["budget"]
+        bad = int((tot["ratio"] > 1.05).sum())
+        problems += bad
+        print(f"  {platform:<14} {len(tot)} flights, ratios {', '.join(f'{r:.3f}' for r in tot['ratio'])}"
+              f"{'' if bad == 0 else f'  <-- {bad} over 1.05x'}")
+
+    if problems == 0:
+        print("\n[PASS] No campaign on any platform spends more than its stored budget allows.")
+    else:
+        print(f"\n[FLAGGED] {problems} campaign-periods spend more than the stored budget allows.")
+
+
 if __name__ == "__main__":
     check_1_aggregate_spend_vs_demand()
     check_2_channel_mix_consistency()
@@ -501,3 +586,4 @@ if __name__ == "__main__":
     check_5_renewal_lag_structure()
     check_6_day_of_week_and_hour_of_day()
     check_7_timezone_precision_sweep()
+    check_8_spend_vs_budget()

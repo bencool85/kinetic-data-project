@@ -2096,3 +2096,37 @@ seasonality calendar.
   reported number is wrong today. It would matter for any future "spend
   vs budget" or pacing analysis. Snap and TikTok still to check when
   they're staged. Fix pending Ben's decision; staging does not alter data.
+
+## 2026-09-29 — Fixed: ad budgets are now each campaign's current budget
+
+- Ben chose to store each campaign's current budget -- the only budget a
+  real ad platform keeps on the campaign object. Earlier months simply ran
+  under it (budgets get raised as the business grows).
+- Extended the check to Snap and TikTok before fixing, since they weren't
+  staged yet. They were the worst: e.g. TikTok prospecting stored $16/day
+  against a busiest week averaging $309/day (~20x).
+- Standard used, from mainstream ad-platform rules: every calendar week
+  averages at or under the daily budget (Meta's weekly cap; stricter than
+  Google's 30.4x monthly cap), no single day above 1.75x (Meta's daily
+  allowance; Google allows 2x), and DV360's monthly budget covers its
+  highest month. Rounded up to the nearest $5 (under $100) or $10.
+- Changed `params.py` (the 6 evergreen budget dicts, plus a comment
+  explaining the rule) and rebuilt only the 6 campaign tables. Diffed old
+  vs new files: only the budget column changed, and only on the 26
+  always-on campaigns; holiday flights and every other column identical.
+  Spend is untouched -- the spend generators never read these budgets
+  (confirmed in code), so no dashboard or analysis number changes.
+- New daily budgets: Meta $140-$320, Google Search $75-$270, YouTube
+  $65-$150, Snap $35-$85, TikTok $130-$310; DV360 monthly $750-$2,250.
+- All 77 original validator checks on the 6 tables still pass.
+- New Check 8 in `audit_cross_dataset_alignment.py`: spend vs budget for
+  every campaign. Result after the fix: 0 of 4,216 campaign-weeks over,
+  0 days over 1.75x, 0 of 180 DV360 months over (worst 0.99x).
+- Applied the same 26 values to the live MotherDuck database (Ben
+  approved the write; a first attempt errored on an integer overflow in my
+  SQL and was rolled back automatically -- verified nothing had changed
+  before retrying). Verified every budget value in all 6 MotherDuck tables
+  matches the regenerated CSVs exactly.
+- Check 8 also flagged 6 holiday flights that spent 0.7%-6.4% over their
+  lifetime budgets ($430 total). Ben chose to cap flight spend at budget;
+  that fix follows in the next entry.

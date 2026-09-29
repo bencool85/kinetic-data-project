@@ -214,12 +214,20 @@ META_OBJECTIVE_BY_AD_OBJECTIVE = {
     "prospecting": "OUTCOME_TRAFFIC", "retargeting": "OUTCOME_SALES", "lookalike": "OUTCOME_SALES",
     "conversion": "OUTCOME_SALES", "brand_lift": "OUTCOME_AWARENESS",
 }
-# Calibrated to what BASE_DAILY_AD_SPEND_TOTAL's seasonality/channel-mix
-# split actually realizes on a typical (non-peak) day for meta's ~24% avg
-# channel share, so the declared budget is a believable "typical day" figure
-# rather than a number disconnected from realized spend (peak-season days
-# legitimately run above it -- real advertisers raise budgets seasonally too).
-META_DAILY_BUDGET_CENTS = {"prospecting": 14000, "conversion": 12000, "retargeting": 8000, "lookalike": 6000}
+# BUDGET SEMANTICS (revised 2026-09-29, applies to every evergreen
+# *_DAILY_BUDGET_* dict on all 6 platforms): each value is the campaign's
+# CURRENT budget -- the only budget a real ad platform stores on the campaign
+# object. Earlier months simply ran under it (advertisers raise budgets as
+# the business grows; that change history isn't part of this dataset).
+# Sized from realized spend so every calendar week averages at or under the
+# budget (Meta's weekly cap, stricter than Google's 30.4x-daily monthly cap)
+# and no single day exceeds 1.75x it (Meta's daily allowance; Google allows
+# 2x). DV360's figure is multiplied by 30 into a monthly budget that covers
+# the highest month. Rounded up to the nearest $5 (under $100) or $10.
+# The original "typical day" calibration was flat for 3 years while spend
+# grew 2.4x, so later months spent up to ~20x the stored budget -- an
+# impossible scenario. See CHANGELOG 2026-09-29.
+META_DAILY_BUDGET_CENTS = {"prospecting": 32000, "conversion": 26000, "retargeting": 19000, "lookalike": 14000}
 META_BRAND_LIFT_FLIGHTS = [   # (flight start, flight length days, lifetime_budget_cents) -- timed near BFCM each year
     (datetime.date(2023, 11, 13), 18, 350000),
     (datetime.date(2024, 11, 11), 18, 380000),
@@ -260,9 +268,9 @@ META_VIDEO_VIEW_RATE_BY_OBJECTIVE = {"prospecting": 0.22, "brand_lift": 0.40}  #
 GOOGLE_SEARCH_CUSTOMER_ID = "123-456-7890"  # Google Ads' external customer ID format
 GOOGLE_SEARCH_OBJECTIVE_SPEND_SHARE = {"prospecting": 0.30, "conversion": 0.35, "retargeting": 0.15,
                                         "lookalike": 0.10, "brand_lift": 0.10}
-GOOGLE_SEARCH_DAILY_BUDGET_MICROS = {   # calibrated the same way as META_DAILY_BUDGET_CENTS -- a believable
-    "prospecting": 100_000_000, "conversion": 120_000_000, "retargeting": 55_000_000,   # typical-day figure, in
-    "lookalike": 35_000_000, "brand_lift": 35_000_000,                                  # micros ($1 = 1,000,000)
+GOOGLE_SEARCH_DAILY_BUDGET_MICROS = {   # current budget, in micros ($1 = 1,000,000) -- see BUDGET SEMANTICS above
+    "prospecting": 220_000_000, "conversion": 270_000_000, "retargeting": 110_000_000,
+    "lookalike": 75_000_000, "brand_lift": 80_000_000,
 }
 # Search CTR/CPC run in a very different range than paid social -- much
 # higher intent, much higher CTR, and cost is per-click (not CPM-driven).
@@ -300,8 +308,8 @@ YOUTUBE_BIDDING_STRATEGY_BY_OBJECTIVE = {
     "prospecting": "TARGET_CPV", "retargeting": "MAXIMIZE_CONVERSIONS", "lookalike": "TARGET_CPV",
     "conversion": "MAXIMIZE_CONVERSIONS", "brand_lift": "TARGET_CPM",
 }
-YOUTUBE_DAILY_BUDGET_MICROS = {"prospecting": 45_000_000, "conversion": 40_000_000,
-                                "retargeting": 20_000_000, "lookalike": 15_000_000}
+YOUTUBE_DAILY_BUDGET_MICROS = {"prospecting": 150_000_000, "conversion": 130_000_000,
+                                "retargeting": 85_000_000, "lookalike": 65_000_000}
 # Flight daily rate calibrated to roughly the SAME proportion of YouTube's
 # own (much smaller, ~9%-share) evergreen daily baseline that Meta's flights
 # were of Meta's baseline (~1.2x) -- an earlier pass here copied Meta-scale
@@ -351,8 +359,8 @@ DV360_PERFORMANCE_GOAL_BY_OBJECTIVE = {
 }
 DV360_OBJECTIVE_SPEND_SHARE = {"prospecting": 0.30, "conversion": 0.30, "retargeting": 0.15,
                                 "lookalike": 0.10, "brand_lift": 0.15}
-DV360_DAILY_BUDGET_MICROS = {"prospecting": 30_000_000, "conversion": 30_000_000, "retargeting": 15_000_000,
-                              "lookalike": 10_000_000, "brand_lift": 15_000_000}
+DV360_DAILY_BUDGET_MICROS = {"prospecting": 75_000_000, "conversion": 65_000_000, "retargeting": 40_000_000,
+                              "lookalike": 25_000_000, "brand_lift": 35_000_000}
 DV360_LINE_ITEM_TYPE_BY_OBJECTIVE = {   # real DV360 LineItemType enum values
     "prospecting": "LINE_ITEM_TYPE_DISPLAY_DEFAULT", "retargeting": "LINE_ITEM_TYPE_DISPLAY_DEFAULT",
     "lookalike": "LINE_ITEM_TYPE_DISPLAY_DEFAULT", "conversion": "LINE_ITEM_TYPE_DISPLAY_DEFAULT",
@@ -388,8 +396,8 @@ SNAP_OBJECTIVE_BY_AD_OBJECTIVE = {   # Snap Ads API campaign objective enum
     "prospecting": "AWARENESS", "retargeting": "WEB_CONVERSIONS", "lookalike": "WEB_CONVERSIONS",
     "conversion": "WEB_CONVERSIONS", "brand_lift": "AWARENESS",
 }
-SNAP_DAILY_BUDGET_MICRO = {"prospecting": 9_000_000, "conversion": 8_000_000,
-                            "retargeting": 5_000_000, "lookalike": 3_500_000}
+SNAP_DAILY_BUDGET_MICRO = {"prospecting": 85_000_000, "conversion": 65_000_000,
+                            "retargeting": 45_000_000, "lookalike": 35_000_000}
 # Flight daily rate calibrated to the SAME ~1.2x-of-evergreen-baseline
 # proportion Meta's flights land at (see YouTube's build script docstring
 # for why this matters -- copying dollar figures across channels without
@@ -416,8 +424,8 @@ TIKTOK_OBJECTIVE_BY_AD_OBJECTIVE = {   # TikTok Ads Manager objective_type enum
     "prospecting": "REACH", "retargeting": "CONVERSIONS", "lookalike": "CONVERSIONS",
     "conversion": "CONVERSIONS", "brand_lift": "REACH",
 }
-TIKTOK_DAILY_BUDGET_MICRO = {"prospecting": 16_000_000, "conversion": 15_000_000,
-                              "retargeting": 8_000_000, "lookalike": 6_000_000}
+TIKTOK_DAILY_BUDGET_MICRO = {"prospecting": 310_000_000, "conversion": 270_000_000,
+                              "retargeting": 170_000_000, "lookalike": 130_000_000}
 TIKTOK_BRAND_LIFT_FLIGHTS = [   # (flight start, flight length days, lifetime_budget_micro) -- tiktok's own avg
                                  # channel share runs close to Google Search's, so flight budgets scale similarly
     (datetime.date(2023, 11, 13), 18, 2_300_000_000),

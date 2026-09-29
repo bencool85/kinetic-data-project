@@ -2,9 +2,9 @@
 -- budget_micros is a MONTHLY budget in micros (confirmed in
 -- generator/build_dv360_insertion_orders.py: 30x a daily figure) -- named
 -- monthly_budget_* here so it isn't read as daily or lifetime.
--- KNOWN ISSUE (2026-09-29, see CHANGELOG): the stored budget is flat for the
--- whole 3 years while spend grows with the business, so later months spend
--- up to 2.4x this budget. Don't use it as a spend cap until that's resolved.
+-- Like every platform's budget in this dataset, it's the CURRENT budget
+-- (fixed 2026-09-29, see CHANGELOG): no month's spend exceeds it; earlier
+-- months ran under it as the business was smaller.
 -- end_date is always empty (no scheduled end), which made it load as text;
 -- cast back to a date here.
 

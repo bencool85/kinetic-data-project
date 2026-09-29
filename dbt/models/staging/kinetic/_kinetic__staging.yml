@@ -508,8 +508,8 @@ models:
   - name: stg_kinetic__dv360_insertion_orders
     description: >
       One row per DV360 insertion order (campaign-level budget container).
-      monthly_budget_usd is a monthly budget. Known issue: it's flat for all
-      3 years while spend grows past it -- see the CHANGELOG, 2026-09-29.
+      monthly_budget_usd is the current monthly budget; no month's spend
+      exceeds it.
     columns:
       - name: insertion_order_id
         data_tests: [not_null, unique]

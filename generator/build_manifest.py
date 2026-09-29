@@ -247,6 +247,15 @@ FILES = [
     ("dbt/models/staging/kinetic/stg_kinetic__dv360_line_items.sql", "Code", "Phase 2 staging (paid media: DV360): 1:1 pass-through of dv360_line_items"),
     ("dbt/models/staging/kinetic/stg_kinetic__dv360_performance_daily.sql", "Code", "Phase 2 staging (paid media: DV360): line-item x day x exchange x environment performance with combined line_item_day_slice_id key, micros converted to dollars, ctr_fraction"),
     ("dbt/models/staging/kinetic/_kinetic__staging.yml", "Code", "Updated: tests for the 3 DV360 staging models, incl. accepted_values on exchange and environment -- all hand-verified against live data first"),
+    ("generator/params.py", "Code", "Updated 2026-09-29: every evergreen ad budget on all 6 platforms is now the campaign's CURRENT budget, sized from realized spend (weekly average <= budget, no day > 1.75x; DV360 monthly >= highest month). The old flat 'typical day' budgets let later months spend up to ~20x the stored budget"),
+    ("data/meta_campaigns.csv", "Shipped table", "Regenerated 2026-09-29: evergreen daily_budget values updated to current budgets (only that column, only the 4 evergreen rows changed)"),
+    ("data/google_search_campaigns.csv", "Shipped table", "Regenerated 2026-09-29: campaign_budget_micros updated to current budgets (only that column changed)"),
+    ("data/youtube_campaigns.csv", "Shipped table", "Regenerated 2026-09-29: evergreen campaign_budget_micros updated to current budgets (only that column, only the 4 evergreen rows changed)"),
+    ("data/dv360_insertion_orders.csv", "Shipped table", "Regenerated 2026-09-29: monthly budget_micros updated to current budgets (only that column changed)"),
+    ("data/snap_campaigns.csv", "Shipped table", "Regenerated 2026-09-29: evergreen daily_budget_micro updated to current budgets (only that column, only the 4 evergreen rows changed)"),
+    ("data/tiktok_campaigns.csv", "Shipped table", "Regenerated 2026-09-29: BUDGET_MODE_DAY budget_micro updated to current budgets (only that column, only the 4 evergreen rows changed)"),
+    ("generator/audit_cross_dataset_alignment.py", "Code", "Updated 2026-09-29: new Check 8 -- spend vs stored budget for every campaign on all 6 platforms (weekly/daily limits for daily budgets, monthly for DV360, total for holiday flights)"),
+    ("dbt/models/staging/kinetic/stg_kinetic__dv360_insertion_orders.sql", "Code", "Updated: budget known-issue note replaced -- budgets are now current budgets"),
 ]
 
 
