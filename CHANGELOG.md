@@ -1979,3 +1979,27 @@ seasonality calendar.
   a guest despite having an account, or created one later. Any "customer
   view" of email engagement or orders will need to decide whether to stitch
   those together by email address.
+
+## 2026-09-29 — Phase 2 sub-batch 4: paid media, Meta staging
+
+- Staging models + tests for `meta_campaigns`, `meta_ads`,
+  `meta_ad_insights_daily`, `meta_ad_actions_daily`. 28 of 47 raw tables
+  staged.
+- Units made explicit in column names, after confirming them in the
+  generator code (`build_meta_campaigns.py`, `build_meta_ad_insights_daily.py`):
+  - Budgets are stored in cents (Meta API convention). Staging keeps the raw
+    `*_budget_cents` and adds `*_budget_usd`. In dollars: always-on
+    campaigns run $60-$140/day; brand-lift flights $3,500-$4,000 lifetime.
+    Cross-check: total Meta spend is $429,401, in line with ~$400/day of
+    always-on budget over the 3 years plus the 3 flights.
+  - `ctr` is a fraction (0.017 = 1.7%), not a percentage -- renamed
+    `ctr_fraction`. Spend, CPM and CPC get a `_usd` suffix.
+- The two daily tables have no single ID column (a row is ad + date, or
+  ad + date + action type), so staging builds a combined key (`ad_day_id`,
+  `ad_day_action_id`) and tests it for uniqueness. Verified on live data
+  with the exact same expressions: zero duplicates; every action row has
+  a matching insights row.
+- Also verified: all IDs unique and non-null (7 campaigns, 10 ads, 7,396
+  ad-days, 35,504 ad-day-actions); every ad's campaign exists; every
+  targeting segment exists; the campaign_id on each daily row matches its
+  ad's campaign.

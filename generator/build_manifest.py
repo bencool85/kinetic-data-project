@@ -229,6 +229,11 @@ FILES = [
     ("dbt/models/staging/kinetic/stg_kinetic__braze_email_events.sql", "Code", "Phase 2 staging (email/push): braze_email_events with external_user_id renamed to customer_id and a short event_name (send/open/click/bounce/unsubscribe) alongside Braze's raw event_type"),
     ("dbt/models/staging/kinetic/stg_kinetic__braze_push_events.sql", "Code", "Phase 2 staging (email/push): braze_push_events with external_user_id renamed to customer_id and a short event_name alongside Braze's raw event_type"),
     ("dbt/models/staging/kinetic/_kinetic__staging.yml", "Code", "Updated: tests for the 4 Braze staging models, incl. accepted_values on event_name -- all hand-verified against live data first"),
+    ("dbt/models/staging/kinetic/stg_kinetic__meta_campaigns.sql", "Code", "Phase 2 staging (paid media: Meta): meta_campaigns with budgets in both raw cents and dollars (Meta API stores budgets in cents)"),
+    ("dbt/models/staging/kinetic/stg_kinetic__meta_ads.sql", "Code", "Phase 2 staging (paid media: Meta): 1:1 pass-through of meta_ads"),
+    ("dbt/models/staging/kinetic/stg_kinetic__meta_ad_insights_daily.sql", "Code", "Phase 2 staging (paid media: Meta): meta_ad_insights_daily with a combined ad_day_id key, unit-suffixed columns (spend_usd, cpm_usd, cpc_usd) and ctr renamed ctr_fraction (0.017 = 1.7%)"),
+    ("dbt/models/staging/kinetic/stg_kinetic__meta_ad_actions_daily.sql", "Code", "Phase 2 staging (paid media: Meta): meta_ad_actions_daily with a combined ad_day_action_id key; value renamed action_count"),
+    ("dbt/models/staging/kinetic/_kinetic__staging.yml", "Code", "Updated: tests for the 4 Meta staging models, incl. uniqueness of the combined daily keys -- all hand-verified against live data first"),
 ]
 
 

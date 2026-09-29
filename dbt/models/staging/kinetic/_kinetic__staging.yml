@@ -347,3 +347,61 @@ models:
         data_tests:
           - accepted_values:
               values: ['send', 'open', 'click', 'bounce', 'unsubscribe']
+
+  # --- Paid media: Meta (Phase 2, sub-batch 4) ---
+  - name: stg_kinetic__meta_campaigns
+    description: One row per Meta campaign. Budgets are provided in both cents (raw) and dollars.
+    columns:
+      - name: campaign_id
+        data_tests: [not_null, unique]
+
+  - name: stg_kinetic__meta_ads
+    description: One row per Meta ad.
+    columns:
+      - name: ad_id
+        data_tests: [not_null, unique]
+      - name: campaign_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__meta_campaigns')
+              field: campaign_id
+      - name: targeting_segment_id
+        data_tests:
+          - relationships:
+              to: ref('stg_kinetic__segments')
+              field: segment_id
+
+  - name: stg_kinetic__meta_ad_insights_daily
+    description: >
+      One row per Meta ad per day: delivery and spend as Meta reports it.
+      spend/cpm/cpc in US dollars; ctr_fraction is a fraction (0.017 = 1.7%).
+    columns:
+      - name: ad_day_id
+        data_tests: [not_null, unique]
+      - name: ad_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__meta_ads')
+              field: ad_id
+      - name: report_date
+        data_tests: [not_null]
+
+  - name: stg_kinetic__meta_ad_actions_daily
+    description: >
+      One row per Meta ad per day per action type. Meta's self-reported
+      conversions, not site-verified orders.
+    columns:
+      - name: ad_day_action_id
+        data_tests: [not_null, unique]
+      - name: ad_day_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__meta_ad_insights_daily')
+              field: ad_day_id
+      - name: action_type
+        data_tests:
+          - accepted_values:
+              values: ['link_click', 'landing_page_view', 'video_view', 'add_to_cart', 'initiate_checkout', 'purchase']
