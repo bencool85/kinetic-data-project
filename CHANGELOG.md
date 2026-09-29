@@ -2235,3 +2235,33 @@ seasonality calendar.
   staged); both now match.
 - HANDOFF.md: added the rule to update section 13 at the end of every
   sub-batch.
+
+## 2026-09-29 — Phase 3 sub-batch 1: int_customer_identity
+
+- New `int_customer_identity`: one row per identifier (web `anonymous_id`
+  or account email) with the customer it belongs to and how the link was
+  made (`identity_map_signup`, `identity_map_login`, `account_email`).
+  Downstream models join on `identifier_key`.
+- Ben's decisions, written as a comment above the SQL:
+  - Match guest emails to accounts by email, before or after signup.
+    Affects 28 of 1,257 guest orders (10 placed before signup, 18 after)
+    and the same 28 Braze guest addresses.
+  - Back-fill: a visitor's earlier anonymous web sessions belong to the
+    customer once identity_map links them. Affects 340 of 23,809
+    anonymous sessions.
+- Assumption (flagged to Ben): deleted accounts (11) are excluded, so no
+  new activity attaches to them. No current links point at them, so it
+  changes nothing today.
+- Hand-verified on live data before writing the model: customer emails
+  and guest emails are already lowercase/trimmed, none null; 860 emails
+  for 860 customers; identity_map has 992 rows, 992 distinct anonymous
+  IDs, no nulls, every customer real (849 customers; 143 of them also have
+  a second "login" ID, which lives on devices, not web sessions); no web
+  session's customer disagrees with identity_map; app sessions always
+  carry customer_id, so nothing to back-fill there.
+- Model output checked with equivalent SQL: 1,841 rows (992 anonymous IDs
+  + 849 emails), 1,841 distinct keys, no nulls. Tests: unique/not_null on
+  `identifier_key`, accepted values on type and method, relationships to
+  customers.
+- dbt/README.md and File_Manifest.xlsx updated; HANDOFF open decision 1
+  (Braze stitching) marked resolved.

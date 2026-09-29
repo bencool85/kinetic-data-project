@@ -36,7 +36,9 @@ database before moving on -- not the whole semantic layer in one shot.
   Snap); the 4 `tiktok_*` tables (paid media: TikTok) -- 47 of 47 raw
   tables staged
 - Intermediate: `int_subscription_paid_periods` (trial-vs-paid start date
-  logic), `int_orders_refunded` (per-order successfully-refunded amount)
+  logic), `int_orders_refunded` (per-order successfully-refunded amount),
+  `int_customer_identity` (which customer an anonymous web ID or email
+  belongs to)
 - Marts: `mart_mrr_monthly` (active subscribers + MRR/ARR by month),
   `mart_storefront_revenue_monthly` (course/merch gross+net revenue, AOV,
   guest-checkout share, discount-usage share, refund rate)

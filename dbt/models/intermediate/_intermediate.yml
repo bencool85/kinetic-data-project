@@ -19,3 +19,32 @@ models:
     columns:
       - name: order_id
         data_tests: [not_null, unique]
+
+  - name: int_customer_identity
+    description: >
+      Lookup table: one row per identifier (a web anonymous_id or an email
+      address) that can be traced to a customer account. Join on
+      identifier_key ('anonymous_id:<id>' or 'email:<lowercased email>') to
+      find out which customer a guest order, Braze guest email, or anonymous
+      web session belongs to. Guest emails are matched to accounts by email;
+      anonymous sessions before signup/login are back-filled. Deleted
+      accounts are excluded.
+    columns:
+      - name: identifier_key
+        data_tests: [not_null, unique]
+      - name: identifier_type
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['anonymous_id', 'email']
+      - name: customer_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__customers')
+              field: customer_id
+      - name: match_method
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['identity_map_signup', 'identity_map_login', 'account_email']

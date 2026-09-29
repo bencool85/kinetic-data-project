@@ -10,7 +10,7 @@ Read this first in a new chat, then the last few CHANGELOG.md entries.
 - Git: last commit 605c34b. Ben pushes himself (`cd ~/Documents/kinetic-project && git push`). Check `git log origin/master..HEAD` for unpushed commits and remind him.
 
 ## Open decisions / to-dos
-1. Braze stitching: Braze events use guest emails vs customer emails. How to match them is unresolved (Phase 3, needs Ben's call).
+1. RESOLVED 2026-09-29 (int_customer_identity): guest emails are matched to customer accounts by email (28 guest orders / 28 Braze guest addresses); anonymous web sessions are back-filled once a visitor signs up or logs in (340 sessions); deleted accounts are excluded.
 2. Sharing the `kinetic` MotherDuck database with Ben's org: not done, needs his explicit yes.
 3. Two-pager marketing sheet: Ben still owes a founder bio (About section) and a higher-resolution logo. Possibly a firm-domain email.
 4. GitHub tokens (PATs) were pasted in chat earlier: remind Ben to revoke them.
