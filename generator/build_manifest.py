@@ -239,6 +239,10 @@ FILES = [
     ("dbt/models/staging/kinetic/stg_kinetic__google_search_performance_daily.sql", "Code", "Phase 2 staging (paid media: Google Search): ad-group-day performance with combined ad_group_day_id key, cost converted from micros to dollars, ctr_fraction. The keyword table rolled up -- never add the two together"),
     ("dbt/models/staging/kinetic/stg_kinetic__google_search_keyword_performance_daily.sql", "Code", "Phase 2 staging (paid media: Google Search): keyword-day performance with combined keyword_day_id key, cost converted from micros to dollars, ctr_fraction"),
     ("dbt/models/staging/kinetic/_kinetic__staging.yml", "Code", "Updated: tests for the 4 Google Search staging models -- all hand-verified against live data first"),
+    ("dbt/models/staging/kinetic/stg_kinetic__youtube_campaigns.sql", "Code", "Phase 2 staging (paid media: YouTube): campaigns with customer_id renamed google_ads_account_id (the ad account, not a Kinetic customer), budgets in micros and dollars"),
+    ("dbt/models/staging/kinetic/stg_kinetic__youtube_ad_groups.sql", "Code", "Phase 2 staging (paid media: YouTube): 1:1 pass-through of youtube_ad_groups"),
+    ("dbt/models/staging/kinetic/stg_kinetic__youtube_performance_daily.sql", "Code", "Phase 2 staging (paid media: YouTube): ad-group-day performance with combined ad_group_day_id key, cost and cost-per-view converted from micros to dollars, video_view_rate_fraction"),
+    ("dbt/models/staging/kinetic/_kinetic__staging.yml", "Code", "Updated: tests for the 3 YouTube staging models -- all hand-verified against live data first"),
 ]
 
 

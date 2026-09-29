@@ -2028,3 +2028,23 @@ seasonality calendar.
   8,751 ad-group-days, 19,932 keyword-days, 19 keywords each in exactly one
   ad group); every ad group's campaign and targeting segment exists; the
   campaign_id on every daily row matches its ad group's campaign.
+
+## 2026-09-29 — Phase 2 sub-batch 6: paid media, YouTube staging
+
+- Staging models + tests for `youtube_campaigns`, `youtube_ad_groups`,
+  `youtube_performance_daily`. 35 of 47 raw tables staged.
+- Same Google Ads conventions as Google Search (confirmed in the generator
+  code): `customer_id` is the Google Ads account number (the same account,
+  123-456-7890) and is renamed `google_ads_account_id`; budgets, cost and
+  cost-per-view are in micros and get `_usd` versions. Budgets arrived as
+  decimals; verified the cast to whole micros loses nothing.
+- In dollars: always-on campaigns $15-$45/day; holiday brand-lift flights
+  $2,500 / $2,700 / $2,900 lifetime (2023 / 2024 / 2025). Total YouTube
+  spend $170,406.94.
+- `video_view_rate` is a fraction (0.284 = 28.4% of impressions became
+  views), renamed `video_view_rate_fraction`. Verified it equals views /
+  impressions, and that average CPV equals cost / views.
+- Also verified: all IDs unique and non-null (7 campaigns, 9 ad groups,
+  6,394 ad-group-days, combined key included); every ad group's campaign
+  and targeting segment exists; each daily row's campaign matches its ad
+  group's campaign.
