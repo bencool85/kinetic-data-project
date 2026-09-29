@@ -2299,3 +2299,15 @@ seasonality calendar.
   under `arguments:`. Updated all 67 (64 staging, 3 intermediate);
   confirmed both YAML files parse and every such test now has only
   `arguments`. Warnings only, no logic change.
+
+## 2026-09-29 — Phase 2 exit: staging tests pass in dbt
+
+- `dbt test --select staging` on Ben's Mac: 206 tests, PASS=205, ERROR=1,
+  12.7s. No deprecation warnings after the `arguments:` fix.
+- All 205 staging tests pass. That meets the playbook's Phase 2 exit
+  criterion, so **Phase 2 is complete**.
+- The 1 error is not a data problem: `--select staging` also picked up the
+  relationships test on `int_customer_identity` (it points at
+  stg_kinetic__customers), and that model hasn't been built in dbt yet, so
+  the table didn't exist ("Catalog Error"). It will run once the
+  intermediate layer is built.

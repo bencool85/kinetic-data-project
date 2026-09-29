@@ -4,9 +4,9 @@ Read this first in a new chat, then the last few CHANGELOG.md entries.
 
 ## Status
 - Phase 0-1: 47-table synthetic dataset done, live in MotherDuck `kinetic`, 5-tab Dive built.
-- Phase 2 (staging): COMPLETE. 47 of 47 raw tables have a `stg_kinetic__*` view, with tests in `_kinetic__staging.yml`.
+- Phase 2 (staging): COMPLETE. 47 of 47 raw tables have a `stg_kinetic__*` view; all built and tested in dbt.
 - Built early (before their phase): `int_subscription_paid_periods`, `int_orders_refunded`, `mart_mrr_monthly`, `mart_storefront_revenue_monthly`. Reconcile these with the playbook when starting Phase 3/4.
-- NEVER RUN: `dbt run` / `dbt test`. dbt is not installed in Claude's environments and motherduck.com is blocked from them. Everything was validated by running equivalent SQL through the MotherDuck tools. First real dbt run must happen on Ben's Mac (pip install dbt-core dbt-duckdb; profile path 'md:kinetic') or dbt Cloud. Expect small fixes when it first runs.
+- dbt now runs on Ben's Mac (dbt 1.10.23, venv ~/.dbt-venv, profile dbt/profiles.yml, output schemas dbt_dev_*). Staging built and 205/205 staging tests pass (2026-09-29). Intermediate and marts not yet built in dbt. Ben runs dbt commands; Claude reads dbt/logs/dbt.log and dbt/target/run_results.json from the bridge.
 - Git: last commit 605c34b. Ben pushes himself (`cd ~/Documents/kinetic-project && git push`). Check `git log origin/master..HEAD` for unpushed commits and remind him.
 
 ## Open decisions / to-dos
