@@ -243,6 +243,10 @@ FILES = [
     ("dbt/models/staging/kinetic/stg_kinetic__youtube_ad_groups.sql", "Code", "Phase 2 staging (paid media: YouTube): 1:1 pass-through of youtube_ad_groups"),
     ("dbt/models/staging/kinetic/stg_kinetic__youtube_performance_daily.sql", "Code", "Phase 2 staging (paid media: YouTube): ad-group-day performance with combined ad_group_day_id key, cost and cost-per-view converted from micros to dollars, video_view_rate_fraction"),
     ("dbt/models/staging/kinetic/_kinetic__staging.yml", "Code", "Updated: tests for the 3 YouTube staging models -- all hand-verified against live data first"),
+    ("dbt/models/staging/kinetic/stg_kinetic__dv360_insertion_orders.sql", "Code", "Phase 2 staging (paid media: DV360): insertion orders with budget_micros named monthly_budget_* (it's a monthly budget), end_date cast back to a date; flags the flat-budget-vs-growing-spend known issue"),
+    ("dbt/models/staging/kinetic/stg_kinetic__dv360_line_items.sql", "Code", "Phase 2 staging (paid media: DV360): 1:1 pass-through of dv360_line_items"),
+    ("dbt/models/staging/kinetic/stg_kinetic__dv360_performance_daily.sql", "Code", "Phase 2 staging (paid media: DV360): line-item x day x exchange x environment performance with combined line_item_day_slice_id key, micros converted to dollars, ctr_fraction"),
+    ("dbt/models/staging/kinetic/_kinetic__staging.yml", "Code", "Updated: tests for the 3 DV360 staging models, incl. accepted_values on exchange and environment -- all hand-verified against live data first"),
 ]
 
 

@@ -2048,3 +2048,51 @@ seasonality calendar.
   6,394 ad-group-days, combined key included); every ad group's campaign
   and targeting segment exists; each daily row's campaign matches its ad
   group's campaign.
+
+## 2026-09-29 — Phase 2 sub-batch 7: paid media, DV360 staging (+ a budget problem found)
+
+- Staging models + tests for `dv360_insertion_orders`, `dv360_line_items`,
+  `dv360_performance_daily`. 38 of 47 raw tables staged.
+- `dv360_performance_daily` is one row per line item, per day, per ad
+  exchange, per environment (web / app / connected TV): 25,776 rows
+  covering 6,312 line-item-days. Staging builds a combined key
+  (`line_item_day_slice_id`); verified zero duplicates. Also verified: all
+  IDs unique and non-null (5 insertion orders, 6 line items); every line
+  item's insertion order and targeting segment exists; each daily row's
+  insertion order matches its line item; display line items never appear
+  on connected TV (only video can); conversion value averages $90 per
+  conversion, so it's already dollars. Total DV360 spend $132,525.13.
+- `budget_micros` is a MONTHLY budget (30x a daily figure, confirmed in
+  `build_dv360_insertion_orders.py`), so staging names it
+  `monthly_budget_usd` ($300-$900 per insertion order).
+
+### Problem found: spend exceeds stored budgets on 4 platforms
+
+- DV360 spent more than its stored monthly budget in 124 of 180
+  insertion-order-months, up to 2.41x. Real DV360 pacing stops at the
+  budget, so as stored this is an impossible scenario.
+- Cause: every campaign's budget is set once, at launch, and never
+  changes, while spend follows the business's growth curve
+  (`GROWTH_END_MULTIPLIER = 2.4`). Spend averages 84% of budget in 2023 and
+  150% in 2026.
+- Checked the other platforms with daily budgets, against each platform's
+  real monthly limit (30.4x the daily budget):
+  | Platform | Campaign-months over the limit | Worst month |
+  |---|---|---|
+  | Meta | 48 of 144 | 1.80x |
+  | Google Search | 53 of 180 | 1.93x |
+  | YouTube | 97 of 144 | 3.39x |
+  | DV360 (monthly budget) | 124 of 180 | 2.41x |
+- The holiday brand-lift flights (lifetime budgets) are fine: within 5% of
+  budget; two Meta flights over by 1-2% ($60, $49), within normal
+  platform tolerance.
+- **Correction:** the Meta entry above says total Meta spend is "in line
+  with ~$400/day of always-on budget". That was a rough whole-period
+  comparison and is misleading; month by month, Meta runs over its daily
+  budgets in the later months, as shown here.
+- Why it slipped through: the original per-table validators only checked
+  that budgets exist; none compared budgets to spend.
+- Impact: no dashboard or analysis query uses budget columns, so no
+  reported number is wrong today. It would matter for any future "spend
+  vs budget" or pacing analysis. Snap and TikTok still to check when
+  they're staged. Fix pending Ben's decision; staging does not alter data.
