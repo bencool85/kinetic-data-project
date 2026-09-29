@@ -30,7 +30,8 @@ database before moving on -- not the whole semantic layer in one shot.
   `web_sessions`, `web_events`, `app_sessions`, `app_events` (web/app
   engagement); `braze_email_campaigns`, `braze_email_events`,
   `braze_push_campaigns`, `braze_push_events` (email/push); the 4 `meta_*`
-  tables (paid media: Meta) -- 28 of 47 raw tables staged
+  tables (paid media: Meta); the 4 `google_search_*` tables (paid media:
+  Google Search) -- 32 of 47 raw tables staged
 - Intermediate: `int_subscription_paid_periods` (trial-vs-paid start date
   logic), `int_orders_refunded` (per-order successfully-refunded amount)
 - Marts: `mart_mrr_monthly` (active subscribers + MRR/ARR by month),

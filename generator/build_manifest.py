@@ -234,6 +234,11 @@ FILES = [
     ("dbt/models/staging/kinetic/stg_kinetic__meta_ad_insights_daily.sql", "Code", "Phase 2 staging (paid media: Meta): meta_ad_insights_daily with a combined ad_day_id key, unit-suffixed columns (spend_usd, cpm_usd, cpc_usd) and ctr renamed ctr_fraction (0.017 = 1.7%)"),
     ("dbt/models/staging/kinetic/stg_kinetic__meta_ad_actions_daily.sql", "Code", "Phase 2 staging (paid media: Meta): meta_ad_actions_daily with a combined ad_day_action_id key; value renamed action_count"),
     ("dbt/models/staging/kinetic/_kinetic__staging.yml", "Code", "Updated: tests for the 4 Meta staging models, incl. uniqueness of the combined daily keys -- all hand-verified against live data first"),
+    ("dbt/models/staging/kinetic/stg_kinetic__google_search_campaigns.sql", "Code", "Phase 2 staging (paid media: Google Search): campaigns with the raw customer_id renamed google_ads_account_id (it's the Google Ads account number, not a Kinetic customer), daily budget in micros and dollars, end_date cast back to a date"),
+    ("dbt/models/staging/kinetic/stg_kinetic__google_search_ad_groups.sql", "Code", "Phase 2 staging (paid media: Google Search): ad groups; cpc_bid_micros cast back to a number (always empty -- automated bidding)"),
+    ("dbt/models/staging/kinetic/stg_kinetic__google_search_performance_daily.sql", "Code", "Phase 2 staging (paid media: Google Search): ad-group-day performance with combined ad_group_day_id key, cost converted from micros to dollars, ctr_fraction. The keyword table rolled up -- never add the two together"),
+    ("dbt/models/staging/kinetic/stg_kinetic__google_search_keyword_performance_daily.sql", "Code", "Phase 2 staging (paid media: Google Search): keyword-day performance with combined keyword_day_id key, cost converted from micros to dollars, ctr_fraction"),
+    ("dbt/models/staging/kinetic/_kinetic__staging.yml", "Code", "Updated: tests for the 4 Google Search staging models -- all hand-verified against live data first"),
 ]
 
 

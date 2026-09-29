@@ -2003,3 +2003,28 @@ seasonality calendar.
   ad-days, 35,504 ad-day-actions); every ad's campaign exists; every
   targeting segment exists; the campaign_id on each daily row matches its
   ad's campaign.
+
+## 2026-09-29 — Phase 2 sub-batch 5: paid media, Google Search staging
+
+- Staging models + tests for `google_search_campaigns`,
+  `google_search_ad_groups`, `google_search_performance_daily`,
+  `google_search_keyword_performance_daily`. 32 of 47 raw tables staged.
+- Renamed a dangerous column: `google_search_campaigns.customer_id` is the
+  Google Ads *account* number (123-456-7890), not a Kinetic customer. It is
+  now `google_ads_account_id`, so nobody joins it to `customers`.
+- Units confirmed in the generator code: cost, CPC and budgets are in micros
+  (millionths of a dollar, Google Ads convention); staging adds `_usd`
+  versions. Daily budgets are $35-$120 per campaign. `ctr` is a fraction.
+  `conversions_value` is already dollars. Conversions can be fractional.
+- Two columns are entirely empty and had loaded as text: `end_date` (no
+  campaign has a scheduled end) and `cpc_bid_micros` (automated bidding, so
+  no manual bid). Staging casts them back to a date and a number.
+- `google_search_performance_daily` is built by summing the keyword table
+  (confirmed in `build_google_search_performance_daily.py`). Verified on
+  live data that cost, clicks, impressions and conversions match on every
+  one of the 8,751 ad-group-days (total cost $350,535.12 in both). The
+  models are documented as "use one or the other, never add them together".
+- Also verified: all IDs unique and non-null (5 campaigns, 8 ad groups,
+  8,751 ad-group-days, 19,932 keyword-days, 19 keywords each in exactly one
+  ad group); every ad group's campaign and targeting segment exists; the
+  campaign_id on every daily row matches its ad group's campaign.

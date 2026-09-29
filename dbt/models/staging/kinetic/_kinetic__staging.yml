@@ -405,3 +405,59 @@ models:
         data_tests:
           - accepted_values:
               values: ['link_click', 'landing_page_view', 'video_view', 'add_to_cart', 'initiate_checkout', 'purchase']
+
+  # --- Paid media: Google Search (Phase 2, sub-batch 5) ---
+  - name: stg_kinetic__google_search_campaigns
+    description: >
+      One row per Google Search campaign. google_ads_account_id is the Google
+      Ads account number, not a Kinetic customer.
+    columns:
+      - name: campaign_id
+        data_tests: [not_null, unique]
+
+  - name: stg_kinetic__google_search_ad_groups
+    description: One row per Google Search ad group.
+    columns:
+      - name: ad_group_id
+        data_tests: [not_null, unique]
+      - name: campaign_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__google_search_campaigns')
+              field: campaign_id
+      - name: targeting_segment_id
+        data_tests:
+          - relationships:
+              to: ref('stg_kinetic__segments')
+              field: segment_id
+
+  - name: stg_kinetic__google_search_performance_daily
+    description: >
+      One row per ad group per day. The keyword table rolled up -- never add
+      the two tables together.
+    columns:
+      - name: ad_group_day_id
+        data_tests: [not_null, unique]
+      - name: ad_group_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__google_search_ad_groups')
+              field: ad_group_id
+
+  - name: stg_kinetic__google_search_keyword_performance_daily
+    description: One row per keyword per day -- the most detailed Google Search table.
+    columns:
+      - name: keyword_day_id
+        data_tests: [not_null, unique]
+      - name: ad_group_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__google_search_ad_groups')
+              field: ad_group_id
+      - name: match_type
+        data_tests:
+          - accepted_values:
+              values: ['EXACT', 'PHRASE', 'BROAD']
