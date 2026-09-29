@@ -188,3 +188,92 @@ models:
           - relationships:
               to: ref('stg_kinetic__subscription_plans')
               field: plan_id
+
+  # --- Web/app engagement (Phase 2, sub-batch 2) ---
+  - name: stg_kinetic__web_sessions
+    description: >
+      One row per website session. customer_id is null when the visitor wasn't
+      a known customer at the time (~79% of sessions) -- expected, not a gap.
+    columns:
+      - name: session_id
+        data_tests: [not_null, unique]
+      - name: anonymous_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__devices')
+              field: anonymous_id
+      - name: customer_id
+        data_tests:
+          - relationships:
+              to: ref('stg_kinetic__customers')
+              field: customer_id
+
+  - name: stg_kinetic__web_events
+    description: One row per event on the website (page view, product view, add to cart, checkout, purchase, search).
+    columns:
+      - name: event_id
+        data_tests: [not_null, unique]
+      - name: session_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__web_sessions')
+              field: session_id
+      - name: anonymous_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__devices')
+              field: anonymous_id
+      - name: customer_id
+        data_tests:
+          - relationships:
+              to: ref('stg_kinetic__customers')
+              field: customer_id
+      - name: product_id
+        data_tests:
+          - relationships:
+              to: ref('stg_kinetic__products')
+              field: product_id
+      - name: order_id
+        data_tests:
+          - relationships:
+              to: ref('stg_kinetic__orders')
+              field: order_id
+
+  - name: stg_kinetic__app_sessions
+    description: One row per session in the Kinetic app (iOS, Android, web app). Always a signed-in customer.
+    columns:
+      - name: session_id
+        data_tests: [not_null, unique]
+      - name: customer_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__customers')
+              field: customer_id
+      - name: device_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__devices')
+              field: device_id
+
+  - name: stg_kinetic__app_events
+    description: One row per in-app event (class started, workout completed or abandoned, streak achieved).
+    columns:
+      - name: event_id
+        data_tests: [not_null, unique]
+      - name: session_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__app_sessions')
+              field: session_id
+      - name: customer_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__customers')
+              field: customer_id

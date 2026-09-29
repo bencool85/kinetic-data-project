@@ -1939,3 +1939,19 @@ seasonality calendar.
 - `devices.customer_id` is null for 17,050 of 18,042 rows (anonymous devices
   that never resolved to a customer). That's by design, so that column gets a
   relationships test but deliberately no not_null test.
+
+## 2026-09-29 — Phase 2 sub-batch 2: web/app engagement staging
+
+- Staging models + tests for `web_sessions`, `web_events`, `app_sessions`,
+  `app_events`. 20 of 47 raw tables now staged.
+- Hand-verified against the live database before writing the tests:
+  - Primary keys unique and non-null in all 4 tables (30,285 web sessions,
+    117,706 web events, 19,610 app sessions, 39,370 app events).
+  - Every foreign key resolves: web/app events -> their sessions; sessions
+    and events -> customers where filled in; web sessions/events ->
+    devices via anonymous_id; app sessions -> devices via device_id; web
+    events -> products and orders where filled in.
+- `customer_id` is null on 23,809 web sessions (~79%) and 90,603 web events:
+  visitors who weren't known customers yet. Expected by design, so those
+  columns get relationships tests but no not_null test. App sessions and
+  events always have a customer, so there they do get not_null.

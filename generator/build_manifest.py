@@ -219,6 +219,11 @@ FILES = [
     ("dbt/models/staging/kinetic/stg_kinetic__customer_segment_membership.sql", "Code", "Phase 2 staging (Customer 360): 1:1 pass-through of customer_segment_membership, plus is_current_member flag"),
     ("dbt/models/staging/kinetic/stg_kinetic__subscription_events.sql", "Code", "Phase 2 staging (Customer 360): 1:1 pass-through of subscription_events; old_plan/new_plan renamed to old_plan_id/new_plan_id"),
     ("dbt/models/staging/kinetic/_kinetic__staging.yml", "Code", "Updated: tests for the 6 Customer 360 staging models (PK not_null/unique, FK relationships) -- all hand-verified against live data first"),
+    ("dbt/models/staging/kinetic/stg_kinetic__web_sessions.sql", "Code", "Phase 2 staging (web/app engagement): 1:1 pass-through of web_sessions, plus is_known_customer flag (customer_id null for ~79% of sessions by design)"),
+    ("dbt/models/staging/kinetic/stg_kinetic__web_events.sql", "Code", "Phase 2 staging (web/app engagement): 1:1 pass-through of web_events"),
+    ("dbt/models/staging/kinetic/stg_kinetic__app_sessions.sql", "Code", "Phase 2 staging (web/app engagement): 1:1 pass-through of app_sessions"),
+    ("dbt/models/staging/kinetic/stg_kinetic__app_events.sql", "Code", "Phase 2 staging (web/app engagement): 1:1 pass-through of app_events"),
+    ("dbt/models/staging/kinetic/_kinetic__staging.yml", "Code", "Updated: tests for the 4 web/app engagement staging models -- all hand-verified against live data first"),
 ]
 
 
