@@ -604,3 +604,62 @@ models:
           - relationships:
               to: ref('stg_kinetic__snap_ads')
               field: ad_id
+
+  # --- Paid media: TikTok (Phase 2, sub-batch 9) ---
+  - name: stg_kinetic__tiktok_campaigns
+    description: >
+      One row per TikTok campaign. The single raw budget is split into
+      daily_budget_usd / lifetime_budget_usd by budget_mode, matching the
+      other platforms.
+    columns:
+      - name: campaign_id
+        data_tests: [not_null, unique]
+      - name: budget_mode
+        data_tests:
+          - accepted_values:
+              values: ['BUDGET_MODE_DAY', 'BUDGET_MODE_TOTAL']
+
+  - name: stg_kinetic__tiktok_adgroups
+    description: One row per TikTok ad group.
+    columns:
+      - name: adgroup_id
+        data_tests: [not_null, unique]
+      - name: campaign_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__tiktok_campaigns')
+              field: campaign_id
+      - name: targeting_segment_id
+        data_tests:
+          - relationships:
+              to: ref('stg_kinetic__segments')
+              field: segment_id
+
+  - name: stg_kinetic__tiktok_ads
+    description: One row per TikTok ad.
+    columns:
+      - name: ad_id
+        data_tests: [not_null, unique]
+      - name: adgroup_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__tiktok_adgroups')
+              field: adgroup_id
+      - name: ad_format
+        data_tests:
+          - accepted_values:
+              values: ['SINGLE_VIDEO', 'SPARK_AD', 'COLLECTION']
+
+  - name: stg_kinetic__tiktok_reports_daily
+    description: One row per TikTok ad per day. Spend and CPM in micros and dollars; CTR as a fraction.
+    columns:
+      - name: ad_day_id
+        data_tests: [not_null, unique]
+      - name: ad_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__tiktok_ads')
+              field: ad_id

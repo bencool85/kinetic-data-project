@@ -2188,3 +2188,24 @@ seasonality calendar.
   campaign match its ad's; every targeting segment exists; swipes and
   video views never exceed impressions; conversion value averages $90.61,
   so it's dollars. Total Snap spend $115,034.09 (after the flight cap).
+
+## 2026-09-29 — Phase 2 sub-batch 9: paid media, TikTok staging
+
+- Staging models + tests for `tiktok_campaigns`, `tiktok_adgroups`,
+  `tiktok_ads`, `tiktok_reports_daily`. 46 of 47 raw tables staged; all 6
+  paid-media platforms done.
+- TikTok keeps one `budget_micro` column plus a `budget_mode` flag (daily
+  vs. total). Staging keeps both raw columns and adds `daily_budget_usd` /
+  `lifetime_budget_usd`, so budgets line up with the other 5 platforms.
+  Checked: 4 always-on campaigns get daily budgets ($130-$310), the 3
+  holiday flights get lifetime budgets ($2,300 / $2,500 / $2,700).
+- Units: spend and CPM in micros (`_usd` added); `ctr` is a fraction,
+  renamed `ctr_fraction`. `advertiser_id` renamed `tiktok_advertiser_id`.
+- Hand-verified before writing tests: all IDs unique and non-null (7
+  campaigns, 8 ad groups, 10 ads, 7,416 ad-days incl. the combined
+  `ad_day_id` key); every link resolves through all four levels and each
+  daily row's ad group and campaign match its ad's; every targeting
+  segment exists; clicks and video views never exceed impressions; CTR
+  equals clicks / impressions and CPM equals spend / impressions x 1,000;
+  conversion value averages $89.15, so it's dollars. Total TikTok spend
+  $333,914.27 (after the flight cap).

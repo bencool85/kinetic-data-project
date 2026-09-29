@@ -272,6 +272,11 @@ FILES = [
     ("dbt/models/staging/kinetic/stg_kinetic__snap_ads.sql", "Code", "Phase 2 staging (paid media: Snap): 1:1 pass-through of snap_ads"),
     ("dbt/models/staging/kinetic/stg_kinetic__snap_stats_daily.sql", "Code", "Phase 2 staging (paid media: Snap): ad-day stats with combined ad_day_id key, spend in micros and dollars; documents swipes as Snap's clicks"),
     ("dbt/models/staging/kinetic/_kinetic__staging.yml", "Code", "Updated: tests for the 4 Snap staging models -- all hand-verified against live data first"),
+    ("dbt/models/staging/kinetic/stg_kinetic__tiktok_campaigns.sql", "Code", "Phase 2 staging (paid media: TikTok): campaigns with the single budget split into daily_budget_usd / lifetime_budget_usd by budget_mode (matching the other platforms), advertiser_id renamed tiktok_advertiser_id"),
+    ("dbt/models/staging/kinetic/stg_kinetic__tiktok_adgroups.sql", "Code", "Phase 2 staging (paid media: TikTok): 1:1 pass-through of tiktok_adgroups"),
+    ("dbt/models/staging/kinetic/stg_kinetic__tiktok_ads.sql", "Code", "Phase 2 staging (paid media: TikTok): 1:1 pass-through of tiktok_ads"),
+    ("dbt/models/staging/kinetic/stg_kinetic__tiktok_reports_daily.sql", "Code", "Phase 2 staging (paid media: TikTok): ad-day reports with combined ad_day_id key, spend and CPM in micros and dollars, ctr_fraction"),
+    ("dbt/models/staging/kinetic/_kinetic__staging.yml", "Code", "Updated: tests for the 4 TikTok staging models -- all hand-verified against live data first"),
 ]
 
 
