@@ -36,15 +36,18 @@ models:
         data_tests:
           - not_null
           - accepted_values:
-              values: ['anonymous_id', 'email']
+              arguments:
+                values: ['anonymous_id', 'email']
       - name: customer_id
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__customers')
-              field: customer_id
+              arguments:
+                to: ref('stg_kinetic__customers')
+                field: customer_id
       - name: match_method
         data_tests:
           - not_null
           - accepted_values:
-              values: ['identity_map_signup', 'identity_map_login', 'account_email']
+              arguments:
+                values: ['identity_map_signup', 'identity_map_login', 'account_email']

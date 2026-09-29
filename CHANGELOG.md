@@ -2284,3 +2284,18 @@ seasonality calendar.
   `dbt test` passes.
 - HANDOFF: new pitfall (git lock files without delete permission) and the
   dbt_dev decision.
+
+## 2026-09-29 — First real dbt run: staging builds; test syntax updated for dbt 1.10
+
+- Ben installed dbt 1.10.23 + dbt-duckdb 1.10.0 (Python 3.9.6, venv
+  ~/.dbt-venv). `dbt debug`: all checks passed.
+- `dbt run --select staging` on Ben's Mac: PASS=47, ERROR=0, 22.7s. All
+  47 views created in `dbt_dev_staging`.
+- Checked from MotherDuck: each of the 47 views returns exactly the same
+  row count as its raw table (401,182 rows in total), and `main` still has
+  its 47 raw tables, untouched.
+- dbt 1.10 warned 67 times (MissingArgumentsPropertyInGenericTestDeprecation):
+  `relationships` and `accepted_values` tests must nest their settings
+  under `arguments:`. Updated all 67 (64 staging, 3 intermediate);
+  confirmed both YAML files parse and every such test now has only
+  `arguments`. Warnings only, no logic change.

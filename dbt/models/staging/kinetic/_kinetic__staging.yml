@@ -22,14 +22,16 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__customers')
-              field: customer_id
+              arguments:
+                to: ref('stg_kinetic__customers')
+                field: customer_id
       - name: plan_id
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__subscription_plans')
-              field: plan_id
+              arguments:
+                to: ref('stg_kinetic__subscription_plans')
+                field: plan_id
 
   - name: stg_kinetic__invoices
     description: One row per invoice generated for a subscription.
@@ -40,8 +42,9 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__subscriptions')
-              field: subscription_id
+              arguments:
+                to: ref('stg_kinetic__subscriptions')
+                field: subscription_id
 
   - name: stg_kinetic__products
     description: One row per sellable product (course or merch).
@@ -64,8 +67,9 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__orders')
-              field: order_id
+              arguments:
+                to: ref('stg_kinetic__orders')
+                field: order_id
 
   - name: stg_kinetic__payments
     description: One row per payment attempt against an order.
@@ -76,8 +80,9 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__orders')
-              field: order_id
+              arguments:
+                to: ref('stg_kinetic__orders')
+                field: order_id
 
   - name: stg_kinetic__refunds
     description: One row per refund issued against a payment.
@@ -88,8 +93,9 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__orders')
-              field: order_id
+              arguments:
+                to: ref('stg_kinetic__orders')
+                field: order_id
 
   - name: stg_kinetic__discount_codes
     description: One row per discount code definition.
@@ -107,8 +113,9 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__customers')
-              field: customer_id
+              arguments:
+                to: ref('stg_kinetic__customers')
+                field: customer_id
 
   - name: stg_kinetic__devices
     description: >
@@ -122,8 +129,9 @@ models:
       - name: customer_id
         data_tests:
           - relationships:
-              to: ref('stg_kinetic__customers')
-              field: customer_id
+              arguments:
+                to: ref('stg_kinetic__customers')
+                field: customer_id
 
   - name: stg_kinetic__identity_map
     description: One row per event that resolved an anonymous_id to a known customer.
@@ -134,14 +142,16 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__customers')
-              field: customer_id
+              arguments:
+                to: ref('stg_kinetic__customers')
+                field: customer_id
       - name: anonymous_id
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__devices')
-              field: anonymous_id
+              arguments:
+                to: ref('stg_kinetic__devices')
+                field: anonymous_id
 
   - name: stg_kinetic__segments
     description: One row per audience segment definition (customer-grain or anonymous-device-grain).
@@ -158,14 +168,16 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__customers')
-              field: customer_id
+              arguments:
+                to: ref('stg_kinetic__customers')
+                field: customer_id
       - name: segment_id
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__segments')
-              field: segment_id
+              arguments:
+                to: ref('stg_kinetic__segments')
+                field: segment_id
 
   - name: stg_kinetic__subscription_events
     description: One row per lifecycle event on a subscription (trial started, renewed, upgraded, canceled, etc.).
@@ -176,18 +188,21 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__subscriptions')
-              field: subscription_id
+              arguments:
+                to: ref('stg_kinetic__subscriptions')
+                field: subscription_id
       - name: old_plan_id
         data_tests:
           - relationships:
-              to: ref('stg_kinetic__subscription_plans')
-              field: plan_id
+              arguments:
+                to: ref('stg_kinetic__subscription_plans')
+                field: plan_id
       - name: new_plan_id
         data_tests:
           - relationships:
-              to: ref('stg_kinetic__subscription_plans')
-              field: plan_id
+              arguments:
+                to: ref('stg_kinetic__subscription_plans')
+                field: plan_id
 
   # --- Web/app engagement (Phase 2, sub-batch 2) ---
   - name: stg_kinetic__web_sessions
@@ -201,13 +216,15 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__devices')
-              field: anonymous_id
+              arguments:
+                to: ref('stg_kinetic__devices')
+                field: anonymous_id
       - name: customer_id
         data_tests:
           - relationships:
-              to: ref('stg_kinetic__customers')
-              field: customer_id
+              arguments:
+                to: ref('stg_kinetic__customers')
+                field: customer_id
 
   - name: stg_kinetic__web_events
     description: One row per event on the website (page view, product view, add to cart, checkout, purchase, search).
@@ -218,29 +235,34 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__web_sessions')
-              field: session_id
+              arguments:
+                to: ref('stg_kinetic__web_sessions')
+                field: session_id
       - name: anonymous_id
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__devices')
-              field: anonymous_id
+              arguments:
+                to: ref('stg_kinetic__devices')
+                field: anonymous_id
       - name: customer_id
         data_tests:
           - relationships:
-              to: ref('stg_kinetic__customers')
-              field: customer_id
+              arguments:
+                to: ref('stg_kinetic__customers')
+                field: customer_id
       - name: product_id
         data_tests:
           - relationships:
-              to: ref('stg_kinetic__products')
-              field: product_id
+              arguments:
+                to: ref('stg_kinetic__products')
+                field: product_id
       - name: order_id
         data_tests:
           - relationships:
-              to: ref('stg_kinetic__orders')
-              field: order_id
+              arguments:
+                to: ref('stg_kinetic__orders')
+                field: order_id
 
   - name: stg_kinetic__app_sessions
     description: One row per session in the Kinetic app (iOS, Android, web app). Always a signed-in customer.
@@ -251,14 +273,16 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__customers')
-              field: customer_id
+              arguments:
+                to: ref('stg_kinetic__customers')
+                field: customer_id
       - name: device_id
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__devices')
-              field: device_id
+              arguments:
+                to: ref('stg_kinetic__devices')
+                field: device_id
 
   - name: stg_kinetic__app_events
     description: One row per in-app event (class started, workout completed or abandoned, streak achieved).
@@ -269,14 +293,16 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__app_sessions')
-              field: session_id
+              arguments:
+                to: ref('stg_kinetic__app_sessions')
+                field: session_id
       - name: customer_id
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__customers')
-              field: customer_id
+              arguments:
+                to: ref('stg_kinetic__customers')
+                field: customer_id
 
   # --- Email/push, Braze (Phase 2, sub-batch 3) ---
   - name: stg_kinetic__braze_email_campaigns
@@ -304,19 +330,22 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__braze_email_campaigns')
-              field: campaign_id
+              arguments:
+                to: ref('stg_kinetic__braze_email_campaigns')
+                field: campaign_id
       - name: customer_id
         data_tests:
           - relationships:
-              to: ref('stg_kinetic__customers')
-              field: customer_id
+              arguments:
+                to: ref('stg_kinetic__customers')
+                field: customer_id
       - name: email_address
         data_tests: [not_null]
       - name: event_name
         data_tests:
           - accepted_values:
-              values: ['send', 'open', 'click', 'bounce', 'unsubscribe']
+              arguments:
+                values: ['send', 'open', 'click', 'bounce', 'unsubscribe']
 
   - name: stg_kinetic__braze_push_events
     description: One row per push notification event (send, open, click, bounce, unsubscribe). Always a known customer and device.
@@ -329,24 +358,28 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__braze_push_campaigns')
-              field: campaign_id
+              arguments:
+                to: ref('stg_kinetic__braze_push_campaigns')
+                field: campaign_id
       - name: customer_id
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__customers')
-              field: customer_id
+              arguments:
+                to: ref('stg_kinetic__customers')
+                field: customer_id
       - name: device_id
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__devices')
-              field: device_id
+              arguments:
+                to: ref('stg_kinetic__devices')
+                field: device_id
       - name: event_name
         data_tests:
           - accepted_values:
-              values: ['send', 'open', 'click', 'bounce', 'unsubscribe']
+              arguments:
+                values: ['send', 'open', 'click', 'bounce', 'unsubscribe']
 
   # --- Paid media: Meta (Phase 2, sub-batch 4) ---
   - name: stg_kinetic__meta_campaigns
@@ -364,13 +397,15 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__meta_campaigns')
-              field: campaign_id
+              arguments:
+                to: ref('stg_kinetic__meta_campaigns')
+                field: campaign_id
       - name: targeting_segment_id
         data_tests:
           - relationships:
-              to: ref('stg_kinetic__segments')
-              field: segment_id
+              arguments:
+                to: ref('stg_kinetic__segments')
+                field: segment_id
 
   - name: stg_kinetic__meta_ad_insights_daily
     description: >
@@ -383,8 +418,9 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__meta_ads')
-              field: ad_id
+              arguments:
+                to: ref('stg_kinetic__meta_ads')
+                field: ad_id
       - name: report_date
         data_tests: [not_null]
 
@@ -399,12 +435,14 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__meta_ad_insights_daily')
-              field: ad_day_id
+              arguments:
+                to: ref('stg_kinetic__meta_ad_insights_daily')
+                field: ad_day_id
       - name: action_type
         data_tests:
           - accepted_values:
-              values: ['link_click', 'landing_page_view', 'video_view', 'add_to_cart', 'initiate_checkout', 'purchase']
+              arguments:
+                values: ['link_click', 'landing_page_view', 'video_view', 'add_to_cart', 'initiate_checkout', 'purchase']
 
   # --- Paid media: Google Search (Phase 2, sub-batch 5) ---
   - name: stg_kinetic__google_search_campaigns
@@ -424,13 +462,15 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__google_search_campaigns')
-              field: campaign_id
+              arguments:
+                to: ref('stg_kinetic__google_search_campaigns')
+                field: campaign_id
       - name: targeting_segment_id
         data_tests:
           - relationships:
-              to: ref('stg_kinetic__segments')
-              field: segment_id
+              arguments:
+                to: ref('stg_kinetic__segments')
+                field: segment_id
 
   - name: stg_kinetic__google_search_performance_daily
     description: >
@@ -443,8 +483,9 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__google_search_ad_groups')
-              field: ad_group_id
+              arguments:
+                to: ref('stg_kinetic__google_search_ad_groups')
+                field: ad_group_id
 
   - name: stg_kinetic__google_search_keyword_performance_daily
     description: One row per keyword per day -- the most detailed Google Search table.
@@ -455,12 +496,14 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__google_search_ad_groups')
-              field: ad_group_id
+              arguments:
+                to: ref('stg_kinetic__google_search_ad_groups')
+                field: ad_group_id
       - name: match_type
         data_tests:
           - accepted_values:
-              values: ['EXACT', 'PHRASE', 'BROAD']
+              arguments:
+                values: ['EXACT', 'PHRASE', 'BROAD']
 
   # --- Paid media: YouTube (Phase 2, sub-batch 6) ---
   - name: stg_kinetic__youtube_campaigns
@@ -473,7 +516,8 @@ models:
       - name: video_ad_format
         data_tests:
           - accepted_values:
-              values: ['VIDEO_TRUE_VIEW_IN_STREAM', 'VIDEO_ACTION', 'VIDEO_BUMPER']
+              arguments:
+                values: ['VIDEO_TRUE_VIEW_IN_STREAM', 'VIDEO_ACTION', 'VIDEO_BUMPER']
 
   - name: stg_kinetic__youtube_ad_groups
     description: One row per YouTube ad group.
@@ -484,13 +528,15 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__youtube_campaigns')
-              field: campaign_id
+              arguments:
+                to: ref('stg_kinetic__youtube_campaigns')
+                field: campaign_id
       - name: targeting_segment_id
         data_tests:
           - relationships:
-              to: ref('stg_kinetic__segments')
-              field: segment_id
+              arguments:
+                to: ref('stg_kinetic__segments')
+                field: segment_id
 
   - name: stg_kinetic__youtube_performance_daily
     description: One row per YouTube ad group per day. Cost in micros and dollars; view rate as a fraction.
@@ -501,8 +547,9 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__youtube_ad_groups')
-              field: ad_group_id
+              arguments:
+                to: ref('stg_kinetic__youtube_ad_groups')
+                field: ad_group_id
 
   # --- Paid media: DV360 (Phase 2, sub-batch 7) ---
   - name: stg_kinetic__dv360_insertion_orders
@@ -523,13 +570,15 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__dv360_insertion_orders')
-              field: insertion_order_id
+              arguments:
+                to: ref('stg_kinetic__dv360_insertion_orders')
+                field: insertion_order_id
       - name: targeting_segment_id
         data_tests:
           - relationships:
-              to: ref('stg_kinetic__segments')
-              field: segment_id
+              arguments:
+                to: ref('stg_kinetic__segments')
+                field: segment_id
 
   - name: stg_kinetic__dv360_performance_daily
     description: >
@@ -542,16 +591,19 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__dv360_line_items')
-              field: line_item_id
+              arguments:
+                to: ref('stg_kinetic__dv360_line_items')
+                field: line_item_id
       - name: exchange
         data_tests:
           - accepted_values:
-              values: ['GOOGLE_AD_MANAGER', 'APPNEXUS', 'OPENX', 'PUBMATIC', 'INDEX_EXCHANGE']
+              arguments:
+                values: ['GOOGLE_AD_MANAGER', 'APPNEXUS', 'OPENX', 'PUBMATIC', 'INDEX_EXCHANGE']
       - name: environment
         data_tests:
           - accepted_values:
-              values: ['WEB_OPTIMIZED', 'WEB_NOT_OPTIMIZED', 'APP', 'CONNECTED_TV']
+              arguments:
+                values: ['WEB_OPTIMIZED', 'WEB_NOT_OPTIMIZED', 'APP', 'CONNECTED_TV']
 
   # --- Paid media: Snap (Phase 2, sub-batch 8) ---
   - name: stg_kinetic__snap_campaigns
@@ -569,13 +621,15 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__snap_campaigns')
-              field: campaign_id
+              arguments:
+                to: ref('stg_kinetic__snap_campaigns')
+                field: campaign_id
       - name: targeting_segment_id
         data_tests:
           - relationships:
-              to: ref('stg_kinetic__segments')
-              field: segment_id
+              arguments:
+                to: ref('stg_kinetic__segments')
+                field: segment_id
 
   - name: stg_kinetic__snap_ads
     description: One row per Snap ad.
@@ -586,12 +640,14 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__snap_ad_squads')
-              field: ad_squad_id
+              arguments:
+                to: ref('stg_kinetic__snap_ad_squads')
+                field: ad_squad_id
       - name: ad_type
         data_tests:
           - accepted_values:
-              values: ['single_image', 'video', 'collection']
+              arguments:
+                values: ['single_image', 'video', 'collection']
 
   - name: stg_kinetic__snap_stats_daily
     description: One row per Snap ad per day. Swipes are Snap's clicks; spend in micros and dollars.
@@ -602,8 +658,9 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__snap_ads')
-              field: ad_id
+              arguments:
+                to: ref('stg_kinetic__snap_ads')
+                field: ad_id
 
   # --- Paid media: TikTok (Phase 2, sub-batch 9) ---
   - name: stg_kinetic__tiktok_campaigns
@@ -617,7 +674,8 @@ models:
       - name: budget_mode
         data_tests:
           - accepted_values:
-              values: ['BUDGET_MODE_DAY', 'BUDGET_MODE_TOTAL']
+              arguments:
+                values: ['BUDGET_MODE_DAY', 'BUDGET_MODE_TOTAL']
 
   - name: stg_kinetic__tiktok_adgroups
     description: One row per TikTok ad group.
@@ -628,13 +686,15 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__tiktok_campaigns')
-              field: campaign_id
+              arguments:
+                to: ref('stg_kinetic__tiktok_campaigns')
+                field: campaign_id
       - name: targeting_segment_id
         data_tests:
           - relationships:
-              to: ref('stg_kinetic__segments')
-              field: segment_id
+              arguments:
+                to: ref('stg_kinetic__segments')
+                field: segment_id
 
   - name: stg_kinetic__tiktok_ads
     description: One row per TikTok ad.
@@ -645,12 +705,14 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__tiktok_adgroups')
-              field: adgroup_id
+              arguments:
+                to: ref('stg_kinetic__tiktok_adgroups')
+                field: adgroup_id
       - name: ad_format
         data_tests:
           - accepted_values:
-              values: ['SINGLE_VIDEO', 'SPARK_AD', 'COLLECTION']
+              arguments:
+                values: ['SINGLE_VIDEO', 'SPARK_AD', 'COLLECTION']
 
   - name: stg_kinetic__tiktok_reports_daily
     description: One row per TikTok ad per day. Spend and CPM in micros and dollars; CTR as a fraction.
@@ -661,8 +723,9 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__tiktok_ads')
-              field: ad_id
+              arguments:
+                to: ref('stg_kinetic__tiktok_ads')
+                field: ad_id
 
   - name: stg_kinetic__product_variants
     description: One row per purchasable variant of a product (size, or the single default option).
@@ -673,7 +736,8 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_kinetic__products')
-              field: product_id
+              arguments:
+                to: ref('stg_kinetic__products')
+                field: product_id
       - name: sku
         data_tests: [not_null, unique]
