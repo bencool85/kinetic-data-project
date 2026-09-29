@@ -2221,3 +2221,7 @@ seasonality calendar.
   orphans) and all 12 products have at least one; no negative price
   adjustments (all $0); every variant was created on or after its
   product's creation date; all 21 active.
+
+## 2026-09-29 — Added HANDOFF.md
+
+- New `HANDOFF.md` at the repo root: status, open decisions, decisions already made, what Ben already understands, per-session setup, and past pitfalls. Written so a new chat or project can start without this conversation.
