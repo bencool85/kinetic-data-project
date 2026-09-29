@@ -2311,3 +2311,21 @@ seasonality calendar.
   stg_kinetic__customers), and that model hasn't been built in dbt yet, so
   the table didn't exist ("Catalog Error"). It will run once the
   intermediate layer is built.
+
+## 2026-09-29 — Intermediate layer built and tested in dbt
+
+- `dbt build --select intermediate` on Ben's Mac: 3 models + 12 tests,
+  PASS=15, ERROR=0, 13.0s. Views in `dbt_dev_intermediate`. The
+  int_customer_identity relationships test that errored in the staging
+  run now passes.
+- Checked the dbt-built views from MotherDuck:
+  - int_customer_identity: 1,841 rows (992 anonymous IDs); links 28 guest
+    orders and back-fills 340 sessions -- same as the pre-build check.
+  - int_subscription_paid_periods: 576 rows = 576 subscriptions. 374 have
+    no paid start. Looked into it because 65% seemed high: all 374 were
+    canceled during their trial, and none of them has a paid invoice. The
+    other 202 = 199 with a paid invoice + 3 still trialing (their paid
+    start is their trial end date). So the model is right; the synthetic
+    data has a 65% trial-cancel rate.
+  - int_orders_refunded: 159 orders = 159 orders with a succeeded refund
+    in raw; $6,546.82 refunded in total.
