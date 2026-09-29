@@ -17,6 +17,7 @@ Read this first in a new chat, then the last few CHANGELOG.md entries.
 5. Phase 3 onward per playbook: intermediate layer, marts, docs/descriptions, semantic layer, agent Skills.
 
 ## Decisions already made (do not reopen without reason)
+- dbt output goes to its own schemas (profile `schema: dbt_dev` -> dbt_dev_staging / dbt_dev_intermediate / dbt_dev_marts), never `main`. Profile lives in dbt/profiles.yml. dbt is installed in a venv at ~/.dbt-venv on Ben's Mac. Ben approved dbt run writing these schemas (2026-09-29).
 - Budgets: tables store the CURRENT budget; flight spend is capped at budget (fixed in generator, CSVs and live DB; audit Check 8 guards it).
 - Ad-platform units: Meta cents; Google/YouTube/DV360/Snap/TikTok micros. Staging exposes `_usd` columns. `ctr` is a fraction (`ctr_fraction`).
 - Google Search ad-group table is a rollup of the keyword table: never add them together.
@@ -33,6 +34,7 @@ dbt (transformation tool run separately, not a database; models are SQL files; s
 - Manifest: add a line in generator/build_manifest.py, then run with HOME="$HOME/mnt" python3 generator/build_manifest.py.
 
 ## Pitfalls that cost time before
+- Git commits from the bridge leave lock files (.git/HEAD.lock, objects/maintenance.lock, tmp_obj_*) when delete permission isn't granted, and the next commit fails. Ask for delete permission on kinetic-project at the start of any session that will commit; then remove only empty lock files and tmp_obj_* files.
 - Do not run `git fetch` from the device bridge (left stale lock files).
 - iCloud folders are unreadable from the bridge: keep everything in ~/Documents.
 - Terminal cannot be typed into by Claude; Ben types git commands himself.

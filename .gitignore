@@ -3,3 +3,9 @@ __pycache__/
 .env
 *.env
 warehouse/.env
+
+# dbt build output and local state
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+dbt/.user.yml

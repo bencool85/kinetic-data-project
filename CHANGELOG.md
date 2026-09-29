@@ -2265,3 +2265,22 @@ seasonality calendar.
   customers.
 - dbt/README.md and File_Manifest.xlsx updated; HANDOFF open decision 1
   (Braze stitching) marked resolved.
+
+## 2026-09-29 — dbt install setup (first real run pending)
+
+- Ben's call: install dbt now rather than at Phase 5, since Phase 2's exit
+  test (staging tests pass in dbt) can't be met without it and 52 models
+  have never been compiled.
+- New `dbt/profiles.yml` (in the project, no secrets): `md:kinetic`,
+  `schema: dbt_dev`. Combined with the folder schemas, dbt builds into
+  `dbt_dev_staging`, `dbt_dev_intermediate`, `dbt_dev_marts`. Checked the
+  live database first: only `main` exists (47 tables), so no collisions.
+  Ben approved `dbt run` writing to these schemas.
+- `dbt/README.md` setup rewritten: venv at `~/.dbt-venv`, then
+  `dbt debug` / `dbt run` / `dbt test`.
+- `.gitignore`: dbt `target/`, `logs/`, `dbt_packages/`, `.user.yml`.
+- Playbook v1.1 (Ben approved): Phase 1 now requires dbt installed and one
+  clean run. Kinetic Phase 2 status moved back to "in progress" until
+  `dbt test` passes.
+- HANDOFF: new pitfall (git lock files without delete permission) and the
+  dbt_dev decision.

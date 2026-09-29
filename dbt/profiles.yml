@@ -1,0 +1,16 @@
+# dbt connection profile, kept in the project so there's nothing to set up
+# in ~/.dbt. No secrets here: MotherDuck auth comes from your existing
+# DuckDB/MotherDuck login or the motherduck_token environment variable.
+#
+# schema: dbt_dev keeps everything dbt builds apart from the 47 raw tables
+# in `main`. With the folder schemas in dbt_project.yml, models land in
+# dbt_dev_staging, dbt_dev_intermediate and dbt_dev_marts -- all safe to
+# drop and rebuild without touching raw data.
+kinetic:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: 'md:kinetic'
+      schema: dbt_dev
+      threads: 4

@@ -191,6 +191,7 @@ FILES = [
     ("README.md", "Docs", "Updated 2026-09-28: real project status (47/47 tables built+validated, live in MotherDuck) + direct link to the live Dive dashboard, replacing the stale 'planning complete, next step Phase 0' placeholder text"),
     ("docs/cross_dataset_alignment_audit.md", "Docs", "Updated 2026-09-28: closed the one open item (brand_lift/holiday-discount-code asymmetry across the 3 Novembers) -- reviewed and confirmed intentional, no data changed"),
     ("dbt/dbt_project.yml", "Code", "dbt project config for the new semantic layer -- staging views, intermediate views, mart tables"),
+    ("dbt/profiles.yml", "Code", "dbt connection profile (MotherDuck md:kinetic, schema dbt_dev); no secrets"),
     ("dbt/.gitignore", "Repo config", "Excludes dbt's target/, dbt_packages/, logs/ from git"),
     ("dbt/README.md", "Docs", "How to install dbt-core + dbt-duckdb and run this project locally against MotherDuck (neither of Claude's environments can reach motherduck.com directly, so dbt run/test must be executed on the user's own machine)"),
     ("dbt/models/staging/kinetic/_kinetic__sources.yml", "Code", "Declares all 47 raw kinetic tables as dbt sources, so every staging model references source() rather than a hardcoded table name"),

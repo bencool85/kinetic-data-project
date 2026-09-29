@@ -58,32 +58,28 @@ for the original 47 tables), but **actually executing `dbt run`/`dbt test`
 has to happen from your own Mac**, which has normal, unrestricted internet
 access.
 
-One-time setup:
+One-time setup (Terminal on your Mac). dbt goes in its own virtual
+environment so it can't clash with other Python tools:
 
 ```
-pip3 install dbt-core dbt-duckdb
+python3 -m venv ~/.dbt-venv
+source ~/.dbt-venv/bin/activate
+pip install dbt-core dbt-duckdb
 ```
 
-Add a profile at `~/.dbt/profiles.yml`:
-
-```yaml
-kinetic:
-  target: dev
-  outputs:
-    dev:
-      type: duckdb
-      path: 'md:kinetic'
-      threads: 4
-```
+The connection profile lives in this folder (`dbt/profiles.yml`), so there
+is nothing to add under `~/.dbt`. It uses `schema: dbt_dev`, so dbt's output
+lands in `dbt_dev_staging`, `dbt_dev_intermediate` and `dbt_dev_marts`,
+separate from the raw tables in `main`.
 
 `dbt-duckdb` reads your MotherDuck auth the same way the `duckdb` CLI does
-(a saved token via `duckdb -ui` login, or the `motherduck_token` environment
-variable) -- no separate credential needed if you're already logged in to
-MotherDuck on this machine.
+(a saved login, or the `motherduck_token` environment variable).
 
-Then, from this `dbt/` folder:
+Each time, from this `dbt/` folder:
 
 ```
+source ~/.dbt-venv/bin/activate
+dbt debug  # checks the connection
 dbt run    # builds all staging/intermediate/mart views & tables
 dbt test   # runs the not_null/unique/relationship tests
 ```
