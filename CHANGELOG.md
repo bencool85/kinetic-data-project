@@ -2329,3 +2329,5 @@ seasonality calendar.
     data has a 65% trial-cancel rate.
   - int_orders_refunded: 159 orders = 159 orders with a succeeded refund
     in raw; $6,546.82 refunded in total.
+- Marts: added a `unique` test on `year_month` to both marts, so their
+  one-row-per-month grain is tested (playbook: test the grain).

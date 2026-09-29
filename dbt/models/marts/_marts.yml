@@ -9,7 +9,7 @@ models:
       recomputing the trial/paid-start logic themselves.
     columns:
       - name: year_month
-        data_tests: [not_null]
+        data_tests: [not_null, unique]
       - name: mrr_usd
         data_tests:
           - not_null
@@ -23,6 +23,6 @@ models:
       in this dataset).
     columns:
       - name: year_month
-        data_tests: [not_null]
+        data_tests: [not_null, unique]
       - name: order_count
         data_tests: [not_null]
