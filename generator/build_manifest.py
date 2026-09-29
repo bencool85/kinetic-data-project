@@ -267,6 +267,11 @@ FILES = [
     ("data/tiktok_reports_daily.csv", "Shipped table", "Regenerated 2026-09-29: the 2023/2024/2025 holiday flights (56 rows) trimmed to spend exactly their lifetime budgets; every other row identical"),
     ("docs/cross_dataset_alignment_audit.md", "Docs", "Updated 2026-09-29: added Check 8 (spend vs stored budget) with both fixes and results"),
     ("generator/audit_cross_dataset_alignment.py", "Code", "Updated 2026-09-29: Check 8's flight limit tightened from 1.05x to 1.0x now that flights are capped"),
+    ("dbt/models/staging/kinetic/stg_kinetic__snap_campaigns.sql", "Code", "Phase 2 staging (paid media: Snap): campaigns with ad_account_id renamed snap_ad_account_id, current budgets in micros and dollars"),
+    ("dbt/models/staging/kinetic/stg_kinetic__snap_ad_squads.sql", "Code", "Phase 2 staging (paid media: Snap): 1:1 pass-through of snap_ad_squads (Snap's ad set / ad group level)"),
+    ("dbt/models/staging/kinetic/stg_kinetic__snap_ads.sql", "Code", "Phase 2 staging (paid media: Snap): 1:1 pass-through of snap_ads"),
+    ("dbt/models/staging/kinetic/stg_kinetic__snap_stats_daily.sql", "Code", "Phase 2 staging (paid media: Snap): ad-day stats with combined ad_day_id key, spend in micros and dollars; documents swipes as Snap's clicks"),
+    ("dbt/models/staging/kinetic/_kinetic__staging.yml", "Code", "Updated: tests for the 4 Snap staging models -- all hand-verified against live data first"),
 ]
 
 

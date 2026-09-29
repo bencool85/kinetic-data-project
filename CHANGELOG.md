@@ -2169,3 +2169,22 @@ seasonality calendar.
   confirmed from MotherDuck that every flight is at or under budget.
 - No dashboard logic changes; the Dive's paid-media spend totals drop by
   the $430 (under 0.03%).
+
+## 2026-09-29 — Phase 2 sub-batch 8: paid media, Snap staging
+
+- Staging models + tests for `snap_campaigns`, `snap_ad_squads`,
+  `snap_ads`, `snap_stats_daily`. 42 of 47 raw tables staged.
+- Snap vocabulary documented in the models: an "ad squad" is Snap's ad set
+  / ad group level, and "swipes" are Snap's clicks (swipe-ups) -- there is
+  no clicks column.
+- Budgets and spend are in micros (Snap micro-currency); `_usd` versions
+  added. Budgets are the current budgets set in the 2026-09-29 fix; checked
+  the cast to whole micros loses nothing and every campaign has exactly one
+  of daily / lifetime budget. `ad_account_id` renamed `snap_ad_account_id`.
+- Hand-verified before writing tests: all IDs unique and non-null (7
+  campaigns, 8 ad squads, 10 ads, 7,407 ad-days incl. the combined
+  `ad_day_id` key); every link resolves through all four levels (campaign
+  -> ad squad -> ad -> daily row), and each daily row's ad squad and
+  campaign match its ad's; every targeting segment exists; swipes and
+  video views never exceed impressions; conversion value averages $90.61,
+  so it's dollars. Total Snap spend $115,034.09 (after the flight cap).

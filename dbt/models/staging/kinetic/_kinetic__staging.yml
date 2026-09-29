@@ -552,3 +552,55 @@ models:
         data_tests:
           - accepted_values:
               values: ['WEB_OPTIMIZED', 'WEB_NOT_OPTIMIZED', 'APP', 'CONNECTED_TV']
+
+  # --- Paid media: Snap (Phase 2, sub-batch 8) ---
+  - name: stg_kinetic__snap_campaigns
+    description: One row per Snap campaign. Budgets are current budgets, in micros and dollars.
+    columns:
+      - name: campaign_id
+        data_tests: [not_null, unique]
+
+  - name: stg_kinetic__snap_ad_squads
+    description: One row per Snap ad squad (Snap's equivalent of an ad set / ad group).
+    columns:
+      - name: ad_squad_id
+        data_tests: [not_null, unique]
+      - name: campaign_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__snap_campaigns')
+              field: campaign_id
+      - name: targeting_segment_id
+        data_tests:
+          - relationships:
+              to: ref('stg_kinetic__segments')
+              field: segment_id
+
+  - name: stg_kinetic__snap_ads
+    description: One row per Snap ad.
+    columns:
+      - name: ad_id
+        data_tests: [not_null, unique]
+      - name: ad_squad_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__snap_ad_squads')
+              field: ad_squad_id
+      - name: ad_type
+        data_tests:
+          - accepted_values:
+              values: ['single_image', 'video', 'collection']
+
+  - name: stg_kinetic__snap_stats_daily
+    description: One row per Snap ad per day. Swipes are Snap's clicks; spend in micros and dollars.
+    columns:
+      - name: ad_day_id
+        data_tests: [not_null, unique]
+      - name: ad_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__snap_ads')
+              field: ad_id

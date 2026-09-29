@@ -32,7 +32,8 @@ database before moving on -- not the whole semantic layer in one shot.
   `braze_push_campaigns`, `braze_push_events` (email/push); the 4 `meta_*`
   tables (paid media: Meta); the 4 `google_search_*` tables (paid media:
   Google Search); the 3 `youtube_*` tables (paid media: YouTube); the 3
-  `dv360_*` tables (paid media: DV360) -- 38 of 47 raw tables staged
+  `dv360_*` tables (paid media: DV360); the 4 `snap_*` tables (paid media:
+  Snap) -- 42 of 47 raw tables staged
 - Intermediate: `int_subscription_paid_periods` (trial-vs-paid start date
   logic), `int_orders_refunded` (per-order successfully-refunded amount)
 - Marts: `mart_mrr_monthly` (active subscribers + MRR/ARR by month),
