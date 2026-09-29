@@ -224,6 +224,11 @@ FILES = [
     ("dbt/models/staging/kinetic/stg_kinetic__app_sessions.sql", "Code", "Phase 2 staging (web/app engagement): 1:1 pass-through of app_sessions"),
     ("dbt/models/staging/kinetic/stg_kinetic__app_events.sql", "Code", "Phase 2 staging (web/app engagement): 1:1 pass-through of app_events"),
     ("dbt/models/staging/kinetic/_kinetic__staging.yml", "Code", "Updated: tests for the 4 web/app engagement staging models -- all hand-verified against live data first"),
+    ("dbt/models/staging/kinetic/stg_kinetic__braze_email_campaigns.sql", "Code", "Phase 2 staging (email/push): 1:1 pass-through of braze_email_campaigns"),
+    ("dbt/models/staging/kinetic/stg_kinetic__braze_push_campaigns.sql", "Code", "Phase 2 staging (email/push): 1:1 pass-through of braze_push_campaigns"),
+    ("dbt/models/staging/kinetic/stg_kinetic__braze_email_events.sql", "Code", "Phase 2 staging (email/push): braze_email_events with external_user_id renamed to customer_id and a short event_name (send/open/click/bounce/unsubscribe) alongside Braze's raw event_type"),
+    ("dbt/models/staging/kinetic/stg_kinetic__braze_push_events.sql", "Code", "Phase 2 staging (email/push): braze_push_events with external_user_id renamed to customer_id and a short event_name alongside Braze's raw event_type"),
+    ("dbt/models/staging/kinetic/_kinetic__staging.yml", "Code", "Updated: tests for the 4 Braze staging models, incl. accepted_values on event_name -- all hand-verified against live data first"),
 ]
 
 

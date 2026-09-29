@@ -1955,3 +1955,27 @@ seasonality calendar.
   visitors who weren't known customers yet. Expected by design, so those
   columns get relationships tests but no not_null test. App sessions and
   events always have a customer, so there they do get not_null.
+
+## 2026-09-29 — Phase 2 sub-batch 3: email/push (Braze) staging
+
+- Staging models + tests for `braze_email_campaigns`, `braze_email_events`,
+  `braze_push_campaigns`, `braze_push_events`. 24 of 47 raw tables staged.
+- Two light cleanups, both allowed in staging because they don't change
+  meaning: Braze's `external_user_id` is renamed to `customer_id` (it is
+  Kinetic's customer ID), and a short `event_name` (send/open/click/bounce/
+  unsubscribe) sits next to Braze's raw `event_type`
+  (users.messages.email.Open etc.). Checked on live data that event_name
+  yields exactly those 5 values in both tables.
+- Hand-verified before writing tests: all 4 primary keys unique and
+  non-null (9 email campaigns, 26,335 email events, 7 push campaigns,
+  9,897 push events); every event's campaign exists; every filled-in
+  customer exists; every push device exists and belongs to the same
+  customer the push was sent to.
+- 2,187 email events have no customer_id. All of them are Order
+  Confirmation emails to guest checkouts, and every address matches a
+  guest order's email. Expected, so no not_null test on that column.
+- Noted for Phase 3 (intermediate): 28 of those guest-checkout emails
+  match an existing customer's email address -- people who checked out as
+  a guest despite having an account, or created one later. Any "customer
+  view" of email engagement or orders will need to decide whether to stitch
+  those together by email address.

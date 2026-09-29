@@ -277,3 +277,73 @@ models:
           - relationships:
               to: ref('stg_kinetic__customers')
               field: customer_id
+
+  # --- Email/push, Braze (Phase 2, sub-batch 3) ---
+  - name: stg_kinetic__braze_email_campaigns
+    description: One row per Braze email campaign (triggered or scheduled).
+    columns:
+      - name: campaign_id
+        data_tests: [not_null, unique]
+
+  - name: stg_kinetic__braze_push_campaigns
+    description: One row per Braze push notification campaign.
+    columns:
+      - name: campaign_id
+        data_tests: [not_null, unique]
+
+  - name: stg_kinetic__braze_email_events
+    description: >
+      One row per email event (send, open, click, bounce, unsubscribe).
+      customer_id is null for Order Confirmation emails to guest checkouts.
+    columns:
+      - name: event_id
+        data_tests: [not_null, unique]
+      - name: send_id
+        data_tests: [not_null]
+      - name: campaign_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__braze_email_campaigns')
+              field: campaign_id
+      - name: customer_id
+        data_tests:
+          - relationships:
+              to: ref('stg_kinetic__customers')
+              field: customer_id
+      - name: email_address
+        data_tests: [not_null]
+      - name: event_name
+        data_tests:
+          - accepted_values:
+              values: ['send', 'open', 'click', 'bounce', 'unsubscribe']
+
+  - name: stg_kinetic__braze_push_events
+    description: One row per push notification event (send, open, click, bounce, unsubscribe). Always a known customer and device.
+    columns:
+      - name: event_id
+        data_tests: [not_null, unique]
+      - name: send_id
+        data_tests: [not_null]
+      - name: campaign_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__braze_push_campaigns')
+              field: campaign_id
+      - name: customer_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__customers')
+              field: customer_id
+      - name: device_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__devices')
+              field: device_id
+      - name: event_name
+        data_tests:
+          - accepted_values:
+              values: ['send', 'open', 'click', 'bounce', 'unsubscribe']
