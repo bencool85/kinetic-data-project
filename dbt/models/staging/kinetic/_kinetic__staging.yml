@@ -96,3 +96,95 @@ models:
     columns:
       - name: discount_code_id
         data_tests: [not_null, unique]
+
+  # --- Customer 360 (Phase 2, sub-batch 1) ---
+  - name: stg_kinetic__customer_addresses
+    description: One row per billing or shipping address on file for a customer.
+    columns:
+      - name: address_id
+        data_tests: [not_null, unique]
+      - name: customer_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__customers')
+              field: customer_id
+
+  - name: stg_kinetic__devices
+    description: >
+      One row per device seen on web or app. customer_id is null for anonymous
+      devices that never resolved to a known customer -- expected, not a gap.
+    columns:
+      - name: device_id
+        data_tests: [not_null, unique]
+      - name: anonymous_id
+        data_tests: [not_null]
+      - name: customer_id
+        data_tests:
+          - relationships:
+              to: ref('stg_kinetic__customers')
+              field: customer_id
+
+  - name: stg_kinetic__identity_map
+    description: One row per event that resolved an anonymous_id to a known customer.
+    columns:
+      - name: resolution_id
+        data_tests: [not_null, unique]
+      - name: customer_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__customers')
+              field: customer_id
+      - name: anonymous_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__devices')
+              field: anonymous_id
+
+  - name: stg_kinetic__segments
+    description: One row per audience segment definition (customer-grain or anonymous-device-grain).
+    columns:
+      - name: segment_id
+        data_tests: [not_null, unique]
+
+  - name: stg_kinetic__customer_segment_membership
+    description: One row per period a customer spent in a segment (exited_at null = still a member).
+    columns:
+      - name: membership_id
+        data_tests: [not_null, unique]
+      - name: customer_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__customers')
+              field: customer_id
+      - name: segment_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__segments')
+              field: segment_id
+
+  - name: stg_kinetic__subscription_events
+    description: One row per lifecycle event on a subscription (trial started, renewed, upgraded, canceled, etc.).
+    columns:
+      - name: event_id
+        data_tests: [not_null, unique]
+      - name: subscription_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_kinetic__subscriptions')
+              field: subscription_id
+      - name: old_plan_id
+        data_tests:
+          - relationships:
+              to: ref('stg_kinetic__subscription_plans')
+              field: plan_id
+      - name: new_plan_id
+        data_tests:
+          - relationships:
+              to: ref('stg_kinetic__subscription_plans')
+              field: plan_id

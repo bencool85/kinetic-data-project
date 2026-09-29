@@ -1918,3 +1918,24 @@ seasonality calendar.
   database before writing any dbt SQL: 2026-07 showed 246 orders,
   $13,843.71 gross revenue, $56.28 AOV, 13.0% guest orders, 19.5% with a
   discount applied, 4.5% of orders refunded ($649.59).
+
+## 2026-09-29 — Adopted the Data-to-Agents Playbook; Phase 2 sub-batch 1 (Customer 360 staging)
+
+- Wrote a reusable consulting framework, the "Data-to-Agents Playbook"
+  (published as a separate page, not in this repo): 9 phases from discovery
+  through staging, intermediate, marts, documentation, a dynamic semantic
+  layer, Skills, and agents. Kinetic now follows it phase by phase, finishing
+  each phase across all tables before starting the next.
+- Phase 2 (staging) is being completed in 9 sub-batches, grouped in the same
+  dependency order as the original 47-table build. Sub-batch 1, Customer 360:
+  `customer_addresses`, `devices`, `identity_map`, `segments`,
+  `customer_segment_membership`, `subscription_events`. 16 of 47 raw tables
+  now staged.
+- Since `dbt test` can't run yet, every test was verified by hand against the
+  live database first: all 6 primary keys unique and non-null; every foreign
+  key resolves (addresses/devices/identity_map/membership/subscription_events
+  -> customers, membership -> segments, subscription_events -> subscriptions,
+  old/new plan -> subscription_plans, identity_map.anonymous_id -> devices).
+- `devices.customer_id` is null for 17,050 of 18,042 rows (anonymous devices
+  that never resolved to a customer). That's by design, so that column gets a
+  relationships test but deliberately no not_null test.

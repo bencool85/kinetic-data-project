@@ -24,7 +24,10 @@ database before moving on -- not the whole semantic layer in one shot.
 
 - Staging: `customers`, `subscriptions`, `subscription_plans`, `invoices`,
   `products` (Phase 1/2 core entities); `orders`, `order_line_items`,
-  `payments`, `refunds`, `discount_codes` (Phase 3 storefront entities)
+  `payments`, `refunds`, `discount_codes` (Phase 3 storefront entities);
+  `customer_addresses`, `devices`, `identity_map`, `segments`,
+  `customer_segment_membership`, `subscription_events` (Customer 360) --
+  16 of 47 raw tables staged
 - Intermediate: `int_subscription_paid_periods` (trial-vs-paid start date
   logic), `int_orders_refunded` (per-order successfully-refunded amount)
 - Marts: `mart_mrr_monthly` (active subscribers + MRR/ARR by month),

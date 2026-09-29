@@ -212,6 +212,13 @@ FILES = [
     ("dbt/models/staging/kinetic/stg_kinetic__discount_codes.sql", "Code", "Staging model: 1:1 pass-through of discount_codes"),
     ("dbt/models/intermediate/int_orders_refunded.sql", "Code", "Intermediate model: per-order total of succeeded refunds only (failed/pending refunds don't reduce reported revenue)"),
     ("dbt/models/marts/mart_storefront_revenue_monthly.sql", "Code", "Second canonical metric mart: non-subscription (course+merch) gross/net revenue, AOV, guest-checkout share, discount-usage share, refund rate by month -- validated against a hand-run equivalent query on the live database (2026-07: 246 orders, $13,843.71 gross revenue, $56.28 AOV)"),
+    ("dbt/models/staging/kinetic/stg_kinetic__customer_addresses.sql", "Code", "Phase 2 staging (Customer 360): 1:1 pass-through of customer_addresses"),
+    ("dbt/models/staging/kinetic/stg_kinetic__devices.sql", "Code", "Phase 2 staging (Customer 360): 1:1 pass-through of devices, plus is_anonymous_device flag (customer_id null for ~94% of devices by design)"),
+    ("dbt/models/staging/kinetic/stg_kinetic__identity_map.sql", "Code", "Phase 2 staging (Customer 360): 1:1 pass-through of identity_map"),
+    ("dbt/models/staging/kinetic/stg_kinetic__segments.sql", "Code", "Phase 2 staging (Customer 360): 1:1 pass-through of segments"),
+    ("dbt/models/staging/kinetic/stg_kinetic__customer_segment_membership.sql", "Code", "Phase 2 staging (Customer 360): 1:1 pass-through of customer_segment_membership, plus is_current_member flag"),
+    ("dbt/models/staging/kinetic/stg_kinetic__subscription_events.sql", "Code", "Phase 2 staging (Customer 360): 1:1 pass-through of subscription_events; old_plan/new_plan renamed to old_plan_id/new_plan_id"),
+    ("dbt/models/staging/kinetic/_kinetic__staging.yml", "Code", "Updated: tests for the 6 Customer 360 staging models (PK not_null/unique, FK relationships) -- all hand-verified against live data first"),
 ]
 
 
