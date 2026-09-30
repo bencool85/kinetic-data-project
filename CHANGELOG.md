@@ -2409,3 +2409,13 @@ seasonality calendar.
 - Tests: not_null/unique/accepted_values/relationships in
   `_intermediate.yml` plus 3 singular tests in `dbt/tests/`.
 - Ben pushed all earlier commits (0 unpushed at the start of this step).
+
+## 2026-09-30 — int_sessions_unified built and tested in dbt
+
+- `dbt build --select int_sessions_unified` on Ben's Mac: 1 view + 13 tests,
+  PASS=14, ERROR=0, 10.2s. View in `dbt_dev_intermediate`.
+- Checked from MotherDuck: 49,895 rows = 49,895 distinct sessions (30,285
+  web, 19,610 app); 26,086 known_at_time, 340 backfilled (263 customers),
+  23,469 anonymous (= null customer_id); 0 negative durations. Identical to
+  the pre-build hand check.
+- Playbook section 13 and double-black-solutions/LOG.md updated.
