@@ -2588,3 +2588,21 @@ seasonality calendar.
   and Pages switched on (Settings > Pages > branch gh-pages, folder /root).
   The site is a snapshot of the 2026-09-30 build; regenerate and rebuild the
   branch after model changes.
+
+## 2026-09-30 — Claude Code setup reviewed and updated (CLAUDE.md, settings, docs-site script)
+
+- Reviewed CLAUDE.md and .claude/settings.json ahead of moving work to Claude Code.
+  Fixed: rule 8 (playbook can now be updated from Claude Code: section-13-only
+  edits, backup and per-section check, republish to the existing artifact link
+  if the Artifact tool exists, else flag it); wrong unit note (Meta SPEND is
+  dollars, only budgets are cents); playbook folder access (`--add-dir` and
+  additionalDirectories, Edit allowed on playbook/ and LOG.md only); branch
+  warning (work is on `overnight`, unmerged); static-dataset note;
+  MORNING_LIST.md is record-only; Ben's teaching rules added.
+- New `scripts/rebuild_docs_branch.sh`: rebuilds gh-pages from dbt/target as one
+  commit on top of the existing branch (no force push). Tested here: adds one
+  commit, second run says nothing to do; refuses local paths/token strings.
+  `git push origin gh-pages` allowed in settings.
+- Not verified from here: exact permission-pattern syntax for the ~ paths in
+  settings.json and whether Claude Code has the Artifact tool. First Claude Code
+  session should check both.

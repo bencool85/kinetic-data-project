@@ -10,7 +10,12 @@
       "Bash(git checkout*)",
       "Bash(git branch*)",
       "Bash(git push origin overnight)",
-      "Bash(python3 generator/build_manifest.py*)"
+      "Bash(python3 generator/build_manifest.py*)",
+      "Bash(git push origin gh-pages)",
+      "Bash(bash scripts/rebuild_docs_branch.sh*)",
+      "Edit(~/Documents/double-black-solutions/playbook/**)",
+      "Edit(~/Documents/double-black-solutions/LOG.md)",
+      "Read(~/Documents/double-black-solutions/**)"
     ],
     "deny": [
       "Bash(git push)",
@@ -27,6 +32,9 @@
       "Bash(git reset --hard*)",
       "Bash(git clean*)",
       "Bash(rm *)"
+    ],
+    "additionalDirectories": [
+      "~/Documents/double-black-solutions"
     ]
   }
 }
