@@ -221,6 +221,7 @@ FILES = [
     ("dbt/tests/assert_int_sessions_unified_customer_matches_resolution.sql", "Code", "dbt test: customer_id is null exactly when a session is anonymous"),
     ("dbt/tests/assert_int_sessions_unified_counts_match_sources.sql", "Code", "dbt test: unified session count equals web + app session counts"),
     ("dbt/tests/assert_int_sessions_unified_no_negative_duration.sql", "Code", "dbt test: no session ends before it starts"),
+    ("OVERNIGHT_PLAN.md", "Doc", "Runbook for the unattended overnight run: queue, rules, stop rules, morning list format"),
     ("dbt/models/marts/mart_storefront_revenue_monthly.sql", "Code", "Second canonical metric mart: non-subscription (course+merch) gross/net revenue, AOV, guest-checkout share, discount-usage share, refund rate by month -- validated against a hand-run equivalent query on the live database (2026-07: 246 orders, $13,843.71 gross revenue, $56.28 AOV)"),
     ("dbt/models/staging/kinetic/stg_kinetic__customer_addresses.sql", "Code", "Phase 2 staging (Customer 360): 1:1 pass-through of customer_addresses"),
     ("dbt/models/staging/kinetic/stg_kinetic__devices.sql", "Code", "Phase 2 staging (Customer 360): 1:1 pass-through of devices, plus is_anonymous_device flag (customer_id null for ~94% of devices by design)"),

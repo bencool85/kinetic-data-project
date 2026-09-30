@@ -2419,3 +2419,11 @@ seasonality calendar.
   23,469 anonymous (= null customer_id); 0 negative durations. Identical to
   the pre-build hand check.
 - Playbook section 13 and double-black-solutions/LOG.md updated.
+
+## 2026-09-29 — Overnight plan added
+
+- `OVERNIGHT_PLAN.md`: runbook for a scheduled unattended run (Phase 3 models
+  4-5, mart cleanup, up to 3 Phase 4 marts, Phase 5 descriptions). Commits go
+  on a separate `overnight` branch, MotherDuck stays read-only, dbt cannot run
+  overnight, results land in MORNING_LIST.md. Ben's calls: branch not master;
+  assume-and-log decisions that are his.
