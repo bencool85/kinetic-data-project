@@ -2553,3 +2553,17 @@ seasonality calendar.
   their formatting changed (block style, folded long text); content is
   otherwise the same. Not yet run through `dbt parse` / `dbt docs generate`
   (needs Ben's Mac).
+
+## 2026-09-30 — Phase 6 DRAFT: semantic layer definitions (overnight run; not validated)
+
+- `dbt/drafts/semantic_layer_DRAFT.yml`: 5 MetricFlow semantic models (mrr,
+  subscriber_movement, storefront_revenue, paid_media, acquisition) and 25
+  metrics, each defined once. Snapshot measures (MRR, active subscribers) use
+  a non-additive time dimension so they are never summed across months.
+  Ratios (AOV, CTR, CPC, cost per reported conversion, reported ROAS, blended
+  CAC) are ratio metrics computed from sums.
+- `docs/semantic_layer_validation_DRAFT.md`: 10 `mf query` checks with
+  expected values from live hand SQL.
+- Kept in `dbt/drafts/` (outside model-paths) so an unvalidated file cannot
+  break `dbt build`. Assumed default: dbt Semantic Layer / MetricFlow.
+- Honest limit: only paid-media metrics have two dimensions (platform, time).

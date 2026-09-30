@@ -1,0 +1,368 @@
+# ======================================================================
+# DRAFT -- Phase 6 semantic layer (dbt Semantic Layer / MetricFlow)
+# Written overnight 2026-09-30. NOT VALIDATED: dbt-metricflow is not
+# installed and the marts it points at have not been built in dbt yet.
+# Kept in dbt/drafts/ (outside model-paths) so `dbt parse/build` ignores it.
+# To activate: build the marts, `pip install dbt-metricflow`, add a
+# metricflow_time_spine model, move this file to dbt/models/marts/, then run
+# `dbt parse` and `mf validate-configs` (see MORNING_LIST.md).
+#
+# ASSUMED DEFAULT (Ben's call): dbt Semantic Layer / MetricFlow rather than a
+# BI-tool semantic layer, because Kinetic has no BI tool.
+#
+# Rule of this file: each metric is defined ONCE. The allowed dimensions are
+# the ones declared on its semantic model plus metric_time (month, quarter,
+# year). Anything not declared here is not answerable and the Skill must say
+# so.
+#
+# Honest limit of today's marts: only the paid-media metrics have a second
+# dimension (platform). Every other mart is one row per month, so those
+# metrics can be sliced by time only. The Phase 6 exit check ("at least 2
+# approved dimensions without a new model") is met by the paid-media metrics
+# only; a by-channel or by-plan subscriber mart would be needed to meet it for
+# subscribers and revenue.
+# ======================================================================
+
+semantic_models:
+
+  # ---- Recurring revenue: a SNAPSHOT on the 1st of each month ----------
+  - name: mrr
+    description: >
+      Monthly recurring revenue and paying subscribers, snapshotted on the
+      1st of each month. Snapshot numbers must never be summed across months.
+    model: ref('mart_mrr_monthly')
+    defaults:
+      agg_time_dimension: month_start
+    entities:
+      - name: month
+        type: primary
+        expr: year_month
+    dimensions:
+      - name: month_start
+        type: time
+        type_params:
+          time_granularity: month
+    measures:
+      - name: mrr_usd_snapshot
+        description: MRR in US dollars on the 1st of the month (a run-rate, not cash).
+        expr: mrr_usd
+        agg: sum
+        non_additive_dimension:
+          name: month_start
+          window_choice: max
+      - name: active_subscribers_snapshot
+        description: Paying subscriptions on the 1st of the month.
+        expr: active_subscribers
+        agg: sum
+        non_additive_dimension:
+          name: month_start
+          window_choice: max
+
+  # ---- Subscriber movement ----------------------------------------------
+  - name: subscriber_movement
+    description: Paying-subscriber flows per month (new, returning, churned).
+    model: ref('mart_subscriber_movement_monthly')
+    defaults:
+      agg_time_dimension: month_start
+    entities:
+      - name: month
+        type: primary
+        expr: year_month
+    dimensions:
+      - name: month_start
+        type: time
+        type_params:
+          time_granularity: month
+    measures:
+      - name: new_paying_subscribers_flow
+        expr: new_paying_subscribers
+        agg: sum
+      - name: first_time_subscribers_flow
+        expr: first_time_subscribers
+        agg: sum
+      - name: returning_subscribers_flow
+        expr: returning_subscribers
+        agg: sum
+      - name: churned_subscribers_flow
+        expr: churned_subscribers
+        agg: sum
+      - name: active_subscribers_end_snapshot
+        description: Paying at the LAST day of the month.
+        expr: active_subscribers_end
+        agg: sum
+        non_additive_dimension:
+          name: month_start
+          window_choice: max
+
+  # ---- Storefront (course + merch) ----------------------------------------
+  - name: storefront_revenue
+    description: Course and merch orders per month.
+    model: ref('mart_storefront_revenue_monthly')
+    defaults:
+      agg_time_dimension: month_start
+    entities:
+      - name: month
+        type: primary
+        expr: year_month
+    dimensions:
+      - name: month_start
+        type: time
+        type_params:
+          time_granularity: month
+    measures:
+      - name: orders
+        expr: order_count
+        agg: sum
+      - name: gross_before_discount_usd_sum
+        expr: gross_before_discount_usd
+        agg: sum
+      - name: discount_usd_sum
+        expr: discount_usd
+        agg: sum
+      - name: paid_revenue_usd_sum
+        expr: paid_revenue_usd
+        agg: sum
+      - name: refunded_amount_usd_sum
+        expr: refunded_amount_usd
+        agg: sum
+      - name: net_revenue_usd_sum
+        expr: net_revenue_usd
+        agg: sum
+
+  # ---- Paid media: the only mart with a second dimension (platform) --------
+  - name: paid_media
+    description: >
+      Advertising by platform by month. Conversions are the platforms' own
+      claims and overlap; they are not Kinetic orders.
+    model: ref('mart_paid_media_monthly')
+    defaults:
+      agg_time_dimension: month_start
+    entities:
+      - name: platform_month
+        type: primary
+        expr: platform_month_id
+    dimensions:
+      - name: month_start
+        type: time
+        type_params:
+          time_granularity: month
+      - name: platform
+        type: categorical
+    measures:
+      - name: spend_usd_sum
+        expr: spend_usd
+        agg: sum
+      - name: impressions_sum
+        expr: impressions
+        agg: sum
+      - name: clicks_sum
+        expr: clicks
+        agg: sum
+      - name: conversions_sum
+        expr: conversions
+        agg: sum
+      - name: conversions_value_usd_sum
+        expr: conversions_value_usd
+        agg: sum
+
+  # ---- Blended acquisition efficiency inputs -------------------------------
+  - name: acquisition
+    description: Total paid spend and first-time paying subscribers per month (no channel split exists).
+    model: ref('mart_acquisition_efficiency_monthly')
+    defaults:
+      agg_time_dimension: month_start
+    entities:
+      - name: month
+        type: primary
+        expr: year_month
+    dimensions:
+      - name: month_start
+        type: time
+        type_params:
+          time_granularity: month
+    measures:
+      - name: acq_paid_spend_usd
+        expr: paid_spend_usd
+        agg: sum
+      - name: acq_first_time_subscribers
+        expr: first_time_subscribers
+        agg: sum
+
+metrics:
+
+  # ---- revenue / subscribers ------------------------------------------------
+  - name: mrr_usd
+    label: Monthly recurring revenue (USD)
+    description: >
+      MRR on the 1st of the month. A run-rate, not cash collected. Over a
+      quarter or year it returns the LAST month's snapshot, not a sum.
+    type: simple
+    type_params:
+      measure: mrr_usd_snapshot
+
+  - name: active_subscribers
+    label: Paying subscribers (1st of month)
+    type: simple
+    type_params:
+      measure: active_subscribers_snapshot
+
+  - name: new_paying_subscribers
+    label: New paying subscribers
+    type: simple
+    type_params:
+      measure: new_paying_subscribers_flow
+
+  - name: first_time_subscribers
+    label: First-time paying subscribers
+    type: simple
+    type_params:
+      measure: first_time_subscribers_flow
+
+  - name: returning_subscribers
+    label: Returning (win-back) subscribers
+    type: simple
+    type_params:
+      measure: returning_subscribers_flow
+
+  - name: churned_subscribers
+    label: Churned paying subscribers
+    description: Paying subscriptions canceled. Canceled trials are not included.
+    type: simple
+    type_params:
+      measure: churned_subscribers_flow
+
+  - name: net_new_subscribers
+    label: Net new paying subscribers
+    type: derived
+    type_params:
+      expr: new_paying_subscribers - churned_subscribers
+      metrics:
+        - name: new_paying_subscribers
+        - name: churned_subscribers
+
+  - name: active_subscribers_month_end
+    label: Paying subscribers (end of month)
+    type: simple
+    type_params:
+      measure: active_subscribers_end_snapshot
+
+  # ---- storefront -----------------------------------------------------------
+  - name: storefront_orders
+    type: simple
+    type_params:
+      measure: orders
+
+  - name: storefront_gross_before_discount_usd
+    type: simple
+    type_params:
+      measure: gross_before_discount_usd_sum
+
+  - name: storefront_paid_revenue_usd
+    label: Storefront revenue paid (USD)
+    description: What customers were charged for course and merch orders, before refunds.
+    type: simple
+    type_params:
+      measure: paid_revenue_usd_sum
+
+  - name: storefront_net_revenue_usd
+    label: Storefront net revenue (USD)
+    description: Paid minus succeeded refunds. NOT a margin; there is no cost data.
+    type: simple
+    type_params:
+      measure: net_revenue_usd_sum
+
+  - name: storefront_aov_usd
+    label: Average order value (USD)
+    description: Paid revenue divided by orders, computed from sums so longer periods are weighted correctly.
+    type: ratio
+    type_params:
+      numerator: storefront_paid_revenue_usd
+      denominator: storefront_orders
+
+  # ---- paid media (dimensions: platform, metric_time) ------------------------
+  - name: paid_spend_usd
+    label: Paid media spend (USD)
+    type: simple
+    type_params:
+      measure: spend_usd_sum
+
+  - name: paid_impressions
+    type: simple
+    type_params:
+      measure: impressions_sum
+
+  - name: paid_clicks
+    type: simple
+    type_params:
+      measure: clicks_sum
+
+  - name: paid_reported_conversions
+    label: Platform-reported conversions
+    description: >
+      Each platform's own conversion claim (Meta: purchases only). Overlaps
+      between platforms; never treat as Kinetic orders or add across platforms
+      as if they were sales.
+    type: simple
+    type_params:
+      measure: conversions_sum
+
+  - name: paid_reported_conversion_value_usd
+    description: Platform-reported conversion value; Meta reports none.
+    type: simple
+    type_params:
+      measure: conversions_value_usd_sum
+
+  - name: paid_ctr
+    label: Click-through rate (fraction)
+    type: ratio
+    type_params:
+      numerator: paid_clicks
+      denominator: paid_impressions
+
+  - name: paid_cpc_usd
+    label: Cost per click (USD)
+    type: ratio
+    type_params:
+      numerator: paid_spend_usd
+      denominator: paid_clicks
+
+  - name: paid_cost_per_reported_conversion_usd
+    label: Cost per platform-reported conversion (USD)
+    description: Not Kinetic's true acquisition cost; see blended_cac_usd for the whole-business figure.
+    type: ratio
+    type_params:
+      numerator: paid_spend_usd
+      denominator: paid_reported_conversions
+
+  - name: paid_reported_roas
+    label: Platform-reported ROAS
+    description: >
+      Platform-reported conversion value divided by spend. Not true ROAS.
+      Meta has no value, so a Meta or all-platform ratio is understated;
+      only query by platform and exclude meta.
+    type: ratio
+    type_params:
+      numerator: paid_reported_conversion_value_usd
+      denominator: paid_spend_usd
+
+  # ---- blended acquisition (time only) ---------------------------------------
+  - name: acq_paid_spend_usd
+    type: simple
+    type_params:
+      measure: acq_paid_spend_usd
+
+  - name: acq_first_time_subscribers
+    type: simple
+    type_params:
+      measure: acq_first_time_subscribers
+
+  - name: blended_cac_usd
+    label: Blended CAC (USD)
+    description: >
+      All paid media spend divided by first-time paying subscribers. Includes
+      organic sign-ups, so it cannot rank channels or be split by platform.
+      Small monthly counts make single months noisy; ask for quarter or year.
+    type: ratio
+    type_params:
+      numerator: acq_paid_spend_usd
+      denominator: acq_first_time_subscribers

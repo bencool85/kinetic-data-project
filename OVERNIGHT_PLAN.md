@@ -21,8 +21,10 @@ Persona user stories: CHANGELOG.md entry "2026-08-14 -- Dive v2", docs/phase0_si
    Ben sleeps. Never ask Ben for any approval; if something needs one, skip it
    and log it. Do NOT call any device_request_* tool (folder access, delete
    permission), any computer_* tool, or any Claude_Browser / claude-in-chrome tool:
-   these show consent prompts that pause the run while Ben sleeps. Use only
-   device_bash, MotherDuck read-only queries, and file tools. If a tool call is
+   these show consent prompts that pause the run while Ben sleeps. Also never call AskUserQuestion, any Suggest* tool (SuggestConnectors,
+   SuggestSkills, SuggestPluginInstall), Artifact, or any create/update/delete
+   scheduled-task tool. Use only device_bash, MotherDuck read-only queries,
+   file tools (Read/Write/Edit) and the cloud Bash tool for scratch work. If a tool call is
    refused or a prompt appears, do not retry it; log it and move on. If git says "Author
    identity unknown", use per-command `-c user.name="Ben" -c user.email="seeds_uptempo_0c@icloud.com"` (matches earlier commits); do not change git config.
 2. MotherDuck: READ-ONLY (the query tool). Never call query_rw. Never delete anything.
