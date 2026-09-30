@@ -2733,3 +2733,14 @@ seasonality calendar.
   live data (Q2 2026 spend $146,284; blended CAC $6,649, the lowest quarter since 2025), pass criteria and
   the setup decisions still open. Found `customers.signup_source` (per-customer channel), noted for use case 2.
 - Manifest line added; HANDOFF updated.
+
+## 2026-09-30 — Phase 8 scope approved; pilot setup decided
+
+- Ben approved the 6 test questions and made the four setup calls: stay on dbt_dev_marts for the pilot
+  (static data; prod schema before a real client), run in claude.ai with the Skill uploaded, read-only by
+  switching off the MotherDuck connector's write tool (separate read-only user before a real client),
+  feedback logged in the repo.
+- docs/phase8_pilot_scope.md: DRAFT removed, decisions and Ben's pre-run steps added.
+- docs/kinetic_skill.md v1.1: new ground rule 3 "Read only: SELECT statements only" (rules renumbered),
+  dev-schema note updated.
+- New docs/phase8_pilot_log.md (empty grading table). Manifest lines added/updated; HANDOFF updated.

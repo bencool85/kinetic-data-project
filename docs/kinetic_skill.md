@@ -5,7 +5,8 @@ description: How to answer business questions about Kinetic (a fictional D2C fit
 
 # Kinetic data Skill
 
-STATUS: v1, signed off by Ben (Phase 7) on 2026-09-30. The five marts are built
+STATUS: v1.1 (v1 signed off by Ben, Phase 7, 2026-09-30; v1.1 adds the read-only
+rule for the Phase 8 pilot). The five marts are built
 (full build 366/366 pass) and the semantic layer is validated (10/10 queries
 match hand-computed values). Table, column and metric names below were checked
 against the live database on 2026-09-30.
@@ -13,8 +14,9 @@ against the live database on 2026-09-30.
 Scope decisions Ben made at sign-off:
 - Churn rate, LTV, revenue by plan and email/push rates have no mart yet; the
   Skill refuses them rather than computing ad hoc. Revisit if a pilot needs them.
-- The SQL route points at the dev schema `dbt_dev_marts`. Before a real pilot
-  (Phase 8), point it at a stable production schema.
+- The SQL route points at the dev schema `dbt_dev_marts`. Phase 8 pilot (Ben,
+  2026-09-30): stays on dev because the data is static; a stable production
+  schema is required before any real client.
 - SQL on the marts is the default route; MetricFlow only runs where it is installed.
 
 ## Ground rules
@@ -26,9 +28,12 @@ Scope decisions Ben made at sign-off:
 2. Every answer states the metric name, the period, and the `data_through`
    date. The data ends 2026-07-30. Never answer for later months, and never
    treat "no row" as zero.
-3. Lead with the number, then the caveat that applies. If a caveat below
+3. Read only. Run SELECT statements only; never CREATE, INSERT, UPDATE,
+   DELETE, DROP or ALTER anything, and never use a write/read-write query tool.
+   If a question seems to need a write, stop and say so.
+4. Lead with the number, then the caveat that applies. If a caveat below
    applies and you leave it out, the answer is wrong.
-4. Money is US dollars. Ad platforms report in micros or cents upstream; the
+5. Money is US dollars. Ad platforms report in micros or cents upstream; the
    marts are already dollars. Do not convert again.
 
 ## Which mart answers which question

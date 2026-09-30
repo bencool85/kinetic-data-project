@@ -1,6 +1,6 @@
-# Phase 8 pilot scope: CMO paid-media check (DRAFT, in Ben's review)
+# Phase 8 pilot scope: CMO paid-media check
 
-Chosen by Ben 2026-09-30. Persona: CMO / performance marketing.
+Chosen and approved by Ben 2026-09-30. Persona: CMO / performance marketing.
 
 ## The use case in one line
 "Where did our ad money go, what did each platform say it got back, and is it
@@ -43,11 +43,19 @@ so July 2026 is a partial month and must be called out if used.
 - Guardrail questions (4-6) are declined or explained, never invented.
 - The CMO (Ben playing the role) asks at least 3 of their own questions on top of these.
 
-## Still to decide before running it
-1. Production schema: the Skill points at `dbt_dev_marts`. Keep it for the pilot, or
-   build a `prod` target first?
-2. Where the Skill lives: `.claude/skills/` (Claude Code) vs claude.ai upload
-   (MotherDuck connector).
-3. Read-only access: the agent uses md_select.py (SELECT-only) or a read-only
-   MotherDuck token/share.
-4. Feedback: one line per question (right / wrong / missing caveat) in a pilot log.
+## Setup decisions (Ben, 2026-09-30)
+1. Schema: stays on `dbt_dev_marts` for the pilot (data is static). Do not rebuild or
+   change the paid-media marts while the pilot runs. A production schema is required
+   before any real client.
+2. Where it runs: claude.ai, with the Skill uploaded and the MotherDuck connector.
+   docs/kinetic_skill.md in git stays the master copy; re-upload after every change.
+3. Read-only: Ben switches off the connector's write tool (`query_rw`) in claude.ai, and
+   the Skill has a "SELECT only" rule. Before a real client: a separate MotherDuck user
+   with a read-only share (a real lock, not a setting).
+4. Feedback: docs/phase8_pilot_log.md. Ben pastes each agent reply into Claude Code;
+   Claude grades it against the table above and logs one row per question.
+
+## Before the first run (Ben)
+- In claude.ai: switch off the MotherDuck connector's `query_rw` tool.
+- Upload docs/kinetic_skill.md as a Skill (name `kinetic-data`).
+- Start a fresh chat and ask the 6 questions, then at least 3 of your own.

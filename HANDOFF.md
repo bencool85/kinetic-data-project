@@ -44,15 +44,15 @@ standing rules; this note holds status, open decisions and pitfalls.
 
 ## Next step (start here)
 0. Ben pushes `master` when ready (check `git log origin/master..master`). gh-pages was pushed.
-1. Phase 8: pilot persona CHOSEN: CMO / performance marketing (Ben, 2026-09-30). Use case CHOSEN: the
-   paid-media check (spend by platform, platform-reported cost per conversion, blended CAC trend), runs
-   on today's marts. Draft scope with 6 test questions and live-checked answers: docs/phase8_pilot_scope.md
-   (Ben reviewing). Next use case: funnel by channel on customers.signup_source (needs a new mart and
-   Ben's call on whether signup_source counts as attribution vs the "CAC is blended only" decision).
-   Playbook section 13 not yet updated for the scope (do it once Ben approves the scope).
-   Chat tool DECIDED (Ben, 2026-09-30): Claude (app/web) + MotherDuck connector (read-only query tool only) +
-   the Skill. It is a demo for Ben himself, not a real user, so the dev schema is acceptable for now. Needs: a stable production schema for the
-   marts, read-only access for the agent, guardrails doc, and a way to collect feedback.
+1. Phase 8: persona CMO; use case the paid-media check; scope APPROVED by Ben 2026-09-30
+   (docs/phase8_pilot_scope.md: 6 test questions with live-checked answers). Setup decisions made:
+   pilot stays on dbt_dev_marts (do NOT rebuild the paid-media marts while it runs; prod schema needed
+   before a real client); runs in claude.ai (Skill uploaded, MotherDuck connector); read-only via Ben
+   switching off the connector's query_rw tool + Skill rule 3 "SELECT only" (separate read-only
+   MotherDuck user needed before a real client); feedback in docs/phase8_pilot_log.md (Ben pastes
+   replies, Claude grades). WAITING ON BEN: switch off query_rw, upload docs/kinetic_skill.md (v1.1)
+   to claude.ai, run the 6 questions + 3 of his own. Next use case after the pilot: funnel by channel
+   on customers.signup_source (needs a new mart and Ben's call vs the "CAC is blended only" decision).
 2. Optional: subscription-grain mart to slice subscribers/revenue by subscriber type, channel or plan.
 Recommend a model and ask Ben before starting each one (CLAUDE.md "Model and cost").
 
