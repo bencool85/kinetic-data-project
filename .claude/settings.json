@@ -17,7 +17,8 @@
       "Edit(~/Documents/double-black-solutions/LOG.md)",
       "Read(~/Documents/double-black-solutions/**)",
       "mcp__terminal__read_terminal",
-      "Bash(/Users/ben/.dbt-venv/bin/python scripts/md_select.py *)"
+      "Bash(/Users/ben/.dbt-venv/bin/python scripts/md_select.py *)",
+      "Bash(bash scripts/md_env.sh *)"
     ],
     "deny": [
       "Bash(git push)",

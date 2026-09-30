@@ -2744,3 +2744,19 @@ seasonality calendar.
 - docs/kinetic_skill.md v1.1: new ground rule 3 "Read only: SELECT statements only" (rules renumbered),
   dev-schema note updated.
 - New docs/phase8_pilot_log.md (empty grading table). Manifest lines added/updated; HANDOFF updated.
+
+## 2026-09-30 — Owned-channel gap: mart_messaging_monthly (email + push)
+
+- Ben flagged that owned channels had intermediate models but no marts (a miss in the paid-only
+  CMO pilot). Decision: build a messaging mart and a web-sessions mart, then extend the semantic
+  layer, Skill and pilot. Ben said to proceed without asking; defaults below are ASSUMED, NEEDS YOUR CALL.
+- Hand-checked int_messaging_events first: every event has a send; one open/click/bounce/unsubscribe
+  per send at most; no opens on bounced sends; every click follows an open; all within 2 days; 7 opens
+  stamped 31 Jul-1 Aug on late-July sends.
+- New dbt/models/marts/mart_messaging_monthly.sql (grain: channel x campaign_type x month of SEND).
+  Assumed definitions: delivered = sends - bounces; open/click/unsubscribe rates divided by delivered;
+  click-to-open = clicks / opens; the 7 late opens counted in July (no August row).
+  Built and tested in dbt: 12/12 pass. Totals match the hand-checked figures (email 18,187 sends /
+  6,328 opens / 1,341 clicks; push 7,851 / 1,590 / 220). Two singular tests added.
+- New scripts/md_env.sh: runs only dbt or mf from dbt/ with the MotherDuck token loaded from ~/.zshrc
+  (never printed); allowed in .claude/settings.json so builds stop prompting for a browser sign-in.

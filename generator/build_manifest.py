@@ -304,6 +304,9 @@ FILES = [
     ("dbt/models/marts/mart_subscriber_movement_monthly.sql", "Code", "Phase 4 mart (CEO): new/returning/churned/net-new/active paying subscribers by month (written and hand-validated; needs dbt build)"),
     ("dbt/tests/assert_mart_subscriber_movement_monthly_identity.sql", "Code", "dbt test: end-of-month active = previous + new - churned"),
     ("dbt/tests/assert_mart_subscriber_movement_monthly_totals_match_source.sql", "Code", "dbt test: total new and churned match the paid-periods source"),
+    ("dbt/models/marts/mart_messaging_monthly.sql", "Code", "dbt mart: email and push by channel x campaign type x month (sends, bounces, delivered, opens, clicks, unsubscribes and rates); hand-validated, built 12/12"),
+    ("dbt/tests/assert_mart_messaging_monthly_totals_match_events.sql", "Code", "dbt test: messaging mart totals per channel equal the events in int_messaging_events"),
+    ("dbt/tests/assert_mart_messaging_monthly_identity.sql", "Code", "dbt test: messaging funnel logic (delivered = sends - bounces, opens <= delivered, clicks <= opens, rates in 0-1)"),
     ("dbt/models/marts/mart_paid_media_monthly.sql", "Code", "Phase 4 mart (Performance Marketing/CMO): spend, clicks, platform-reported conversions and ratios by platform by month (written and hand-validated; needs dbt build)"),
     ("dbt/models/marts/mart_acquisition_efficiency_monthly.sql", "Code", "Phase 4 mart (CEO/CFO): blended CAC by month = paid spend / first-time paying subscribers (written and hand-validated; needs dbt build)"),
     ("dbt/tests/assert_mart_paid_media_monthly_spend_matches_daily.sql", "Code", "dbt test: monthly paid media spend equals daily total"),
@@ -315,6 +318,7 @@ FILES = [
     ("docs/phase8_pilot_scope.md", "Doc", "Phase 8 pilot scope (approved 2026-09-30): CMO paid-media check, 6 test questions with live-checked answers, pass criteria, Ben's setup decisions (dev schema, claude.ai, write tool off, pilot log)"),
     ("docs/phase8_pilot_log.md", "Doc", "Phase 8 pilot log: one graded row per question asked to the pilot agent (verdict, cited or not, notes)"),
     ("docs/metrics_glossary.md", "Doc", "Phase 5 metrics glossary: plain-language definition of every mart metric, its grain, source and what it does NOT mean"),
+    ("scripts/md_env.sh", "Code", "Script: run ONLY dbt or mf (MetricFlow) from dbt/ with the MotherDuck token loaded from ~/.zshrc (never printed), so no browser sign-in"),
     ("scripts/md_select.py", "Code", "Script: run ONE read-only SQL statement (SELECT/WITH/DESCRIBE...) on MotherDuck kinetic; refuses writes/DDL; loads the token itself, never prints it"),
     ("scripts/rebuild_docs_branch.sh", "Code", "Script: rebuild the gh-pages branch (published dbt docs site) from dbt/target as one fast-forward commit; refuses local paths/tokens"),
 ]

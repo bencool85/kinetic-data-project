@@ -199,6 +199,79 @@ models:
         description: Latest date the ad data covers.
         data_tests:
           - not_null
+  - name: mart_messaging_monthly
+    description: >
+      Owned-channel messaging (Braze email and push) by channel, campaign type
+      (broadcast or triggered) and month: sends, bounces, delivered, opens, clicks,
+      unsubscribes and the rates bounce_rate_fraction, open_rate_fraction,
+      click_rate_fraction, click_to_open_rate_fraction and unsubscribe_rate_fraction.
+      A month means messages SENT in that month and what became of them (opens and
+      clicks arrive within 2 days). delivered is sends minus bounces (there is no
+      delivered event); open, click and unsubscribe rates are divided by delivered.
+      Ratios come from monthly totals and are null when the denominator is 0.
+      CAUTION: the unit is messages, not people; an open is a tracked event defined
+      by this dataset, so compare channels and months, not outside benchmarks. Seven
+      opens stamped 31 Jul to 1 Aug 2026 belong to 29-30 Jul sends and are counted
+      in July. The latest month is cut off at the data's end. No attribution to
+      revenue or subscribers exists here. Rows stop at the data's last date.
+    columns:
+      - name: message_month_id
+        description: 'Unique key: channel, campaign type and month joined with pipes.'
+        data_tests:
+          - not_null
+          - unique
+      - name: channel
+        description: email or push.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - email
+                  - push
+      - name: campaign_type
+        description: broadcast (sent to a whole audience) or triggered (sent after a customer action).
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - broadcast
+                  - triggered
+      - name: month_start
+        description: First day of the month the messages were sent.
+        data_tests:
+          - not_null
+      - name: year_month
+        description: Month as YYYY-MM.
+      - name: sends
+        description: Messages sent.
+        data_tests:
+          - not_null
+      - name: bounces
+        description: Messages that bounced (not delivered).
+      - name: delivered
+        description: Sends minus bounces.
+      - name: opens
+        description: Delivered messages that were opened (at most one per message).
+      - name: clicks
+        description: Messages that were clicked (at most one per message; every click follows an open).
+      - name: unsubscribes
+        description: Messages after which the recipient unsubscribed.
+      - name: bounce_rate_fraction
+        description: Bounces divided by sends as a fraction (0.02 = 2%).
+      - name: open_rate_fraction
+        description: Opens divided by delivered as a fraction; a tracked-event rate, not an outside benchmark.
+      - name: click_rate_fraction
+        description: Clicks divided by delivered as a fraction.
+      - name: click_to_open_rate_fraction
+        description: Clicks divided by opens as a fraction; null with no opens.
+      - name: unsubscribe_rate_fraction
+        description: Unsubscribes divided by delivered as a fraction.
+      - name: data_through
+        description: Latest send date the messaging data covers.
+        data_tests:
+          - not_null
   - name: mart_acquisition_efficiency_monthly
     description: >
       Blended customer acquisition cost by month: all paid media spend divided by
