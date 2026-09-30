@@ -2576,3 +2576,15 @@ seasonality calendar.
   CAC/ROAS, churn rate/cohorts, email rates, individual customers).
 - DRAFT: needs review by Ben (and, in a real engagement, the client's data
   owner), and the dbt build to pass, before use. Phase 8 not started.
+
+## 2026-09-30 — Phase 5: metrics glossary and docs site branch
+
+- `docs/metrics_glossary.md`: plain-language glossary of every metric in the
+  five marts (Means / Not), with the same caveats as the descriptions.
+- Built a `gh-pages` branch (local; three files from `dbt/target`:
+  index.html, manifest.json, catalog.json, plus .nojekyll) so the generated
+  dbt docs site can be served by GitHub Pages. The repo is public; the site
+  has no local paths or secrets (checked). Needs `git push origin gh-pages`
+  and Pages switched on (Settings > Pages > branch gh-pages, folder /root).
+  The site is a snapshot of the 2026-09-30 build; regenerate and rebuild the
+  branch after model changes.

@@ -311,6 +311,7 @@ FILES = [
     ("dbt/drafts/semantic_layer_DRAFT.yml", "Config", "DRAFT Phase 6 semantic layer (MetricFlow semantic models + metrics) for the marts built so far; unvalidated, outside model-paths"),
     ("docs/semantic_layer_validation_DRAFT.md", "Doc", "DRAFT Phase 6 validation set: mf query commands with expected values from hand SQL (not yet run)"),
     ("docs/kinetic_skill_DRAFT.md", "Doc", "DRAFT Phase 7 Skill: which mart answers which question, Phase 5 caveats as instructions, 'I don't have this data' rules (not reviewed by data owner)"),
+    ("docs/metrics_glossary.md", "Doc", "Phase 5 metrics glossary: plain-language definition of every mart metric, its grain, source and what it does NOT mean"),
 ]
 
 
