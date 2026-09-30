@@ -21,8 +21,12 @@ standing rules; this note holds status, open decisions and pitfalls.
 - Phase 7 (Skill): DRAFT ONLY, needs Ben's review. docs/kinetic_skill_DRAFT.md. Not to be used until
   Phase 6 is validated.
 - Phase 8 (agents): NOT STARTED. Needs a pilot persona.
-- Git: all Phase 3-5 work is on branch `overnight`, pushed to origin/overnight and in sync (2026-09-30).
-  `overnight` is 23 commits ahead of master and NOT merged: merging is Ben's call, and Ben pushes master.
+- Git: all Phase 3-5 work is on branch `overnight`. Ben decided to merge it into master (2026-09-30).
+  Claude Code's auto mode blocks Claude from changing master, so Ben runs the merge and push himself:
+  `git checkout master && git merge --ff-only overnight && git push origin master && git checkout overnight`
+  (a fast-forward: master has no commits of its own). To see whether it has been done:
+  `git rev-list --count master..overnight` (0 = merged) and `git log origin/master..master` (empty =
+  pushed). Work continues on `overnight`; later merges are again Ben's call.
 - Playbook: section 13 ("Applied to Kinetic") is the single status list and matches this note. The
   published artifact was read from Claude Code on 2026-09-30; Claude Code has the Artifact tool and can
   republish to the same link, so no Cowork step is needed.
@@ -38,7 +42,7 @@ standing rules; this note holds status, open decisions and pitfalls.
 Recommend a model and ask Ben before starting each one (CLAUDE.md "Model and cost").
 
 ## Open decisions / to-dos
-1. Merging `overnight` into master: not done, Ben's call.
+1. Merge of `overnight` into master: decided, Ben runs it himself (command in Status > Git).
 2. Sharing the `kinetic` MotherDuck database with Ben's org: not done, needs his explicit yes.
 3. Two-pager marketing sheet: Ben still owes a founder bio (About section) and a higher-resolution
    logo. Possibly a firm-domain email.

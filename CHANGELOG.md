@@ -2639,3 +2639,11 @@ seasonality calendar.
   `/Users/ben/.dbt-venv/bin/python generator/build_manifest.py`.
 - Updated CLAUDE.md rule 2, HANDOFF.md and the allow rule in .claude/settings.json
   to that command. File_Manifest.xlsx rebuilt (299 file rows).
+
+## 2026-09-30 — Merge of `overnight` into master decided (Ben runs it)
+
+- Ben decided to merge `overnight` into master. Claude Code's auto mode blocked
+  Claude from changing master, so nothing was merged by Claude. Ben runs:
+  `git checkout master && git merge --ff-only overnight && git push origin master && git checkout overnight`.
+  It is a fast-forward (master has no commits of its own), so no conflicts.
+- HANDOFF.md updated with the command and how to check whether it has been done.
