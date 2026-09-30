@@ -22,7 +22,7 @@ Read this first in a new chat, then the last few CHANGELOG.md entries.
 1. RESOLVED 2026-09-29 (int_customer_identity): guest emails are matched to customer accounts by email (28 guest orders / 28 Braze guest addresses); anonymous web sessions are back-filled once a visitor signs up or logs in (340 sessions); deleted accounts are excluded.
 2. Sharing the `kinetic` MotherDuck database with Ben's org: not done, needs his explicit yes.
 3. Two-pager marketing sheet: Ben still owes a founder bio (About section) and a higher-resolution logo. Possibly a firm-domain email.
-4. GitHub tokens (PATs) were pasted in chat earlier: remind Ben to revoke them.
+4. DONE 2026-09-30: Ben revoked the GitHub tokens (PATs) pasted in earlier chats. If a new token is ever pasted in chat, remind him to revoke it.
 5. Phase 3 onward per playbook: intermediate layer, marts, docs/descriptions, semantic layer, agent Skills.
 
 ## Decisions already made (do not reopen without reason)
