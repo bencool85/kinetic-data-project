@@ -45,7 +45,9 @@ standing rules; this note holds status, open decisions and pitfalls.
 ## Next step (start here)
 0. Ben pushes `master` when ready (check `git log origin/master..master`). gh-pages was pushed.
 1. Phase 8: pilot persona CHOSEN: CMO / performance marketing (Ben, 2026-09-30). Next: scope ONE use case
-   from the CMO's Phase 0 user stories. Needs: a stable production schema for the
+   from the CMO's Phase 0 user stories.
+   Chat tool DECIDED (Ben, 2026-09-30): Claude (app/web) + MotherDuck connector (read-only query tool only) +
+   the Skill. It is a demo for Ben himself, not a real user, so the dev schema is acceptable for now. Needs: a stable production schema for the
    marts, read-only access for the agent, guardrails doc, and a way to collect feedback.
 2. Optional: subscription-grain mart to slice subscribers/revenue by subscriber type, channel or plan.
 Recommend a model and ask Ben before starting each one (CLAUDE.md "Model and cost").

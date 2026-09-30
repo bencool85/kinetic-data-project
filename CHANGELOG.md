@@ -2718,3 +2718,9 @@ seasonality calendar.
 
 - Ben chose the CMO / performance marketing persona for the Phase 8 pilot (paid media is the richest
   data and has the most traps: platform-reported conversions, no CAC by channel). Next: scope one use case.
+
+## 2026-09-30 — Phase 8 chat tool chosen: Claude + MotherDuck connector + Skill
+
+- Ben chose Claude (app/web) as the chat front end for the CMO pilot, with the MotherDuck connector limited to the
+  read-only query tool and docs/kinetic_skill.md as the instructions. It is a demo for himself only. Slack or a
+  custom web chat stay options for a real client rollout; data, semantic layer and Skill are unchanged either way.
