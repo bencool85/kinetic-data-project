@@ -2606,3 +2606,12 @@ seasonality calendar.
 - Not verified from here: exact permission-pattern syntax for the ~ paths in
   settings.json and whether Claude Code has the Artifact tool. First Claude Code
   session should check both.
+
+## 2026-09-30 — Model rule changed: Opus by default
+
+- Ben's call: use Opus for this project by default, including routine work (was:
+  Sonnet for mechanical work, Opus for judgment calls). Updated CLAUDE.md
+  ("Model and cost") and HANDOFF.md. Ben also chose to keep Claude Code's auto
+  permission mode on; the CLAUDE.md rules and settings.json deny rules still apply.
+- The Cowork Project instructions (claude.ai) still contain the old MODEL & COST
+  line; Ben edits those in the Project settings.

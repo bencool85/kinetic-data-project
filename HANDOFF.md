@@ -51,7 +51,7 @@ dbt (transformation tool run separately, not a database; models are SQL files; s
 - Terminal cannot be typed into by Claude; Ben types git commands himself.
 - MotherDuck integer overflow: use BIGINT literals when multiplying micros.
 - Cloud sandbox files vanish between sessions; anything that matters must be committed to Ben's Mac.
-- Ben watches token use: short chats, new chat per phase, Sonnet for routine work, Opus for judgment calls.
+- Ben watches token use: short chats, new chat per phase. Model: use Opus by default for everything (Ben, 2026-09-30; replaces the old "Sonnet for routine work" rule).
 - Meta spend in the raw table is plain dollars, although older notes say "Meta cents" (only Meta BUDGETS are in cents). Verified 2026-09-30.
 - Seven Braze email events are stamped after the data end (2026-07-30); marts must end series at the data's last date.
 - Overnight session tooling: this Cowork session's manifest script needs a fake HOME under $HOME (not /tmp): mkdir -p $HOME/fakehome/Documents and symlink both folders, then HOME=$HOME/fakehome python3 generator/build_manifest.py.

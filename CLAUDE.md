@@ -76,6 +76,6 @@ MORNING_LIST.md is a record of the first overnight run only: ignore it unless de
   confirms he understands it.
 - Decisions that are his: ask with the question tool (multiple choice) in interactive sessions.
 
-## Cost
-Long chats are expensive: suggest a new chat at phase boundaries. Sonnet for routine
-mechanical work; Opus for judgment calls (metric definitions, identity stitching, semantic layer).
+## Model and cost
+Ben's call (2026-09-30): use Opus for this project by default, including routine work.
+Long chats are still expensive: suggest a new chat at phase boundaries.
