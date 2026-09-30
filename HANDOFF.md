@@ -84,8 +84,10 @@ plain-language descriptions for agents, and "Skills". Also git basics: tarball, 
 He learns best by asking questions while reading; answer them and do not move on until he confirms.
 
 ## How work runs in Claude Code (replaces the Cowork-era setup notes)
-- Claude runs dbt, git and the manifest script itself (`python3 generator/build_manifest.py`, no HOME
-  workaround needed), and commits each step. Pushes only `git push origin overnight`, only when told.
+- Claude runs dbt, git and the manifest script itself, and commits each step. Manifest:
+  `/Users/ben/.dbt-venv/bin/python generator/build_manifest.py` from the repo root (openpyxl is
+  installed in the venv, not in the Mac's system python3; no HOME workaround needed). Pushes only
+  `git push origin overnight`, only when told.
 - MotherDuck: writes only through dbt into dbt_dev_* schemas; ad-hoc SQL is SELECT-only.
 - Playbook: at the end of every sub-batch, update section 13 and "Next up" following CLAUDE.md rule 8
   (backup, edit inside the section-13 slice, per-section unchanged check shown to Ben), republish to

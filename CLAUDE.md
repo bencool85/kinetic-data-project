@@ -32,7 +32,8 @@ MORNING_LIST.md is a record of the first overnight run only: ignore it unless de
 1. One table or small group at a time. Hand-verify keys, joins, units against live
    data BEFORE writing the model; show validation results. No impossible scenarios.
 2. Every added/changed file: add a line to generator/build_manifest.py and run
-   `python3 generator/build_manifest.py`, add a CHANGELOG.md entry, keep it committed.
+   `/Users/ben/.dbt-venv/bin/python generator/build_manifest.py` (the venv has openpyxl;
+   the Mac's system python3 does not), add a CHANGELOG.md entry, keep it committed.
 3. Commit each step yourself (end messages with the attribution lines your session
    gives you). Push ONLY `git push origin overnight`, and only when the task or Ben
    says so. Never push master, never force-push. Ben pushes master himself.

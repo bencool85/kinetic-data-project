@@ -2630,3 +2630,12 @@ seasonality calendar.
   resolved items moved to "Decisions already made"; new open items: merge of
   `overnight`, MotherDuck token, old lock files in `_to_delete/`.
 - No models, data or playbook content changed.
+
+## 2026-09-30 — Manifest script now runs from the dbt venv
+
+- `python3 generator/build_manifest.py` failed on the Mac (system python3 has no
+  openpyxl; the Cowork sandbox had it). Ben chose to install openpyxl into
+  ~/.dbt-venv. The manifest is now run with
+  `/Users/ben/.dbt-venv/bin/python generator/build_manifest.py`.
+- Updated CLAUDE.md rule 2, HANDOFF.md and the allow rule in .claude/settings.json
+  to that command. File_Manifest.xlsx rebuilt (299 file rows).
