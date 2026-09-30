@@ -2724,3 +2724,12 @@ seasonality calendar.
 - Ben chose Claude (app/web) as the chat front end for the CMO pilot, with the MotherDuck connector limited to the
   read-only query tool and docs/kinetic_skill.md as the instructions. It is a demo for himself only. Slack or a
   custom web chat stay options for a real client rollout; data, semantic layer and Skill are unchanged either way.
+
+## 2026-09-30 — Phase 8 use case scoped (draft): CMO paid-media check
+
+- Reviewed the CMO's Phase 0 stories: funnel by channel and retention by channel both need new marts;
+  the paid-media stories run on today's marts. Ben chose the paid-media check as the first pilot use case.
+- New docs/phase8_pilot_scope.md: 6 test questions (3 numbers, 3 guardrails) with answers checked against
+  live data (Q2 2026 spend $146,284; blended CAC $6,649, the lowest quarter since 2025), pass criteria and
+  the setup decisions still open. Found `customers.signup_source` (per-customer channel), noted for use case 2.
+- Manifest line added; HANDOFF updated.

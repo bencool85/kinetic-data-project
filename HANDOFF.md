@@ -44,8 +44,12 @@ standing rules; this note holds status, open decisions and pitfalls.
 
 ## Next step (start here)
 0. Ben pushes `master` when ready (check `git log origin/master..master`). gh-pages was pushed.
-1. Phase 8: pilot persona CHOSEN: CMO / performance marketing (Ben, 2026-09-30). Next: scope ONE use case
-   from the CMO's Phase 0 user stories.
+1. Phase 8: pilot persona CHOSEN: CMO / performance marketing (Ben, 2026-09-30). Use case CHOSEN: the
+   paid-media check (spend by platform, platform-reported cost per conversion, blended CAC trend), runs
+   on today's marts. Draft scope with 6 test questions and live-checked answers: docs/phase8_pilot_scope.md
+   (Ben reviewing). Next use case: funnel by channel on customers.signup_source (needs a new mart and
+   Ben's call on whether signup_source counts as attribution vs the "CAC is blended only" decision).
+   Playbook section 13 not yet updated for the scope (do it once Ben approves the scope).
    Chat tool DECIDED (Ben, 2026-09-30): Claude (app/web) + MotherDuck connector (read-only query tool only) +
    the Skill. It is a demo for Ben himself, not a real user, so the dev schema is acceptable for now. Needs: a stable production schema for the
    marts, read-only access for the agent, guardrails doc, and a way to collect feedback.

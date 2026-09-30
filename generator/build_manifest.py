@@ -312,6 +312,7 @@ FILES = [
     ("dbt/models/marts/metricflow_time_spine.sql", "Code", "Phase 6 calendar table (one row per day, ends at the data's last day) required by MetricFlow"),
     ("docs/semantic_layer_validation.md", "Doc", "Phase 6 validation set: 10 mf query commands with expected and returned values (all match, run 2026-09-30)"),
     ("docs/kinetic_skill.md", "Doc", "Phase 7 Skill (signed off 2026-09-30): which mart answers which question, Phase 5 caveats as instructions, 'I don't have this data' rules; v2 adds how to get the numbers (SQL on marts, or MetricFlow metrics); in Ben's review"),
+    ("docs/phase8_pilot_scope.md", "Doc", "Phase 8 pilot scope (DRAFT, Ben reviewing): CMO paid-media check, 6 test questions with live-checked answers, guardrails, pass criteria, open setup decisions"),
     ("docs/metrics_glossary.md", "Doc", "Phase 5 metrics glossary: plain-language definition of every mart metric, its grain, source and what it does NOT mean"),
     ("scripts/md_select.py", "Code", "Script: run ONE read-only SQL statement (SELECT/WITH/DESCRIBE...) on MotherDuck kinetic; refuses writes/DDL; loads the token itself, never prints it"),
     ("scripts/rebuild_docs_branch.sh", "Code", "Script: rebuild the gh-pages branch (published dbt docs site) from dbt/target as one fast-forward commit; refuses local paths/tokens"),
