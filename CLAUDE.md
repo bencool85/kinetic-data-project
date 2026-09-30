@@ -6,9 +6,12 @@ the Cowork chats: this repo IS the shared memory. He is not a data engineer:
 explain in plain language, with the why. Answer his questions before moving on.
 
 ## Start of every session
-Read HANDOFF.md and the last 5 entries of CHANGELOG.md. Run `git branch --show-current`:
-all Phase 3-5 work lives on branch `overnight`, NOT yet merged into master (merging is
-Ben's call, never do it unasked). Work on `overnight` unless told otherwise.
+Read HANDOFF.md and the last 5 entries of CHANGELOG.md. Run `git branch --show-current`.
+Branches (Ben, 2026-09-30): daytime, interactive work happens on `master` (you commit
+locally, Ben pushes). Branch `overnight` is ONLY for unattended runs while Ben sleeps: it is
+brought up to date with master before a run (Ben's call) and merged back into master in the
+morning (Ben runs the merge; never merge or change master's history unasked). If you are
+on `overnight` in an interactive session, say so and ask before doing any work.
 Playbook (phases 0-8):
 ~/Documents/double-black-solutions/playbook/data-to-agents-playbook.html.
 Decision log for the firm: ~/Documents/double-black-solutions/LOG.md.
@@ -35,8 +38,9 @@ MORNING_LIST.md is a record of the first overnight run only: ignore it unless de
    `/Users/ben/.dbt-venv/bin/python generator/build_manifest.py` (the venv has openpyxl;
    the Mac's system python3 does not), add a CHANGELOG.md entry, keep it committed.
 3. Commit each step yourself (end messages with the attribution lines your session
-   gives you). Push ONLY `git push origin overnight`, and only when the task or Ben
-   says so. Never push master, never force-push. Ben pushes master himself.
+   gives you). In interactive sessions you commit on master and do NOT push. In unattended
+   runs on `overnight`, push ONLY `git push origin overnight`, and only when the task says
+   so. Never push master, never force-push. Ben pushes master himself.
 4. dbt: run from dbt/ with `/Users/ben/.dbt-venv/bin/dbt` (build, then read
    dbt/logs/dbt.log and dbt/target/run_results.json). MotherDuck writes happen ONLY
    through dbt into dbt_dev_* schemas. Never write to `main`, never drop/delete raw

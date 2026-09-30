@@ -1,4 +1,4 @@
-# Handoff note (updated 2026-09-30; project now runs in Claude Code, branch `overnight`)
+# Handoff note (updated 2026-09-30; project now runs in Claude Code, daytime work on `master`)
 
 Read this first in a new chat, then the last 5 CHANGELOG.md entries. CLAUDE.md holds the
 standing rules; this note holds status, open decisions and pitfalls.
@@ -24,12 +24,12 @@ standing rules; this note holds status, open decisions and pitfalls.
 - Phase 7 (Skill): DRAFT ONLY, needs Ben's review. docs/kinetic_skill_DRAFT.md. It must use the
   dimension name `platform_month__platform` (plain `platform` is rejected by MetricFlow).
 - Phase 8 (agents): NOT STARTED. Needs a pilot persona.
-- Git: all Phase 3-5 work is on branch `overnight`. Ben decided to merge it into master (2026-09-30).
-  Claude Code's auto mode blocks Claude from changing master, so Ben runs the merge and push himself:
-  `git checkout master && git merge --ff-only overnight && git push origin master && git checkout overnight`
-  (a fast-forward: master has no commits of its own). To see whether it has been done:
-  `git rev-list --count master..overnight` (0 = merged) and `git log origin/master..master` (empty =
-  pushed). Work continues on `overnight`; later merges are again Ben's call.
+- Git: MERGED 2026-09-30. `overnight` was fast-forwarded into master and pushed by Ben (master and
+  origin/master both at b0fcdca). New pattern: daytime work is on `master` (Claude commits locally,
+  Ben pushes master). `overnight` is used only for unattended runs while Ben sleeps: before a run,
+  Ben brings it up to date with master (`git checkout overnight && git merge --ff-only master`,
+  then `git push origin overnight`); in the morning he reviews and merges it back into master
+  himself. Claude's auto mode may block commits on master: if so, say it plainly and ask Ben.
 - Playbook: section 13 ("Applied to Kinetic") is the single status list and matches this note. The
   published artifact was read from Claude Code on 2026-09-30; Claude Code has the Artifact tool and can
   republish to the same link, so no Cowork step is needed.
@@ -44,7 +44,7 @@ standing rules; this note holds status, open decisions and pitfalls.
 Recommend a model and ask Ben before starting each one (CLAUDE.md "Model and cost").
 
 ## Open decisions / to-dos
-1. Merge of `overnight` into master: decided, Ben runs it himself (command in Status > Git).
+1. (Resolved 2026-09-30) Merge of `overnight` into master: done by Ben. Future overnight merges are his call.
 2. Sharing the `kinetic` MotherDuck database with Ben's org: not done, needs his explicit yes.
 3. Two-pager marketing sheet: Ben still owes a founder bio (About section) and a higher-resolution
    logo. Possibly a firm-domain email.

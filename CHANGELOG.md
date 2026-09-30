@@ -2668,3 +2668,13 @@ seasonality calendar.
 - Full `dbt build`: 366/366 pass.
 - Not done yet: playbook section 13, docs-site rebuild, phase marked done (all wait for
   Ben's confirmation).
+
+## 2026-09-30 — Branch workflow: daytime on master, overnight only for unattended runs
+
+- Ben merged `overnight` into master (fast-forward, both at b0fcdca) and pushed master himself.
+- New pattern (Ben's call): interactive work happens on `master` (Claude commits locally, Ben
+  pushes). Branch `overnight` is used only for unattended runs while he sleeps; he brings it up
+  to date with master before a run and merges it back in the morning.
+- Updated CLAUDE.md (start-of-session branch rule, rule 3), HANDOFF.md (Git status, open
+  decision 1 resolved) and OVERNIGHT_PLAN_CLAUDE_CODE.md (branch check at run start).
+- Also set up this day: MOTHERDUCK_TOKEN in ~/.zshrc so dbt/duckdb no longer prompt for a browser login.
