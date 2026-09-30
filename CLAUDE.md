@@ -77,5 +77,10 @@ MORNING_LIST.md is a record of the first overnight run only: ignore it unless de
 - Decisions that are his: ask with the question tool (multiple choice) in interactive sessions.
 
 ## Model and cost
-Ben's call (2026-09-30): use Opus for this project by default, including routine work.
-Long chats are still expensive: suggest a new chat at phase boundaries.
+Ben's call (2026-09-30): do NOT default to one model. At the start of each phase or task,
+recommend which model to use (Opus, Sonnet or Haiku) and why, weighing quality against
+cost, and ask Ben to confirm with the question tool before starting. Rule of thumb to base
+the recommendation on: cheaper models for routine, mechanical work (renames, descriptions,
+manifest/CHANGELOG upkeep); Opus for judgment calls (metric definitions, identity stitching,
+semantic layer design, anything where a wrong answer is costly). Ben switches with /model.
+Long chats are also expensive: suggest a new chat at phase boundaries.

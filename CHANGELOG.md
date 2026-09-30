@@ -2607,10 +2607,11 @@ seasonality calendar.
   settings.json and whether Claude Code has the Artifact tool. First Claude Code
   session should check both.
 
-## 2026-09-30 — Model rule changed: Opus by default
+## 2026-09-30 — Model rule changed: choose per phase/task
 
-- Ben's call: use Opus for this project by default, including routine work (was:
-  Sonnet for mechanical work, Opus for judgment calls). Updated CLAUDE.md
+- Ben's call: no fixed default model. At each phase or task Claude recommends the
+  best and most cost-effective model and asks Ben to confirm before starting
+  (first said "Opus by default", then revised the same day). Updated CLAUDE.md
   ("Model and cost") and HANDOFF.md. Ben also chose to keep Claude Code's auto
   permission mode on; the CLAUDE.md rules and settings.json deny rules still apply.
 - The Cowork Project instructions (claude.ai) still contain the old MODEL & COST
