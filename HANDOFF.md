@@ -10,7 +10,7 @@ Read this first in a new chat, then the last few CHANGELOG.md entries.
 - Git: see `git log`. Ben pushes himself (`cd ~/Documents/kinetic-project && git push`). Check `git log origin/master..HEAD` for unpushed commits and remind him.
 
 ## Next step (start here)
-- OVERNIGHT RUN 1 (2026-09-30) finished the whole queue on git branch `overnight` (not master, nothing pushed). MORNING_LIST.md is a one-off overnight report (its open items are now in the playbook's "Applied to Kinetic" table, the single status list).
+- OVERNIGHT RUN 1 (2026-09-30) finished the whole queue on git branch `overnight` (not master, nothing pushed). MORNING_LIST.md is kept as a record only (Ben, 2026-09-30): ignore it unless debugging the overnight work. It is a one-off overnight report (its open items are now in the playbook's "Applied to Kinetic" table, the single status list).
 - BUILT AND TESTED IN DBT 2026-09-30 (Ben ran it: 66/66 pass, docs generated locally): int_messaging_events, int_paid_media_daily, int_subscription_data_through, mart_subscriber_movement_monthly, mart_paid_media_monthly, mart_acquisition_efficiency_monthly; changed: mart_storefront_revenue_monthly (reads int_orders_net; gross_revenue_usd renamed paid_revenue_usd), mart_mrr_monthly (reads int_subscription_data_through). Playbook section 13 and LOG.md updated (Phases 3-4 "built, awaiting Ben's review").
 - Phase 5: descriptions on every column (yml rewritten by script; run `dbt parse`, then `dbt docs generate`).
 - Phase 6 and 7 are DRAFTS only (dbt/drafts/semantic_layer_DRAFT.yml, docs/semantic_layer_validation_DRAFT.md, docs/kinetic_skill_DRAFT.md).
