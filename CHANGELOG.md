@@ -2427,3 +2427,6 @@ seasonality calendar.
   on a separate `overnight` branch, MotherDuck stays read-only, dbt cannot run
   overnight, results land in MORNING_LIST.md. Ben's calls: branch not master;
   assume-and-log decisions that are his.
+- Plan revised (Ben): three scheduled runs (8:51 pm, 1:51 am, 6:51 am PT),
+  one per usage-session reset; no unit cap; queue extended with Phase 6/7
+  DRAFTS; each run resumes from MORNING_LIST.md "Progress".

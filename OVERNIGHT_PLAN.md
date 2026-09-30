@@ -1,4 +1,4 @@
-# Overnight plan (unattended run, written 2026-09-29 for a run at ~9 pm PT)
+# Overnight plan (unattended runs, written 2026-09-29; runs start at each of Ben's usage-session resets: 8:51 pm, 1:51 am, 6:51 am PT)
 
 Ben is asleep. Work through the queue below with NO questions to him: where
 a decision is his, take the recommended default, log it in MORNING_LIST.md as
@@ -54,13 +54,23 @@ Persona user stories: CHANGELOG.md entry "2026-08-14 -- Dive v2", docs/phase0_si
    not from what is easiest. One mart, one grain, unique test on the grain,
    hand-validate the number before writing dbt, `data_through` column if it is a time series.
 5. Phase 5: plain-language `description:` on every model and column that lacks one (staging first, then intermediate, then marts), with an explicit caveat wherever a number could be misread. Writing only.
-STOP after item 5. Do not start Phases 6-8.
+6. Phase 6 (DRAFT only): assumed default = dbt Semantic Layer / MetricFlow. Write `metrics.yml`-style semantic model + metric definitions for the marts built so far (each metric once, with its allowed dimensions). Cannot be validated overnight: mark every file DRAFT, list `pip install dbt-metricflow` / `mf validate-configs` as a morning step.
+7. Phase 7 (DRAFT only): a client-specific Skill document (which mart answers which question, every Phase 5 caveat restated as an instruction, escalation rule "say I don't have this data instead of guessing"). Save as docs/kinetic_skill_DRAFT.md.
+STOP after item 7. Do not start Phase 8 (needs a live pilot persona).
+
+## Resume protocol (each run is a fresh session with no memory)
+At the start of every run: check out branch `overnight`; read MORNING_LIST.md
+"Progress" section; append a line "Run started <PT time>"; continue from the
+first unfinished queue item. If Progress says QUEUE COMPLETE, write "Run <time>:
+nothing to do" and stop immediately (spend nothing else). After each unit,
+update the Progress section (item number, name, status: done / blocked) and
+commit. MORNING_LIST.md is one file for all runs: append, never overwrite.
 
 ## Stop rules
 - A check fails twice on the same unit: revert that unit's uncommitted changes, log it in MORNING_LIST.md under "Blocked", move to the next unit.
 - Device tools cannot reach the Mac: try the Projects tool `project_write` to write
   `overnight-status.md` saying so and the time; then stop.
-- Never work past ~8 units of work total.
+- Each run works until the queue is done or the session's usage runs out; there is no unit cap. Because a run can be cut off at any moment, COMMIT AFTER EVERY UNIT and never leave a unit half-written in the working tree.
 - Anything that would need Ben's approval (MotherDuck write, delete, push, a token): don't; list it.
 
 ## MORNING_LIST.md (create/append in the repo root, commit on the branch)
