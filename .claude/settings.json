@@ -15,7 +15,9 @@
       "Bash(bash scripts/rebuild_docs_branch.sh*)",
       "Edit(~/Documents/double-black-solutions/playbook/**)",
       "Edit(~/Documents/double-black-solutions/LOG.md)",
-      "Read(~/Documents/double-black-solutions/**)"
+      "Read(~/Documents/double-black-solutions/**)",
+      "mcp__terminal__read_terminal",
+      "Bash(/Users/ben/.dbt-venv/bin/python scripts/md_select.py *)"
     ],
     "deny": [
       "Bash(git push)",

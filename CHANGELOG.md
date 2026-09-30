@@ -2678,3 +2678,15 @@ seasonality calendar.
 - Updated CLAUDE.md (start-of-session branch rule, rule 3), HANDOFF.md (Git status, open
   decision 1 resolved) and OVERNIGHT_PLAN_CLAUDE_CODE.md (branch check at run start).
 - Also set up this day: MOTHERDUCK_TOKEN in ~/.zshrc so dbt/duckdb no longer prompt for a browser login.
+
+## 2026-09-30 — Phase 6 closed; read-only SQL helper; fewer permission prompts
+
+- Ben confirmed he understands the semantic layer (incl. why metrics cannot be sliced by each
+  other: a dimension needs a label on the underlying rows). Phase 6 marked done in playbook
+  section 13 (republished to the same artifact link, v26), double-black-solutions/LOG.md and HANDOFF.md.
+- dbt docs regenerated and the gh-pages branch rebuilt locally (a339554); Ben publishes it with
+  `git push origin gh-pages`.
+- New scripts/md_select.py: runs ONE read-only statement on MotherDuck, refuses writes/DDL and
+  multi-statement input, loads the token itself and never prints it. Tested: one good query,
+  three refusals, a keyword inside a string literal. Allowed in .claude/settings.json (with
+  mcp__terminal__read_terminal); CLAUDE.md rule 4 now points to it. Manifest line added.

@@ -44,8 +44,9 @@ MORNING_LIST.md is a record of the first overnight run only: ignore it unless de
 4. dbt: run from dbt/ with `/Users/ben/.dbt-venv/bin/dbt` (build, then read
    dbt/logs/dbt.log and dbt/target/run_results.json). MotherDuck writes happen ONLY
    through dbt into dbt_dev_* schemas. Never write to `main`, never drop/delete raw
-   tables. Ad-hoc SQL against MotherDuck is SELECT-only (duckdb via the venv python,
-   `md:kinetic`). Anything else needs Ben's OK.
+   tables. Ad-hoc SQL against MotherDuck is SELECT-only: use
+   `/Users/ben/.dbt-venv/bin/python scripts/md_select.py "<sql>"` (refuses writes, loads the
+   token itself, pre-approved in settings.json). Anything else needs Ben's OK.
 5. Ask before deleting; otherwise `mv` into ~/Documents/kinetic-project/_to_delete/.
 6. Decisions that are Ben's: interactive session -> ask with the question tool; unattended
    run -> take the recommended default and log it as "assumed, needs your call".

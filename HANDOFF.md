@@ -16,11 +16,14 @@ standing rules; this note holds status, open decisions and pitfalls.
 - Phase 5 (documentation): DONE, confirmed by Ben 2026-09-30. Description on every model and column;
   docs site at https://bencool85.github.io/kinetic-data-project/ (gh-pages branch, a snapshot of the
   2026-09-30 build: rebuild after model changes, CLAUDE.md rule 10); glossary at docs/metrics_glossary.md.
-- Phase 6 (semantic layer): VALIDATED 2026-09-30, NOT yet confirmed by Ben (so not marked done).
+- Phase 6 (semantic layer): DONE, confirmed by Ben 2026-09-30 (playbook section 13 updated and
+  republished as artifact v26; LOG.md entry added).
   dbt/models/marts/_semantic_layer.yml (5 semantic models, 25 metrics) plus the calendar model
   metricflow_time_spine. `mf validate-configs` 0 errors; all 10 queries in
   docs/semantic_layer_validation.md match the hand-computed values. Full build 366/366 pass.
-  MetricFlow 0.209 (dbt-metricflow 0.11.0) is installed in ~/.dbt-venv.
+  MetricFlow 0.209 (dbt-metricflow 0.11.0) is installed in ~/.dbt-venv. Known limit (Ben accepted):
+  only paid-media metrics have a second dimension (platform). Slicing subscribers/revenue (e.g. MRR by
+  first-time vs returning) needs a new subscription-grain mart with a subscriber-type column: optional.
 - Phase 7 (Skill): DRAFT ONLY, needs Ben's review. docs/kinetic_skill_DRAFT.md. It must use the
   dimension name `platform_month__platform` (plain `platform` is rejected by MetricFlow).
 - Phase 8 (agents): NOT STARTED. Needs a pilot persona.
@@ -35,12 +38,11 @@ standing rules; this note holds status, open decisions and pitfalls.
   republish to the same link, so no Cowork step is needed.
 
 ## Next step (start here)
-1. Phase 6 wrap-up: walk Ben through the semantic layer until he confirms he understands it. Then
-   mark Phase 6 done: playbook section 13 (CLAUDE.md rule 8, republish, LOG.md) and rebuild the docs
-   site (rule 10). Known limit: only paid-media metrics have a second dimension (platform), so the
-   playbook's exit test (2 dimensions) is met for those only.
-2. Phase 7: Ben reviews the draft Skill.
-3. Phase 8: choose a pilot persona, then scope one use case.
+0. Ben still has to push: `git push origin gh-pages` (docs site rebuilt locally at a339554, not yet
+   published) and `git push origin master` (local commits). Check `git log origin/master..master`.
+1. Phase 7: Ben reviews the draft Skill (docs/kinetic_skill_DRAFT.md).
+2. Phase 8: choose a pilot persona, then scope one use case.
+3. Optional: subscription-grain mart to slice subscribers/revenue by subscriber type, channel or plan.
 Recommend a model and ask Ben before starting each one (CLAUDE.md "Model and cost").
 
 ## Open decisions / to-dos
@@ -49,10 +51,11 @@ Recommend a model and ask Ben before starting each one (CLAUDE.md "Model and cos
 3. Two-pager marketing sheet: Ben still owes a founder bio (About section) and a higher-resolution
    logo. Possibly a firm-domain email.
 4. MotherDuck login: Ben added an `export MOTHERDUCK_TOKEN=...` line to ~/.zshrc himself
-   (2026-09-30). A Claude Code session started before that does not see it; commands then load it
-   with `eval "$(grep -i '^export motherduck_token=' ~/.zshrc | tail -1)"`, which never prints the
-   value. The token was pasted into a chat once that day; Claude advised revoking it and creating a
-   fresh one (not verified). Claude never prints or stores the token.
+   (2026-09-30). A session started before that does not see it. For ad-hoc SQL use
+   `scripts/md_select.py` (SELECT-only, loads the token itself, pre-approved in settings.json); for
+   other commands load it with `eval "$(grep -i '^export motherduck_token=' ~/.zshrc | tail -1)"`.
+   The token was partly shown in a screenshot in chat; Ben says he rotated it. Claude never prints
+   or stores the token.
 5. The Cowork Project instructions (claude.ai) still contain the old MODEL & COST line; Ben edits
    those in the Project settings if he keeps using Cowork.
 6. `_to_delete/` holds four old git lock files from the Cowork runs (run3*_HEAD.lock, run3*_index.lock);
