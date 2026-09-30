@@ -53,6 +53,7 @@ standing rules; this note holds status, open decisions and pitfalls.
    replies, Claude grades). WAITING ON BEN: switch off query_rw, upload docs/kinetic_skill.md (v1.1)
    to claude.ai, run the 6 questions + 3 of his own. Next use case after the pilot: funnel by channel
    on customers.signup_source (needs a new mart and Ben's call vs the "CAC is blended only" decision).
+   Playbook section 13 updated (Phase 8 in progress) and republished as artifact v28; LOG.md entry added.
 2. Optional: subscription-grain mart to slice subscribers/revenue by subscriber type, channel or plan.
 Recommend a model and ask Ben before starting each one (CLAUDE.md "Model and cost").
 
