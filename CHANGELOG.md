@@ -2690,3 +2690,15 @@ seasonality calendar.
   multi-statement input, loads the token itself and never prints it. Tested: one good query,
   three refusals, a keyword inside a string literal. Allowed in .claude/settings.json (with
   mcp__terminal__read_terminal); CLAUDE.md rule 4 now points to it. Manifest line added.
+
+## 2026-09-30 — Phase 7 started: Skill draft reviewed against live data (v2)
+
+- Checked every mart, column and metric name in docs/kinetic_skill_DRAFT.md against MotherDuck: all
+  exist. Quoted numbers hold: blended CAC $8,803 over 36 months, 4.8 first-time subscribers a
+  month, 33.7% guest orders, Meta conversion value null in every month.
+- Fixed: stale status note (models are built, semantic layer validated). Added "How to get the
+  numbers": Ben chose SQL on the marts as the default route (works in claude.ai via the MotherDuck
+  connector) and MetricFlow metrics where installed. Added the rules the SQL route needs
+  (recompute ratios from sums, never sum snapshots, `ctr_fraction`) and the MetricFlow syntax
+  (`platform_month__platform`, template filters). Manifest line updated.
+- Not signed off yet: Ben is reading it.

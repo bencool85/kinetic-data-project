@@ -5,16 +5,18 @@ description: How to answer business questions about Kinetic (a fictional D2C fit
 
 # Kinetic data Skill (DRAFT)
 
-STATUS: DRAFT written overnight 2026-09-30. Not reviewed by Kinetic's data
-owner (Phase 7 requires that), and it describes models that are written and
-hand-verified but not yet built in dbt. Do not use with a pilot persona until
-the dbt build passes and Ben has reviewed it.
+STATUS: DRAFT v2 (2026-09-30), in review with Ben (Phase 7). The five marts
+are built (full build 366/366 pass) and the semantic layer is validated (10/10
+queries match hand-computed values). Table, column and metric names below were
+checked against the live database on 2026-09-30. Do not use with a pilot
+persona until Ben has signed it off.
 
 ## Ground rules
 
-1. Query only the curated `dbt_dev_marts` tables below (and the semantic-layer
-   metrics once validated). Do not build answers from raw tables or staging
-   views when a mart exists.
+1. Query only the curated `kinetic.dbt_dev_marts` tables below, or the
+   semantic-layer metrics that sit on top of them (see "How to get the
+   numbers"). Do not build answers from raw tables or staging views when a
+   mart exists.
 2. Every answer states the metric name, the period, and the `data_through`
    date. The data ends 2026-07-30. Never answer for later months, and never
    treat "no row" as zero.
@@ -36,6 +38,51 @@ the dbt build passes and Ben has reviewed it.
 Persona guide: CEO -> subscriber movement, MRR, blended CAC. CFO -> storefront
 revenue (paid vs net), MRR, blended CAC. CMO / performance marketing -> paid
 media, blended CAC.
+
+## How to get the numbers
+
+Two routes return the same numbers (checked on 10 test queries, 2026-09-30).
+
+**Route 1 (default, works anywhere): SQL on the marts.** Read-only SELECTs
+against `kinetic.dbt_dev_marts.<mart>`. Rules for this route:
+
+- Money columns end in `_usd`; rates in `mart_paid_media_monthly` are
+  `ctr_fraction` (0.0153 means 1.53%).
+- Ratios over more than one month or platform (AOV, CTR, CPC, cost per
+  conversion, reported ROAS, blended CAC) must be recomputed from the sums,
+  e.g. AOV = sum(paid_revenue_usd) / sum(order_count). Never average the
+  monthly ratio columns.
+- Snapshots (`mrr_usd`, `arr_usd`, `active_subscribers`,
+  `active_subscribers_end`) are never summed across months: take the last
+  month of the period.
+- Filter with `month_start` (a DATE, first of the month). Every mart has a
+  `data_through` column; quote it.
+
+**Route 2 (only where MetricFlow is installed, e.g. Claude Code on Ben's
+Mac): semantic-layer metrics.** Run `mf query` from the `dbt/` folder. The
+metric already applies the rules above (ratios from sums, snapshots take the
+last value), so prefer it when available.
+
+| Metric | Same as mart column |
+|--------|---------------------|
+| `mrr_usd`, `active_subscribers` | `mart_mrr_monthly` |
+| `new_paying_subscribers`, `first_time_subscribers`, `returning_subscribers`, `churned_subscribers`, `net_new_subscribers`, `active_subscribers_month_end` | `mart_subscriber_movement_monthly` (last one = `active_subscribers_end`) |
+| `storefront_orders`, `storefront_gross_before_discount_usd`, `storefront_paid_revenue_usd`, `storefront_net_revenue_usd`, `storefront_aov_usd` | `mart_storefront_revenue_monthly` (`order_count`, ...) |
+| `paid_spend_usd`, `paid_impressions`, `paid_clicks`, `paid_reported_conversions`, `paid_reported_conversion_value_usd`, `paid_ctr`, `paid_cpc_usd`, `paid_cost_per_reported_conversion_usd`, `paid_reported_roas` | `mart_paid_media_monthly` |
+| `acq_paid_spend_usd`, `acq_first_time_subscribers`, `blended_cac_usd` | `mart_acquisition_efficiency_monthly` |
+
+MetricFlow syntax that trips people up:
+
+- Time: `--group-by metric_time__month` (or `__quarter`, `__year`).
+- Platform: `--group-by platform_month__platform`. Plain `platform` is
+  rejected. Only paid-media metrics have a platform; nothing else can be
+  split by any dimension other than time.
+- Filters use templates:
+  `--where "{{ TimeDimension('metric_time','year') }} = '2025-01-01'"` or
+  `--where "{{ Dimension('platform_month__platform') }} = 'google_search'"`.
+  Date ranges: `--start-time 2026-07-01 --end-time 2026-07-31`.
+- Add `--decimals 2` to see cents.
+- Example: `mf query --metrics paid_spend_usd --group-by platform_month__platform --where "{{ TimeDimension('metric_time','year') }} = '2025-01-01'"`
 
 ## Caveats, restated as instructions
 

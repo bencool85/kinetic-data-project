@@ -24,8 +24,11 @@ standing rules; this note holds status, open decisions and pitfalls.
   MetricFlow 0.209 (dbt-metricflow 0.11.0) is installed in ~/.dbt-venv. Known limit (Ben accepted):
   only paid-media metrics have a second dimension (platform). Slicing subscribers/revenue (e.g. MRR by
   first-time vs returning) needs a new subscription-grain mart with a subscriber-type column: optional.
-- Phase 7 (Skill): DRAFT ONLY, needs Ben's review. docs/kinetic_skill_DRAFT.md. It must use the
-  dimension name `platform_month__platform` (plain `platform` is rejected by MetricFlow).
+- Phase 7 (Skill): IN REVIEW with Ben (started 2026-09-30). docs/kinetic_skill_DRAFT.md is v2: every
+  table/column name and quoted number re-checked against live data; new section "How to get the
+  numbers" (Ben chose: SQL on marts as the default route, MetricFlow metrics where installed, incl.
+  the `platform_month__platform` rule). Not signed off: Ben reads it, asks questions, then confirms.
+  Still open for Phase 8: where the Skill file will live (.claude/skills/ vs claude.ai upload).
 - Phase 8 (agents): NOT STARTED. Needs a pilot persona.
 - Git: MERGED 2026-09-30. `overnight` was fast-forwarded into master and pushed by Ben (master and
   origin/master both at b0fcdca). New pattern: daytime work is on `master` (Claude commits locally,
@@ -38,9 +41,8 @@ standing rules; this note holds status, open decisions and pitfalls.
   republish to the same link, so no Cowork step is needed.
 
 ## Next step (start here)
-0. Ben still has to push: `git push origin gh-pages` (docs site rebuilt locally at a339554, not yet
-   published) and `git push origin master` (local commits). Check `git log origin/master..master`.
-1. Phase 7: Ben reviews the draft Skill (docs/kinetic_skill_DRAFT.md).
+0. Ben pushes `master` when ready (check `git log origin/master..master`). gh-pages was pushed.
+1. Phase 7: Ben finishes reading the Skill v2 (docs/kinetic_skill_DRAFT.md) and signs it off.
 2. Phase 8: choose a pilot persona, then scope one use case.
 3. Optional: subscription-grain mart to slice subscribers/revenue by subscriber type, channel or plan.
 Recommend a model and ask Ben before starting each one (CLAUDE.md "Model and cost").
