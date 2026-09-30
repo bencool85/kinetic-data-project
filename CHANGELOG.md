@@ -2439,3 +2439,7 @@ seasonality calendar.
   master, force push, reset --hard, clean, rm) and
   `OVERNIGHT_PLAN_CLAUDE_CODE.md` (overnight runbook variant where dbt builds
   and pushes are allowed). Cowork's OVERNIGHT_PLAN.md is unchanged.
+- `.claude/settings.json` deny rules widened: they now also block bare
+  `git push`, any push naming master/main (including `--dry-run` and
+  `branch:master` forms), `--all`, `--mirror` and force flags. Only
+  `git push origin overnight` is allowed.
