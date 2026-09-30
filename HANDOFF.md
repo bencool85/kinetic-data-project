@@ -10,8 +10,9 @@ Read this first in a new chat, then the last few CHANGELOG.md entries.
 - Git: last commit 605c34b. Ben pushes himself (`cd ~/Documents/kinetic-project && git push`). Check `git log origin/master..HEAD` for unpushed commits and remind him.
 
 ## Next step (start here)
-- Phase 3, model 2 of 5: `int_orders_net` -- one row per order: gross, discount, refund (from int_orders_refunded, succeeded only), net, is_guest_order, and a resolved customer_id (guest orders matched via int_customer_identity on 'email:'||lower(trim(guest_email))). Hand-verify against live data before writing; Ben then runs `dbt build --select int_orders_net`.
+- Phase 3, model 2 of 5, `int_orders_net`: written, hand-verified and committed (2026-09-30). Ben runs `cd ~/Documents/kinetic-project/dbt && source ~/.dbt-venv/bin/activate && dbt build --select int_orders_net`; then read dbt/logs/dbt.log + dbt/target/run_results.json, confirm 3,650 rows / net $182,861.97 in MotherDuck, and update playbook section 13.
 - Remaining after that, in order: int_sessions_unified (back-fill via int_customer_identity), int_messaging_events (Braze email + push), int_paid_media_daily (needs Ben's call: which platform actions count as a "conversion").
+- At the marts review: point mart_storefront_revenue_monthly at int_orders_net.paid_usd and rename its "gross_revenue_usd" (it is the paid amount).
 - Pending Ben's yes: add a playbook principle "time series stop where the data stops; never extend to today". Check the Dive for the same current_date bug during the Phase 4 review.
 
 ## Open decisions / to-dos
@@ -37,6 +38,7 @@ dbt (transformation tool run separately, not a database; models are SQL files; s
 - Delete permission for ~/Documents is per session; ask only if needed (use mv to _to_delete otherwise).
 - Ask before any MotherDuck write. Ben has approved writes case by case.
 - Manifest: add a line in generator/build_manifest.py, then run with HOME="$HOME/mnt" python3 generator/build_manifest.py.
+  When folders mount by name (no mnt/Documents), make a fake home: mkdir -p /tmp/fakehome/Documents && ln -sfn $HOME/mnt/kinetic-project /tmp/fakehome/Documents/kinetic-project (and double-black-solutions), then HOME=/tmp/fakehome python3 generator/build_manifest.py.
 
 ## Pitfalls that cost time before
 - Time series must end at the last date the data covers (compute it from the data), never current_date: the synthetic data ends 2026-07-30, and months after that get invented numbers. Check the Dive and every new mart for this.

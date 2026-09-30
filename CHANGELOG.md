@@ -2356,3 +2356,27 @@ seasonality calendar.
   from MotherDuck: 35 months, last 2026-07, data_through 2026-07-30, July
   MRR $2,133.07.
 - HANDOFF.md: added "Next step" (int_orders_net) for the next chat.
+
+## 2026-09-30 — int_orders_net written and hand-verified (awaiting dbt build)
+
+- New `int_orders_net` (one row per order): gross_usd (pre-discount
+  subtotal), discount_usd (subscriber + code), paid_usd, refund_usd
+  (succeeded only), net_usd, is_guest_order, customer_id (guests resolved
+  by email via int_customer_identity), customer_resolution.
+- Ben's calls: "gross" = pre-discount subtotal; net is NOT floored at zero
+  (a test fails loudly instead).
+- Hand-checked against the dbt-built views in MotherDuck: 3,650 orders =
+  3,650 distinct order_ids; gross $194,283.64 - discount $4,874.85 = paid
+  $189,408.79 (equals raw total_amount on every order); refund $6,546.82
+  (equals int_orders_refunded); net $182,861.97; 1,257 guest orders = 28
+  guest_email_match + 1,229 unresolved; 2,393 account orders; 0 negative
+  net; 0 customer_ids missing from customers.
+- Tests: not_null/unique/relationships/accepted_values in
+  `_intermediate.yml`, plus 3 singular tests in `dbt/tests/`
+  (no negative net; money reconciles to the cent; refund total matches
+  int_orders_refunded).
+- Note: `mart_storefront_revenue_monthly` still calls the paid amount
+  "gross_revenue_usd". Point it at int_orders_net.paid_usd and rename the
+  column at the marts review, so "gross" means one thing.
+- File_Manifest.xlsx regenerated (271 rows). The manifest script now needs a
+  fake HOME with Documents/ symlinks because folders mount by name.

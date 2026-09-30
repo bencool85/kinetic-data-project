@@ -51,3 +51,48 @@ models:
           - accepted_values:
               arguments:
                 values: ['identity_map_signup', 'identity_map_login', 'account_email']
+
+  - name: int_orders_net
+    description: >
+      One row per order with the money broken out once: gross_usd (subtotal
+      before discounts), discount_usd (subscriber discount + code), paid_usd
+      (what was charged), refund_usd (succeeded refunds only, 0 if none) and
+      net_usd (paid minus refund, never floored at zero). customer_id is the
+      order's account or, for guest orders, the account matched by email via
+      int_customer_identity; unmatched guests stay null. is_guest_order stays
+      true for anyone who checked out as a guest. Net is not a margin figure
+      (no COGS data exists).
+    columns:
+      - name: order_id
+        data_tests:
+          - not_null
+          - unique
+          - relationships:
+              arguments:
+                to: ref('stg_kinetic__orders')
+                field: order_id
+      - name: gross_usd
+        data_tests: [not_null]
+      - name: discount_usd
+        data_tests: [not_null]
+      - name: paid_usd
+        data_tests: [not_null]
+      - name: refund_usd
+        data_tests: [not_null]
+      - name: net_usd
+        data_tests: [not_null]
+      - name: is_guest_order
+        data_tests: [not_null]
+      - name: customer_id
+        description: Null only for guest orders with no matching account.
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_kinetic__customers')
+                field: customer_id
+      - name: customer_resolution
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['account', 'guest_email_match', 'unresolved']
