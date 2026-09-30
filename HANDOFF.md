@@ -24,10 +24,12 @@ standing rules; this note holds status, open decisions and pitfalls.
   MetricFlow 0.209 (dbt-metricflow 0.11.0) is installed in ~/.dbt-venv. Known limit (Ben accepted):
   only paid-media metrics have a second dimension (platform). Slicing subscribers/revenue (e.g. MRR by
   first-time vs returning) needs a new subscription-grain mart with a subscriber-type column: optional.
-- Phase 7 (Skill): IN REVIEW with Ben (started 2026-09-30). docs/kinetic_skill_DRAFT.md is v2: every
-  table/column name and quoted number re-checked against live data; new section "How to get the
-  numbers" (Ben chose: SQL on marts as the default route, MetricFlow metrics where installed, incl.
-  the `platform_month__platform` rule). Not signed off: Ben reads it, asks questions, then confirms.
+- Phase 7 (Skill): DONE, signed off by Ben 2026-09-30. docs/kinetic_skill.md (v1, renamed from _DRAFT):
+  SQL on the marts is the default route, MetricFlow metrics where installed (dimension
+  `platform_month__platform`). Quoted numbers re-checked against live data (incl. guest orders 33.7%).
+  Ben's scope decisions: the Skill refuses churn rate, LTV, revenue by plan and email/push rates
+  (no marts yet); it points at the dev schema `dbt_dev_marts`, to be swapped for a production
+  schema before a real pilot (Phase 8).
   Still open for Phase 8: where the Skill file will live (.claude/skills/ vs claude.ai upload).
 - Phase 8 (agents): NOT STARTED. Needs a pilot persona.
 - Git: MERGED 2026-09-30. `overnight` was fast-forwarded into master and pushed by Ben (master and
@@ -42,9 +44,9 @@ standing rules; this note holds status, open decisions and pitfalls.
 
 ## Next step (start here)
 0. Ben pushes `master` when ready (check `git log origin/master..master`). gh-pages was pushed.
-1. Phase 7: Ben finishes reading the Skill v2 (docs/kinetic_skill_DRAFT.md) and signs it off.
-2. Phase 8: choose a pilot persona, then scope one use case.
-3. Optional: subscription-grain mart to slice subscribers/revenue by subscriber type, channel or plan.
+1. Phase 8: choose a pilot persona, then scope one use case. Needs: a stable production schema for the
+   marts, read-only access for the agent, guardrails doc, and a way to collect feedback.
+2. Optional: subscription-grain mart to slice subscribers/revenue by subscriber type, channel or plan.
 Recommend a model and ask Ben before starting each one (CLAUDE.md "Model and cost").
 
 ## Open decisions / to-dos

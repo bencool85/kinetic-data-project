@@ -2702,3 +2702,14 @@ seasonality calendar.
   (recompute ratios from sums, never sum snapshots, `ctr_fraction`) and the MetricFlow syntax
   (`platform_month__platform`, template filters). Manifest line updated.
 - Not signed off yet: Ben is reading it.
+
+## 2026-09-30 — Phase 7 signed off: Kinetic Skill v1
+
+- Ben reviewed the Skill and answered the check questions (why no CAC by channel: no ad-to-subscriber
+  key; why MRR is not summed: a snapshot would count the same subscribers every month). He accepted three scope decisions
+  (Skill refuses churn rate/LTV/revenue by plan/email rates; dev schema pointer until Phase 8; SQL is
+  the default route).
+- Renamed docs/kinetic_skill_DRAFT.md to docs/kinetic_skill.md, removed the DRAFT wording, recorded the
+  decisions in its header. Re-checked "about a third guest orders" against live data: 1,229 of 3,650
+  orders (33.7%) have no customer_id. Manifest line updated.
+- Playbook section 13, LOG.md and HANDOFF.md updated (Phase 8 is next).

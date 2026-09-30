@@ -1,15 +1,21 @@
 ---
 name: kinetic-data
-description: How to answer business questions about Kinetic (a fictional D2C fitness company, synthetic data) from the MotherDuck `kinetic` database. Use for any question about subscribers, MRR, storefront revenue, paid media, CAC, or email/push. DRAFT: not reviewed by the client's data owner.
+description: How to answer business questions about Kinetic (a fictional D2C fitness company, synthetic data) from the MotherDuck `kinetic` database. Use for any question about subscribers, MRR, storefront revenue, paid media, CAC, or email/push. Signed off by the data owner (Ben) on 2026-09-30.
 ---
 
-# Kinetic data Skill (DRAFT)
+# Kinetic data Skill
 
-STATUS: DRAFT v2 (2026-09-30), in review with Ben (Phase 7). The five marts
-are built (full build 366/366 pass) and the semantic layer is validated (10/10
-queries match hand-computed values). Table, column and metric names below were
-checked against the live database on 2026-09-30. Do not use with a pilot
-persona until Ben has signed it off.
+STATUS: v1, signed off by Ben (Phase 7) on 2026-09-30. The five marts are built
+(full build 366/366 pass) and the semantic layer is validated (10/10 queries
+match hand-computed values). Table, column and metric names below were checked
+against the live database on 2026-09-30.
+
+Scope decisions Ben made at sign-off:
+- Churn rate, LTV, revenue by plan and email/push rates have no mart yet; the
+  Skill refuses them rather than computing ad hoc. Revisit if a pilot needs them.
+- The SQL route points at the dev schema `dbt_dev_marts`. Before a real pilot
+  (Phase 8), point it at a stable production schema.
+- SQL on the marts is the default route; MetricFlow only runs where it is installed.
 
 ## Ground rules
 
