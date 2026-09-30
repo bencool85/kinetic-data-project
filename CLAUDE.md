@@ -1,0 +1,45 @@
+# Kinetic data-to-agents project (Claude Code instructions)
+
+Ben (consultant, Double Black Solutions) is learning to build "data-to-agents"
+foundations on a fully synthetic D2C fitness company, Kinetic. Same project as
+the Cowork chats: this repo IS the shared memory. He is not a data engineer:
+explain in plain language, with the why. Answer his questions before moving on.
+
+## Start of every session
+Read HANDOFF.md and the last 5 entries of CHANGELOG.md. Playbook (phases 0-8):
+~/Documents/double-black-solutions/playbook/data-to-agents-playbook.html.
+Decision log for the firm: ~/Documents/double-black-solutions/LOG.md.
+
+## The project
+- 47 synthetic tables in MotherDuck database `kinetic`; dbt project in dbt/
+  (staging -> intermediate -> marts; schemas dbt_dev_staging / _intermediate / _marts).
+- Repo: github.com/bencool85/kinetic-data-project, branch master.
+- Time series stop where the data stops (2026-07-30); NEVER use current_date.
+- Ad-platform units: Meta cents; Google/YouTube/DV360/Snap/TikTok micros (BIGINT
+  literals). Staging exposes `_usd` columns. Google Search ad-group table is a rollup
+  of keywords: never add both.
+
+## Standing rules
+1. One table or small group at a time. Hand-verify keys, joins, units against live
+   data BEFORE writing the model; show validation results. No impossible scenarios.
+2. Every added/changed file: add a line to generator/build_manifest.py and run
+   `python3 generator/build_manifest.py`, add a CHANGELOG.md entry, keep it committed.
+3. Commit each step yourself (end messages with the attribution lines your session
+   gives you). Push ONLY `git push origin overnight`, and only when the task or Ben
+   says so. Never push master, never force-push. Ben pushes master himself.
+4. dbt: run from dbt/ with `/Users/ben/.dbt-venv/bin/dbt` (build, then read
+   dbt/logs/dbt.log and dbt/target/run_results.json). MotherDuck writes happen ONLY
+   through dbt into dbt_dev_* schemas. Never write to `main`, never drop/delete raw
+   tables. Ad-hoc SQL against MotherDuck is SELECT-only (duckdb via the venv python,
+   `md:kinetic`). Anything else needs Ben's OK.
+5. Ask before deleting; otherwise `mv` into ~/Documents/kinetic-project/_to_delete/.
+6. Decisions that are Ben's: interactive session -> ask with the question tool; unattended
+   run -> take the recommended default and log it as "assumed, needs your call".
+7. Before ending: update HANDOFF.md (status, open decisions, pitfalls) and commit.
+8. Playbook: edit the local HTML only; republishing to the claude.ai artifact can only
+   be done from Cowork, so log "playbook needs republish" in HANDOFF.md.
+9. Never paste or store GitHub tokens; remind Ben to revoke any pasted earlier.
+
+## Cost
+Long chats are expensive: suggest a new chat at phase boundaries. Sonnet for routine
+mechanical work; Opus for judgment calls (metric definitions, identity stitching, semantic layer).

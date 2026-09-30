@@ -2430,3 +2430,12 @@ seasonality calendar.
 - Plan revised (Ben): three scheduled runs (8:51 pm, 1:51 am, 6:51 am PT),
   one per usage-session reset; no unit cap; queue extended with Phase 6/7
   DRAFTS; each run resumes from MORNING_LIST.md "Progress".
+
+## 2026-09-29 — Claude Code setup files added
+
+- `CLAUDE.md` (standing rules for Claude Code sessions: same project, same
+  rules, plus dbt builds and pushes of the `overnight` branch only),
+  `.claude/settings.json` (allow dbt/git commit/push overnight; deny push to
+  master, force push, reset --hard, clean, rm) and
+  `OVERNIGHT_PLAN_CLAUDE_CODE.md` (overnight runbook variant where dbt builds
+  and pushes are allowed). Cowork's OVERNIGHT_PLAN.md is unchanged.
