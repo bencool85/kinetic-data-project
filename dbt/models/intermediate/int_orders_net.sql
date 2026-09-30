@@ -8,10 +8,9 @@
 --   net_usd      paid - refund
 --
 -- Judgment calls (Ben, 2026-09-30):
---   * "Gross" means the pre-discount subtotal. Note that
---     mart_storefront_revenue_monthly still calls the PAID amount
---     "gross_revenue_usd"; point it at paid_usd and rename its column when
---     the marts are reviewed, so "gross" has one meaning.
+--   * "Gross" means the pre-discount subtotal. 
+--     mart_storefront_revenue_monthly now reads this model and calls the
+--     paid amount paid_revenue_usd, so "gross" has one meaning.
 --   * net_usd is NOT floored at zero. A refund larger than the amount paid
 --     is a data problem, and a test fails loudly if it ever happens (none
 --     today: 116 orders are fully refunded, none over-refunded).

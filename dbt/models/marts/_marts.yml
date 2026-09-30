@@ -24,12 +24,28 @@ models:
   - name: mart_storefront_revenue_monthly
     description: >
       Canonical non-subscription (course + merch) storefront revenue by
-      month: gross/net revenue, AOV, guest-checkout share, discount-usage
-      share, refund rate. Note: net_revenue_usd is gross minus successful
-      refunds only -- not a true gross margin figure (no COGS data exists
-      in this dataset).
+      month, built on int_orders_net. gross_before_discount_usd is the
+      subtotal before discounts; discount_usd is what discounts took off;
+      paid_revenue_usd is what customers were charged (gross minus discount;
+      this was called gross_revenue_usd before 2026-09-30). net_revenue_usd
+      is paid minus successful refunds only -- not a true gross margin (no
+      COGS data exists). AOV is paid revenue per order. Rows stop at the
+      latest order date in the data (see data_through).
     columns:
       - name: year_month
         data_tests: [not_null, unique]
       - name: order_count
+        data_tests: [not_null]
+      - name: gross_before_discount_usd
+        description: Order subtotals before any discount, in US dollars.
+      - name: discount_usd
+        description: Subscriber discounts plus discount codes, in US dollars.
+      - name: paid_revenue_usd
+        description: What customers were charged (gross minus discounts), before refunds. Formerly gross_revenue_usd.
+        data_tests: [not_null]
+      - name: net_revenue_usd
+        description: Paid revenue minus succeeded refunds. Not a margin figure.
+        data_tests: [not_null]
+      - name: data_through
+        description: Latest order date in the data; later months are unknown, not zero.
         data_tests: [not_null]

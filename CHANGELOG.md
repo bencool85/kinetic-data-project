@@ -2480,3 +2480,18 @@ seasonality calendar.
   conversion applied, verified raw sum = staged sum.
 - Tests: yml (unique platform_day_id, accepted platforms, not_null) + 2
   singular tests. NOT yet run in dbt.
+
+## 2026-09-30 — Phase 3 exit check: storefront mart reads int_orders_net (overnight run; needs dbt build)
+
+- `mart_storefront_revenue_monthly` now reads `int_orders_net` instead of
+  recomputing discounts/refunds from staging. Column `gross_revenue_usd`
+  renamed `paid_revenue_usd` (it was the amount paid); new columns
+  `gross_before_discount_usd`, `discount_usd` and `data_through`. yml
+  descriptions and tests updated. Grep found no other readers of the old
+  name (the Dive reads raw tables, not this mart).
+- Hand-checked: re-running the new SQL against int_orders_net gave the same
+  36 months as the dbt-built mart, every metric identical (order_count, paid,
+  AOV, guest/discount/refund %, refunded amount, net). Totals: gross
+  $194,283.64, discount $4,874.85, paid $189,408.79, net $182,861.97.
+  has_discount = (discounts > 0) on all 3,650 orders (597).
+- Needs `dbt build --select mart_storefront_revenue_monthly` on Ben's Mac.
