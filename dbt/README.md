@@ -36,12 +36,15 @@ database before moving on -- not the whole semantic layer in one shot.
   Snap); the 4 `tiktok_*` tables (paid media: TikTok) -- 47 of 47 raw
   tables staged
 - Intermediate: `int_subscription_paid_periods` (trial-vs-paid start date
-  logic), `int_orders_refunded` (per-order successfully-refunded amount),
-  `int_customer_identity` (which customer an anonymous web ID or email
-  belongs to)
-- Marts: `mart_mrr_monthly` (active subscribers + MRR/ARR by month),
-  `mart_storefront_revenue_monthly` (course/merch gross+net revenue, AOV,
-  guest-checkout share, discount-usage share, refund rate)
+  logic), `int_orders_refunded`, `int_customer_identity`, `int_orders_net`,
+  `int_sessions_unified`, `int_subscription_data_through`; written and
+  hand-verified but awaiting `dbt build` (2026-09-30 overnight run):
+  `int_messaging_events`, `int_paid_media_daily`
+- Marts: `mart_mrr_monthly`, `mart_storefront_revenue_monthly` (now reads
+  `int_orders_net`); awaiting `dbt build`: `mart_subscriber_movement_monthly`,
+  `mart_paid_media_monthly`, `mart_acquisition_efficiency_monthly`
+- Every model and column has a plain-language `description:` (Phase 5); run
+  `dbt docs generate` to build the glossary site.
 
 Still to come, table group by table group: segment membership (Phase 4),
 web/app engagement (Phase 5), email/push funnels (Phase 6), paid media

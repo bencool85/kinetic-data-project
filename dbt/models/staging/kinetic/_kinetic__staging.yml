@@ -1,24 +1,74 @@
 version: 2
-
 models:
   - name: stg_kinetic__customers
     description: One row per customer, 1:1 with the raw customers table.
     columns:
       - name: customer_id
-        data_tests: [not_null, unique]
-
+        description: Unique ID of the customer account (one row per customer).
+        data_tests:
+          - not_null
+          - unique
+      - name: first_name
+        description: Customer's first name (synthetic).
+      - name: last_name
+        description: Customer's last name (synthetic).
+      - name: email
+        description: >-
+          Account email address. Lowercase and trim before matching (int_customer_identity
+          does).
+      - name: customer_created_at
+        description: When the account was created.
+      - name: signup_source
+        description: >-
+          Marketing channel credited with the sign-up (meta, google_search, youtube,
+          dv360, snap, tiktok or organic_direct). This is the channel recorded on
+          the account, the only per-customer acquisition channel that exists.
+      - name: email_opt_in
+        description: True if the customer agreed to receive marketing email.
+      - name: push_opt_in
+        description: True if the customer agreed to receive push notifications.
+      - name: is_deleted
+        description: >-
+          True if the account was deleted at the customer's request. Deleted accounts
+          are excluded from identity matching.
   - name: stg_kinetic__subscription_plans
     description: One row per subscription plan (tier x billing interval).
     columns:
       - name: plan_id
-        data_tests: [not_null, unique]
-
+        description: >-
+          Unique ID of the plan (one row per tier and billing interval, for example
+          plan_plus_monthly).
+        data_tests:
+          - not_null
+          - unique
+      - name: plan_tier
+        description: 'Plan level: basic or plus.'
+      - name: billing_interval
+        description: 'How often the plan bills: month or year.'
+      - name: plan_price_usd
+        description: >-
+          Price charged per billing interval in US dollars. For annual plans this
+          is the whole year, not per month; divide by 12 for a monthly equivalent.
+      - name: currency
+        description: >-
+          Currency code of the amounts on this row. Always USD in this dataset.
+      - name: is_active
+        description: True if this record is currently active/enabled.
+      - name: plan_created_at
+        description: When the plan was created.
   - name: stg_kinetic__subscriptions
     description: One row per subscription object (Stripe-shaped).
     columns:
       - name: subscription_id
-        data_tests: [not_null, unique]
+        description: >-
+          Unique ID of the subscription (one row per subscription object; a customer
+          who returns gets a new one).
+        data_tests:
+          - not_null
+          - unique
       - name: customer_id
+        description: >-
+          ID of the customer account this row belongs to (joins to stg_kinetic__customers).
         data_tests:
           - not_null
           - relationships:
@@ -26,145 +76,436 @@ models:
                 to: ref('stg_kinetic__customers')
                 field: customer_id
       - name: plan_id
+        description: ID of the subscription plan (a tier at a billing interval).
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__subscription_plans')
                 field: plan_id
-
+      - name: billing_interval
+        description: 'Billing interval of the plan at the time: month or year.'
+      - name: subscription_status
+        description: >-
+          Current status: active, canceled, past_due or trialing. This is the status
+          now, not a history; use subscription_events for history.
+      - name: trial_start
+        description: First day of the free trial; null if there was no trial.
+      - name: trial_end
+        description: >-
+          Last day of the free trial; paying starts here unless it was canceled
+          first.
+      - name: start_date
+        description: Date the subscription started.
+      - name: current_period_start
+        description: Start of the billing period in progress.
+      - name: current_period_end
+        description: End of the billing period in progress.
+      - name: canceled_at
+        description: >-
+          Date the subscription was canceled; null if it never was. A cancellation
+          during the trial is NOT a paying subscriber leaving (see int_subscription_paid_periods).
+      - name: cancel_reason
+        description: >-
+          Why it ended: voluntary, involuntary (failed payments), trial_canceled
+          or trial_expired; null if never canceled.
+      - name: past_due_since
+        description: >-
+          Date a failed payment first made the subscription past due; null if never.
+      - name: subscription_created_at
+        description: When the subscription record was created.
   - name: stg_kinetic__invoices
     description: One row per invoice generated for a subscription.
     columns:
       - name: invoice_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the invoice (one row per invoice).
+        data_tests:
+          - not_null
+          - unique
       - name: subscription_id
+        description: ID of the subscription.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__subscriptions')
                 field: subscription_id
-
+      - name: customer_id
+        description: >-
+          ID of the customer account this row belongs to (joins to stg_kinetic__customers).
+      - name: plan_id
+        description: ID of the subscription plan (a tier at a billing interval).
+      - name: amount_due_usd
+        description: >-
+          Amount billed on the invoice in US dollars (annual invoices are the full
+          year). An invoice being 'due' does not mean it was collected; check invoice_status.
+      - name: currency
+        description: >-
+          Currency code of the amounts on this row. Always USD in this dataset.
+      - name: period_start
+        description: First day the invoice covers.
+      - name: period_end
+        description: Last day the invoice covers.
+      - name: invoice_status
+        description: >-
+          paid, open (not yet paid) or uncollectible (written off). Only paid invoices
+          are collected revenue.
+      - name: paid_at
+        description: When the invoice was paid; null if not paid.
+      - name: invoice_created_at
+        description: When the invoice was created.
   - name: stg_kinetic__products
     description: One row per sellable product (course or merch).
     columns:
       - name: product_id
-        data_tests: [not_null, unique]
-
+        description: Unique ID of the product.
+        data_tests:
+          - not_null
+          - unique
+      - name: product_name
+        description: Product name.
+      - name: product_type
+        description: 'Kind of product: course or merch.'
+      - name: product_category
+        description: >-
+          Category: strength, conditioning, endurance, mobility, transformation
+          (courses) or apparel, equipment, accessories (merch).
+      - name: base_price_usd
+        description: >-
+          List price in US dollars before variant adjustments or discounts.
+      - name: is_subscription_eligible
+        description: True if subscribers get a discount on this product.
+      - name: product_created_at
+        description: When the product was created.
+      - name: is_active
+        description: True if this record is currently active/enabled.
   - name: stg_kinetic__orders
     description: One row per order (customer or guest checkout).
     columns:
       - name: order_id
-        data_tests: [not_null, unique]
-
+        description: Unique ID of the order (one row per order).
+        data_tests:
+          - not_null
+          - unique
+      - name: customer_id
+        description: >-
+          Customer account that placed the order. Null for guest checkouts (1,257
+          of 3,650 orders); those may still be matched to an account by email (see
+          int_orders_net).
+      - name: guest_email
+        description: Email typed at guest checkout; null for account orders.
+      - name: order_type
+        description: >-
+          course or merch (subscriptions are billed through invoices, not orders).
+      - name: order_date
+        description: Date the order was placed.
+      - name: subtotal_usd
+        description: Order value in US dollars BEFORE any discount.
+      - name: subscriber_discount_applied
+        description: True if a subscriber discount was applied.
+      - name: subscriber_discount_usd
+        description: Discount given for being a subscriber, in US dollars.
+      - name: discount_code_id
+        description: ID of the discount code used; null if none.
+      - name: discount_code_usd
+        description: Discount given by the code, in US dollars.
+      - name: total_amount_usd
+        description: >-
+          What the customer was charged in US dollars (subtotal minus discounts).
+          Before refunds.
+      - name: currency
+        description: >-
+          Currency code of the amounts on this row. Always USD in this dataset.
+      - name: order_created_at
+        description: When the order record was created.
+      - name: is_guest_order
+        description: >-
+          True if the order was a guest checkout (no account at the time).
+      - name: has_discount
+        description: True if any discount (subscriber or code) reduced the order.
   - name: stg_kinetic__order_line_items
     description: One row per line item on an order.
     columns:
       - name: line_item_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the line (one product on one order).
+        data_tests:
+          - not_null
+          - unique
       - name: order_id
+        description: ID of the order.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__orders')
                 field: order_id
-
+      - name: product_id
+        description: ID of the product.
+      - name: variant_id
+        description: ID of the product variant (size, colour, etc.).
+      - name: quantity
+        description: Units of the product on this line.
+      - name: unit_price_usd
+        description: Price per unit in US dollars.
+      - name: line_total_usd
+        description: >-
+          quantity times unit price in US dollars, before order-level discounts.
   - name: stg_kinetic__payments
     description: One row per payment attempt against an order.
     columns:
       - name: payment_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the payment attempt.
+        data_tests:
+          - not_null
+          - unique
       - name: order_id
+        description: ID of the order.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__orders')
                 field: order_id
-
+      - name: customer_id
+        description: Customer who paid. Null for guest checkouts.
+      - name: amount_usd
+        description: >-
+          Amount of the attempt in US dollars. Includes FAILED attempts: filter
+          payment_status = 'succeeded' before summing money collected.
+      - name: currency
+        description: >-
+          Currency code of the amounts on this row. Always USD in this dataset.
+      - name: payment_method_type
+        description: 'How the customer paid: card, paypal or apple_pay.'
+      - name: card_brand
+        description: >-
+          Card network (visa, mastercard, amex, discover) when paid by card; otherwise
+          null.
+      - name: card_last4
+        description: >-
+          Last four digits of the card (synthetic; never the full number).
+      - name: payment_status
+        description: >-
+          succeeded or failed. 314 attempts failed; every order has exactly one
+          succeeded payment.
+      - name: failure_code
+        description: >-
+          Why a failed attempt failed (card_declined, insufficient_funds, expired_card
+          or processing_error); null for succeeded payments.
+      - name: processed_at
+        description: When the payment was processed.
+      - name: payment_created_at
+        description: When the payment record was created.
   - name: stg_kinetic__refunds
     description: One row per refund issued against a payment.
     columns:
       - name: refund_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the refund.
+        data_tests:
+          - not_null
+          - unique
       - name: order_id
+        description: ID of the order.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__orders')
                 field: order_id
-
+      - name: payment_id
+        description: ID of the payment attempt.
+      - name: customer_id
+        description: Customer refunded. Null for guest orders.
+      - name: amount_usd
+        description: Amount refunded in US dollars.
+      - name: currency
+        description: >-
+          Currency code of the amounts on this row. Always USD in this dataset.
+      - name: is_partial
+        description: True if less than the full order was refunded.
+      - name: refund_reason
+        description: >-
+          Reason recorded (requested_by_customer, product_unacceptable, fraudulent
+          or duplicate).
+      - name: refund_status
+        description: >-
+          Status of the refund. Only 'succeeded' refunds move money; all refunds
+          in the data are succeeded today.
+      - name: refunded_at
+        description: When the refund was made.
+      - name: refund_created_at
+        description: When the refund record was created.
   - name: stg_kinetic__discount_codes
     description: One row per discount code definition.
     columns:
       - name: discount_code_id
-        data_tests: [not_null, unique]
-
-  # --- Customer 360 (Phase 2, sub-batch 1) ---
+        description: Unique ID of the discount code.
+        data_tests:
+          - not_null
+          - unique
+      - name: code
+        description: The code text customers type.
+      - name: discount_type
+        description: >-
+          percent (discount_value is a percentage) or fixed_amount (discount_value
+          is dollars).
+      - name: discount_value
+        description: >-
+          Size of the discount: a percent or a dollar amount depending on discount_type.
+      - name: applies_to
+        description: 'What the code applies to: course, merch or all.'
+      - name: min_order_amount_usd
+        description: Smallest order value in US dollars the code accepts.
+      - name: valid_from
+        description: First day the code works.
+      - name: valid_until
+        description: Last day the code works.
+      - name: is_active
+        description: True if this record is currently active/enabled.
+      - name: discount_code_created_at
+        description: When the code was created.
   - name: stg_kinetic__customer_addresses
-    description: One row per billing or shipping address on file for a customer.
+    description: >-
+      One row per billing or shipping address on file for a customer.
     columns:
       - name: address_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the address.
+        data_tests:
+          - not_null
+          - unique
       - name: customer_id
+        description: >-
+          ID of the customer account this row belongs to (joins to stg_kinetic__customers).
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__customers')
                 field: customer_id
-
+      - name: address_type
+        description: billing or shipping.
+      - name: street_address
+        description: Street line (synthetic).
+      - name: unit
+        description: Apartment or unit, if any.
+      - name: city
+        description: City.
+      - name: state
+        description: State or region.
+      - name: zip_code
+        description: Postal code.
+      - name: country
+        description: Country.
+      - name: address_created_at
+        description: When the address was added.
   - name: stg_kinetic__devices
     description: >
-      One row per device seen on web or app. customer_id is null for anonymous
-      devices that never resolved to a known customer -- expected, not a gap.
+      One row per device seen on web or app. customer_id is null for anonymous devices
+      that never resolved to a known customer -- expected, not a gap.
     columns:
       - name: device_id
-        data_tests: [not_null, unique]
-      - name: anonymous_id
-        data_tests: [not_null]
-      - name: customer_id
-        data_tests:
-          - relationships:
-              arguments:
-                to: ref('stg_kinetic__customers')
-                field: customer_id
-
-  - name: stg_kinetic__identity_map
-    description: One row per event that resolved an anonymous_id to a known customer.
-    columns:
-      - name: resolution_id
-        data_tests: [not_null, unique]
-      - name: customer_id
+        description: Unique ID of the device.
         data_tests:
           - not_null
+          - unique
+      - name: customer_id
+        description: >-
+          Customer who owns the device. Null for anonymous web devices that never
+          signed in (about 94% of devices, by design).
+        data_tests:
           - relationships:
               arguments:
                 to: ref('stg_kinetic__customers')
                 field: customer_id
       - name: anonymous_id
+        description: >-
+          Web visitor ID assigned before anyone signs in. It is how pre-signup activity
+          is later tied to a customer (see int_customer_identity).
+        data_tests:
+          - not_null
+      - name: device_type
+        description: 'Platform of the device: web, ios or android.'
+      - name: first_seen_at
+        description: First day the device was seen.
+      - name: last_seen_at
+        description: Latest day the device was seen.
+      - name: is_anonymous_device
+        description: True if the device is not linked to any customer account.
+  - name: stg_kinetic__identity_map
+    description: >-
+      One row per event that resolved an anonymous_id to a known customer.
+    columns:
+      - name: resolution_id
+        description: >-
+          Unique ID of the resolution (one visitor becoming a known customer).
+        data_tests:
+          - not_null
+          - unique
+      - name: anonymous_id
+        description: >-
+          Web visitor ID assigned before anyone signs in. It is how pre-signup activity
+          is later tied to a customer (see int_customer_identity).
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__devices')
                 field: anonymous_id
-
+      - name: customer_id
+        description: >-
+          ID of the customer account this row belongs to (joins to stg_kinetic__customers).
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_kinetic__customers')
+                field: customer_id
+      - name: resolved_at
+        description: >-
+          When the anonymous visitor signed up or logged in and became identifiable.
+      - name: resolution_type
+        description: 'How it happened: signup or login.'
   - name: stg_kinetic__segments
-    description: One row per audience segment definition (customer-grain or anonymous-device-grain).
+    description: >-
+      One row per audience segment definition (customer-grain or anonymous-device-grain).
     columns:
       - name: segment_id
-        data_tests: [not_null, unique]
-
+        description: Unique ID of the audience segment.
+        data_tests:
+          - not_null
+          - unique
+      - name: segment_name
+        description: Segment name.
+      - name: audience_grain
+        description: 'What a segment member is: a customer or an anonymous device.'
+      - name: segment_description
+        description: What the segment means in plain language.
+      - name: source_system
+        description: >-
+          What built the segment: internal_crm or churn_propensity_model.
+      - name: ad_platform
+        description: >-
+          Ad platform the segment is synced to (meta, google_search, youtube, dv360,
+          snap or tiktok).
+      - name: platform_audience_id
+        description: ID of the matching audience inside that ad platform.
+      - name: is_active
+        description: True if this record is currently active/enabled.
+      - name: segment_created_at
+        description: When the segment was created.
   - name: stg_kinetic__customer_segment_membership
-    description: One row per period a customer spent in a segment (exited_at null = still a member).
+    description: >-
+      One row per period a customer spent in a segment (exited_at null = still a
+      member).
     columns:
       - name: membership_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the membership row.
+        data_tests:
+          - not_null
+          - unique
       - name: customer_id
+        description: >-
+          ID of the customer account this row belongs to (joins to stg_kinetic__customers).
         data_tests:
           - not_null
           - relationships:
@@ -172,47 +513,82 @@ models:
                 to: ref('stg_kinetic__customers')
                 field: customer_id
       - name: segment_id
+        description: ID of the audience segment.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__segments')
                 field: segment_id
-
+      - name: entered_at
+        description: When the member entered the segment.
+      - name: exited_at
+        description: When the member left the segment; null if still a member.
+      - name: is_current_member
+        description: True if the member has not exited.
+      - name: membership_created_at
+        description: When the row was created.
   - name: stg_kinetic__subscription_events
-    description: One row per lifecycle event on a subscription (trial started, renewed, upgraded, canceled, etc.).
+    description: >-
+      One row per lifecycle event on a subscription (trial started, renewed, upgraded,
+      canceled, etc.).
     columns:
       - name: event_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the event.
+        data_tests:
+          - not_null
+          - unique
       - name: subscription_id
+        description: ID of the subscription.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__subscriptions')
                 field: subscription_id
+      - name: customer_id
+        description: >-
+          ID of the customer account this row belongs to (joins to stg_kinetic__customers).
+      - name: event_type
+        description: >-
+          What happened: trial_started, trial_converted, trial_expired, canceled_during_trial,
+          renewed, upgraded, downgraded, payment_failed, canceled or resumed.
+      - name: event_at
+        description: When the event happened.
       - name: old_plan_id
+        description: Plan before an upgrade/downgrade; null for other events.
         data_tests:
           - relationships:
               arguments:
                 to: ref('stg_kinetic__subscription_plans')
                 field: plan_id
       - name: new_plan_id
+        description: Plan after an upgrade/downgrade; null for other events.
         data_tests:
           - relationships:
               arguments:
                 to: ref('stg_kinetic__subscription_plans')
                 field: plan_id
-
-  # --- Web/app engagement (Phase 2, sub-batch 2) ---
+      - name: is_resolved
+        description: >-
+          Whether the problem the event describes (for example a failed payment)
+          was later resolved.
+      - name: event_reason
+        description: Free-text reason, where recorded.
   - name: stg_kinetic__web_sessions
     description: >
-      One row per website session. customer_id is null when the visitor wasn't
-      a known customer at the time (~79% of sessions) -- expected, not a gap.
+      One row per website session. customer_id is null when the visitor wasn't a
+      known customer at the time (~79% of sessions) -- expected, not a gap.
     columns:
       - name: session_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the web session.
+        data_tests:
+          - not_null
+          - unique
       - name: anonymous_id
+        description: >-
+          Web visitor ID assigned before anyone signs in. It is how pre-signup activity
+          is later tied to a customer (see int_customer_identity).
         data_tests:
           - not_null
           - relationships:
@@ -220,18 +596,52 @@ models:
                 to: ref('stg_kinetic__devices')
                 field: anonymous_id
       - name: customer_id
+        description: >-
+          Customer, if they were signed in at the time. Null for about 79% of sessions
+          (anonymous visitors); use int_sessions_unified to back-fill later-identified
+          visitors.
         data_tests:
           - relationships:
               arguments:
                 to: ref('stg_kinetic__customers')
                 field: customer_id
-
+      - name: started_at
+        description: When the session started (timestamp).
+      - name: ended_at
+        description: When the session ended (timestamp).
+      - name: device_category
+        description: 'Kind of device used: mobile, tablet or desktop.'
+      - name: utm_source
+        description: >-
+          Traffic source tag on the landing URL. An independently generated tag:
+          NOT a key to an ad campaign.
+      - name: utm_medium
+        description: >-
+          Traffic medium tag on the landing URL: paid or email. A tag on the URL,
+          not proof of an ad platform.
+      - name: utm_campaign
+        description: >-
+          Campaign tag on the URL. A theme label with no join to any ad platform's
+          campaign IDs.
+      - name: landing_page
+        description: First page of the visit.
+      - name: referrer_domain
+        description: Website the visitor came from, if any.
+      - name: is_known_customer
+        description: >-
+          True if the session was tied to a customer account when it happened.
   - name: stg_kinetic__web_events
-    description: One row per event on the website (page view, product view, add to cart, checkout, purchase, search).
+    description: >-
+      One row per event on the website (page view, product view, add to cart, checkout,
+      purchase, search).
     columns:
       - name: event_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the event.
+        data_tests:
+          - not_null
+          - unique
       - name: session_id
+        description: Web session the event belongs to.
         data_tests:
           - not_null
           - relationships:
@@ -239,6 +649,9 @@ models:
                 to: ref('stg_kinetic__web_sessions')
                 field: session_id
       - name: anonymous_id
+        description: >-
+          Web visitor ID assigned before anyone signs in. It is how pre-signup activity
+          is later tied to a customer (see int_customer_identity).
         data_tests:
           - not_null
           - relationships:
@@ -246,30 +659,49 @@ models:
                 to: ref('stg_kinetic__devices')
                 field: anonymous_id
       - name: customer_id
+        description: >-
+          Customer, if signed in at the time. Null for about 77% of events (anonymous
+          visitors).
         data_tests:
           - relationships:
               arguments:
                 to: ref('stg_kinetic__customers')
                 field: customer_id
+      - name: event_type
+        description: >-
+          page_view, product_view, search, add_to_cart, begin_checkout or purchase.
+      - name: occurred_at
+        description: When the event happened (timestamp).
+      - name: page_path
+        description: Page the event happened on.
       - name: product_id
+        description: Product involved; only filled for product events.
         data_tests:
           - relationships:
               arguments:
                 to: ref('stg_kinetic__products')
                 field: product_id
       - name: order_id
+        description: Order created; only filled for purchase events.
         data_tests:
           - relationships:
               arguments:
                 to: ref('stg_kinetic__orders')
                 field: order_id
-
+      - name: search_query
+        description: Text searched; only filled for search events.
   - name: stg_kinetic__app_sessions
-    description: One row per session in the Kinetic app (iOS, Android, web app). Always a signed-in customer.
+    description: >-
+      One row per session in the Kinetic app (iOS, Android, web app). Always a signed-in
+      customer.
     columns:
       - name: session_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the app session.
+        data_tests:
+          - not_null
+          - unique
       - name: customer_id
+        description: Customer using the app (always present).
         data_tests:
           - not_null
           - relationships:
@@ -277,19 +709,34 @@ models:
                 to: ref('stg_kinetic__customers')
                 field: customer_id
       - name: device_id
+        description: >-
+          ID of the device (phone, tablet or browser) the activity came from.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__devices')
                 field: device_id
-
+      - name: platform
+        description: >-
+          ios, android or web (logged-in web devices are recorded as app sessions
+          with platform 'web').
+      - name: started_at
+        description: When the session started (timestamp).
+      - name: ended_at
+        description: When the session ended (timestamp).
   - name: stg_kinetic__app_events
-    description: One row per in-app event (class started, workout completed or abandoned, streak achieved).
+    description: >-
+      One row per in-app event (class started, workout completed or abandoned, streak
+      achieved).
     columns:
       - name: event_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the event.
+        data_tests:
+          - not_null
+          - unique
       - name: session_id
+        description: App session the event belongs to.
         data_tests:
           - not_null
           - relationships:
@@ -297,36 +744,92 @@ models:
                 to: ref('stg_kinetic__app_sessions')
                 field: session_id
       - name: customer_id
+        description: Customer using the app (always present).
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__customers')
                 field: customer_id
-
-  # --- Email/push, Braze (Phase 2, sub-batch 3) ---
+      - name: event_type
+        description: >-
+          workout_completed, workout_abandoned, class_started or streak_achieved.
+      - name: occurred_at
+        description: When the event happened (timestamp).
+      - name: workout_type
+        description: >-
+          Type of workout (running, mobility, hiit, core, cycling, yoga, strength);
+          only for workout and class events.
+      - name: duration_minutes
+        description: >-
+          Length of the workout in minutes; only for workout and class events.
+      - name: streak_days
+        description: >-
+          Length of the streak in days; only for streak_achieved events.
   - name: stg_kinetic__braze_email_campaigns
     description: One row per Braze email campaign (triggered or scheduled).
     columns:
       - name: campaign_id
-        data_tests: [not_null, unique]
-
+        description: Unique ID of the email campaign.
+        data_tests:
+          - not_null
+          - unique
+      - name: campaign_name
+        description: Campaign name.
+      - name: campaign_type
+        description: >-
+          broadcast (sent to a list at one time) or triggered (sent when a customer
+          does something).
+      - name: trigger_event
+        description: >-
+          The customer action that triggers the campaign, if it is a triggered campaign.
+      - name: campaign_description
+        description: Free-text description of what the campaign is for.
+      - name: is_active
+        description: True if the campaign is currently sending.
+      - name: campaign_created_at
+        description: When the campaign record was created.
   - name: stg_kinetic__braze_push_campaigns
     description: One row per Braze push notification campaign.
     columns:
       - name: campaign_id
-        data_tests: [not_null, unique]
-
+        description: Unique ID of the push campaign.
+        data_tests:
+          - not_null
+          - unique
+      - name: campaign_name
+        description: Campaign name.
+      - name: campaign_type
+        description: >-
+          broadcast (sent to a list at one time) or triggered (sent when a customer
+          does something).
+      - name: trigger_event
+        description: >-
+          The customer action that triggers the campaign, if it is a triggered campaign.
+      - name: campaign_description
+        description: Free-text description of what the campaign is for.
+      - name: is_active
+        description: True if the campaign is currently sending.
+      - name: campaign_created_at
+        description: When the campaign record was created.
   - name: stg_kinetic__braze_email_events
     description: >
-      One row per email event (send, open, click, bounce, unsubscribe).
-      customer_id is null for Order Confirmation emails to guest checkouts.
+      One row per email event (send, open, click, bounce, unsubscribe). customer_id
+      is null for Order Confirmation emails to guest checkouts.
     columns:
       - name: event_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the event.
+        data_tests:
+          - not_null
+          - unique
       - name: send_id
-        data_tests: [not_null]
+        description: >-
+          ID of one send of a campaign to one recipient. Sends, opens and clicks
+          of the same message share it.
+        data_tests:
+          - not_null
       - name: campaign_id
+        description: ID of the campaign this row belongs to.
         data_tests:
           - not_null
           - relationships:
@@ -334,27 +837,58 @@ models:
                 to: ref('stg_kinetic__braze_email_campaigns')
                 field: campaign_id
       - name: customer_id
+        description: >-
+          Customer, from Braze's external user ID. Null for emails to guest checkouts
+          (about 8% of events); int_messaging_events matches some by email.
         data_tests:
           - relationships:
               arguments:
                 to: ref('stg_kinetic__customers')
                 field: customer_id
       - name: email_address
-        data_tests: [not_null]
+        description: >-
+          Recipient email address as recorded by Braze (lowercase it before matching).
+        data_tests:
+          - not_null
+      - name: braze_event_type
+        description: >-
+          Braze's raw event name (for example users.messages.email.Open). Kept for
+          traceability.
       - name: event_name
+        description: >-
+          Short lowercase event name: send, open, click, bounce or unsubscribe.
+          Use this rather than braze_event_type.
         data_tests:
           - accepted_values:
               arguments:
-                values: ['send', 'open', 'click', 'bounce', 'unsubscribe']
-
+                values:
+                  - send
+                  - open
+                  - click
+                  - bounce
+                  - unsubscribe
+      - name: occurred_at
+        description: >-
+          When the event happened. A few events are stamped after the data's end
+          date (2026-07-30).
   - name: stg_kinetic__braze_push_events
-    description: One row per push notification event (send, open, click, bounce, unsubscribe). Always a known customer and device.
+    description: >-
+      One row per push notification event (send, open, click, bounce, unsubscribe).
+      Always a known customer and device.
     columns:
       - name: event_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the event.
+        data_tests:
+          - not_null
+          - unique
       - name: send_id
-        data_tests: [not_null]
+        description: >-
+          ID of one send of a campaign to one recipient. Sends, opens and clicks
+          of the same message share it.
+        data_tests:
+          - not_null
       - name: campaign_id
+        description: ID of the campaign this row belongs to.
         data_tests:
           - not_null
           - relationships:
@@ -362,6 +896,8 @@ models:
                 to: ref('stg_kinetic__braze_push_campaigns')
                 field: campaign_id
       - name: customer_id
+        description: >-
+          Customer, from Braze's external user ID (always present for push).
         data_tests:
           - not_null
           - relationships:
@@ -369,370 +905,1000 @@ models:
                 to: ref('stg_kinetic__customers')
                 field: customer_id
       - name: device_id
+        description: Device the notification went to.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__devices')
                 field: device_id
+      - name: platform
+        description: ios or android.
+      - name: braze_event_type
+        description: >-
+          Braze's raw event name (for example users.messages.email.Open). Kept for
+          traceability.
       - name: event_name
+        description: >-
+          Short lowercase event name: send, open, click, bounce or unsubscribe.
+          Use this rather than braze_event_type.
         data_tests:
           - accepted_values:
               arguments:
-                values: ['send', 'open', 'click', 'bounce', 'unsubscribe']
-
-  # --- Paid media: Meta (Phase 2, sub-batch 4) ---
+                values:
+                  - send
+                  - open
+                  - click
+                  - bounce
+                  - unsubscribe
+      - name: occurred_at
+        description: When the event happened.
   - name: stg_kinetic__meta_campaigns
-    description: One row per Meta campaign. Budgets are provided in both cents (raw) and dollars.
+    description: >-
+      One row per Meta campaign. Budgets are provided in both cents (raw) and dollars.
     columns:
       - name: campaign_id
-        data_tests: [not_null, unique]
-
+        description: Unique ID of the Meta campaign.
+        data_tests:
+          - not_null
+          - unique
+      - name: account_id
+        description: >-
+          Kinetic's Meta ad account (an advertiser account, not a customer).
+      - name: campaign_name
+        description: Human-readable campaign name.
+      - name: ad_objective
+        description: >-
+          Kinetic's audience strategy label: prospecting, lookalike, retargeting,
+          conversion or brand_lift.
+      - name: objective
+        description: >-
+          Meta's own objective code (OUTCOME_TRAFFIC, OUTCOME_SALES or OUTCOME_AWARENESS).
+      - name: campaign_status
+        description: Whether the campaign is active, paused or ended.
+      - name: daily_budget_cents
+        description: >-
+          Raw daily budget in cents (Meta convention). Kept for traceability; use
+          daily_budget_usd.
+      - name: daily_budget_usd
+        description: >-
+          Campaign's CURRENT daily budget in US dollars. Null for lifetime-budget
+          campaigns. Budgets are today's setting, not a history.
+      - name: lifetime_budget_cents
+        description: >-
+          Raw lifetime budget in cents. Kept for traceability; use lifetime_budget_usd.
+      - name: lifetime_budget_usd
+        description: >-
+          Campaign's CURRENT total (lifetime) budget in US dollars. Null for always-on
+          campaigns that have a daily budget.
+      - name: start_time
+        description: When the campaign starts.
+      - name: stop_time
+        description: When the campaign stops; null if always-on.
+      - name: campaign_created_at
+        description: When the campaign record was created.
+      - name: campaign_updated_at
+        description: When the campaign was last changed.
   - name: stg_kinetic__meta_ads
     description: One row per Meta ad.
     columns:
       - name: ad_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the Meta ad.
+        data_tests:
+          - not_null
+          - unique
       - name: campaign_id
+        description: ID of the campaign this row belongs to.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__meta_campaigns')
                 field: campaign_id
+      - name: ad_name
+        description: Human-readable ad name.
+      - name: ad_status
+        description: Whether the ad is active, paused or archived.
       - name: targeting_segment_id
+        description: >-
+          ID of the Kinetic audience segment this ad group or ad targets (joins
+          to stg_kinetic__segments).
         data_tests:
           - relationships:
               arguments:
                 to: ref('stg_kinetic__segments')
                 field: segment_id
-
+      - name: optimization_goal
+        description: The outcome the platform is told to optimise delivery for.
+      - name: billing_event
+        description: >-
+          What the platform bills for (for example impressions or clicks).
+      - name: ad_created_at
+        description: When the ad was created.
+      - name: ad_updated_at
+        description: When the ad was last changed.
   - name: stg_kinetic__meta_ad_insights_daily
     description: >
-      One row per Meta ad per day: delivery and spend as Meta reports it.
-      spend/cpm/cpc in US dollars; ctr_fraction is a fraction (0.017 = 1.7%).
+      One row per Meta ad per day: delivery and spend as Meta reports it. spend/cpm/cpc
+      in US dollars; ctr_fraction is a fraction (0.017 = 1.7%).
     columns:
       - name: ad_day_id
-        data_tests: [not_null, unique]
+        description: 'Unique ID: ad ID and date joined.'
+        data_tests:
+          - not_null
+          - unique
       - name: ad_id
+        description: ID of the individual ad.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__meta_ads')
                 field: ad_id
+      - name: campaign_id
+        description: ID of the campaign this row belongs to.
       - name: report_date
-        data_tests: [not_null]
-
+        description: The calendar day the platform's numbers are reported for.
+        data_tests:
+          - not_null
+      - name: impressions
+        description: Number of times the ad was shown.
+      - name: clicks
+        description: Number of clicks on the ad. Platform-reported.
+      - name: reach
+        description: People who saw the ad at least once that day.
+      - name: frequency
+        description: Average times each person reached saw the ad.
+      - name: spend_usd
+        description: >-
+          Meta spend in US dollars (the raw column is already in dollars, no conversion
+          needed).
+      - name: cpm_usd
+        description: Cost per thousand impressions in US dollars.
+      - name: cpc_usd
+        description: Cost per click, in US dollars. Null on days with no clicks.
+      - name: ctr_fraction
+        description: >-
+          Click-through rate as a fraction (0.017 means 1.7%), not a percentage.
   - name: stg_kinetic__meta_ad_actions_daily
     description: >
-      One row per Meta ad per day per action type. Meta's self-reported
-      conversions, not site-verified orders.
+      One row per Meta ad per day per action type. Meta's self-reported conversions,
+      not site-verified orders.
     columns:
       - name: ad_day_action_id
-        data_tests: [not_null, unique]
+        description: 'Unique ID: ad, date and action type joined.'
+        data_tests:
+          - not_null
+          - unique
       - name: ad_day_id
+        description: ID of the matching ad-and-day row in meta_ad_insights_daily.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__meta_ad_insights_daily')
                 field: ad_day_id
+      - name: ad_id
+        description: ID of the individual ad.
+      - name: campaign_id
+        description: ID of the campaign this row belongs to.
+      - name: report_date
+        description: The calendar day the platform's numbers are reported for.
       - name: action_type
+        description: >-
+          Kind of action Meta counted (link_click, landing_page_view, add_to_cart,
+          initiate_checkout, purchase, video_view). Several actions overlap for
+          one person; only 'purchase' is treated as a conversion downstream.
         data_tests:
           - accepted_values:
               arguments:
-                values: ['link_click', 'landing_page_view', 'video_view', 'add_to_cart', 'initiate_checkout', 'purchase']
-
-  # --- Paid media: Google Search (Phase 2, sub-batch 5) ---
+                values:
+                  - link_click
+                  - landing_page_view
+                  - video_view
+                  - add_to_cart
+                  - initiate_checkout
+                  - purchase
+      - name: action_count
+        description: Number of times the action happened, per Meta.
   - name: stg_kinetic__google_search_campaigns
     description: >
-      One row per Google Search campaign. google_ads_account_id is the Google
-      Ads account number, not a Kinetic customer.
+      One row per Google Search campaign. google_ads_account_id is the Google Ads
+      account number, not a Kinetic customer.
     columns:
       - name: campaign_id
-        data_tests: [not_null, unique]
-
+        description: Unique ID of the Google Search campaign.
+        data_tests:
+          - not_null
+          - unique
+      - name: google_ads_account_id
+        description: >-
+          Kinetic's Google Ads account. It is an advertiser account, not a customer.
+      - name: campaign_name
+        description: Human-readable campaign name.
+      - name: ad_objective
+        description: >-
+          What the advertiser told the platform the campaign is optimising for (for
+          example awareness, traffic or conversions). Kinetic's own label, shared
+          across platforms.
+      - name: advertising_channel_type
+        description: >-
+          Google's campaign channel type (for example search or video).
+      - name: bidding_strategy_type
+        description: >-
+          How the campaign bids in the auction (for example manual CPC or target
+          CPA).
+      - name: campaign_status
+        description: Whether the campaign is active, paused or ended.
+      - name: daily_budget_micros
+        description: >-
+          Raw daily budget in micros. Kept for traceability; use daily_budget_usd.
+      - name: daily_budget_usd
+        description: Campaign's CURRENT daily budget in US dollars.
+      - name: start_date
+        description: First day the record applies or runs.
+      - name: end_date
+        description: Last day the record applies or runs; null if open-ended.
+      - name: campaign_created_at
+        description: When the campaign record was created.
   - name: stg_kinetic__google_search_ad_groups
     description: One row per Google Search ad group.
     columns:
       - name: ad_group_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the ad group.
+        data_tests:
+          - not_null
+          - unique
       - name: campaign_id
+        description: ID of the campaign this row belongs to.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__google_search_campaigns')
                 field: campaign_id
+      - name: ad_group_name
+        description: Human-readable ad group name.
+      - name: ad_group_status
+        description: Whether the ad group is active, paused or removed.
       - name: targeting_segment_id
+        description: >-
+          ID of the Kinetic audience segment this ad group or ad targets (joins
+          to stg_kinetic__segments).
         data_tests:
           - relationships:
               arguments:
                 to: ref('stg_kinetic__segments')
                 field: segment_id
-
+      - name: cpc_bid_micros
+        description: Maximum bid per click in micros (millionths of a dollar).
+      - name: ad_group_created_at
+        description: When the ad group record was created.
   - name: stg_kinetic__google_search_performance_daily
     description: >
-      One row per ad group per day. The keyword table rolled up -- never add
-      the two tables together.
+      One row per ad group per day. The keyword table rolled up -- never add the
+      two tables together.
     columns:
       - name: ad_group_day_id
-        data_tests: [not_null, unique]
+        description: 'Unique ID: ad group and date joined.'
+        data_tests:
+          - not_null
+          - unique
+      - name: campaign_id
+        description: ID of the campaign this row belongs to.
       - name: ad_group_id
+        description: ID of the ad group (a set of ads inside a campaign).
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__google_search_ad_groups')
                 field: ad_group_id
-
+      - name: report_date
+        description: The calendar day the platform's numbers are reported for.
+      - name: impressions
+        description: Number of times the ad was shown.
+      - name: clicks
+        description: Number of clicks on the ad. Platform-reported.
+      - name: cost_micros
+        description: >-
+          Raw spend in micros (millionths of a dollar). Kept for traceability; use
+          cost_usd.
+      - name: cost_usd
+        description: >-
+          Spend in US dollars. This table is the keyword table rolled up: never
+          add both, spend would double.
+      - name: average_cpc_usd
+        description: Average cost per click, in US dollars.
+      - name: ctr_fraction
+        description: >-
+          Click-through rate as a fraction (0.017 means 1.7%), not a percentage.
+      - name: conversions
+        description: >-
+          Conversions the platform itself claims for the ad. Self-reported and often
+          fractional (credit is split); not site-verified orders and not comparable
+          one-to-one with Kinetic orders.
+      - name: conversions_value_usd
+        description: >-
+          Value in US dollars of the conversions the platform claims. Self-reported,
+          not verified against Kinetic orders.
   - name: stg_kinetic__google_search_keyword_performance_daily
-    description: One row per keyword per day -- the most detailed Google Search table.
+    description: >-
+      One row per keyword per day -- the most detailed Google Search table.
     columns:
       - name: keyword_day_id
-        data_tests: [not_null, unique]
+        description: 'Unique ID: keyword and date joined.'
+        data_tests:
+          - not_null
+          - unique
+      - name: keyword_id
+        description: ID of the keyword.
+      - name: campaign_id
+        description: ID of the campaign this row belongs to.
       - name: ad_group_id
+        description: ID of the ad group (a set of ads inside a campaign).
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__google_search_ad_groups')
                 field: ad_group_id
+      - name: keyword_text
+        description: The keyword bought.
       - name: match_type
+        description: >-
+          How closely a search must match the keyword: EXACT, PHRASE or BROAD.
         data_tests:
           - accepted_values:
               arguments:
-                values: ['EXACT', 'PHRASE', 'BROAD']
-
-  # --- Paid media: YouTube (Phase 2, sub-batch 6) ---
+                values:
+                  - EXACT
+                  - PHRASE
+                  - BROAD
+      - name: quality_score
+        description: Google's 1-10 ad quality score for the keyword.
+      - name: report_date
+        description: The calendar day the platform's numbers are reported for.
+      - name: impressions
+        description: Number of times the ad was shown.
+      - name: clicks
+        description: Number of clicks on the ad. Platform-reported.
+      - name: cost_micros
+        description: >-
+          Raw spend in micros (millionths of a dollar). Kept for traceability; use
+          cost_usd.
+      - name: cost_usd
+        description: >-
+          Spend in US dollars. This table is more detailed than google_search_performance_daily:
+          never add both, spend would double.
+      - name: average_cpc_usd
+        description: Average cost per click, in US dollars.
+      - name: ctr_fraction
+        description: >-
+          Click-through rate as a fraction (0.017 means 1.7%), not a percentage.
+      - name: conversions
+        description: >-
+          Conversions the platform itself claims for the ad. Self-reported and often
+          fractional (credit is split); not site-verified orders and not comparable
+          one-to-one with Kinetic orders.
+      - name: conversions_value_usd
+        description: >-
+          Value in US dollars of the conversions the platform claims. Self-reported,
+          not verified against Kinetic orders.
   - name: stg_kinetic__youtube_campaigns
     description: >
-      One row per YouTube campaign. google_ads_account_id is the Google Ads
-      account number, not a Kinetic customer. Budgets in micros and dollars.
+      One row per YouTube campaign. google_ads_account_id is the Google Ads account
+      number, not a Kinetic customer. Budgets in micros and dollars.
     columns:
       - name: campaign_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the YouTube campaign.
+        data_tests:
+          - not_null
+          - unique
+      - name: google_ads_account_id
+        description: >-
+          Kinetic's Google Ads account. It is an advertiser account, not a customer.
+      - name: campaign_name
+        description: Human-readable campaign name.
+      - name: ad_objective
+        description: >-
+          What the advertiser told the platform the campaign is optimising for (for
+          example awareness, traffic or conversions). Kinetic's own label, shared
+          across platforms.
+      - name: advertising_channel_type
+        description: >-
+          Google's campaign channel type (for example search or video).
       - name: video_ad_format
+        description: >-
+          Video ad format: VIDEO_BUMPER, VIDEO_ACTION or VIDEO_TRUE_VIEW_IN_STREAM.
         data_tests:
           - accepted_values:
               arguments:
-                values: ['VIDEO_TRUE_VIEW_IN_STREAM', 'VIDEO_ACTION', 'VIDEO_BUMPER']
-
+                values:
+                  - VIDEO_TRUE_VIEW_IN_STREAM
+                  - VIDEO_ACTION
+                  - VIDEO_BUMPER
+      - name: bidding_strategy_type
+        description: >-
+          How the campaign bids in the auction (for example manual CPC or target
+          CPA).
+      - name: campaign_status
+        description: Whether the campaign is active, paused or ended.
+      - name: daily_budget_micros
+        description: >-
+          Raw daily budget in micros. Kept for traceability; use daily_budget_usd.
+      - name: daily_budget_usd
+        description: >-
+          Campaign's CURRENT daily budget in US dollars. Null for lifetime-budget
+          campaigns. Budgets are today's setting, not a history.
+      - name: lifetime_budget_micros
+        description: >-
+          Raw lifetime budget in micros. Kept for traceability; use lifetime_budget_usd.
+      - name: lifetime_budget_usd
+        description: >-
+          Campaign's CURRENT total (lifetime) budget in US dollars. Null for always-on
+          campaigns that have a daily budget.
+      - name: start_date
+        description: First day the record applies or runs.
+      - name: end_date
+        description: Last day the record applies or runs; null if open-ended.
+      - name: campaign_created_at
+        description: When the campaign record was created.
   - name: stg_kinetic__youtube_ad_groups
     description: One row per YouTube ad group.
     columns:
       - name: ad_group_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the ad group.
+        data_tests:
+          - not_null
+          - unique
       - name: campaign_id
+        description: ID of the campaign this row belongs to.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__youtube_campaigns')
                 field: campaign_id
+      - name: ad_group_name
+        description: Human-readable ad group name.
+      - name: ad_group_status
+        description: Whether the ad group is active, paused or removed.
       - name: targeting_segment_id
+        description: >-
+          ID of the Kinetic audience segment this ad group or ad targets (joins
+          to stg_kinetic__segments).
         data_tests:
           - relationships:
               arguments:
                 to: ref('stg_kinetic__segments')
                 field: segment_id
-
+      - name: ad_group_created_at
+        description: When the ad group record was created.
   - name: stg_kinetic__youtube_performance_daily
-    description: One row per YouTube ad group per day. Cost in micros and dollars; view rate as a fraction.
+    description: >-
+      One row per YouTube ad group per day. Cost in micros and dollars; view rate
+      as a fraction.
     columns:
       - name: ad_group_day_id
-        data_tests: [not_null, unique]
+        description: 'Unique ID: ad group and date joined.'
+        data_tests:
+          - not_null
+          - unique
+      - name: campaign_id
+        description: ID of the campaign this row belongs to.
       - name: ad_group_id
+        description: ID of the ad group (a set of ads inside a campaign).
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__youtube_ad_groups')
                 field: ad_group_id
-
-  # --- Paid media: DV360 (Phase 2, sub-batch 7) ---
+      - name: report_date
+        description: The calendar day the platform's numbers are reported for.
+      - name: impressions
+        description: Number of times the ad was shown.
+      - name: video_views
+        description: >-
+          Number of times a video ad was viewed, using the platform's own definition
+          of a view.
+      - name: video_view_rate_fraction
+        description: Views divided by impressions as a fraction (0.28 means 28%).
+      - name: clicks
+        description: Number of clicks on the ad. Platform-reported.
+      - name: cost_micros
+        description: >-
+          Raw spend in micros (millionths of a dollar). Kept for traceability; use
+          cost_usd.
+      - name: cost_usd
+        description: >-
+          Advertising spend in US dollars, converted from the platform's micros.
+      - name: average_cpv_usd
+        description: Average cost per video view in US dollars.
+      - name: conversions
+        description: >-
+          Conversions Google claims for the ad group. Self-reported, often fractional;
+          not Kinetic orders.
+      - name: conversions_value_usd
+        description: >-
+          Value in US dollars of the conversions the platform claims. Self-reported,
+          not verified against Kinetic orders.
   - name: stg_kinetic__dv360_insertion_orders
     description: >
-      One row per DV360 insertion order (campaign-level budget container).
-      monthly_budget_usd is the current monthly budget; no month's spend
-      exceeds it.
+      One row per DV360 insertion order (campaign-level budget container). monthly_budget_usd
+      is the current monthly budget; no month's spend exceeds it.
     columns:
       - name: insertion_order_id
-        data_tests: [not_null, unique]
-
+        description: Unique ID of the DV360 insertion order (a budget container).
+        data_tests:
+          - not_null
+          - unique
+      - name: dv360_advertiser_id
+        description: Kinetic's DV360 advertiser account, not a customer.
+      - name: insertion_order_name
+        description: Insertion order name.
+      - name: ad_objective
+        description: >-
+          What the advertiser told the platform the campaign is optimising for (for
+          example awareness, traffic or conversions). Kinetic's own label, shared
+          across platforms.
+      - name: performance_goal_type
+        description: Goal DV360 optimises toward (CPM, viewable CPM or CPA).
+      - name: pacing_type
+        description: How spend is spread over time (even pacing).
+      - name: budget_type
+        description: How the budget is set (automatic).
+      - name: monthly_budget_micros
+        description: >-
+          Raw monthly budget in micros. Kept for traceability; use monthly_budget_usd.
+      - name: monthly_budget_usd
+        description: >-
+          CURRENT monthly budget in US dollars (DV360 budgets are monthly, unlike
+          the other platforms).
+      - name: insertion_order_status
+        description: Whether the insertion order is active, paused or ended.
+      - name: start_date
+        description: First day the insertion order runs.
+      - name: end_date
+        description: Last day it runs.
+      - name: insertion_order_created_at
+        description: When it was created.
   - name: stg_kinetic__dv360_line_items
     description: One row per DV360 line item.
     columns:
       - name: line_item_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the DV360 line item (the buying unit).
+        data_tests:
+          - not_null
+          - unique
       - name: insertion_order_id
+        description: Insertion order the line item belongs to.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__dv360_insertion_orders')
                 field: insertion_order_id
+      - name: line_item_name
+        description: Line item name.
+      - name: line_item_type
+        description: 'Kind of line item: video or display.'
       - name: targeting_segment_id
+        description: >-
+          ID of the Kinetic audience segment this ad group or ad targets (joins
+          to stg_kinetic__segments).
         data_tests:
           - relationships:
               arguments:
                 to: ref('stg_kinetic__segments')
                 field: segment_id
-
+      - name: line_item_status
+        description: Whether the line item is active, paused or ended.
+      - name: line_item_created_at
+        description: When it was created.
   - name: stg_kinetic__dv360_performance_daily
     description: >
-      One row per line item, per day, per exchange, per environment. Sum
-      across exchange and environment for a line-item-day total.
+      One row per line item, per day, per exchange, per environment. Sum across
+      exchange and environment for a line-item-day total.
     columns:
       - name: line_item_day_slice_id
-        data_tests: [not_null, unique]
+        description: >-
+          Unique ID: line item, date, exchange and environment joined. A line item's
+          day is split across several rows.
+        data_tests:
+          - not_null
+          - unique
       - name: line_item_id
+        description: ID of the DV360 line item.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__dv360_line_items')
                 field: line_item_id
+      - name: insertion_order_id
+        description: ID of the insertion order the line item belongs to.
+      - name: report_date
+        description: The calendar day the platform's numbers are reported for.
       - name: exchange
+        description: Ad exchange the impressions were bought on.
         data_tests:
           - accepted_values:
               arguments:
-                values: ['GOOGLE_AD_MANAGER', 'APPNEXUS', 'OPENX', 'PUBMATIC', 'INDEX_EXCHANGE']
+                values:
+                  - GOOGLE_AD_MANAGER
+                  - APPNEXUS
+                  - OPENX
+                  - PUBMATIC
+                  - INDEX_EXCHANGE
       - name: environment
+        description: >-
+          Where the ad ran: WEB_OPTIMIZED, WEB_NOT_OPTIMIZED, APP or CONNECTED_TV.
         data_tests:
           - accepted_values:
               arguments:
-                values: ['WEB_OPTIMIZED', 'WEB_NOT_OPTIMIZED', 'APP', 'CONNECTED_TV']
-
-  # --- Paid media: Snap (Phase 2, sub-batch 8) ---
+                values:
+                  - WEB_OPTIMIZED
+                  - WEB_NOT_OPTIMIZED
+                  - APP
+                  - CONNECTED_TV
+      - name: impressions
+        description: Number of times the ad was shown.
+      - name: clicks
+        description: Number of clicks on the ad. Platform-reported.
+      - name: cost_micros
+        description: >-
+          Raw spend in micros (millionths of a dollar). Kept for traceability; use
+          cost_usd.
+      - name: cost_usd
+        description: >-
+          Spend in US dollars for this slice. Sum across exchange and environment
+          for a line-item-day figure.
+      - name: cpm_usd
+        description: Cost per thousand impressions in US dollars.
+      - name: ctr_fraction
+        description: >-
+          Click-through rate as a fraction (0.017 means 1.7%), not a percentage.
+      - name: conversions
+        description: Conversions DV360 claims. Self-reported; not Kinetic orders.
+      - name: conversions_value_usd
+        description: >-
+          Value in US dollars of the conversions the platform claims. Self-reported,
+          not verified against Kinetic orders.
   - name: stg_kinetic__snap_campaigns
-    description: One row per Snap campaign. Budgets are current budgets, in micros and dollars.
+    description: >-
+      One row per Snap campaign. Budgets are current budgets, in micros and dollars.
     columns:
       - name: campaign_id
-        data_tests: [not_null, unique]
-
+        description: Unique ID of the Snap campaign.
+        data_tests:
+          - not_null
+          - unique
+      - name: snap_ad_account_id
+        description: Kinetic's Snap ad account, not a customer.
+      - name: campaign_name
+        description: Human-readable campaign name.
+      - name: ad_objective
+        description: >-
+          What the advertiser told the platform the campaign is optimising for (for
+          example awareness, traffic or conversions). Kinetic's own label, shared
+          across platforms.
+      - name: objective
+        description: Snap's own objective code.
+      - name: campaign_status
+        description: Whether the campaign is active, paused or ended.
+      - name: daily_budget_micro
+        description: >-
+          Raw daily budget in micros. Kept for traceability; use daily_budget_usd.
+      - name: daily_budget_usd
+        description: >-
+          Campaign's CURRENT daily budget in US dollars. Null for lifetime-budget
+          campaigns. Budgets are today's setting, not a history.
+      - name: lifetime_budget_micro
+        description: Raw lifetime budget in micros; use lifetime_budget_usd.
+      - name: lifetime_budget_usd
+        description: >-
+          Campaign's CURRENT total (lifetime) budget in US dollars. Null for always-on
+          campaigns that have a daily budget.
+      - name: start_time
+        description: When the campaign is scheduled to start.
+      - name: end_time
+        description: When the campaign is scheduled to end; null if always-on.
+      - name: campaign_created_at
+        description: When the campaign record was created.
+      - name: campaign_updated_at
+        description: When the campaign was last changed.
   - name: stg_kinetic__snap_ad_squads
-    description: One row per Snap ad squad (Snap's equivalent of an ad set / ad group).
+    description: >-
+      One row per Snap ad squad (Snap's equivalent of an ad set / ad group).
     columns:
       - name: ad_squad_id
-        data_tests: [not_null, unique]
+        description: >-
+          Unique ID of the Snap ad squad (Snap's name for an ad group).
+        data_tests:
+          - not_null
+          - unique
       - name: campaign_id
+        description: Campaign the ad squad belongs to.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__snap_campaigns')
                 field: campaign_id
+      - name: ad_squad_name
+        description: Ad squad name.
+      - name: ad_squad_status
+        description: Whether the ad squad is active or paused.
       - name: targeting_segment_id
+        description: >-
+          ID of the Kinetic audience segment this ad group or ad targets (joins
+          to stg_kinetic__segments).
         data_tests:
           - relationships:
               arguments:
                 to: ref('stg_kinetic__segments')
                 field: segment_id
-
+      - name: optimization_goal
+        description: The outcome the platform is told to optimise delivery for.
+      - name: ad_squad_created_at
+        description: When it was created.
   - name: stg_kinetic__snap_ads
     description: One row per Snap ad.
     columns:
       - name: ad_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the Snap ad.
+        data_tests:
+          - not_null
+          - unique
       - name: ad_squad_id
+        description: Ad squad the ad belongs to.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__snap_ad_squads')
                 field: ad_squad_id
+      - name: ad_name
+        description: Human-readable ad name.
       - name: ad_type
+        description: 'Ad format: video, single_image or collection.'
         data_tests:
           - accepted_values:
               arguments:
-                values: ['single_image', 'video', 'collection']
-
+                values:
+                  - single_image
+                  - video
+                  - collection
+      - name: ad_status
+        description: Whether the ad is active, paused or archived.
+      - name: ad_created_at
+        description: When the ad record was created.
   - name: stg_kinetic__snap_stats_daily
-    description: One row per Snap ad per day. Swipes are Snap's clicks; spend in micros and dollars.
+    description: >-
+      One row per Snap ad per day. Swipes are Snap's clicks; spend in micros and
+      dollars.
     columns:
       - name: ad_day_id
-        data_tests: [not_null, unique]
+        description: 'Unique ID: ad and date joined.'
+        data_tests:
+          - not_null
+          - unique
       - name: ad_id
+        description: ID of the individual ad.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__snap_ads')
                 field: ad_id
-
-  # --- Paid media: TikTok (Phase 2, sub-batch 9) ---
+      - name: ad_squad_id
+        description: Ad squad the ad belongs to.
+      - name: campaign_id
+        description: ID of the campaign this row belongs to.
+      - name: report_date
+        description: The calendar day the platform's numbers are reported for.
+      - name: impressions
+        description: Number of times the ad was shown.
+      - name: swipes
+        description: 'Swipe-ups on the ad: Snap''s equivalent of clicks.'
+      - name: video_views
+        description: >-
+          Number of times a video ad was viewed, using the platform's own definition
+          of a view.
+      - name: spend_micro
+        description: >-
+          Raw spend in micros (millionths of a dollar). Kept for traceability; use
+          spend_usd.
+      - name: spend_usd
+        description: Advertising spend in US dollars.
+      - name: conversions
+        description: >-
+          Conversions Snap claims. Self-reported and fractional; not Kinetic orders.
+      - name: conversions_value_usd
+        description: >-
+          Value in US dollars of the conversions the platform claims. Self-reported,
+          not verified against Kinetic orders.
   - name: stg_kinetic__tiktok_campaigns
     description: >
-      One row per TikTok campaign. The single raw budget is split into
-      daily_budget_usd / lifetime_budget_usd by budget_mode, matching the
-      other platforms.
+      One row per TikTok campaign. The single raw budget is split into daily_budget_usd
+      / lifetime_budget_usd by budget_mode, matching the other platforms.
     columns:
       - name: campaign_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the TikTok campaign.
+        data_tests:
+          - not_null
+          - unique
+      - name: tiktok_advertiser_id
+        description: Kinetic's TikTok advertiser account, not a customer.
+      - name: campaign_name
+        description: Human-readable campaign name.
+      - name: ad_objective
+        description: >-
+          What the advertiser told the platform the campaign is optimising for (for
+          example awareness, traffic or conversions). Kinetic's own label, shared
+          across platforms.
+      - name: objective_type
+        description: TikTok's own objective code.
+      - name: campaign_status
+        description: Whether the campaign is active, paused or ended.
       - name: budget_mode
+        description: >-
+          Whether budget_micro is a daily or a total (lifetime) budget.
         data_tests:
           - accepted_values:
               arguments:
-                values: ['BUDGET_MODE_DAY', 'BUDGET_MODE_TOTAL']
-
+                values:
+                  - BUDGET_MODE_DAY
+                  - BUDGET_MODE_TOTAL
+      - name: budget_micro
+        description: >-
+          Raw budget in micros; whether it is daily or total depends on budget_mode.
+          Use daily_budget_usd / lifetime_budget_usd.
+      - name: daily_budget_usd
+        description: >-
+          Campaign's CURRENT daily budget in US dollars. Null for lifetime-budget
+          campaigns. Budgets are today's setting, not a history.
+      - name: lifetime_budget_usd
+        description: >-
+          Campaign's CURRENT total (lifetime) budget in US dollars. Null for always-on
+          campaigns that have a daily budget.
+      - name: start_time
+        description: When the campaign is scheduled to start.
+      - name: end_time
+        description: When the campaign is scheduled to end; null if always-on.
+      - name: campaign_created_at
+        description: When the campaign record was created.
   - name: stg_kinetic__tiktok_adgroups
     description: One row per TikTok ad group.
     columns:
       - name: adgroup_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the TikTok ad group.
+        data_tests:
+          - not_null
+          - unique
       - name: campaign_id
+        description: ID of the campaign this row belongs to.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__tiktok_campaigns')
                 field: campaign_id
+      - name: adgroup_name
+        description: Ad group name.
+      - name: adgroup_status
+        description: Whether the ad group is active or paused.
       - name: targeting_segment_id
+        description: >-
+          ID of the Kinetic audience segment this ad group or ad targets (joins
+          to stg_kinetic__segments).
         data_tests:
           - relationships:
               arguments:
                 to: ref('stg_kinetic__segments')
                 field: segment_id
-
+      - name: billing_event
+        description: >-
+          What the platform bills for (for example impressions or clicks).
+      - name: placement_type
+        description: Where the ads may run (automatic placement).
+      - name: adgroup_created_at
+        description: When it was created.
   - name: stg_kinetic__tiktok_ads
     description: One row per TikTok ad.
     columns:
       - name: ad_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the TikTok ad.
+        data_tests:
+          - not_null
+          - unique
       - name: adgroup_id
+        description: Ad group the ad belongs to.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__tiktok_adgroups')
                 field: adgroup_id
+      - name: ad_name
+        description: Human-readable ad name.
       - name: ad_format
+        description: 'Ad format: SPARK_AD, SINGLE_VIDEO or COLLECTION.'
         data_tests:
           - accepted_values:
               arguments:
-                values: ['SINGLE_VIDEO', 'SPARK_AD', 'COLLECTION']
-
+                values:
+                  - SINGLE_VIDEO
+                  - SPARK_AD
+                  - COLLECTION
+      - name: ad_status
+        description: Whether the ad is active, paused or archived.
+      - name: ad_created_at
+        description: When the ad record was created.
   - name: stg_kinetic__tiktok_reports_daily
-    description: One row per TikTok ad per day. Spend and CPM in micros and dollars; CTR as a fraction.
+    description: >-
+      One row per TikTok ad per day. Spend and CPM in micros and dollars; CTR as
+      a fraction.
     columns:
       - name: ad_day_id
-        data_tests: [not_null, unique]
+        description: 'Unique ID: ad and date joined.'
+        data_tests:
+          - not_null
+          - unique
       - name: ad_id
+        description: ID of the individual ad.
         data_tests:
           - not_null
           - relationships:
               arguments:
                 to: ref('stg_kinetic__tiktok_ads')
                 field: ad_id
-
+      - name: adgroup_id
+        description: Ad group the ad belongs to.
+      - name: campaign_id
+        description: ID of the campaign this row belongs to.
+      - name: report_date
+        description: The calendar day the platform's numbers are reported for.
+      - name: impressions
+        description: Number of times the ad was shown.
+      - name: clicks
+        description: Number of clicks on the ad. Platform-reported.
+      - name: video_views
+        description: >-
+          Number of times a video ad was viewed, using the platform's own definition
+          of a view.
+      - name: spend_micro
+        description: >-
+          Raw spend in micros (millionths of a dollar). Kept for traceability; use
+          spend_usd.
+      - name: spend_usd
+        description: Advertising spend in US dollars.
+      - name: cpm_usd
+        description: Cost per thousand impressions in US dollars.
+      - name: ctr_fraction
+        description: >-
+          Click-through rate as a fraction (0.017 means 1.7%), not a percentage.
+      - name: conversions
+        description: >-
+          Conversions TikTok claims. Self-reported and fractional; not Kinetic orders.
+      - name: conversions_value_usd
+        description: >-
+          Value in US dollars of the conversions the platform claims. Self-reported,
+          not verified against Kinetic orders.
   - name: stg_kinetic__product_variants
-    description: One row per purchasable variant of a product (size, or the single default option).
+    description: >-
+      One row per purchasable variant of a product (size, or the single default
+      option).
     columns:
       - name: variant_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the variant.
+        data_tests:
+          - not_null
+          - unique
       - name: product_id
+        description: ID of the product.
         data_tests:
           - not_null
           - relationships:
@@ -740,4 +1906,17 @@ models:
                 to: ref('stg_kinetic__products')
                 field: product_id
       - name: sku
-        data_tests: [not_null, unique]
+        description: Stock-keeping unit code of the variant.
+        data_tests:
+          - not_null
+          - unique
+      - name: variant_option
+        description: The option that defines the variant (size, colour, ...).
+      - name: price_adjustment_usd
+        description: >-
+          Amount added to (or subtracted from) the product's base price for this
+          variant, in US dollars.
+      - name: is_active
+        description: True if this record is currently active/enabled.
+      - name: variant_created_at
+        description: When the variant was created.

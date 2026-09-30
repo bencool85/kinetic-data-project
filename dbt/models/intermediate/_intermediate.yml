@@ -1,44 +1,83 @@
 version: 2
-
 models:
   - name: int_subscription_paid_periods
     description: >
-      One row per subscription, with paid_start_date resolved (null if the
-      subscription was canceled during its trial and never actually paid).
-      This is the single source of truth for "is this subscription actively
-      paying as of date X" used by every mart below.
+      One row per subscription, with paid_start_date resolved (null if the subscription
+      was canceled during its trial and never actually paid). This is the single
+      source of truth for "is this subscription actively paying as of date X" used
+      by every mart below.
     columns:
       - name: subscription_id
-        data_tests: [not_null, unique]
-
+        description: Unique ID of the subscription (one row per subscription).
+        data_tests:
+          - not_null
+          - unique
+      - name: customer_id
+        description: Customer who owns the subscription.
+      - name: plan_id
+        description: Plan the subscription is on.
+      - name: billing_interval
+        description: month or year.
+      - name: subscription_status
+        description: >-
+          Status now (active, canceled, past_due, trialing), not a history.
+      - name: canceled_at
+        description: >-
+          Date canceled; null if never. Includes cancellations during a trial, which
+          never paid.
+      - name: paid_start_date
+        description: >-
+          Date the subscription started PAYING: the start date if there was no trial,
+          else the trial end. Null if it was canceled during the trial and never
+          paid. It can be after the data ends (3 trials convert in August 2026);
+          series must stop at int_subscription_data_through.
   - name: int_orders_refunded
     description: >
-      One row per order with at least one succeeded refund, with the total
-      refunded amount. Orders with no successful refund are absent (not a
-      zero row) -- always LEFT JOIN and COALESCE to 0 when using this.
+      One row per order with at least one succeeded refund, with the total refunded
+      amount. Orders with no successful refund are absent (not a zero row) -- always
+      LEFT JOIN and COALESCE to 0 when using this.
     columns:
       - name: order_id
-        data_tests: [not_null, unique]
-
+        description: >-
+          Unique ID of an order that has at least one succeeded refund (orders with
+          no refund are absent).
+        data_tests:
+          - not_null
+          - unique
+      - name: refunded_amount_usd
+        description: Total of the order's succeeded refunds in US dollars.
+      - name: refund_count
+        description: Number of succeeded refunds on the order.
   - name: int_customer_identity
     description: >
-      Lookup table: one row per identifier (a web anonymous_id or an email
-      address) that can be traced to a customer account. Join on
-      identifier_key ('anonymous_id:<id>' or 'email:<lowercased email>') to
-      find out which customer a guest order, Braze guest email, or anonymous
-      web session belongs to. Guest emails are matched to accounts by email;
-      anonymous sessions before signup/login are back-filled. Deleted
-      accounts are excluded.
+      Lookup table: one row per identifier (a web anonymous_id or an email address)
+      that can be traced to a customer account. Join on identifier_key ('anonymous_id:<id>'
+      or 'email:<lowercased email>') to find out which customer a guest order, Braze
+      guest email, or anonymous web session belongs to. Guest emails are matched
+      to accounts by email; anonymous sessions before signup/login are back-filled.
+      Deleted accounts are excluded.
     columns:
       - name: identifier_key
-        data_tests: [not_null, unique]
+        description: >-
+          Unique key: identifier type, a colon, and the value (for example email:jo@example.com).
+        data_tests:
+          - not_null
+          - unique
       - name: identifier_type
+        description: anonymous_id (a web visitor ID) or email.
         data_tests:
           - not_null
           - accepted_values:
               arguments:
-                values: ['anonymous_id', 'email']
+                values:
+                  - anonymous_id
+                  - email
+      - name: identifier_value
+        description: The visitor ID, or the lowercased trimmed email address.
       - name: customer_id
+        description: >-
+          The customer account this identifier belongs to. Deleted accounts never
+          appear.
         data_tests:
           - not_null
           - relationships:
@@ -46,24 +85,33 @@ models:
                 to: ref('stg_kinetic__customers')
                 field: customer_id
       - name: match_method
+        description: >-
+          How the link was made: identity_map_signup / identity_map_login (visitor
+          became known) or account_email (email on an account).
         data_tests:
           - not_null
           - accepted_values:
               arguments:
-                values: ['identity_map_signup', 'identity_map_login', 'account_email']
-
+                values:
+                  - identity_map_signup
+                  - identity_map_login
+                  - account_email
+      - name: linked_at
+        description: >-
+          When the link became known (sign-up/login time, or account creation for
+          emails).
   - name: int_orders_net
     description: >
-      One row per order with the money broken out once: gross_usd (subtotal
-      before discounts), discount_usd (subscriber discount + code), paid_usd
-      (what was charged), refund_usd (succeeded refunds only, 0 if none) and
-      net_usd (paid minus refund, never floored at zero). customer_id is the
-      order's account or, for guest orders, the account matched by email via
-      int_customer_identity; unmatched guests stay null. is_guest_order stays
-      true for anyone who checked out as a guest. Net is not a margin figure
-      (no COGS data exists).
+      One row per order with the money broken out once: gross_usd (subtotal before
+      discounts), discount_usd (subscriber discount + code), paid_usd (what was
+      charged), refund_usd (succeeded refunds only, 0 if none) and net_usd (paid
+      minus refund, never floored at zero). customer_id is the order's account or,
+      for guest orders, the account matched by email via int_customer_identity;
+      unmatched guests stay null. is_guest_order stays true for anyone who checked
+      out as a guest. Net is not a margin figure (no COGS data exists).
     columns:
       - name: order_id
+        description: Unique ID of the order (one row per order).
         data_tests:
           - not_null
           - unique
@@ -71,18 +119,39 @@ models:
               arguments:
                 to: ref('stg_kinetic__orders')
                 field: order_id
+      - name: order_date
+        description: Date the order was placed.
+      - name: order_type
+        description: course or merch.
       - name: gross_usd
-        data_tests: [not_null]
+        description: Order subtotal in US dollars BEFORE discounts.
+        data_tests:
+          - not_null
       - name: discount_usd
-        data_tests: [not_null]
+        description: Subscriber discount plus discount code, in US dollars.
+        data_tests:
+          - not_null
       - name: paid_usd
-        data_tests: [not_null]
+        description: >-
+          What the customer was charged in US dollars (gross minus discount), before
+          refunds.
+        data_tests:
+          - not_null
       - name: refund_usd
-        data_tests: [not_null]
+        description: Succeeded refunds on the order in US dollars; 0 if none.
+        data_tests:
+          - not_null
       - name: net_usd
-        data_tests: [not_null]
+        description: >-
+          Paid minus refunds in US dollars. Not a margin: there is no cost data.
+        data_tests:
+          - not_null
       - name: is_guest_order
-        data_tests: [not_null]
+        description: >-
+          True if the customer checked out as a guest, even if we later matched
+          the email to an account.
+        data_tests:
+          - not_null
       - name: customer_id
         description: Null only for guest orders with no matching account.
         data_tests:
@@ -91,41 +160,63 @@ models:
                 to: ref('stg_kinetic__customers')
                 field: customer_id
       - name: customer_resolution
+        description: >-
+          How customer_id was found: account (order's own), guest_email_match (matched
+          by email) or unresolved.
         data_tests:
           - not_null
           - accepted_values:
               arguments:
-                values: ['account', 'guest_email_match', 'unresolved']
-
+                values:
+                  - account
+                  - guest_email_match
+                  - unresolved
   - name: int_sessions_unified
     description: >
-      One row per session, web and app together (49,895 today). source_system
-      says where it was recorded ('web' or 'app'); platform is web, ios or
-      android. customer_id is the account known at the time or, for web
-      sessions, the account the visitor's anonymous_id later turned out to be
-      (back-filled, no time limit). customer_resolution says which:
-      known_at_time, backfilled or anonymous. Anonymous web sessions (the
-      majority of web traffic) keep a null customer_id. App sessions with
-      platform 'web' are logged-in web devices, kept as separate sessions.
-      UTM, landing page, referrer and device_category exist for web sessions
-      only; device_id for app sessions only.
+      One row per session, web and app together (49,895 today). source_system says
+      where it was recorded ('web' or 'app'); platform is web, ios or android. customer_id
+      is the account known at the time or, for web sessions, the account the visitor's
+      anonymous_id later turned out to be (back-filled, no time limit). customer_resolution
+      says which: known_at_time, backfilled or anonymous. Anonymous web sessions
+      (the majority of web traffic) keep a null customer_id. App sessions with platform
+      'web' are logged-in web devices, kept as separate sessions. UTM, landing page,
+      referrer and device_category exist for web sessions only; device_id for app
+      sessions only.
     columns:
       - name: session_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the session (web_sess_... or app_sess_...).
+        data_tests:
+          - not_null
+          - unique
       - name: source_system
+        description: 'Where it was recorded: web analytics or the app.'
         data_tests:
           - not_null
           - accepted_values:
               arguments:
-                values: ['web', 'app']
+                values:
+                  - web
+                  - app
       - name: platform
+        description: >-
+          web, ios or android. App sessions with platform web are logged-in web
+          devices.
         data_tests:
           - not_null
           - accepted_values:
               arguments:
-                values: ['web', 'ios', 'android']
+                values:
+                  - web
+                  - ios
+                  - android
       - name: started_at
-        data_tests: [not_null]
+        description: When the session started.
+        data_tests:
+          - not_null
+      - name: ended_at
+        description: When the session ended.
+      - name: duration_seconds
+        description: Length of the session in seconds.
       - name: customer_id
         description: Null only when customer_resolution is 'anonymous'.
         data_tests:
@@ -134,47 +225,95 @@ models:
                 to: ref('stg_kinetic__customers')
                 field: customer_id
       - name: customer_resolution
+        description: >-
+          known_at_time (signed in), backfilled (identified later via anonymous_id)
+          or anonymous.
         data_tests:
           - not_null
           - accepted_values:
               arguments:
-                values: ['known_at_time', 'backfilled', 'anonymous']
-
+                values:
+                  - known_at_time
+                  - backfilled
+                  - anonymous
+      - name: anonymous_id
+        description: Web visitor ID; web sessions only.
+      - name: device_id
+        description: App device ID; app sessions only.
+      - name: utm_source
+        description: >-
+          Traffic source tag on the landing URL; web only. Not a key to an ad platform
+          campaign.
+      - name: utm_medium
+        description: Traffic medium tag; web only.
+      - name: utm_campaign
+        description: >-
+          Campaign tag; web only. A theme label that does not join to any ad platform
+          campaign.
+      - name: landing_page
+        description: First page of the visit; web only.
+      - name: referrer_domain
+        description: Site the visitor came from; web only.
+      - name: device_category
+        description: mobile, tablet or desktop; web only.
   - name: int_messaging_events
     description: >
-      One row per Braze email or push event (36,232 today: 26,335 email +
-      9,897 push), both channels in one shape. channel says which; event_name
-      is send/open/click/bounce/unsubscribe. Nothing is de-duplicated, so
-      counting rows is NOT a unique-open or unique-click count: count distinct
-      send_id per event_name for that. customer_id is Braze's own id or, for
-      email events that lacked one (guest checkouts), the account matched by
-      email address; guests with no account stay null (customer_resolution =
-      unresolved). email_address exists for email rows only; device_id and
-      platform for push rows only. A handful of email events are stamped just
-      after the data's end (2026-07-30); marts must end their time series at
-      the data's own last date.
+      One row per Braze email or push event (36,232 today: 26,335 email + 9,897
+      push), both channels in one shape. channel says which; event_name is send/open/click/bounce/unsubscribe.
+      Nothing is de-duplicated, so counting rows is NOT a unique-open or unique-click
+      count: count distinct send_id per event_name for that. customer_id is Braze's
+      own id or, for email events that lacked one (guest checkouts), the account
+      matched by email address; guests with no account stay null (customer_resolution
+      = unresolved). email_address exists for email rows only; device_id and platform
+      for push rows only. A handful of email events are stamped just after the data's
+      end (2026-07-30); marts must end their time series at the data's own last
+      date.
     columns:
       - name: event_id
-        data_tests: [not_null, unique]
+        description: Unique ID of the event.
+        data_tests:
+          - not_null
+          - unique
       - name: channel
+        description: email or push.
         data_tests:
           - not_null
           - accepted_values:
               arguments:
-                values: ['email', 'push']
+                values:
+                  - email
+                  - push
       - name: send_id
-        data_tests: [not_null]
-      - name: campaign_id
+        description: >-
+          ID of one send to one recipient; its sends, opens and clicks share it.
         data_tests:
           - not_null
+      - name: campaign_id
+        description: Braze campaign the message belongs to.
+        data_tests:
+          - not_null
+      - name: campaign_name
+        description: Campaign name.
+      - name: campaign_type
+        description: broadcast or triggered.
       - name: event_name
+        description: >-
+          send, open, click, bounce or unsubscribe. Rows, not people: count distinct
+          send_id for unique opens/clicks.
         data_tests:
           - not_null
           - accepted_values:
               arguments:
-                values: ['send', 'open', 'click', 'bounce', 'unsubscribe']
+                values:
+                  - send
+                  - open
+                  - click
+                  - bounce
+                  - unsubscribe
       - name: occurred_at
-        data_tests: [not_null]
+        description: When the event happened.
+        data_tests:
+          - not_null
       - name: customer_id
         description: Null only when customer_resolution is 'unresolved'.
         data_tests:
@@ -183,55 +322,86 @@ models:
                 to: ref('stg_kinetic__customers')
                 field: customer_id
       - name: customer_resolution
+        description: >-
+          braze_customer_id (Braze knew the customer), email_match (matched by email)
+          or unresolved (guest).
         data_tests:
           - not_null
           - accepted_values:
               arguments:
-                values: ['braze_customer_id', 'email_match', 'unresolved']
-
+                values:
+                  - braze_customer_id
+                  - email_match
+                  - unresolved
+      - name: email_address
+        description: Recipient email (lowercase); email events only.
+      - name: device_id
+        description: Device the push went to; push events only.
+      - name: platform
+        description: ios or android; push events only.
   - name: int_paid_media_daily
     description: >
-      One row per ad platform per day (6 platforms x 1,095 days = 6,570 rows,
-      2023-08-01 to 2026-07-30), all in US dollars. platform is meta,
-      google_search, youtube, dv360, snap or tiktok. conversions is each
-      platform's OWN attributed purchase-type count (Meta: the 'purchase'
-      action only; others: their single conversions column, which can be
-      fractional). These are self-reported by the platforms, overlap with
-      each other and are not Kinetic orders, so do not add them up as if
-      they were sales or compare them one-to-one with orders.
-      conversions_value_usd is null for Meta (no value column). Snap swipes
-      are counted as clicks. Google Search uses the ad-group table only
-      (never add the keyword table).
+      One row per ad platform per day (6 platforms x 1,095 days = 6,570 rows, 2023-08-01
+      to 2026-07-30), all in US dollars. platform is meta, google_search, youtube,
+      dv360, snap or tiktok. conversions is each platform's OWN attributed purchase-type
+      count (Meta: the 'purchase' action only; others: their single conversions
+      column, which can be fractional). These are self-reported by the platforms,
+      overlap with each other and are not Kinetic orders, so do not add them up
+      as if they were sales or compare them one-to-one with orders. conversions_value_usd
+      is null for Meta (no value column). Snap swipes are counted as clicks. Google
+      Search uses the ad-group table only (never add the keyword table).
     columns:
       - name: platform_day_id
-        data_tests: [not_null, unique]
+        description: 'Unique key: platform, a pipe and the date.'
+        data_tests:
+          - not_null
+          - unique
       - name: platform
+        description: meta, google_search, youtube, dv360, snap or tiktok.
         data_tests:
           - not_null
           - accepted_values:
               arguments:
-                values: ['meta', 'google_search', 'youtube', 'dv360', 'snap', 'tiktok']
+                values:
+                  - meta
+                  - google_search
+                  - youtube
+                  - dv360
+                  - snap
+                  - tiktok
       - name: report_date
-        data_tests: [not_null]
+        description: The day the numbers are for.
+        data_tests:
+          - not_null
       - name: spend_usd
-        description: Total spend that day in US dollars (already converted from micros where needed).
-        data_tests: [not_null]
+        description: >-
+          Total spend that day in US dollars (already converted from micros where
+          needed).
+        data_tests:
+          - not_null
       - name: impressions
-        data_tests: [not_null]
+        description: Times the ads were shown that day.
+        data_tests:
+          - not_null
       - name: clicks
-        data_tests: [not_null]
+        description: 'Clicks that day (Snap: swipes).'
+        data_tests:
+          - not_null
       - name: conversions
-        description: Platform-reported, fractional for most platforms; not site-verified orders.
-        data_tests: [not_null]
+        description: >-
+          Platform-reported, fractional for most platforms; not site-verified orders.
+        data_tests:
+          - not_null
       - name: conversions_value_usd
-        description: Platform-reported conversion value in dollars; null for Meta.
-
+        description: >-
+          Platform-reported conversion value in dollars; null for Meta.
   - name: int_subscription_data_through
     description: >
-      A single row holding data_through: the last date the subscription and
-      invoice data covers (2026-07-30 today). Subscription time series end at
-      this date's month rather than today, because later months would be
-      invented.
+      A single row holding data_through: the last date the subscription and invoice
+      data covers (2026-07-30 today). Subscription time series end at this date's
+      month rather than today, because later months would be invented.
     columns:
       - name: data_through
-        data_tests: [not_null]
+        description: Last date the subscription and invoice data covers.
+        data_tests:
+          - not_null

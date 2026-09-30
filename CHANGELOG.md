@@ -2533,3 +2533,23 @@ seasonality calendar.
 - Hand-validated by inlining int_paid_media_daily and the movement logic
   against live staging/intermediate views. Tests: yml + 2 singular tests.
   NOT yet run in dbt.
+
+## 2026-09-30 — Phase 5 descriptions written (overnight run)
+
+- Added a plain-language `description:` to every column of all 47 staging
+  models (462 columns), all 8 intermediate models and all 5 marts, listing
+  columns that previously had none (staging only described the tested keys).
+  Existing model descriptions and all tests are unchanged (verified: same
+  test set before and after for staging, intermediate and marts).
+- Caveats written into the descriptions where a number could be misread:
+  platform-reported conversions (not orders, overlap, fractional), raw micros
+  vs _usd, payments include failed attempts, orders vs paid vs net (no
+  margin), MRR/ARR are run-rates, guest/anonymous null customer_ids,
+  utm_campaign is not an ad-platform key, Google keyword vs ad-group tables
+  never added, blended CAC is not channel CAC, Meta value null.
+- Descriptions for enumerated values (discount types, campaign types, etc.)
+  were checked against the distinct values in the live staging views.
+- The staging/intermediate/marts yml files were rewritten with PyYAML, so
+  their formatting changed (block style, folded long text); content is
+  otherwise the same. Not yet run through `dbt parse` / `dbt docs generate`
+  (needs Ben's Mac).

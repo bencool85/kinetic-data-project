@@ -1,136 +1,239 @@
 version: 2
-
 models:
   - name: mart_mrr_monthly
     description: >
-      Canonical Monthly Recurring Revenue and active-subscriber-count by
-      month. This is the one place MRR/ARR are defined for the whole
-      project -- dashboards and future marts should query this rather than
-      recomputing the trial/paid-start logic themselves. Each row is a
-      snapshot on the 1st of the month. Rows stop at the last month the
-      data covers (see data_through).
+      Canonical Monthly Recurring Revenue and active-subscriber-count by month.
+      This is the one place MRR/ARR are defined for the whole project -- dashboards
+      and future marts should query this rather than recomputing the trial/paid-start
+      logic themselves. Each row is a snapshot on the 1st of the month. Rows stop
+      at the last month the data covers (see data_through).
     columns:
+      - name: month_start
+        description: First day of the month; the snapshot date.
       - name: year_month
-        data_tests: [not_null, unique]
-      - name: mrr_usd
+        description: Month as YYYY-MM.
         data_tests:
           - not_null
+          - unique
+      - name: active_subscribers
+        description: >-
+          Paying subscriptions on the 1st of the month (trial-only subscriptions
+          are not counted).
+      - name: mrr_usd
+        description: >-
+          Monthly recurring revenue in US dollars: monthly plan prices plus annual
+          plans divided by 12. A run-rate, not cash collected.
+        data_tests:
+          - not_null
+      - name: arr_usd
+        description: 'mrr_usd times 12: an annualised run-rate, not a forecast.'
       - name: data_through
         description: >
-          Latest date the subscription/invoice data covers. The mart never
-          goes past this month; MRR for later months is unknown, not zero.
-        data_tests: [not_null]
-
+          Latest date the subscription/invoice data covers. The mart never goes
+          past this month; MRR for later months is unknown, not zero.
+        data_tests:
+          - not_null
   - name: mart_storefront_revenue_monthly
     description: >
-      Canonical non-subscription (course + merch) storefront revenue by
-      month, built on int_orders_net. gross_before_discount_usd is the
-      subtotal before discounts; discount_usd is what discounts took off;
-      paid_revenue_usd is what customers were charged (gross minus discount;
-      this was called gross_revenue_usd before 2026-09-30). net_revenue_usd
-      is paid minus successful refunds only -- not a true gross margin (no
-      COGS data exists). AOV is paid revenue per order. Rows stop at the
-      latest order date in the data (see data_through).
+      Canonical non-subscription (course + merch) storefront revenue by month, built
+      on int_orders_net. gross_before_discount_usd is the subtotal before discounts;
+      discount_usd is what discounts took off; paid_revenue_usd is what customers
+      were charged (gross minus discount; this was called gross_revenue_usd before
+      2026-09-30). net_revenue_usd is paid minus successful refunds only -- not
+      a true gross margin (no COGS data exists). AOV is paid revenue per order.
+      Rows stop at the latest order date in the data (see data_through).
     columns:
+      - name: month_start
+        description: First day of the month.
       - name: year_month
-        data_tests: [not_null, unique]
+        description: Month as YYYY-MM.
+        data_tests:
+          - not_null
+          - unique
       - name: order_count
-        data_tests: [not_null]
+        description: >-
+          Orders placed that month (course and merch, including guest checkouts).
+        data_tests:
+          - not_null
       - name: gross_before_discount_usd
         description: Order subtotals before any discount, in US dollars.
       - name: discount_usd
         description: Subscriber discounts plus discount codes, in US dollars.
       - name: paid_revenue_usd
-        description: What customers were charged (gross minus discounts), before refunds. Formerly gross_revenue_usd.
-        data_tests: [not_null]
+        description: >-
+          What customers were charged (gross minus discounts), before refunds. Formerly
+          gross_revenue_usd.
+        data_tests:
+          - not_null
+      - name: aov_usd
+        description: >-
+          Average order value: paid revenue divided by orders, in US dollars.
+      - name: guest_order_pct
+        description: Percent of orders that were guest checkouts (0-100).
+      - name: discount_used_pct
+        description: Percent of orders with any discount (0-100).
+      - name: refunded_order_pct
+        description: >-
+          Percent of orders with at least one succeeded refund (0-100).
+      - name: refunded_amount_usd
+        description: >-
+          Succeeded refunds attributed to that month's orders (not refunds made
+          that month), in US dollars.
       - name: net_revenue_usd
         description: Paid revenue minus succeeded refunds. Not a margin figure.
-        data_tests: [not_null]
+        data_tests:
+          - not_null
       - name: data_through
-        description: Latest order date in the data; later months are unknown, not zero.
-        data_tests: [not_null]
-
+        description: >-
+          Latest order date in the data; later months are unknown, not zero.
+        data_tests:
+          - not_null
   - name: mart_subscriber_movement_monthly
     description: >
-      Paying-subscriber movement by month: new paying subscribers (split into
-      first_time and returning win-backs), churned subscribers, net new and
-      active subscribers at month end. "Paying" starts when the trial
-      converts (a trial canceled before converting never counts). A returning
-      subscriber is someone with an earlier paying subscription, so
-      first_time + returning = new. Counts people-subscriptions, not revenue:
-      use mart_mrr_monthly for dollars. Active at month end can differ from
-      mart_mrr_monthly's count on the 1st only when someone starts or cancels
-      on the 1st. Rows stop at the data's last month (see data_through);
-      later months are unknown, not zero.
+      Paying-subscriber movement by month: new paying subscribers (split into first_time
+      and returning win-backs), churned subscribers, net new and active subscribers
+      at month end. "Paying" starts when the trial converts (a trial canceled before
+      converting never counts). A returning subscriber is someone with an earlier
+      paying subscription, so first_time + returning = new. Counts people-subscriptions,
+      not revenue: use mart_mrr_monthly for dollars. Active at month end can differ
+      from mart_mrr_monthly's count on the 1st only when someone starts or cancels
+      on the 1st. Rows stop at the data's last month (see data_through); later months
+      are unknown, not zero.
     columns:
+      - name: month_start
+        description: First day of the month.
       - name: year_month
-        data_tests: [not_null, unique]
+        description: Month as YYYY-MM.
+        data_tests:
+          - not_null
+          - unique
       - name: new_paying_subscribers
-        data_tests: [not_null]
+        description: >-
+          Subscriptions whose paying started that month (first_time + returning).
+        data_tests:
+          - not_null
+      - name: first_time_subscribers
+        description: New paying subscribers who had never paid before.
+      - name: returning_subscribers
+        description: >-
+          New paying subscribers who had an earlier paying subscription (win-backs).
       - name: churned_subscribers
-        description: Paying subscriptions canceled that month (canceled trials are not included).
-        data_tests: [not_null]
+        description: >-
+          Paying subscriptions canceled that month (canceled trials are not included).
+        data_tests:
+          - not_null
       - name: net_new_subscribers
         description: New paying minus churned; negative means the base shrank.
-        data_tests: [not_null]
+        data_tests:
+          - not_null
       - name: active_subscribers_end
-        data_tests: [not_null]
+        description: Paying and not canceled on the last day of the month.
+        data_tests:
+          - not_null
       - name: data_through
         description: Latest date the subscription data covers.
-        data_tests: [not_null]
-
+        data_tests:
+          - not_null
   - name: mart_paid_media_monthly
     description: >
-      Paid media by platform by month (meta, google_search, youtube, dv360,
-      snap, tiktok), in US dollars: spend, impressions, clicks, conversions,
-      conversions_value_usd and the ratios ctr_fraction, cpc_usd,
-      cost_per_conversion_usd and reported_roas (ratios come from monthly
-      totals and are null when the denominator is 0). CAUTION: conversions
-      and their value are each platform's OWN claims; they overlap between
-      platforms, are not Kinetic orders, and Meta counts only its 'purchase'
-      action and reports no value (reported_roas null). Never add conversions
-      across platforms as sales, and reported_roas is not true ROAS. Rows stop
-      at the data's last date (see data_through).
+      Paid media by platform by month (meta, google_search, youtube, dv360, snap,
+      tiktok), in US dollars: spend, impressions, clicks, conversions, conversions_value_usd
+      and the ratios ctr_fraction, cpc_usd, cost_per_conversion_usd and reported_roas
+      (ratios come from monthly totals and are null when the denominator is 0).
+      CAUTION: conversions and their value are each platform's OWN claims; they
+      overlap between platforms, are not Kinetic orders, and Meta counts only its
+      'purchase' action and reports no value (reported_roas null). Never add conversions
+      across platforms as sales, and reported_roas is not true ROAS. Rows stop at
+      the data's last date (see data_through).
     columns:
       - name: platform_month_id
-        data_tests: [not_null, unique]
+        description: 'Unique key: platform, a pipe and the month.'
+        data_tests:
+          - not_null
+          - unique
       - name: platform
+        description: meta, google_search, youtube, dv360, snap or tiktok.
         data_tests:
           - not_null
           - accepted_values:
               arguments:
-                values: ['meta', 'google_search', 'youtube', 'dv360', 'snap', 'tiktok']
+                values:
+                  - meta
+                  - google_search
+                  - youtube
+                  - dv360
+                  - snap
+                  - tiktok
+      - name: month_start
+        description: First day of the month.
+      - name: year_month
+        description: Month as YYYY-MM.
       - name: spend_usd
-        data_tests: [not_null]
+        description: Total spend in US dollars for the month.
+        data_tests:
+          - not_null
+      - name: impressions
+        description: Times the ads were shown.
+      - name: clicks
+        description: 'Clicks (Snap: swipes).'
+      - name: conversions
+        description: >-
+          Platform-reported conversions (fractional); not Kinetic orders.
+      - name: conversions_value_usd
+        description: >-
+          Platform-reported conversion value in dollars; null for Meta.
       - name: ctr_fraction
         description: Clicks divided by impressions as a fraction (0.045 = 4.5%).
+      - name: cpc_usd
+        description: Spend divided by clicks, in US dollars; null with no clicks.
+      - name: cost_per_conversion_usd
+        description: >-
+          Spend divided by platform-reported conversions. Not Kinetic's true cost
+          to acquire a customer; Meta counts only purchases, so it is not like-for-like
+          across platforms.
       - name: reported_roas
-        description: Platform-reported conversion value divided by spend; null for Meta. Not true ROAS.
+        description: >-
+          Platform-reported conversion value divided by spend; null for Meta. Not
+          true ROAS.
       - name: data_through
-        data_tests: [not_null]
-
+        description: Latest date the ad data covers.
+        data_tests:
+          - not_null
   - name: mart_acquisition_efficiency_monthly
     description: >
-      Blended customer acquisition cost by month: all paid media spend divided
-      by first-time paying subscribers. CAUTION: "blended" means all ad spend
-      over all new payers, including people who would have come without ads,
-      so it overstates the cost of an ad-driven subscriber and cannot compare
-      channels (no ad-to-order key exists). Spend and new payers are matched
-      in the same month with no lag, and with only a handful of signups a
-      month the monthly figure swings widely; use cumulative_blended_cac_usd
-      for the trend. Null CAC means no new subscribers that month. Spend is
-      advertising cost only. The level is a synthetic-data artifact, not a
-      benchmark. Rows stop at the data's last date (see data_through).
+      Blended customer acquisition cost by month: all paid media spend divided by
+      first-time paying subscribers. CAUTION: "blended" means all ad spend over
+      all new payers, including people who would have come without ads, so it overstates
+      the cost of an ad-driven subscriber and cannot compare channels (no ad-to-order
+      key exists). Spend and new payers are matched in the same month with no lag,
+      and with only a handful of signups a month the monthly figure swings widely;
+      use cumulative_blended_cac_usd for the trend. Null CAC means no new subscribers
+      that month. Spend is advertising cost only. The level is a synthetic-data
+      artifact, not a benchmark. Rows stop at the data's last date (see data_through).
     columns:
+      - name: month_start
+        description: First day of the month.
       - name: year_month
-        data_tests: [not_null, unique]
+        description: Month as YYYY-MM.
+        data_tests:
+          - not_null
+          - unique
       - name: paid_spend_usd
-        data_tests: [not_null]
+        description: >-
+          All paid media spend across the six platforms that month, in US dollars.
+        data_tests:
+          - not_null
       - name: first_time_subscribers
-        data_tests: [not_null]
+        description: New paying subscribers who had never paid before that month.
+        data_tests:
+          - not_null
       - name: blended_cac_usd
-        description: Spend divided by first-time subscribers; null when there were none that month.
+        description: >-
+          Spend divided by first-time subscribers; null when there were none that
+          month.
       - name: cumulative_blended_cac_usd
         description: Spend to date divided by first-time subscribers to date.
       - name: data_through
-        data_tests: [not_null]
+        description: Latest date the data covers.
+        data_tests:
+          - not_null
