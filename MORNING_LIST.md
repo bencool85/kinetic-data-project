@@ -65,3 +65,4 @@ Note: `mart_storefront_revenue_monthly` renamed `gross_revenue_usd` to `paid_rev
 ## 6. Units running ahead of your understanding
 
 Phases stay "awaiting your understanding" until you confirm. Everything above is ahead of that: int_messaging_events, int_paid_media_daily, the storefront mart change, the 3 new marts, Phase 5 descriptions, and the Phase 6 and 7 drafts. Suggested order to be walked through: paid-media conversion choice (assumed #1), then blended CAC (assumed #6), then the subscriber movement identity, then the drafts.
+- Run 2 started 2026-09-30: QUEUE COMPLETE, nothing to do.
