@@ -2331,3 +2331,24 @@ seasonality calendar.
     in raw; $6,546.82 refunded in total.
 - Marts: added a `unique` test on `year_month` to both marts, so their
   one-row-per-month grain is tested (playbook: test the grain).
+
+## 2026-09-29 — Marts built and tested in dbt; MRR mart no longer invents future months
+
+- `dbt build --select marts` on Ben's Mac: 2 models + 6 tests, PASS=8,
+  10.4s. Tables in `dbt_dev_marts`. Every existing model has now been
+  built and tested in dbt.
+- Checked from MotherDuck: `mart_mrr_monthly` reproduces the 2026-09-28
+  hand check exactly (2026-07: 90 subscribers / $2,133.07 MRR).
+  `mart_storefront_revenue_monthly` covers 36 months (2023-08 to 2026-07);
+  its order counts sum to 3,650 = every raw order.
+- **Bug found and fixed (Ben's call):** the MRR mart's month series ran to
+  `current_date`, but the data ends 2026-07-30. So 2026-08 and 2026-09
+  were made up: no cancellations are recorded after the data ends, and 3
+  still-trialing subscriptions counted as paying. MRR appeared to rise to
+  $2,357.82 (101 subscribers). Now the series ends at the month of the
+  latest subscription/invoice record, computed from the data, and each
+  row carries a `data_through` date (2026-07-30 today) with a not_null
+  test. Ran the new SQL against the dbt-built views: 35 months (2023-09 to
+  2026-07), all 35 identical to the old rows; only the 2 invented months
+  are gone. Needs `dbt build --select mart_mrr_monthly` on Ben's Mac to
+  update the table.

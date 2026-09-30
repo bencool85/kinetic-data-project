@@ -6,9 +6,29 @@
 -- kinetic database on 2026-09-28 (see CHANGELOG.md) -- e.g. 2026-07 showed
 -- 90 active subscribers / ~$2,133 MRR.
 
-with months as (
+-- The month series stops at the last month the data actually covers,
+-- worked out from the data itself, not today's date. Decision (Ben,
+-- 2026-09-29): before this fix the series ran to current_date, so months
+-- after the data ended (Aug-Sep 2026) assumed nobody canceled and counted
+-- still-trialing subscriptions as paying -- MRR looked like it rose to
+-- $2,357.82 on no evidence. data_through is the latest subscription or
+-- invoice record; it's also returned on every row so readers know how
+-- current the number is.
+
+with data_bounds as (
+    select greatest(
+        (select max(subscription_created_at) from {{ ref('stg_kinetic__subscriptions') }}),
+        (select max(canceled_at) from {{ ref('stg_kinetic__subscriptions') }}),
+        (select max(invoice_created_at) from {{ ref('stg_kinetic__invoices') }}),
+        (select max(paid_at) from {{ ref('stg_kinetic__invoices') }})
+    )::date as data_through
+),
+
+months as (
     select unnest(generate_series(
-        date '2023-01-01', date_trunc('month', current_date), interval 1 month
+        date '2023-01-01',
+        (select date_trunc('month', data_through) from data_bounds),
+        interval 1 month
     )) as month_start
 ),
 
@@ -43,7 +63,8 @@ select
     strftime(month_start, '%Y-%m') as year_month,
     count(distinct subscription_id) as active_subscribers,
     round(sum(monthly_equivalent_usd), 2) as mrr_usd,
-    round(sum(monthly_equivalent_usd) * 12, 2) as arr_usd
+    round(sum(monthly_equivalent_usd) * 12, 2) as arr_usd,
+    (select data_through from data_bounds) as data_through
 from active_by_month
 group by 1, 2
 order by 1

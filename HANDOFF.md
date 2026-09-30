@@ -6,7 +6,7 @@ Read this first in a new chat, then the last few CHANGELOG.md entries.
 - Phase 0-1: 47-table synthetic dataset done, live in MotherDuck `kinetic`, 5-tab Dive built.
 - Phase 2 (staging): COMPLETE. 47 of 47 raw tables have a `stg_kinetic__*` view; all built and tested in dbt.
 - Built early (before their phase): `int_subscription_paid_periods`, `int_orders_refunded`, `mart_mrr_monthly`, `mart_storefront_revenue_monthly`. Reconcile these with the playbook when starting Phase 3/4.
-- dbt now runs on Ben's Mac (dbt 1.10.23, venv ~/.dbt-venv, profile dbt/profiles.yml, output schemas dbt_dev_*). Staging built and 205/205 staging tests pass (2026-09-29). Intermediate and marts not yet built in dbt. Ben runs dbt commands; Claude reads dbt/logs/dbt.log and dbt/target/run_results.json from the bridge.
+- dbt now runs on Ben's Mac (dbt 1.10.23, venv ~/.dbt-venv, profile dbt/profiles.yml, output schemas dbt_dev_*). Staging built and 205/205 staging tests pass (2026-09-29). Intermediate (15/15) and marts (8/8) also built and tested in dbt. Ben runs dbt commands; Claude reads dbt/logs/dbt.log and dbt/target/run_results.json from the bridge.
 - Git: last commit 605c34b. Ben pushes himself (`cd ~/Documents/kinetic-project && git push`). Check `git log origin/master..HEAD` for unpushed commits and remind him.
 
 ## Open decisions / to-dos
@@ -34,6 +34,7 @@ dbt (transformation tool run separately, not a database; models are SQL files; s
 - Manifest: add a line in generator/build_manifest.py, then run with HOME="$HOME/mnt" python3 generator/build_manifest.py.
 
 ## Pitfalls that cost time before
+- Time series must end at the last date the data covers (compute it from the data), never current_date: the synthetic data ends 2026-07-30, and months after that get invented numbers. Check the Dive and every new mart for this.
 - Git commits from the bridge leave lock files (.git/HEAD.lock, objects/maintenance.lock, tmp_obj_*) when delete permission isn't granted, and the next commit fails. Ask for delete permission on kinetic-project at the start of any session that will commit; then remove only empty lock files and tmp_obj_* files.
 - Do not run `git fetch` from the device bridge (left stale lock files).
 - iCloud folders are unreadable from the bridge: keep everything in ~/Documents.

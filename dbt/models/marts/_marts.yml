@@ -6,13 +6,20 @@ models:
       Canonical Monthly Recurring Revenue and active-subscriber-count by
       month. This is the one place MRR/ARR are defined for the whole
       project -- dashboards and future marts should query this rather than
-      recomputing the trial/paid-start logic themselves.
+      recomputing the trial/paid-start logic themselves. Each row is a
+      snapshot on the 1st of the month. Rows stop at the last month the
+      data covers (see data_through).
     columns:
       - name: year_month
         data_tests: [not_null, unique]
       - name: mrr_usd
         data_tests:
           - not_null
+      - name: data_through
+        description: >
+          Latest date the subscription/invoice data covers. The mart never
+          goes past this month; MRR for later months is unknown, not zero.
+        data_tests: [not_null]
 
   - name: mart_storefront_revenue_monthly
     description: >
