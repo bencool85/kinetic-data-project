@@ -16,10 +16,13 @@ standing rules; this note holds status, open decisions and pitfalls.
 - Phase 5 (documentation): DONE, confirmed by Ben 2026-09-30. Description on every model and column;
   docs site at https://bencool85.github.io/kinetic-data-project/ (gh-pages branch, a snapshot of the
   2026-09-30 build: rebuild after model changes, CLAUDE.md rule 10); glossary at docs/metrics_glossary.md.
-- Phase 6 (semantic layer): DRAFT ONLY, not validated. dbt/drafts/semantic_layer_DRAFT.yml (5 semantic
-  models, 25 metrics) and docs/semantic_layer_validation_DRAFT.md (10 checks with expected values).
-- Phase 7 (Skill): DRAFT ONLY, needs Ben's review. docs/kinetic_skill_DRAFT.md. Not to be used until
-  Phase 6 is validated.
+- Phase 6 (semantic layer): VALIDATED 2026-09-30, NOT yet confirmed by Ben (so not marked done).
+  dbt/models/marts/_semantic_layer.yml (5 semantic models, 25 metrics) plus the calendar model
+  metricflow_time_spine. `mf validate-configs` 0 errors; all 10 queries in
+  docs/semantic_layer_validation.md match the hand-computed values. Full build 366/366 pass.
+  MetricFlow 0.209 (dbt-metricflow 0.11.0) is installed in ~/.dbt-venv.
+- Phase 7 (Skill): DRAFT ONLY, needs Ben's review. docs/kinetic_skill_DRAFT.md. It must use the
+  dimension name `platform_month__platform` (plain `platform` is rejected by MetricFlow).
 - Phase 8 (agents): NOT STARTED. Needs a pilot persona.
 - Git: all Phase 3-5 work is on branch `overnight`. Ben decided to merge it into master (2026-09-30).
   Claude Code's auto mode blocks Claude from changing master, so Ben runs the merge and push himself:
@@ -32,11 +35,10 @@ standing rules; this note holds status, open decisions and pitfalls.
   republish to the same link, so no Cowork step is needed.
 
 ## Next step (start here)
-1. Phase 6 validation: `pip install dbt-metricflow` into ~/.dbt-venv, add a `metricflow_time_spine`
-   model, move the draft yml from dbt/drafts/ into dbt/models/marts/, run `dbt parse` and
-   `mf validate-configs`, then run the 10 queries in docs/semantic_layer_validation_DRAFT.md and compare
-   with the expected values. Known limit: only paid-media metrics have a second dimension (platform),
-   so the playbook's exit test (2 dimensions) is met for those only.
+1. Phase 6 wrap-up: walk Ben through the semantic layer until he confirms he understands it. Then
+   mark Phase 6 done: playbook section 13 (CLAUDE.md rule 8, republish, LOG.md) and rebuild the docs
+   site (rule 10). Known limit: only paid-media metrics have a second dimension (platform), so the
+   playbook's exit test (2 dimensions) is met for those only.
 2. Phase 7: Ben reviews the draft Skill.
 3. Phase 8: choose a pilot persona, then scope one use case.
 Recommend a model and ask Ben before starting each one (CLAUDE.md "Model and cost").
@@ -46,9 +48,11 @@ Recommend a model and ask Ben before starting each one (CLAUDE.md "Model and cos
 2. Sharing the `kinetic` MotherDuck database with Ben's org: not done, needs his explicit yes.
 3. Two-pager marketing sheet: Ben still owes a founder bio (About section) and a higher-resolution
    logo. Possibly a firm-domain email.
-4. MotherDuck login: no token is saved on the Mac, so dbt opens a browser login when it connects
-   (seen with `dbt debug`, 2026-09-30). Optional fix, Ben's to do himself: set a `motherduck_token`
-   environment variable. Claude never handles or stores the token.
+4. MotherDuck login: Ben added an `export MOTHERDUCK_TOKEN=...` line to ~/.zshrc himself
+   (2026-09-30). A Claude Code session started before that does not see it; commands then load it
+   with `eval "$(grep -i '^export motherduck_token=' ~/.zshrc | tail -1)"`, which never prints the
+   value. The token was pasted into a chat once that day; Claude advised revoking it and creating a
+   fresh one (not verified). Claude never prints or stores the token.
 5. The Cowork Project instructions (claude.ai) still contain the old MODEL & COST line; Ben edits
    those in the Project settings if he keeps using Cowork.
 6. `_to_delete/` holds four old git lock files from the Cowork runs (run3*_HEAD.lock, run3*_index.lock);
@@ -109,6 +113,7 @@ He learns best by asking questions while reading; answer them and do not move on
   paying in Aug 2026: both are excluded from the marts.
 - MotherDuck integer overflow: use BIGINT literals when multiplying micros.
 - Older notes say "Meta cents": only Meta BUDGETS are cents, spend is dollars.
-- The semantic-layer draft lives in dbt/drafts/ (outside model-paths) on purpose, so an unvalidated
-  file cannot break `dbt build`. Move it only as part of Phase 6 validation.
+- MetricFlow: run `mf` from dbt/. Group by platform as `platform_month__platform`; filters use the
+  template form, e.g. `--where "{{ TimeDimension('metric_time','year') }} = '2025-01-01'"`. Add
+  `--decimals 2` to see cents. `month` cannot be used as an entity name (reserved word).
 - Ben watches token use: short chats, new chat per phase.

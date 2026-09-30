@@ -2647,3 +2647,24 @@ seasonality calendar.
   `git checkout master && git merge --ff-only overnight && git push origin master && git checkout overnight`.
   It is a fast-forward (master has no commits of its own), so no conflicts.
 - HANDOFF.md updated with the command and how to check whether it has been done.
+
+## 2026-09-30 — Phase 6 semantic layer validated (awaiting Ben's confirmation)
+
+- Installed dbt-metricflow 0.11.0 (MetricFlow 0.209) into ~/.dbt-venv with dbt-core
+  1.10.23 and dbt-duckdb 1.10.0 pinned; dbt-semantic-interfaces moved 0.9.0 -> 0.9.4.dev0.
+- New model `metricflow_time_spine` (dbt_dev_marts): one row per day, 2023-01-01 to the
+  data's last day (2026-07-30, read from int_subscription_data_through, not current_date).
+- Draft moved from dbt/drafts/ to dbt/models/marts/_semantic_layer.yml. Fixes needed to
+  pass validation: labels added to 7 metrics (required); the four `month` entities
+  renamed per model (mrr_month, subscriber_movement_month, storefront_month,
+  acquisition_month) because `month` is a reserved word and shared entity + dimension
+  pairs are rejected. No metric definition changed.
+- `mf validate-configs`: 0 errors, 0 warnings (definitions and warehouse checks).
+- All 10 validation queries match the hand-computed expected values; results in
+  docs/semantic_layer_validation.md (renamed from _DRAFT). Query 1 differs by one cent on
+  four platforms: monthly rounding in the mart, not a definition error.
+- Found: the platform dimension must be queried as `platform_month__platform`; the
+  Phase 7 Skill draft must use that name.
+- Full `dbt build`: 366/366 pass.
+- Not done yet: playbook section 13, docs-site rebuild, phase marked done (all wait for
+  Ben's confirmation).

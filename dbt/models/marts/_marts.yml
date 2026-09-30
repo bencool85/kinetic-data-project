@@ -237,3 +237,17 @@ models:
         description: Latest date the data covers.
         data_tests:
           - not_null
+  - name: metricflow_time_spine
+    description: >
+      A plain calendar, one row per day, required by MetricFlow (the semantic layer
+      engine). It holds no business data. It runs from 2023-01-01 to the last day
+      the data covers (2026-07-30), never to today's date. Not for direct querying.
+    time_spine:
+      standard_granularity_column: date_day
+    columns:
+      - name: date_day
+        description: The calendar day.
+        granularity: day
+        data_tests:
+          - not_null
+          - unique

@@ -1,11 +1,13 @@
 # ======================================================================
-# DRAFT -- Phase 6 semantic layer (dbt Semantic Layer / MetricFlow)
-# Written overnight 2026-09-30. NOT VALIDATED: dbt-metricflow is not
-# installed and the marts it points at have not been built in dbt yet.
-# Kept in dbt/drafts/ (outside model-paths) so `dbt parse/build` ignores it.
-# To activate: build the marts, `pip install dbt-metricflow`, add a
-# metricflow_time_spine model, move this file to dbt/models/marts/, then run
-# `dbt parse` and `mf validate-configs` (see MORNING_LIST.md).
+# Phase 6 semantic layer (dbt Semantic Layer / MetricFlow)
+# Validated 2026-09-30: `dbt parse` and `mf validate-configs` pass with
+# 0 errors, and the 10 queries in docs/semantic_layer_validation.md return
+# the expected values. Needs the metricflow_time_spine model (same folder).
+#
+# Entity names: each semantic model has its own (mrr_month, ...), because
+# MetricFlow rejects the reserved word `month` and rejects two models that
+# share an entity + dimension pair. Queries across models still line up on
+# metric_time. The platform dimension is queried as platform_month__platform.
 #
 # ASSUMED DEFAULT (Ben's call): dbt Semantic Layer / MetricFlow rather than a
 # BI-tool semantic layer, because Kinetic has no BI tool.
@@ -34,7 +36,7 @@ semantic_models:
     defaults:
       agg_time_dimension: month_start
     entities:
-      - name: month
+      - name: mrr_month
         type: primary
         expr: year_month
     dimensions:
@@ -65,7 +67,7 @@ semantic_models:
     defaults:
       agg_time_dimension: month_start
     entities:
-      - name: month
+      - name: subscriber_movement_month
         type: primary
         expr: year_month
     dimensions:
@@ -101,7 +103,7 @@ semantic_models:
     defaults:
       agg_time_dimension: month_start
     entities:
-      - name: month
+      - name: storefront_month
         type: primary
         expr: year_month
     dimensions:
@@ -172,7 +174,7 @@ semantic_models:
     defaults:
       agg_time_dimension: month_start
     entities:
-      - name: month
+      - name: acquisition_month
         type: primary
         expr: year_month
     dimensions:
@@ -248,11 +250,13 @@ metrics:
 
   # ---- storefront -----------------------------------------------------------
   - name: storefront_orders
+    label: Storefront orders
     type: simple
     type_params:
       measure: orders
 
   - name: storefront_gross_before_discount_usd
+    label: Storefront gross before discounts (USD)
     type: simple
     type_params:
       measure: gross_before_discount_usd_sum
@@ -287,11 +291,13 @@ metrics:
       measure: spend_usd_sum
 
   - name: paid_impressions
+    label: Paid media impressions
     type: simple
     type_params:
       measure: impressions_sum
 
   - name: paid_clicks
+    label: Paid media clicks
     type: simple
     type_params:
       measure: clicks_sum
@@ -307,6 +313,7 @@ metrics:
       measure: conversions_sum
 
   - name: paid_reported_conversion_value_usd
+    label: Platform-reported conversion value (USD)
     description: Platform-reported conversion value; Meta reports none.
     type: simple
     type_params:
@@ -347,11 +354,13 @@ metrics:
 
   # ---- blended acquisition (time only) ---------------------------------------
   - name: acq_paid_spend_usd
+    label: Paid media spend, all platforms (USD)
     type: simple
     type_params:
       measure: acq_paid_spend_usd
 
   - name: acq_first_time_subscribers
+    label: First-time paying subscribers (acquisition view)
     type: simple
     type_params:
       measure: acq_first_time_subscribers
