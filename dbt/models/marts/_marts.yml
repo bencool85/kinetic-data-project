@@ -78,3 +78,59 @@ models:
       - name: data_through
         description: Latest date the subscription data covers.
         data_tests: [not_null]
+
+  - name: mart_paid_media_monthly
+    description: >
+      Paid media by platform by month (meta, google_search, youtube, dv360,
+      snap, tiktok), in US dollars: spend, impressions, clicks, conversions,
+      conversions_value_usd and the ratios ctr_fraction, cpc_usd,
+      cost_per_conversion_usd and reported_roas (ratios come from monthly
+      totals and are null when the denominator is 0). CAUTION: conversions
+      and their value are each platform's OWN claims; they overlap between
+      platforms, are not Kinetic orders, and Meta counts only its 'purchase'
+      action and reports no value (reported_roas null). Never add conversions
+      across platforms as sales, and reported_roas is not true ROAS. Rows stop
+      at the data's last date (see data_through).
+    columns:
+      - name: platform_month_id
+        data_tests: [not_null, unique]
+      - name: platform
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['meta', 'google_search', 'youtube', 'dv360', 'snap', 'tiktok']
+      - name: spend_usd
+        data_tests: [not_null]
+      - name: ctr_fraction
+        description: Clicks divided by impressions as a fraction (0.045 = 4.5%).
+      - name: reported_roas
+        description: Platform-reported conversion value divided by spend; null for Meta. Not true ROAS.
+      - name: data_through
+        data_tests: [not_null]
+
+  - name: mart_acquisition_efficiency_monthly
+    description: >
+      Blended customer acquisition cost by month: all paid media spend divided
+      by first-time paying subscribers. CAUTION: "blended" means all ad spend
+      over all new payers, including people who would have come without ads,
+      so it overstates the cost of an ad-driven subscriber and cannot compare
+      channels (no ad-to-order key exists). Spend and new payers are matched
+      in the same month with no lag, and with only a handful of signups a
+      month the monthly figure swings widely; use cumulative_blended_cac_usd
+      for the trend. Null CAC means no new subscribers that month. Spend is
+      advertising cost only. The level is a synthetic-data artifact, not a
+      benchmark. Rows stop at the data's last date (see data_through).
+    columns:
+      - name: year_month
+        data_tests: [not_null, unique]
+      - name: paid_spend_usd
+        data_tests: [not_null]
+      - name: first_time_subscribers
+        data_tests: [not_null]
+      - name: blended_cac_usd
+        description: Spend divided by first-time subscribers; null when there were none that month.
+      - name: cumulative_blended_cac_usd
+        description: Spend to date divided by first-time subscribers to date.
+      - name: data_through
+        data_tests: [not_null]

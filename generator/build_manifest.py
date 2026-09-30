@@ -304,6 +304,10 @@ FILES = [
     ("dbt/models/marts/mart_subscriber_movement_monthly.sql", "Code", "Phase 4 mart (CEO): new/returning/churned/net-new/active paying subscribers by month (written and hand-validated; needs dbt build)"),
     ("dbt/tests/assert_mart_subscriber_movement_monthly_identity.sql", "Code", "dbt test: end-of-month active = previous + new - churned"),
     ("dbt/tests/assert_mart_subscriber_movement_monthly_totals_match_source.sql", "Code", "dbt test: total new and churned match the paid-periods source"),
+    ("dbt/models/marts/mart_paid_media_monthly.sql", "Code", "Phase 4 mart (Performance Marketing/CMO): spend, clicks, platform-reported conversions and ratios by platform by month (written and hand-validated; needs dbt build)"),
+    ("dbt/models/marts/mart_acquisition_efficiency_monthly.sql", "Code", "Phase 4 mart (CEO/CFO): blended CAC by month = paid spend / first-time paying subscribers (written and hand-validated; needs dbt build)"),
+    ("dbt/tests/assert_mart_paid_media_monthly_spend_matches_daily.sql", "Code", "dbt test: monthly paid media spend equals daily total"),
+    ("dbt/tests/assert_mart_acquisition_efficiency_monthly_spend_matches_daily.sql", "Code", "dbt test: CAC mart spend equals total paid media spend"),
 ]
 
 

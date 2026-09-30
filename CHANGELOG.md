@@ -2515,3 +2515,21 @@ seasonality calendar.
   counted.
 - Tests: yml + 2 singular tests. NOT yet run in dbt. Needs
   `dbt build --select int_subscription_data_through mart_mrr_monthly mart_subscriber_movement_monthly`.
+
+## 2026-09-30 — mart_paid_media_monthly and mart_acquisition_efficiency_monthly written and hand-validated (overnight run; need dbt build)
+
+- Chosen from the persona stories (Performance Marketing: platform efficiency
+  over time; CMO: spend per platform; CEO/CFO: CAC). Persona stories that
+  need an ad-to-order key (channel-level CAC, campaign attribution) were NOT
+  built: no such key exists.
+- `mart_paid_media_monthly` (platform x month, 216 rows = 6 x 36): spend,
+  impressions, clicks, platform-reported conversions/value, ctr_fraction,
+  cpc_usd, cost_per_conversion_usd, reported_roas, data_through. Total spend
+  $1,531,706.95; Google Search 2026-07 $8,224.52 spend, 2.35 reported ROAS.
+- `mart_acquisition_efficiency_monthly` (month, 36 rows): paid spend, first-time
+  paying subscribers (from mart_subscriber_movement_monthly), blended CAC,
+  cumulative blended CAC. Overall $1,531,706.93 / 174 = $8,802.91; 2026-07
+  $9,874.68 over 4; one month has no new subscribers (null CAC).
+- Hand-validated by inlining int_paid_media_daily and the movement logic
+  against live staging/intermediate views. Tests: yml + 2 singular tests.
+  NOT yet run in dbt.
