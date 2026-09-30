@@ -13,7 +13,7 @@ Read this first in a new chat, then the last few CHANGELOG.md entries.
 - Phase 3, model 2 of 5, `int_orders_net`: DONE (built and tested in dbt 2026-09-30, 16/16 pass; 3,650 rows, net $182,861.97). Playbook section 13 updated.
 - Phase 3, model 3 of 5, `int_sessions_unified`: DONE (built and tested in dbt 2026-09-30, 14/14 pass; 49,895 rows, 340 back-filled). Playbook section 13 updated.
 - Next: model 4 of 5, `int_messaging_events` (Braze email + push). Suggest a new chat.
-- Remaining after that, in order: int_sessions_unified (back-fill via int_customer_identity), int_messaging_events (Braze email + push), int_paid_media_daily (needs Ben's call: which platform actions count as a "conversion").
+- Remaining after that: int_paid_media_daily (needs Ben's call: which platform actions count as a "conversion").
 - At the marts review: point mart_storefront_revenue_monthly at int_orders_net.paid_usd and rename its "gross_revenue_usd" (it is the paid amount).
 - Pending Ben's yes: add a playbook principle "time series stop where the data stops; never extend to today". Check the Dive for the same current_date bug during the Phase 4 review.
 
