@@ -16,7 +16,7 @@ Read this first in a new chat, then the last few CHANGELOG.md entries.
 - Phase 6 and 7 are DRAFTS only (dbt/drafts/semantic_layer_DRAFT.yml, docs/semantic_layer_validation_DRAFT.md, docs/kinetic_skill_DRAFT.md).
 - 2026-09-30: Ben confirmed his understanding of all overnight work; Phases 3 and 4 CLOSED (his acceptance of the assumed decisions incl. conversion definition and blended CAC). Phase 5: descriptions done, still open: publish the dbt docs site and write a metrics glossary. Next: finish Phase 5, then Phase 6 validation (pip install dbt-metricflow, run docs/semantic_layer_validation_DRAFT.md), review the Phase 7 Skill draft. Phase 8 needs a pilot persona.
 - (old note follows) Phases stay "awaiting Ben's understanding" until he confirms. Phase 8 not started.
-- Pending Ben's yes: add a playbook principle "time series stop where the data stops; never extend to today".
+- Ben said YES (2026-09-30): playbook principle 05 "time series end where the data ends" added. Kinetic stays a STATIC dataset for now (ends 2026-07-30); daily updates may come someday.
 
 ## Open decisions / to-dos
 1. RESOLVED 2026-09-29 (int_customer_identity): guest emails are matched to customer accounts by email (28 guest orders / 28 Braze guest addresses); anonymous web sessions are back-filled once a visitor signs up or logs in (340 sessions); deleted accounts are excluded.
