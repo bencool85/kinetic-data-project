@@ -7,10 +7,11 @@ Read this first in a new chat, then the last few CHANGELOG.md entries.
 - Phase 2 (staging): COMPLETE. 47 of 47 raw tables have a `stg_kinetic__*` view; all built and tested in dbt.
 - Built early (before their phase): `int_subscription_paid_periods`, `int_orders_refunded`, `mart_mrr_monthly`, `mart_storefront_revenue_monthly`. Reconcile these with the playbook when starting Phase 3/4.
 - dbt now runs on Ben's Mac (dbt 1.10.23, venv ~/.dbt-venv, profile dbt/profiles.yml, output schemas dbt_dev_*). Staging built and 205/205 staging tests pass (2026-09-29). Intermediate (15/15) and marts (8/8) also built and tested in dbt. Ben runs dbt commands; Claude reads dbt/logs/dbt.log and dbt/target/run_results.json from the bridge.
-- Git: last commit 605c34b. Ben pushes himself (`cd ~/Documents/kinetic-project && git push`). Check `git log origin/master..HEAD` for unpushed commits and remind him.
+- Git: see `git log`. Ben pushes himself (`cd ~/Documents/kinetic-project && git push`). Check `git log origin/master..HEAD` for unpushed commits and remind him.
 
 ## Next step (start here)
-- Phase 3, model 2 of 5, `int_orders_net`: written, hand-verified and committed (2026-09-30). Ben runs `cd ~/Documents/kinetic-project/dbt && source ~/.dbt-venv/bin/activate && dbt build --select int_orders_net`; then read dbt/logs/dbt.log + dbt/target/run_results.json, confirm 3,650 rows / net $182,861.97 in MotherDuck, and update playbook section 13.
+- Phase 3, model 2 of 5, `int_orders_net`: DONE (built and tested in dbt 2026-09-30, 16/16 pass; 3,650 rows, net $182,861.97). Playbook section 13 updated.
+- Next: model 3 of 5, `int_sessions_unified` (back-fill anonymous sessions via int_customer_identity; 340 sessions).
 - Remaining after that, in order: int_sessions_unified (back-fill via int_customer_identity), int_messaging_events (Braze email + push), int_paid_media_daily (needs Ben's call: which platform actions count as a "conversion").
 - At the marts review: point mart_storefront_revenue_monthly at int_orders_net.paid_usd and rename its "gross_revenue_usd" (it is the paid amount).
 - Pending Ben's yes: add a playbook principle "time series stop where the data stops; never extend to today". Check the Dive for the same current_date bug during the Phase 4 review.

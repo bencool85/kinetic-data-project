@@ -2380,3 +2380,14 @@ seasonality calendar.
   column at the marts review, so "gross" means one thing.
 - File_Manifest.xlsx regenerated (271 rows). The manifest script now needs a
   fake HOME with Documents/ symlinks because folders mount by name.
+
+## 2026-09-30 — int_orders_net built and tested in dbt
+
+- `dbt build --select int_orders_net` on Ben's Mac: 1 view + 15 tests,
+  PASS=16, ERROR=0, 10.2s. View in `dbt_dev_intermediate`.
+- Checked the dbt-built view from MotherDuck: 3,650 rows = 3,650 distinct
+  orders; gross $194,283.64, discount $4,874.85, paid $189,408.79, refund
+  $6,546.82, net $182,861.97; 1,257 guest orders (28 guest_email_match,
+  1,229 unresolved), 2,393 account orders; 0 negative net. All identical to
+  the pre-build hand check.
+- Playbook section 13 and double-black-solutions/LOG.md updated.
