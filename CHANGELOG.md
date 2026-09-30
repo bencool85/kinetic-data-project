@@ -2772,3 +2772,16 @@ seasonality calendar.
   figures exactly (per source, 49,895 sessions, 46,049,491 seconds). Two singular tests added.
 - Caveat baked into the model and yml: sessions are visits, not people or sales; utm tags are URL tags,
   so never attribute revenue or subscribers to a source.
+
+## 2026-09-30 — Owned channels: semantic layer (42 metrics), glossary, Skill v1.2, pilot use case 2
+
+- _semantic_layer.yml: two new semantic models (`messaging`, `traffic`) and 17 metrics (25 -> 42), each
+  defined once; ratio metrics from sums. `dbt parse` and `mf validate-configs` 0 errors and 0 warnings
+  (including against the warehouse). Six new validation queries (docs/semantic_layer_validation.md 11-16)
+  match values worked out with direct SQL on the intermediate models. Full `dbt build` 389/389 pass.
+- docs/metrics_glossary.md: entries for messaging and traffic; "not defined yet" list updated.
+- docs/kinetic_skill.md v1.2: new marts and metrics, messaging/traffic caveats, refusals updated, and ground
+  rule 5 "no causal wording" (from pilot log row D1). NOT reviewed by Ben yet; must be re-uploaded to claude.ai.
+- docs/phase8_pilot_scope.md: Addendum with use case 2 and 8 test questions (R1-R8) with live-checked answers.
+- dbt docs regenerated; gh-pages rebuilt locally at 95f34b3 (Ben publishes: `git push origin gh-pages`).
+- Removed .DS_Store from git tracking and ignored it. Assumed definitions listed in HANDOFF (Phase 4).

@@ -190,6 +190,82 @@ semantic_models:
         expr: first_time_subscribers
         agg: sum
 
+  # ---- Owned channels: email and push messaging -----------------------------
+  - name: messaging
+    description: >
+      Braze email and push by channel, campaign type and month of SEND: what was
+      sent, bounced, opened, clicked and unsubscribed. The unit is messages, not people.
+    model: ref('mart_messaging_monthly')
+    defaults:
+      agg_time_dimension: month_start
+    entities:
+      - name: message_month
+        type: primary
+        expr: message_month_id
+    dimensions:
+      - name: month_start
+        type: time
+        type_params:
+          time_granularity: month
+      - name: channel
+        type: categorical
+      - name: campaign_type
+        type: categorical
+    measures:
+      - name: msg_sends
+        expr: sends
+        agg: sum
+      - name: msg_bounces
+        expr: bounces
+        agg: sum
+      - name: msg_delivered
+        expr: delivered
+        agg: sum
+      - name: msg_opens
+        expr: opens
+        agg: sum
+      - name: msg_clicks
+        expr: clicks
+        agg: sum
+      - name: msg_unsubscribes
+        expr: unsubscribes
+        agg: sum
+
+  # ---- Owned channels: web and app traffic -----------------------------------
+  - name: traffic
+    description: >
+      Web and app sessions by month, traffic source and landing page. A session is
+      a visit, not a person or a sale; utm tags are URL tags, not ad campaign IDs.
+    model: ref('mart_traffic_monthly')
+    defaults:
+      agg_time_dimension: month_start
+    entities:
+      - name: traffic_month
+        type: primary
+        expr: traffic_month_id
+    dimensions:
+      - name: month_start
+        type: time
+        type_params:
+          time_granularity: month
+      - name: traffic_source
+        type: categorical
+      - name: landing_page
+        type: categorical
+    measures:
+      - name: sessions_sum
+        expr: sessions
+        agg: sum
+      - name: known_sessions_sum
+        expr: known_sessions
+        agg: sum
+      - name: anonymous_sessions_sum
+        expr: anonymous_sessions
+        agg: sum
+      - name: duration_seconds_sum
+        expr: total_duration_seconds
+        agg: sum
+
 metrics:
 
   # ---- revenue / subscribers ------------------------------------------------
@@ -375,3 +451,122 @@ metrics:
     type_params:
       numerator: acq_paid_spend_usd
       denominator: acq_first_time_subscribers
+
+  # ---- owned channels: email and push (by channel, campaign_type, time) -----------
+  - name: messages_sent
+    label: Messages sent (email and push)
+    description: Messages sent in the period. Messages, not people. Slice by message_month__channel or message_month__campaign_type.
+    type: simple
+    type_params:
+      measure: msg_sends
+
+  - name: messages_bounced
+    label: Messages bounced
+    type: simple
+    type_params:
+      measure: msg_bounces
+
+  - name: messages_delivered
+    label: Messages delivered (sends minus bounces)
+    description: There is no delivered event; delivered is sends minus bounces.
+    type: simple
+    type_params:
+      measure: msg_delivered
+
+  - name: messages_opened
+    label: Messages opened
+    description: A tracked open event (at most one per message). Compare channels and months, not outside benchmarks.
+    type: simple
+    type_params:
+      measure: msg_opens
+
+  - name: messages_clicked
+    label: Messages clicked
+    type: simple
+    type_params:
+      measure: msg_clicks
+
+  - name: messages_unsubscribed
+    label: Unsubscribes after a message
+    type: simple
+    type_params:
+      measure: msg_unsubscribes
+
+  - name: message_bounce_rate
+    label: Bounce rate (fraction of sends)
+    type: ratio
+    type_params:
+      numerator: messages_bounced
+      denominator: messages_sent
+
+  - name: message_open_rate
+    label: Open rate (fraction of delivered)
+    description: Opens divided by delivered. A tracked-event rate, not an outside benchmark.
+    type: ratio
+    type_params:
+      numerator: messages_opened
+      denominator: messages_delivered
+
+  - name: message_click_rate
+    label: Click rate (fraction of delivered)
+    type: ratio
+    type_params:
+      numerator: messages_clicked
+      denominator: messages_delivered
+
+  - name: message_click_to_open_rate
+    label: Click-to-open rate (clicks / opens)
+    type: ratio
+    type_params:
+      numerator: messages_clicked
+      denominator: messages_opened
+
+  - name: message_unsubscribe_rate
+    label: Unsubscribe rate (fraction of delivered)
+    type: ratio
+    type_params:
+      numerator: messages_unsubscribed
+      denominator: messages_delivered
+
+  # ---- owned channels: web and app traffic (by traffic_source, landing_page, time) --
+  - name: traffic_sessions
+    label: Sessions (web and app)
+    description: >
+      Visits, not people or sales. Slice by traffic_month__traffic_source or
+      traffic_month__landing_page. A session tagged with an ad platform arrived through
+      that platform's link; it is not attributed revenue or a subscriber.
+    type: simple
+    type_params:
+      measure: sessions_sum
+
+  - name: traffic_known_sessions
+    label: Sessions tied to a customer account
+    type: simple
+    type_params:
+      measure: known_sessions_sum
+
+  - name: traffic_anonymous_sessions
+    label: Anonymous web sessions
+    type: simple
+    type_params:
+      measure: anonymous_sessions_sum
+
+  - name: traffic_duration_seconds
+    label: Total session time (seconds)
+    type: simple
+    type_params:
+      measure: duration_seconds_sum
+
+  - name: traffic_known_share
+    label: Known share of sessions (fraction)
+    type: ratio
+    type_params:
+      numerator: traffic_known_sessions
+      denominator: traffic_sessions
+
+  - name: traffic_avg_session_seconds
+    label: Average session length (seconds)
+    type: ratio
+    type_params:
+      numerator: traffic_duration_seconds
+      denominator: traffic_sessions

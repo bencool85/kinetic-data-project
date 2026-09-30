@@ -9,26 +9,37 @@ standing rules; this note holds status, open decisions and pitfalls.
 - Phase 3 (intermediate): DONE, confirmed by Ben 2026-09-30. Eight models: int_subscription_paid_periods,
   int_orders_refunded, int_customer_identity, int_orders_net, int_sessions_unified, int_messaging_events,
   int_paid_media_daily, int_subscription_data_through.
-- Phase 4 (marts): DONE, confirmed by Ben 2026-09-30. Five marts: mart_mrr_monthly,
-  mart_storefront_revenue_monthly, mart_subscriber_movement_monthly, mart_paid_media_monthly,
-  mart_acquisition_efficiency_monthly. Last full build: 66/66 pass (2026-09-30).
-  Not built (no mart yet): churn rate, cohort retention, LTV, email funnel rates.
+- Phase 4 (marts): DONE, confirmed by Ben 2026-09-30 (five marts), then EXTENDED the same day after Ben
+  flagged that owned channels had no marts: mart_messaging_monthly (email + push by channel x campaign type
+  x month of send) and mart_traffic_monthly (web + app sessions by traffic source x landing page x month).
+  Seven marts in all: mart_mrr_monthly, mart_storefront_revenue_monthly, mart_subscriber_movement_monthly,
+  mart_paid_media_monthly, mart_acquisition_efficiency_monthly, mart_messaging_monthly, mart_traffic_monthly.
+  Full build 389/389 pass (2026-09-30). Hand-checked against the intermediate models; 2 singular tests each.
+  ASSUMED, NEEDS BEN'S CALL (defaults I took because he said to proceed): delivered = sends - bounces (no
+  delivered event); open/click/unsubscribe rates divide by delivered, click-to-open by opens; the month is
+  the month of SEND; the 7 opens stamped 31 Jul-1 Aug are counted in July; traffic_source = app | UTM source
+  for tagged web | untagged_web (direct, organic, untracked cannot be separated); landing_page kept as a second
+  dimension. Not built (no mart yet): churn rate, cohort retention, LTV, campaign-level email.
 - Phase 5 (documentation): DONE, confirmed by Ben 2026-09-30. Description on every model and column;
   docs site at https://bencool85.github.io/kinetic-data-project/ (gh-pages branch, a snapshot of the
   2026-09-30 build: rebuild after model changes, CLAUDE.md rule 10); glossary at docs/metrics_glossary.md.
 - Phase 6 (semantic layer): DONE, confirmed by Ben 2026-09-30 (playbook section 13 updated and
   republished as artifact v26; LOG.md entry added).
-  dbt/models/marts/_semantic_layer.yml (5 semantic models, 25 metrics) plus the calendar model
-  metricflow_time_spine. `mf validate-configs` 0 errors; all 10 queries in
-  docs/semantic_layer_validation.md match the hand-computed values. Full build 366/366 pass.
+  dbt/models/marts/_semantic_layer.yml (now 7 semantic models, 42 metrics: the 17 new ones cover
+  messaging and traffic) plus the calendar model metricflow_time_spine. `mf validate-configs` 0 errors;
+  all 16 queries in docs/semantic_layer_validation.md match the hand-computed values (10 original + 6 for
+  owned channels). New dimensions: message_month__channel, message_month__campaign_type,
+  traffic_month__traffic_source, traffic_month__landing_page.
   MetricFlow 0.209 (dbt-metricflow 0.11.0) is installed in ~/.dbt-venv. Known limit (Ben accepted):
   only paid-media metrics have a second dimension (platform). Slicing subscribers/revenue (e.g. MRR by
   first-time vs returning) needs a new subscription-grain mart with a subscriber-type column: optional.
 - Phase 7 (Skill): DONE, signed off by Ben 2026-09-30. docs/kinetic_skill.md (v1, renamed from _DRAFT):
   SQL on the marts is the default route, MetricFlow metrics where installed (dimension
   `platform_month__platform`). Quoted numbers re-checked against live data (incl. guest orders 33.7%).
-  Ben's scope decisions: the Skill refuses churn rate, LTV, revenue by plan and email/push rates
-  (no marts yet); it points at the dev schema `dbt_dev_marts`, to be swapped for a production
+  v1.2 (2026-09-30, NOT yet reviewed by Ben): adds the two owned-channel marts and metrics, their caveats,
+  and ground rule 5 (no causal wording: never say spend "brought in" subscribers; found by the pilot
+  dashboard, log row D1). Re-upload docs/kinetic_skill.md to claude.ai to replace the old copy.
+  Ben's scope decisions: the Skill refuses churn rate, LTV and revenue by plan (no marts yet); it points at the dev schema `dbt_dev_marts`, to be swapped for a production
   schema before a real pilot (Phase 8).
   Still open for Phase 8: where the Skill file will live (.claude/skills/ vs claude.ai upload).
 - Phase 8 (agents): NOT STARTED. Needs a pilot persona.
@@ -50,10 +61,18 @@ standing rules; this note holds status, open decisions and pitfalls.
    before a real client); runs in claude.ai (Skill uploaded, MotherDuck connector); read-only via Ben
    switching off the connector's query_rw tool + Skill rule 3 "SELECT only" (separate read-only
    MotherDuck user needed before a real client); feedback in docs/phase8_pilot_log.md (Ben pastes
-   replies, Claude grades). WAITING ON BEN: switch off query_rw, upload docs/kinetic_skill.md (v1.1)
-   to claude.ai, run the 6 questions + 3 of his own. Next use case after the pilot: funnel by channel
-   on customers.signup_source (needs a new mart and Ben's call vs the "CAC is blended only" decision).
-   Playbook section 13 updated (Phase 8 in progress) and republished as artifact v28; LOG.md entry added.
+   replies, Claude grades).
+   PILOT STATUS (2026-09-30): Ben switched off query_rw, uploaded Skill v1.1 and ran Q1 (graded RIGHT,
+   log row 1) plus a dashboard he asked the agent for (log row D1: numbers right, one caveat missed:
+   "brought in" causal wording, now banned by Skill v1.2 rule 5). Q2-Q6 still to run and grade.
+   NEW USE CASE 2 (owned channels, after Ben's "why no marts for owned channels" miss): marts, tests,
+   semantic layer, glossary and Skill v1.2 are built; 8 test questions with live-checked answers are in
+   docs/phase8_pilot_scope.md (Addendum, R1-R8). WAITING ON BEN: (1) OK or change the assumed definitions
+   listed under Phase 4; (2) review Skill v1.2; (3) re-upload docs/kinetic_skill.md to claude.ai
+   (replace the old copy); (4) finish Q2-Q6, then run R1-R8 and paste the replies to be graded.
+   Later use case: funnel by channel on customers.signup_source (needs a new mart and Ben's call vs the
+   "CAC is blended only" decision); also Ben's pending push of docs-site gh-pages (a339554 was pushed;
+   a new rebuild is committed locally, see below). Playbook section 13 updated (Phase 8 in progress) and republished as artifact v28; LOG.md entry added.
 2. Optional: subscription-grain mart to slice subscribers/revenue by subscriber type, channel or plan.
 Recommend a model and ask Ben before starting each one (CLAUDE.md "Model and cost").
 

@@ -93,10 +93,45 @@ Ratios are computed from monthly totals, not averaged from daily ratios.
 
 The level (about $8.8k per subscriber overall) is a synthetic-data artifact, not a benchmark.
 
+## Email and push (`mart_messaging_monthly`, one row per channel x campaign type x month)
+
+The month is the month a message was SENT; opens and clicks arrive within 2 days. The unit is messages, not people.
+
+**Sends / bounces / delivered (`sends`, `bounces`, `delivered`)**
+- Means: messages sent; messages that bounced; sends minus bounces (there is no delivered event).
+- Not: people reached. One person can receive many messages.
+
+**Opens / clicks / unsubscribes (`opens`, `clicks`, `unsubscribes`)**
+- Means: delivered messages that were opened; messages that were clicked (every click follows an open); messages after which the recipient unsubscribed. At most one of each per message.
+- Not: a measure of interest or revenue. An open is a tracked event defined by this dataset; in real life email opens are inflated by privacy features, so compare channels and months, not outside benchmarks.
+
+**Rates (`open_rate_fraction`, `click_rate_fraction`, `click_to_open_rate_fraction`, `unsubscribe_rate_fraction`, `bounce_rate_fraction`)**
+- Means: opens / delivered, clicks / delivered, clicks / opens, unsubscribes / delivered, bounces / sends, as fractions (0.35 = 35%), computed from monthly totals.
+- Not: attributable to revenue or subscribers. Nothing here links a message to an order. Triggered messages (sent after a customer action) open far more than broadcasts, so never average across campaign types without saying so. Null means a zero denominator.
+- Late data: seven opens stamped 31 Jul to 1 Aug 2026 belong to 29-30 Jul sends and are counted in July. The latest month is cut off at the data's end.
+
+## Web and app traffic (`mart_traffic_monthly`, one row per month x traffic source x landing page)
+
+**Sessions (`sessions`)**
+- Means: visits that started in the month, web and app.
+- Not: people, and not sales. A session is one visit.
+
+**Traffic source (`traffic_source`)**
+- Means: for web sessions the UTM source on the link (meta, google_search, tiktok, youtube, dv360, snap, email); `untagged_web` for web sessions with no tag (direct, organic or untracked: the data cannot tell them apart); `app` for every app session (app sessions have no tags, landing page or referrer).
+- Not: attribution. A session tagged meta arrived through a Meta-tagged link; no key links it to an ad, order or subscriber, so never credit revenue or subscribers to a source. UTM tags are URL tags, not ad-platform campaign IDs.
+
+**Known / anonymous sessions (`known_sessions`, `anonymous_sessions`, `known_share_fraction`)**
+- Means: sessions tied to a customer account (known at the time, or back-filled after the visitor signed up or logged in) versus anonymous web visitors. All app sessions are known.
+- Not: a count of customers. Anonymous visitors are most of web traffic, and especially of paid traffic (about 95% anonymous).
+
+**Average session length (`avg_session_seconds`)**
+- Means: total session seconds / sessions.
+- Not: engagement quality. App sessions run much longer than web sessions, so mix matters.
+
 ---
 
 ## Every mart: `data_through`
 The latest date the data covers (2026-07-30). Later months are unknown, not zero.
 
 ## Not defined yet (say "I don't have this")
-Churn rate, cohort retention, LTV, margin/profit, email or push open/click rates, and CAC or ROAS by channel or campaign.
+Churn rate, cohort retention, LTV, margin/profit, email or push performance at campaign level (only channel and campaign type exist), page-level or funnel metrics beyond landing page, and CAC or ROAS by channel or campaign.

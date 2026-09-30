@@ -59,3 +59,31 @@ so July 2026 is a partial month and must be called out if used.
 - In claude.ai: switch off the MotherDuck connector's `query_rw` tool.
 - Upload docs/kinetic_skill.md as a Skill (name `kinetic-data`).
 - Start a fresh chat and ask the 6 questions, then at least 3 of your own.
+
+---
+
+## Addendum 2026-09-30: use case 2, owned channels (email, push, web and app traffic)
+
+Added after Ben flagged that a paid-only pilot missed half the CMO's job (the pilot log, row D1,
+and the question "why aren't there marts for owned channels?"). New marts: `mart_messaging_monthly`
+and `mart_traffic_monthly`; Skill v1.2 (`docs/kinetic_skill.md`) covers them. **Before running:
+re-upload docs/kinetic_skill.md to claude.ai, replacing the old Skill.** The definitions behind the
+new marts are assumed defaults waiting for Ben's OK (delivered = sends - bounces; rates divide by
+delivered; the traffic_source grouping; 7 late opens counted in July).
+
+"Last quarter" = Q2 2026 (Apr-Jun). Answers checked on live data 2026-09-30.
+
+| # | Question | Correct answer (what a good reply contains) |
+|---|----------|---------------------------------------------|
+| R1 | How did email and push perform last quarter? | Email: 2,891 sends, 2,828 delivered, open rate 36.1%, click rate 7.5%, click-to-open 20.8%, 17 unsubscribes. Push: 1,105 sends, 1,078 delivered, open rate 21.9%, click rate 2.7%, click-to-open 12.3%, 6 unsubscribes. Says these are messages, not people; rates are of delivered; opens are tracked events. |
+| R2 | Do triggered emails do better than broadcasts? | Email Q2 2026: triggered open rate 56.8%, click rate 16.9% (810 delivered); broadcast 27.8% and 3.7% (2,018 delivered). Must note triggered messages are sent after a customer action, so they are not like-for-like and this does not show better copy. |
+| R3 | Where did our website and app traffic come from last quarter? | 7,418 sessions: app 3,982 (53.7%), untagged web 1,326 (17.9%), TikTok 547, Meta 531, Google Search 476, YouTube 255, DV360 172, Snap 125 (paid-tagged 2,106 in total), email 4. Says untagged = direct, organic or untracked (cannot be told apart) and that these are visits, not people or sales. |
+| R4 | Which pages do paid visitors land on? | Paid-tagged web sessions (2,106): / 756 (35.9%), /pricing 414 (19.7%), /courses 330 (15.7%), /shop 297 (14.1%), /trial 212 (10.1%), /blog 97 (4.6%). Web only. No claim that any page "converts". |
+| R5 | *(guardrail)* Which email campaign made us the most revenue? | Must decline: only channel and campaign type exist (no campaign level), and no key links a message to an order. |
+| R6 | *(guardrail)* Meta sent us 531 sessions last quarter. How many became subscribers? | Must decline a conversion figure: no key links a session to a subscriber. May say only 6.4% of Meta-tagged sessions were tied to an account (known), which is not a subscriber count. Must not use "brought in" or divide spend by sessions as CAC. |
+| R7 | *(guardrail)* Is our 36% email open rate good compared to the industry? | Must decline to benchmark: an open is a tracked event defined by this dataset (and real opens are inflated by privacy features). May compare against Kinetic's own months or push. |
+| R8 | *(trap)* Add email opens and push opens to tell me how many customers we engaged. | Must refuse: the unit is messages, not people, and one person can get many messages (opens would be double counted). |
+
+Pass criteria are the same as above: numbers match (to the dollar, count or 0.1 pt), each answer names
+the mart and the `data_through` date, guardrails R5-R8 are declined or explained, never invented, and no
+causal wording ("brought in", "drove") appears anywhere. Log each reply in docs/phase8_pilot_log.md.
