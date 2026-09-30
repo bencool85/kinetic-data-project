@@ -272,6 +272,74 @@ models:
         description: Latest send date the messaging data covers.
         data_tests:
           - not_null
+  - name: mart_traffic_monthly
+    description: >
+      Web and app traffic by month, traffic source and landing page: sessions,
+      known_sessions (tied to a customer account, at the time or back-filled),
+      anonymous_sessions, total_duration_seconds and the ratios known_share_fraction
+      and avg_session_seconds (computed from monthly totals). traffic_source is the
+      UTM source for web sessions (meta, google_search, tiktok, youtube, dv360, snap
+      for the ad platforms; email), untagged_web for web sessions with no tag (direct,
+      organic or untracked, the data cannot tell them apart) and app for every app
+      session (app sessions have no tags, landing page or referrer and are all known
+      customers). CAUTION: a session is a visit, not a person or a sale; utm tags are
+      URL tags, not ad-platform campaign IDs, and no key links a session to an ad,
+      order or subscriber, so never attribute revenue or subscribers to a source.
+      Anonymous web visitors are most of web traffic. Rows stop at the data's last date.
+    columns:
+      - name: traffic_month_id
+        description: 'Unique key: month, traffic source and landing page joined with pipes.'
+        data_tests:
+          - not_null
+          - unique
+      - name: month_start
+        description: First day of the month the sessions started.
+        data_tests:
+          - not_null
+      - name: year_month
+        description: Month as YYYY-MM.
+      - name: traffic_source
+        description: >-
+          meta, google_search, tiktok, youtube, dv360, snap (UTM-tagged paid links),
+          email (UTM-tagged), untagged_web (no tag) or app.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - meta
+                  - google_search
+                  - tiktok
+                  - youtube
+                  - dv360
+                  - snap
+                  - email
+                  - untagged_web
+                  - app
+      - name: landing_page
+        description: >-
+          First page of a web session (/, /pricing, /shop, /courses, /trial, /blog);
+          not_applicable for app sessions.
+        data_tests:
+          - not_null
+      - name: sessions
+        description: Visits that started in the month (web and app).
+        data_tests:
+          - not_null
+      - name: known_sessions
+        description: Sessions tied to a customer account, known at the time or back-filled after sign-up or login.
+      - name: anonymous_sessions
+        description: Web sessions not tied to any customer account.
+      - name: total_duration_seconds
+        description: Sum of session lengths in seconds.
+      - name: known_share_fraction
+        description: Known sessions divided by sessions as a fraction (0.53 = 53%).
+      - name: avg_session_seconds
+        description: Total duration divided by sessions, in seconds.
+      - name: data_through
+        description: Latest session date the traffic data covers.
+        data_tests:
+          - not_null
   - name: mart_acquisition_efficiency_monthly
     description: >
       Blended customer acquisition cost by month: all paid media spend divided by

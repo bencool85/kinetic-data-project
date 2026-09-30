@@ -2760,3 +2760,15 @@ seasonality calendar.
   6,328 opens / 1,341 clicks; push 7,851 / 1,590 / 220). Two singular tests added.
 - New scripts/md_env.sh: runs only dbt or mf from dbt/ with the MotherDuck token loaded from ~/.zshrc
   (never printed); allowed in .claude/settings.json so builds stop prompting for a browser sign-in.
+
+## 2026-09-30 — Owned-channel gap: mart_traffic_monthly (web + app sessions)
+
+- Hand-checked int_sessions_unified: 49,895 sessions; web 30,285 (20,964 UTM-tagged: six ad platforms
+  20,951 + email 13; 9,321 untagged); app 19,610 (no tags, landing page or referrer; all known customers);
+  26,426 known + 23,469 anonymous; no null/zero durations; nothing after 2026-07-30.
+- New dbt/models/marts/mart_traffic_monthly.sql, grain month x traffic_source x landing_page. Assumed
+  (needs Ben's call): traffic_source = app | utm_source for tagged web | untagged_web (direct, organic
+  and untracked cannot be told apart). Built and tested in dbt: 11/11 pass; totals match the hand-checked
+  figures exactly (per source, 49,895 sessions, 46,049,491 seconds). Two singular tests added.
+- Caveat baked into the model and yml: sessions are visits, not people or sales; utm tags are URL tags,
+  so never attribute revenue or subscribers to a source.
