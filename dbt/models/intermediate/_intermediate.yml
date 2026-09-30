@@ -188,3 +188,40 @@ models:
           - accepted_values:
               arguments:
                 values: ['braze_customer_id', 'email_match', 'unresolved']
+
+  - name: int_paid_media_daily
+    description: >
+      One row per ad platform per day (6 platforms x 1,095 days = 6,570 rows,
+      2023-08-01 to 2026-07-30), all in US dollars. platform is meta,
+      google_search, youtube, dv360, snap or tiktok. conversions is each
+      platform's OWN attributed purchase-type count (Meta: the 'purchase'
+      action only; others: their single conversions column, which can be
+      fractional). These are self-reported by the platforms, overlap with
+      each other and are not Kinetic orders, so do not add them up as if
+      they were sales or compare them one-to-one with orders.
+      conversions_value_usd is null for Meta (no value column). Snap swipes
+      are counted as clicks. Google Search uses the ad-group table only
+      (never add the keyword table).
+    columns:
+      - name: platform_day_id
+        data_tests: [not_null, unique]
+      - name: platform
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['meta', 'google_search', 'youtube', 'dv360', 'snap', 'tiktok']
+      - name: report_date
+        data_tests: [not_null]
+      - name: spend_usd
+        description: Total spend that day in US dollars (already converted from micros where needed).
+        data_tests: [not_null]
+      - name: impressions
+        data_tests: [not_null]
+      - name: clicks
+        data_tests: [not_null]
+      - name: conversions
+        description: Platform-reported, fractional for most platforms; not site-verified orders.
+        data_tests: [not_null]
+      - name: conversions_value_usd
+        description: Platform-reported conversion value in dollars; null for Meta.

@@ -297,6 +297,9 @@ FILES = [
     ("dbt/tests/assert_int_messaging_events_counts_match_sources.sql", "Code", "dbt test: unified event count equals email + push event counts"),
     ("dbt/tests/assert_int_messaging_events_customer_matches_resolution.sql", "Code", "dbt test: customer_id is null exactly when a messaging event is unresolved"),
     ("MORNING_LIST.md", "Doc", "Overnight run report: commands to run first, assumed decisions, done/blocked units, proposed playbook wording"),
+    ("dbt/models/intermediate/int_paid_media_daily.sql", "Code", "Intermediate model: one row per ad platform per day, spend/impressions/clicks/conversions in USD (written and hand-verified; needs dbt build)"),
+    ("dbt/tests/assert_int_paid_media_daily_spend_matches_sources.sql", "Code", "dbt test: platform-day spend total equals the six source spend totals"),
+    ("dbt/tests/assert_int_paid_media_daily_no_missing_days.sql", "Code", "dbt test: no missing days per platform"),
 ]
 
 

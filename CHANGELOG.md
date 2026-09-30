@@ -2462,3 +2462,21 @@ seasonality calendar.
   plus 2 singular tests in `dbt/tests/`. NOT yet run in dbt.
 - Assumed (needs Ben's call): no de-duplication; unique opens/clicks are the
   mart's job.
+
+## 2026-09-30 — int_paid_media_daily written and hand-verified (overnight run; needs dbt build)
+
+- New `int_paid_media_daily` (one row per platform per day; 6 platforms x
+  1,095 days = 6,570 rows, 2023-08-01 to 2026-07-30): spend_usd, impressions,
+  clicks, conversions, conversions_value_usd.
+- Hand-checked against the dbt-built staging views: each platform has 1,095
+  distinct dates with no gaps; no negative spend, clicks > impressions or
+  conversions > clicks. Spend totals: meta $429,291.38, google_search
+  $350,535.12 (ad-group table = keyword table), youtube $170,406.94, dv360
+  $132,525.13, snap $115,034.09, tiktok $333,914.27.
+- Assumed (needs Ben's call): conversion = Meta 'purchase' action only;
+  other platforms use their single `conversions` column. Meta value is null.
+  Snap swipes = clicks.
+- Finding: raw Meta spend is plain dollars (project notes say cents); no
+  conversion applied, verified raw sum = staged sum.
+- Tests: yml (unique platform_day_id, accepted platforms, not_null) + 2
+  singular tests. NOT yet run in dbt.
