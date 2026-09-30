@@ -2713,3 +2713,8 @@ seasonality calendar.
   decisions in its header. Re-checked "about a third guest orders" against live data: 1,229 of 3,650
   orders (33.7%) have no customer_id. Manifest line updated.
 - Playbook section 13, LOG.md and HANDOFF.md updated (Phase 8 is next).
+
+## 2026-09-30 — Phase 8 pilot persona chosen: CMO
+
+- Ben chose the CMO / performance marketing persona for the Phase 8 pilot (paid media is the richest
+  data and has the most traps: platform-reported conversions, no CAC by channel). Next: scope one use case.
