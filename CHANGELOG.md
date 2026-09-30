@@ -2443,3 +2443,22 @@ seasonality calendar.
   `git push`, any push naming master/main (including `--dry-run` and
   `branch:master` forms), `--all`, `--mirror` and force flags. Only
   `git push origin overnight` is allowed.
+
+## 2026-09-30 — int_messaging_events written and hand-verified (overnight run; needs dbt build)
+
+- New `int_messaging_events` (one row per Braze email or push event, 36,232
+  today = 26,335 email + 9,897 push): channel, send_id, campaign (+ name/type),
+  event_name, occurred_at, customer_id, customer_resolution
+  (braze_customer_id / email_match / unresolved), email_address (email only),
+  device_id + platform (push only).
+- Hand-checked against the dbt-built staging/intermediate views: event_ids
+  distinct and no overlap between channels; 0 orphan campaigns; 0 customer_ids
+  missing from customers; 0 events before their send; 0 conflicts between
+  Braze's id and the email match; 2,187 email events had no customer_id, 44 of
+  them resolve by email to an account, 2,143 stay unresolved (1,257 distinct
+  guest addresses overall = the guest-order count); 7 email events are stamped
+  after the data end (2026-07-30, latest 2026-08-01), kept and flagged.
+- Tests: not_null/unique/accepted_values/relationships in `_intermediate.yml`
+  plus 2 singular tests in `dbt/tests/`. NOT yet run in dbt.
+- Assumed (needs Ben's call): no de-duplication; unique opens/clicks are the
+  mart's job.

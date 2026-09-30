@@ -139,3 +139,52 @@ models:
           - accepted_values:
               arguments:
                 values: ['known_at_time', 'backfilled', 'anonymous']
+
+  - name: int_messaging_events
+    description: >
+      One row per Braze email or push event (36,232 today: 26,335 email +
+      9,897 push), both channels in one shape. channel says which; event_name
+      is send/open/click/bounce/unsubscribe. Nothing is de-duplicated, so
+      counting rows is NOT a unique-open or unique-click count: count distinct
+      send_id per event_name for that. customer_id is Braze's own id or, for
+      email events that lacked one (guest checkouts), the account matched by
+      email address; guests with no account stay null (customer_resolution =
+      unresolved). email_address exists for email rows only; device_id and
+      platform for push rows only. A handful of email events are stamped just
+      after the data's end (2026-07-30); marts must end their time series at
+      the data's own last date.
+    columns:
+      - name: event_id
+        data_tests: [not_null, unique]
+      - name: channel
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['email', 'push']
+      - name: send_id
+        data_tests: [not_null]
+      - name: campaign_id
+        data_tests:
+          - not_null
+      - name: event_name
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['send', 'open', 'click', 'bounce', 'unsubscribe']
+      - name: occurred_at
+        data_tests: [not_null]
+      - name: customer_id
+        description: Null only when customer_resolution is 'unresolved'.
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_kinetic__customers')
+                field: customer_id
+      - name: customer_resolution
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['braze_customer_id', 'email_match', 'unresolved']

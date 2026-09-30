@@ -293,6 +293,10 @@ FILES = [
     ("dbt/models/staging/kinetic/stg_kinetic__product_variants.sql", "Code", "Phase 2 staging (final table, 47 of 47): product variants with variant_option, price_adjustment_usd"),
     ("HANDOFF.md", "Doc", "Handoff note for starting a new chat/project: status, open decisions, prior decisions, pitfalls"),
     ("dbt/models/staging/kinetic/_kinetic__staging.yml", "Code", "Updated: tests for the 4 TikTok staging models -- all hand-verified against live data first"),
+    ("dbt/models/intermediate/int_messaging_events.sql", "Code", "Intermediate model: one row per Braze email or push event in one shape, customer resolved via Braze id or email match (written and hand-verified; needs dbt build)"),
+    ("dbt/tests/assert_int_messaging_events_counts_match_sources.sql", "Code", "dbt test: unified event count equals email + push event counts"),
+    ("dbt/tests/assert_int_messaging_events_customer_matches_resolution.sql", "Code", "dbt test: customer_id is null exactly when a messaging event is unresolved"),
+    ("MORNING_LIST.md", "Doc", "Overnight run report: commands to run first, assumed decisions, done/blocked units, proposed playbook wording"),
 ]
 
 

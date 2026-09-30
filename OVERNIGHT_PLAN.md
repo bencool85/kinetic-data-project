@@ -14,10 +14,12 @@ Persona user stories: CHANGELOG.md entry "2026-08-14 -- Dive v2", docs/phase0_si
    branch exists, check it out). ALL commits go on `overnight`. Never commit
    to master, never `git push`, never `git fetch`. Commit each step yourself,
    ending messages with the attribution lines your session gives you. If a
-   commit fails on a lock file: delete permission is per session, so first
-   call device_request_delete_permission for ~/Documents/kinetic-project; if
-   it is not granted, `mv` only empty .lock files and tmp_obj_* into
-   ~/Documents/kinetic-project/_to_delete/ and note it. If git says "Author
+   commit fails on a lock file, `mv` only empty .lock files and tmp_obj_* into
+   ~/Documents/kinetic-project/_to_delete/ (mkdir it first) and note it in
+   MORNING_LIST.md. NEVER call device_request_delete_permission (this overrides
+   the task prompt): it needs a human to answer and pauses the whole run while
+   Ben sleeps. Never ask Ben for any approval; if something needs one, skip it
+   and log it. If git says "Author
    identity unknown", use per-command `-c user.name="Ben" -c user.email="seeds_uptempo_0c@icloud.com"` (matches earlier commits); do not change git config.
 2. MotherDuck: READ-ONLY (the query tool). Never call query_rw. Never delete anything.
 3. dbt CANNOT run in this session (Ben's Mac only; you cannot type into Terminal).
