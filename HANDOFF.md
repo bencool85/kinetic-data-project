@@ -1,4 +1,4 @@
-# Handoff note (updated 2026-09-29, Phase 3 in progress)
+# Handoff note (updated 2026-09-30, overnight run 1 complete on branch `overnight`)
 
 Read this first in a new chat, then the last few CHANGELOG.md entries.
 
@@ -10,12 +10,12 @@ Read this first in a new chat, then the last few CHANGELOG.md entries.
 - Git: see `git log`. Ben pushes himself (`cd ~/Documents/kinetic-project && git push`). Check `git log origin/master..HEAD` for unpushed commits and remind him.
 
 ## Next step (start here)
-- Phase 3, model 2 of 5, `int_orders_net`: DONE (built and tested in dbt 2026-09-30, 16/16 pass; 3,650 rows, net $182,861.97). Playbook section 13 updated.
-- Phase 3, model 3 of 5, `int_sessions_unified`: DONE (built and tested in dbt 2026-09-30, 14/14 pass; 49,895 rows, 340 back-filled). Playbook section 13 updated.
-- Next: model 4 of 5, `int_messaging_events` (Braze email + push). Suggest a new chat.
-- Remaining after that: int_paid_media_daily (needs Ben's call: which platform actions count as a "conversion").
-- At the marts review: point mart_storefront_revenue_monthly at int_orders_net.paid_usd and rename its "gross_revenue_usd" (it is the paid amount).
-- Pending Ben's yes: add a playbook principle "time series stop where the data stops; never extend to today". Check the Dive for the same current_date bug during the Phase 4 review.
+- OVERNIGHT RUN 1 (2026-09-30) finished the whole queue on git branch `overnight` (not master, nothing pushed). Read MORNING_LIST.md first: it has the exact commands, the assumed decisions that need Ben's call, and plain-language explainers.
+- Written and hand-verified in MotherDuck, NOT yet built in dbt: int_messaging_events, int_paid_media_daily, int_subscription_data_through, mart_subscriber_movement_monthly, mart_paid_media_monthly, mart_acquisition_efficiency_monthly; changed: mart_storefront_revenue_monthly (reads int_orders_net; gross_revenue_usd renamed paid_revenue_usd), mart_mrr_monthly (reads int_subscription_data_through).
+- Phase 5: descriptions on every column (yml rewritten by script; run `dbt parse`, then `dbt docs generate`).
+- Phase 6 and 7 are DRAFTS only (dbt/drafts/semantic_layer_DRAFT.yml, docs/semantic_layer_validation_DRAFT.md, docs/kinetic_skill_DRAFT.md).
+- Then: Ben runs the dbt build, says "done", Claude checks dbt/logs and MotherDuck, then updates playbook section 13 (proposed wording in MORNING_LIST.md) and LOG.md. Phases stay "awaiting Ben's understanding" until he confirms. Phase 8 not started.
+- Pending Ben's yes: add a playbook principle "time series stop where the data stops; never extend to today".
 
 ## Open decisions / to-dos
 1. RESOLVED 2026-09-29 (int_customer_identity): guest emails are matched to customer accounts by email (28 guest orders / 28 Braze guest addresses); anonymous web sessions are back-filled once a visitor signs up or logs in (340 sessions); deleted accounts are excluded.
@@ -51,3 +51,6 @@ dbt (transformation tool run separately, not a database; models are SQL files; s
 - MotherDuck integer overflow: use BIGINT literals when multiplying micros.
 - Cloud sandbox files vanish between sessions; anything that matters must be committed to Ben's Mac.
 - Ben watches token use: short chats, new chat per phase, Sonnet for routine work, Opus for judgment calls.
+- Meta spend in the raw table is plain dollars, although older notes say "Meta cents" (only Meta BUDGETS are in cents). Verified 2026-09-30.
+- Seven Braze email events are stamped after the data end (2026-07-30); marts must end series at the data's last date.
+- Overnight session tooling: this Cowork session's manifest script needs a fake HOME under $HOME (not /tmp): mkdir -p $HOME/fakehome/Documents and symlink both folders, then HOME=$HOME/fakehome python3 generator/build_manifest.py.

@@ -310,6 +310,7 @@ FILES = [
     ("dbt/tests/assert_mart_acquisition_efficiency_monthly_spend_matches_daily.sql", "Code", "dbt test: CAC mart spend equals total paid media spend"),
     ("dbt/drafts/semantic_layer_DRAFT.yml", "Config", "DRAFT Phase 6 semantic layer (MetricFlow semantic models + metrics) for the marts built so far; unvalidated, outside model-paths"),
     ("docs/semantic_layer_validation_DRAFT.md", "Doc", "DRAFT Phase 6 validation set: mf query commands with expected values from hand SQL (not yet run)"),
+    ("docs/kinetic_skill_DRAFT.md", "Doc", "DRAFT Phase 7 Skill: which mart answers which question, Phase 5 caveats as instructions, 'I don't have this data' rules (not reviewed by data owner)"),
 ]
 
 

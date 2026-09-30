@@ -2567,3 +2567,12 @@ seasonality calendar.
 - Kept in `dbt/drafts/` (outside model-paths) so an unvalidated file cannot
   break `dbt build`. Assumed default: dbt Semantic Layer / MetricFlow.
 - Honest limit: only paid-media metrics have two dimensions (platform, time).
+
+## 2026-09-30 — Phase 7 DRAFT: Kinetic Skill document (overnight run)
+
+- `docs/kinetic_skill_DRAFT.md`: which mart answers which question, every
+  Phase 5 caveat restated as an instruction, and an explicit list of
+  "say I don't have this data" cases (post-2026-07-30, margin/LTV, channel
+  CAC/ROAS, churn rate/cohorts, email rates, individual customers).
+- DRAFT: needs review by Ben (and, in a real engagement, the client's data
+  owner), and the dbt build to pass, before use. Phase 8 not started.
