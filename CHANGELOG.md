@@ -2495,3 +2495,23 @@ seasonality calendar.
   $194,283.64, discount $4,874.85, paid $189,408.79, net $182,861.97.
   has_discount = (discounts > 0) on all 3,650 orders (597).
 - Needs `dbt build --select mart_storefront_revenue_monthly` on Ben's Mac.
+
+## 2026-09-30 — mart_subscriber_movement_monthly written and hand-validated (overnight run; needs dbt build)
+
+- New `mart_subscriber_movement_monthly` (CEO story "net-new vs churned paying
+  subscribers"), one row per month, 2023-08 to 2026-07 (36 months):
+  new_paying_subscribers (first_time / returning), churned_subscribers,
+  net_new_subscribers, active_subscribers_end, data_through.
+- New `int_subscription_data_through` (one date) so mart_mrr_monthly and this
+  mart share the "where the data ends" rule; mart_mrr_monthly now reads it
+  (logic identical: same greatest() of the same four columns; result
+  2026-07-30 confirmed).
+- Hand-validated against live views: 174 first-time + 25 returning = 199 new,
+  101 churned, 98 active at 2026-07-31 (= 98 paid subscriptions never
+  canceled = Phase 0's 98 active subscribers). Identity end = prev end + new -
+  churned holds in all 36 months. Versus mart_mrr_monthly's 1st-of-month
+  snapshot: 8 of 35 months differ, all with a start/cancel on the 1st itself.
+  3 subscriptions paying from 2026-08-05 or later are past the data end, not
+  counted.
+- Tests: yml + 2 singular tests. NOT yet run in dbt. Needs
+  `dbt build --select int_subscription_data_through mart_mrr_monthly mart_subscriber_movement_monthly`.

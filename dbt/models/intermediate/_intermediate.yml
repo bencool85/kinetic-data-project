@@ -225,3 +225,13 @@ models:
         data_tests: [not_null]
       - name: conversions_value_usd
         description: Platform-reported conversion value in dollars; null for Meta.
+
+  - name: int_subscription_data_through
+    description: >
+      A single row holding data_through: the last date the subscription and
+      invoice data covers (2026-07-30 today). Subscription time series end at
+      this date's month rather than today, because later months would be
+      invented.
+    columns:
+      - name: data_through
+        data_tests: [not_null]

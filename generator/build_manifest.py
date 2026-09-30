@@ -300,6 +300,10 @@ FILES = [
     ("dbt/models/intermediate/int_paid_media_daily.sql", "Code", "Intermediate model: one row per ad platform per day, spend/impressions/clicks/conversions in USD (written and hand-verified; needs dbt build)"),
     ("dbt/tests/assert_int_paid_media_daily_spend_matches_sources.sql", "Code", "dbt test: platform-day spend total equals the six source spend totals"),
     ("dbt/tests/assert_int_paid_media_daily_no_missing_days.sql", "Code", "dbt test: no missing days per platform"),
+    ("dbt/models/intermediate/int_subscription_data_through.sql", "Code", "Intermediate model: one row, the last date the subscription/invoice data covers (shared by MRR and subscriber-movement marts) (written; needs dbt build)"),
+    ("dbt/models/marts/mart_subscriber_movement_monthly.sql", "Code", "Phase 4 mart (CEO): new/returning/churned/net-new/active paying subscribers by month (written and hand-validated; needs dbt build)"),
+    ("dbt/tests/assert_mart_subscriber_movement_monthly_identity.sql", "Code", "dbt test: end-of-month active = previous + new - churned"),
+    ("dbt/tests/assert_mart_subscriber_movement_monthly_totals_match_source.sql", "Code", "dbt test: total new and churned match the paid-periods source"),
 ]
 
 

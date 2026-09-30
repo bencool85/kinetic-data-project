@@ -19,7 +19,11 @@ Persona user stories: CHANGELOG.md entry "2026-08-14 -- Dive v2", docs/phase0_si
    MORNING_LIST.md. NEVER call device_request_delete_permission (this overrides
    the task prompt): it needs a human to answer and pauses the whole run while
    Ben sleeps. Never ask Ben for any approval; if something needs one, skip it
-   and log it. If git says "Author
+   and log it. Do NOT call any device_request_* tool (folder access, delete
+   permission), any computer_* tool, or any Claude_Browser / claude-in-chrome tool:
+   these show consent prompts that pause the run while Ben sleeps. Use only
+   device_bash, MotherDuck read-only queries, and file tools. If a tool call is
+   refused or a prompt appears, do not retry it; log it and move on. If git says "Author
    identity unknown", use per-command `-c user.name="Ben" -c user.email="seeds_uptempo_0c@icloud.com"` (matches earlier commits); do not change git config.
 2. MotherDuck: READ-ONLY (the query tool). Never call query_rw. Never delete anything.
 3. dbt CANNOT run in this session (Ben's Mac only; you cannot type into Terminal).

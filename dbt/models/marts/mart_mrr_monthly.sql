@@ -16,12 +16,7 @@
 -- current the number is.
 
 with data_bounds as (
-    select greatest(
-        (select max(subscription_created_at) from {{ ref('stg_kinetic__subscriptions') }}),
-        (select max(canceled_at) from {{ ref('stg_kinetic__subscriptions') }}),
-        (select max(invoice_created_at) from {{ ref('stg_kinetic__invoices') }}),
-        (select max(paid_at) from {{ ref('stg_kinetic__invoices') }})
-    )::date as data_through
+    select data_through from {{ ref('int_subscription_data_through') }}
 ),
 
 months as (

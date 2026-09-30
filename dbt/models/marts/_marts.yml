@@ -49,3 +49,32 @@ models:
       - name: data_through
         description: Latest order date in the data; later months are unknown, not zero.
         data_tests: [not_null]
+
+  - name: mart_subscriber_movement_monthly
+    description: >
+      Paying-subscriber movement by month: new paying subscribers (split into
+      first_time and returning win-backs), churned subscribers, net new and
+      active subscribers at month end. "Paying" starts when the trial
+      converts (a trial canceled before converting never counts). A returning
+      subscriber is someone with an earlier paying subscription, so
+      first_time + returning = new. Counts people-subscriptions, not revenue:
+      use mart_mrr_monthly for dollars. Active at month end can differ from
+      mart_mrr_monthly's count on the 1st only when someone starts or cancels
+      on the 1st. Rows stop at the data's last month (see data_through);
+      later months are unknown, not zero.
+    columns:
+      - name: year_month
+        data_tests: [not_null, unique]
+      - name: new_paying_subscribers
+        data_tests: [not_null]
+      - name: churned_subscribers
+        description: Paying subscriptions canceled that month (canceled trials are not included).
+        data_tests: [not_null]
+      - name: net_new_subscribers
+        description: New paying minus churned; negative means the base shrank.
+        data_tests: [not_null]
+      - name: active_subscribers_end
+        data_tests: [not_null]
+      - name: data_through
+        description: Latest date the subscription data covers.
+        data_tests: [not_null]
