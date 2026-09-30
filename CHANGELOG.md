@@ -2616,3 +2616,17 @@ seasonality calendar.
   permission mode on; the CLAUDE.md rules and settings.json deny rules still apply.
 - The Cowork Project instructions (claude.ai) still contain the old MODEL & COST
   line; Ben edits those in the Project settings.
+
+## 2026-09-30 — HANDOFF.md tidied for Claude Code (first Claude Code session)
+
+- Setup check from Claude Code passed: playbook folder and LOG.md readable, the
+  Artifact tool is available (published playbook read; republish to the same link
+  is possible), `dbt debug` passes (it opens a MotherDuck browser login because no
+  token is saved on the Mac).
+- HANDOFF.md rewritten: status is now one line per phase; Cowork-only notes removed
+  (Ben runs dbt, terminal cannot be typed into, device-bridge lock files, fake HOME
+  for the manifest script, iCloud/sandbox pitfalls); git state corrected
+  (`overnight` is pushed and in sync, 23 commits ahead of master, unmerged);
+  resolved items moved to "Decisions already made"; new open items: merge of
+  `overnight`, MotherDuck token, old lock files in `_to_delete/`.
+- No models, data or playbook content changed.
