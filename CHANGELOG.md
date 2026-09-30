@@ -2391,3 +2391,21 @@ seasonality calendar.
   1,229 unresolved), 2,393 account orders; 0 negative net. All identical to
   the pre-build hand check.
 - Playbook section 13 and double-black-solutions/LOG.md updated.
+
+## 2026-09-30 — int_sessions_unified written and hand-verified (awaiting dbt build)
+
+- New `int_sessions_unified` (one row per session, web + app): source_system,
+  platform, started_at/ended_at/duration_seconds, customer_id,
+  customer_resolution (known_at_time / backfilled / anonymous),
+  anonymous_id, device_id, and the web-only UTM/landing/referrer/device columns.
+- Ben's calls: keep the 4,994 app sessions with platform = 'web' as their
+  own sessions (only 28 overlap in time with a web session); back-fill with
+  no time limit (max gap today is 14 days).
+- Hand-checked against the dbt-built views: 49,895 sessions = 30,285 web +
+  19,610 app, all distinct; 26,086 known_at_time, 340 backfilled (263
+  visitors), 23,469 anonymous; customer_id null exactly for the anonymous
+  ones; 0 conflicts with a session's own customer; 0 negative durations; 0
+  customer_ids missing from customers.
+- Tests: not_null/unique/accepted_values/relationships in
+  `_intermediate.yml` plus 3 singular tests in `dbt/tests/`.
+- Ben pushed all earlier commits (0 unpushed at the start of this step).

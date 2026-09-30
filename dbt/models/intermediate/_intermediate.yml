@@ -96,3 +96,46 @@ models:
           - accepted_values:
               arguments:
                 values: ['account', 'guest_email_match', 'unresolved']
+
+  - name: int_sessions_unified
+    description: >
+      One row per session, web and app together (49,895 today). source_system
+      says where it was recorded ('web' or 'app'); platform is web, ios or
+      android. customer_id is the account known at the time or, for web
+      sessions, the account the visitor's anonymous_id later turned out to be
+      (back-filled, no time limit). customer_resolution says which:
+      known_at_time, backfilled or anonymous. Anonymous web sessions (the
+      majority of web traffic) keep a null customer_id. App sessions with
+      platform 'web' are logged-in web devices, kept as separate sessions.
+      UTM, landing page, referrer and device_category exist for web sessions
+      only; device_id for app sessions only.
+    columns:
+      - name: session_id
+        data_tests: [not_null, unique]
+      - name: source_system
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['web', 'app']
+      - name: platform
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['web', 'ios', 'android']
+      - name: started_at
+        data_tests: [not_null]
+      - name: customer_id
+        description: Null only when customer_resolution is 'anonymous'.
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_kinetic__customers')
+                field: customer_id
+      - name: customer_resolution
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['known_at_time', 'backfilled', 'anonymous']
