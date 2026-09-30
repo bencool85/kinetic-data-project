@@ -1,4 +1,4 @@
-# Handoff note (updated 2026-09-30, overnight run 1 complete on branch `overnight`)
+# Handoff note (updated 2026-09-30, overnight work built in dbt; branch `overnight` pushed)
 
 Read this first in a new chat, then the last few CHANGELOG.md entries.
 
@@ -11,10 +11,10 @@ Read this first in a new chat, then the last few CHANGELOG.md entries.
 
 ## Next step (start here)
 - OVERNIGHT RUN 1 (2026-09-30) finished the whole queue on git branch `overnight` (not master, nothing pushed). Read MORNING_LIST.md first: it has the exact commands, the assumed decisions that need Ben's call, and plain-language explainers.
-- Written and hand-verified in MotherDuck, NOT yet built in dbt: int_messaging_events, int_paid_media_daily, int_subscription_data_through, mart_subscriber_movement_monthly, mart_paid_media_monthly, mart_acquisition_efficiency_monthly; changed: mart_storefront_revenue_monthly (reads int_orders_net; gross_revenue_usd renamed paid_revenue_usd), mart_mrr_monthly (reads int_subscription_data_through).
+- BUILT AND TESTED IN DBT 2026-09-30 (Ben ran it: 66/66 pass, docs generated locally): int_messaging_events, int_paid_media_daily, int_subscription_data_through, mart_subscriber_movement_monthly, mart_paid_media_monthly, mart_acquisition_efficiency_monthly; changed: mart_storefront_revenue_monthly (reads int_orders_net; gross_revenue_usd renamed paid_revenue_usd), mart_mrr_monthly (reads int_subscription_data_through). Playbook section 13 and LOG.md updated (Phases 3-4 "built, awaiting Ben's review").
 - Phase 5: descriptions on every column (yml rewritten by script; run `dbt parse`, then `dbt docs generate`).
 - Phase 6 and 7 are DRAFTS only (dbt/drafts/semantic_layer_DRAFT.yml, docs/semantic_layer_validation_DRAFT.md, docs/kinetic_skill_DRAFT.md).
-- Then: Ben runs the dbt build, says "done", Claude checks dbt/logs and MotherDuck, then updates playbook section 13 (proposed wording in MORNING_LIST.md) and LOG.md. Phases stay "awaiting Ben's understanding" until he confirms. Phase 8 not started.
+- Now: walk Ben through the overnight units and the 11 assumed decisions (MORNING_LIST.md); close Phases 3-5 only when he confirms. Phases stay "awaiting Ben's understanding" until he confirms. Phase 8 not started.
 - Pending Ben's yes: add a playbook principle "time series stop where the data stops; never extend to today".
 
 ## Open decisions / to-dos
