@@ -2352,3 +2352,7 @@ seasonality calendar.
   2026-07), all 35 identical to the old rows; only the 2 invented months
   are gone. Needs `dbt build --select mart_mrr_monthly` on Ben's Mac to
   update the table.
+- Ben rebuilt `mart_mrr_monthly` in dbt (model + 4 tests pass). Confirmed
+  from MotherDuck: 35 months, last 2026-07, data_through 2026-07-30, July
+  MRR $2,133.07.
+- HANDOFF.md: added "Next step" (int_orders_net) for the next chat.

@@ -1,4 +1,4 @@
-# Handoff note (written 2026-09-29, end of Phase 2)
+# Handoff note (updated 2026-09-29, Phase 3 in progress)
 
 Read this first in a new chat, then the last few CHANGELOG.md entries.
 
@@ -8,6 +8,11 @@ Read this first in a new chat, then the last few CHANGELOG.md entries.
 - Built early (before their phase): `int_subscription_paid_periods`, `int_orders_refunded`, `mart_mrr_monthly`, `mart_storefront_revenue_monthly`. Reconcile these with the playbook when starting Phase 3/4.
 - dbt now runs on Ben's Mac (dbt 1.10.23, venv ~/.dbt-venv, profile dbt/profiles.yml, output schemas dbt_dev_*). Staging built and 205/205 staging tests pass (2026-09-29). Intermediate (15/15) and marts (8/8) also built and tested in dbt. Ben runs dbt commands; Claude reads dbt/logs/dbt.log and dbt/target/run_results.json from the bridge.
 - Git: last commit 605c34b. Ben pushes himself (`cd ~/Documents/kinetic-project && git push`). Check `git log origin/master..HEAD` for unpushed commits and remind him.
+
+## Next step (start here)
+- Phase 3, model 2 of 5: `int_orders_net` -- one row per order: gross, discount, refund (from int_orders_refunded, succeeded only), net, is_guest_order, and a resolved customer_id (guest orders matched via int_customer_identity on 'email:'||lower(trim(guest_email))). Hand-verify against live data before writing; Ben then runs `dbt build --select int_orders_net`.
+- Remaining after that, in order: int_sessions_unified (back-fill via int_customer_identity), int_messaging_events (Braze email + push), int_paid_media_daily (needs Ben's call: which platform actions count as a "conversion").
+- Pending Ben's yes: add a playbook principle "time series stop where the data stops; never extend to today". Check the Dive for the same current_date bug during the Phase 4 review.
 
 ## Open decisions / to-dos
 1. RESOLVED 2026-09-29 (int_customer_identity): guest emails are matched to customer accounts by email (28 guest orders / 28 Braze guest addresses); anonymous web sessions are back-filled once a visitor signs up or logs in (340 sessions); deleted accounts are excluded.
